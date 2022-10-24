@@ -1,7 +1,10 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:get/get.dart';
 import 'package:grex_ds/grex_ds.dart';
+import 'package:sample/extensions/string_extension.dart';
+
+import 'localization/app_localizations.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,7 +16,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
         // This is the theme of your application.
@@ -29,41 +32,38 @@ class MyApp extends StatelessWidget {
         fontFamily: GrxFontFamilies.montserrat,
         textTheme: const GrxTextTheme(),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      localizationsDelegates: const [
+        // ... app-specific localization delegate[s] here
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('pt'),
+        Locale('en'),
+        Locale('es'),
+      ],
+      home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
+class MyHomePage extends StatelessWidget {
+  final formKey = GlobalKey<FormState>();
   final String title;
 
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
+  MyHomePage({super.key, required this.title});
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  bool _validateForm() {
+    final form = formKey.currentState;
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+    if (form?.validate() ?? false) {
+      form!.save();
+      return true;
+    }
+
+    return false;
   }
 
   @override
@@ -78,7 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: Text(title),
       ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
@@ -109,21 +109,50 @@ class _MyHomePageState extends State<MyHomePage> {
             GrxCaptionText('Caption Text'),
             GrxCaptionSmallText('Caption Small Text'),
             GrxOverlineText('Overline Text'),
-            GrxTextFormField(
-              controller: TextEditingController(),
-              labelText: 'Nome',
-              hintText: 'José Algusto',
-              validator: (value) =>
-                  (value?.isEmpty ?? true) ? 'Insira o nome da pessoa' : null,
-            ),
-            GrxSwitchFormField(
-              labelText: 'Alberta Fleming',
-            ),
+            Form(
+              key: formKey,
+              child: Column(
+                children: [
+                  GrxTextFormField(
+                    controller: TextEditingController(text: 'Leonardo Gabriel'),
+                    labelText: 'pages.people.name'.translate,
+                    hintText: 'José Algusto',
+                    onSaved: (value) => print('Text Form Field Value: $value'),
+                    validator: (value) => (value?.isEmpty ?? true)
+                        ? 'Insira o nome da pessoa'
+                        : null,
+                  ),
+                  GrxDateTimePicker(
+                    controller: TextEditingController(
+                        text: DateTime.now().toIso8601String()),
+                    labelText: 'pages.people.birth-date'.translate,
+                    hintText: 'fields.datetime.hint'.translate,
+                    dialogConfirmText: 'confirm'.translate,
+                    dialogCancelText: 'cancel'.translate,
+                    dialogErrorFormatText:
+                        'fields.datetime.error-format'.translate,
+                    dialogErrorInvalidText:
+                        'fields.datetime.error-invalid'.translate,
+                    isDateTime: true,
+                    onSaved: (value) =>
+                        print('Is Datetime Value: ${value is DateTime}'),
+                    validator: (value) => (value?.isEmpty ?? true)
+                        ? 'Insira a data de nascimento'
+                        : null,
+                  ),
+                  GrxSwitchFormField(
+                    labelText: 'Alberta Fleming',
+                    onSaved: (value) =>
+                        print('Switch Form Field Value: $value'),
+                  ),
+                ],
+              ),
+            )
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: _validateForm,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.

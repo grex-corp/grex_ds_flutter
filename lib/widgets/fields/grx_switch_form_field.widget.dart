@@ -6,7 +6,7 @@ import '../../themes/colors/grx_colors.dart';
 import '../../themes/typography/styles/grx_headline_small.style.dart';
 import '../cupertino/cupertino_switch_list_tile.dart';
 
-const _defaultInputLabel = GrxHeadlineSmallStyle(color: GrxColors.c2e2e2e);
+const _defaultInputLabel = GrxHeadlineSmallStyle(color: GrxColors.cff2e2e2e);
 
 /// A Design System's [FormField] used like a switch
 class GrxSwitchFormField extends FormField<bool> {
@@ -18,17 +18,15 @@ class GrxSwitchFormField extends FormField<bool> {
     required this.labelText,
     this.onChanged,
     this.changeOnInitialValue = false,
-    Key? key,
-    FormFieldSetter<bool?>? onSaved,
-    FormFieldValidator<bool?>? validator,
-    bool? initialValue,
-    bool enabled = true,
-    TextStyle? style,
+    final Key? key,
+    final FormFieldSetter<bool>? onSaved,
+    final bool? initialValue,
+    final bool enabled = true,
+    final TextStyle? style,
   }) : super(
           key: key,
           initialValue: initialValue,
-          onSaved: onSaved,
-          validator: validator,
+          onSaved: onSaved != null ? (value) => onSaved(value ?? false) : null,
           autovalidateMode: AutovalidateMode.always,
           enabled: enabled,
           builder: (FormFieldState<bool> state) {
@@ -44,7 +42,7 @@ class GrxSwitchFormField extends FormField<bool> {
                 ? CupertinoSwitchListTile(
                     title: Text(labelText, style: style ?? _defaultInputLabel),
                     value: state.value ?? false,
-                    activeColor: GrxColors.c6bbaf0,
+                    activeColor: GrxColors.cff6bbaf0,
                     contentPadding: EdgeInsets.zero,
                     onChanged: (data) {
                       state.didChange(data);
@@ -55,7 +53,7 @@ class GrxSwitchFormField extends FormField<bool> {
                 : SwitchListTile(
                     title: Text(labelText, style: style ?? _defaultInputLabel),
                     value: state.value ?? false,
-                    activeColor: GrxColors.c6bbaf0,
+                    activeColor: GrxColors.cff6bbaf0,
                     contentPadding: EdgeInsets.zero,
                     onChanged: (data) {
                       state.didChange(data);

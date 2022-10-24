@@ -14,7 +14,7 @@ class GrxOverlineText extends GrxText {
     super.data, {
     super.key,
     super.textAlign,
-    final Color color = GrxColors.c2e2e2e,
+    final Color color = GrxColors.cff2e2e2e,
     final TextDecoration? decoration,
     final TextOverflow? overflow,
     final GrxTextTransform transform = GrxTextTransform.uppercase,

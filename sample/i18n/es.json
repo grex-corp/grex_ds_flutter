@@ -1,0 +1,13 @@
+{
+  "confirm": "Confirmar",
+  "cancel": "Cancelar",
+  "next": "Siguiente",
+  "weekly-short": "Semanal",
+
+  "fields.datetime.error-format": "Invalid format",
+  "fields.datetime.error-invalid": "La fecha proporcionada no es válida",
+  "fields.datetime.hint": "02/10/1997",
+
+  "pages.people.name": "Nombre",
+  "pages.people.birth-date": "Fecha de nacimiento"
+}
