@@ -5,7 +5,8 @@ import '../../themes/typography/styles/grx_caption_large_text.style.dart';
 import '../../themes/typography/styles/grx_headline_small.style.dart';
 
 const _inputTextStyle = GrxCaptionLargeTextStyle(color: GrxColors.cff7892b7);
-const _inputHintTextStyle = GrxCaptionLargeTextStyle(color: GrxColors.ccc7892b7);
+const _inputHintTextStyle =
+    GrxCaptionLargeTextStyle(color: GrxColors.ccc7892b7);
 const _labelTextStyle = GrxHeadlineSmallStyle(color: GrxColors.cff2e2e2e);
 
 const _underlineInputBorder = UnderlineInputBorder(
@@ -28,7 +29,6 @@ class GrxTextField extends TextField {
   GrxTextField({
     super.key,
     super.readOnly,
-    super.onChanged,
     super.keyboardType,
     super.obscureText,
     super.onSubmitted,
@@ -49,7 +49,6 @@ class GrxTextField extends TextField {
     final int? hintMaxLines,
     final String? errorText,
     final TextInputAction textInputAction = TextInputAction.done,
-    final bool isValid = true,
   }) : super(
           controller: controller,
           textCapitalization: textCapitalization,
@@ -76,17 +75,28 @@ class GrxTextField extends TextField {
             hintMaxLines: hintMaxLines,
             hintStyle: _inputHintTextStyle,
             errorText: errorText,
-            suffix: Container(
-              padding: const EdgeInsets.only(right: 10),
-              child: isValid
-                  ? const Icon(
-                      Icons.check,
-                      color: GrxColors.cff75f3ab,
-                    )
-                  : const Icon(
+            suffix: Visibility(
+              visible: controller.text.isNotEmpty,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Container(
+                  padding: const EdgeInsets.all(3),
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                    color: GrxColors.caad6dfea,
+                  ),
+                  child: InkWell(
+                    onTap: () {
+                      controller.clear();
+                    },
+                    child: const Icon(
                       Icons.close,
-                      color: GrxColors.cfffc5858,
+                      size: 16,
+                      color: GrxColors.cff7892b7,
                     ),
+                  ),
+                ),
+              ),
             ),
             enabled: enabled,
           ),

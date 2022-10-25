@@ -1,9 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../../utils/grx_form_field.util.dart';
 import 'grx_text_field.widget.dart';
 
 class GrxDateTimePicker extends StatefulWidget {
+  const GrxDateTimePicker({
+    super.key,
+    required this.controller,
+    this.labelText,
+    this.hintText = '02/10/1997',
+    this.dialogConfirmText = 'Confirmar',
+    this.dialogCancelText = 'Cancelar',
+    this.dialogErrorFormatText = 'Formato inválido',
+    this.dialogErrorInvalidText = 'A data informada não é válida',
+    this.onChanged,
+    this.onSaved,
+    this.validator,
+    this.isDateTime = false,
+    this.enabled = true,
+    this.futureDate = false,
+  });
+
   final TextEditingController controller;
   final String? labelText;
   final String? hintText;
@@ -11,27 +29,12 @@ class GrxDateTimePicker extends StatefulWidget {
   final String dialogCancelText;
   final String dialogErrorFormatText;
   final String dialogErrorInvalidText;
+  final void Function(String?)? onChanged;
   final FormFieldSetter<DateTime?>? onSaved;
   final FormFieldValidator<String?>? validator;
   final bool isDateTime;
   final bool enabled;
   final bool futureDate;
-
-  const GrxDateTimePicker({
-    super.key,
-    required this.controller,
-    this.onSaved,
-    this.labelText,
-    this.hintText = '02/10/1997',
-    this.dialogConfirmText = 'Confirmar',
-    this.dialogCancelText = 'Cancelar',
-    this.dialogErrorFormatText = 'Formato inválido',
-    this.dialogErrorInvalidText = 'A data informada não é válida',
-    this.validator,
-    this.isDateTime = false,
-    this.enabled = true,
-    this.futureDate = false,
-  });
 
   @override
   State<StatefulWidget> createState() => _GrxDateTimePickerState();
@@ -65,12 +68,15 @@ class _GrxDateTimePickerState extends State<GrxDateTimePicker> {
           : null,
       onSaved: (_) => widget.onSaved != null ? widget.onSaved!(value) : null,
       builder: (FormFieldState<String> field) {
+        GrxFormFieldUtils.onValueChange(
+          field,
+          widget.controller,
+          onChanged: widget.onChanged,
+        );
+
         return GrxTextField(
           controller: widget.controller,
           readOnly: true,
-          isValid:
-              (widget.validator != null && widget.controller.text.isNotEmpty) ||
-                  widget.validator == null,
           hintText: widget.hintText,
           labelText: widget.labelText,
           errorText: field.errorText,

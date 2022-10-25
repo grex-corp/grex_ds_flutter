@@ -11,6 +11,7 @@ abstract class GrxColors {
   static const Color cff7892b7 = Color(0xff7892b7);
   static const Color ccc7892b7 = Color(0xcc7892b7);
   static const Color cffd6dfea = Color(0xffd6dfea);
+  static const Color caad6dfea = Color(0xaad6dfea);
 
   static const Color cfffc5858 = Color(0xfffc5858);
 }

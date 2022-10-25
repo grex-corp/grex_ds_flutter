@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../utils/grx_form_field.util.dart';
 import 'grx_text_field.widget.dart';
 
 /// A Design System's [FormField] used like text fields.
@@ -14,7 +15,7 @@ class GrxTextFormField extends FormField<String> {
     final TextInputType? keyboardType,
     final bool obscureText = false,
     final void Function(String?)? onChanged,
-    FormFieldValidator<String?>? validator,
+    final FormFieldValidator<String?>? validator,
     final EdgeInsets? contentPadding,
     final TextCapitalization textCapitalization = TextCapitalization.sentences,
     final TextAlignVertical textAlignVertical = TextAlignVertical.center,
@@ -34,20 +35,11 @@ class GrxTextFormField extends FormField<String> {
           validator:
               validator != null ? (_) => validator(controller.text) : null,
           builder: (FormFieldState<String> field) {
-            void onChangedHandler(String value) {
-              if (field.mounted && field.value != value) {
-                if (onChanged != null) {
-                  onChanged(value);
-                }
-
-                field.didChange(value);
-              }
-            }
-
-            void listener() => onChangedHandler(controller.text);
-
-            controller.removeListener(listener);
-            controller.addListener(listener);
+            GrxFormFieldUtils.onValueChange(
+              field,
+              controller,
+              onChanged: onChanged,
+            );
 
             return GrxTextField(
               controller: controller,
@@ -57,7 +49,6 @@ class GrxTextFormField extends FormField<String> {
               textCapitalization: textCapitalization,
               obscureText: obscureText,
               autocorrect: false,
-              onChanged: onChangedHandler,
               textInputAction: textInputAction,
               maxLines: obscureText ? 1 : maxLines,
               textAlignVertical: textAlignVertical,
@@ -69,9 +60,6 @@ class GrxTextFormField extends FormField<String> {
               hintText: hintText,
               hintMaxLines: hintMaxLines,
               errorText: field.errorText,
-              isValid: (validator != null &&
-                      (validator(controller.text)?.isEmpty ?? true)) ||
-                  validator == null,
               enabled: enabled,
             );
           },
