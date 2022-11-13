@@ -6,7 +6,7 @@ import '../../themes/typography/styles/grx_headline_small.style.dart';
 
 const _inputTextStyle = GrxCaptionLargeTextStyle(color: GrxColors.cff7892b7);
 const _inputHintTextStyle =
-    GrxCaptionLargeTextStyle(color: GrxColors.ccc7892b7);
+    GrxCaptionLargeTextStyle(color: GrxColors.cff7892b7);
 const _labelTextStyle = GrxHeadlineSmallStyle(color: GrxColors.cff2e2e2e);
 
 const _underlineInputBorder = UnderlineInputBorder(
@@ -83,7 +83,7 @@ class GrxTextField extends TextField {
                   padding: const EdgeInsets.all(3),
                   decoration: const BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(20)),
-                    color: GrxColors.caad6dfea,
+                    color: GrxColors.cffd6dfea,
                   ),
                   child: InkWell(
                     onTap: () {

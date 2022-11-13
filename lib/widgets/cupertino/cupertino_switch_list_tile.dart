@@ -46,7 +46,7 @@ class CupertinoSwitchListTile extends StatelessWidget {
   ///   title: new Text('Lights'),
   /// )
   /// ```
-  final ValueChanged<bool?>? onChanged;
+  final ValueChanged<bool>? onChanged;
 
   /// The color to use when this switch is on.
   ///

@@ -5,6 +5,17 @@ import 'package:grex_ds/grex_ds.dart';
 import 'package:sample/extensions/string_extension.dart';
 
 import 'localization/app_localizations.dart';
+import 'models/person.model.dart';
+
+final _leaders = [
+  Person(id: 1, name: '1st Person'),
+  Person(id: 2, name: '2nd Person'),
+  Person(id: 3, name: '3rd Person'),
+  Person(id: 4, name: '4th Person'),
+  Person(id: 5, name: '5th Person'),
+  Person(id: 6, name: '6th Person'),
+  Person(id: 7, name: '7th Person'),
+];
 
 void main() {
   runApp(const MyApp());
@@ -49,11 +60,29 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  final formKey = GlobalKey<FormState>();
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key, required this.title});
   final String title;
 
-  MyHomePage({super.key, required this.title});
+  @override
+  State<StatefulWidget> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  final formKey = GlobalKey<FormState>();
+  late Person person;
+
+  @override
+  void initState() {
+    person = Person(
+      id: 22,
+      name: 'Leonardo Gabriel',
+      birthDate: DateTime.now(),
+      leadership: _leaders.first,
+    );
+
+    super.initState();
+  }
 
   bool _validateForm() {
     final form = formKey.currentState;
@@ -78,7 +107,7 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text(title),
+        title: Text(widget.title),
       ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
@@ -100,31 +129,30 @@ class MyHomePage extends StatelessWidget {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            GrxHeadlineLargeText('Healine Large Text'),
-            GrxHeadlineText('Headline Text'),
-            GrxHeadlineMediumText('Headline Medium Text'),
-            GrxHeadlineSmallText('Headline Small Text'),
-            GrxBodyText('Body Text'),
-            GrxCaptionLargeText('Caption Large Text'),
-            GrxCaptionText('Caption Text'),
-            GrxCaptionSmallText('Caption Small Text'),
-            GrxOverlineText('Overline Text'),
+            const GrxHeadlineLargeText('Healine Large Text'),
+            const GrxHeadlineText('Headline Text'),
+            const GrxHeadlineMediumText('Headline Medium Text'),
+            const GrxHeadlineSmallText('Headline Small Text'),
+            const GrxBodyText('Body Text'),
+            const GrxCaptionLargeText('Caption Large Text'),
+            const GrxCaptionText('Caption Text'),
+            const GrxCaptionSmallText('Caption Small Text'),
+            const GrxOverlineText('Overline Text'),
             Form(
               key: formKey,
               child: Column(
                 children: [
                   GrxTextFormField(
-                    controller: TextEditingController(text: 'Leonardo Gabriel'),
+                    initialValue: person.name,
                     labelText: 'pages.people.name'.translate,
                     hintText: 'José Algusto',
-                    onSaved: (value) => print('Text Form Field Value: $value'),
+                    onSaved: (value) => person.name = value!,
                     validator: (value) => (value?.isEmpty ?? true)
                         ? 'Insira o nome da pessoa'
                         : null,
                   ),
-                  GrxDateTimePicker(
-                    controller: TextEditingController(
-                        text: DateTime.now().toIso8601String()),
+                  GrxDateTimePickerFormField(
+                    initialValue: person.birthDate,
                     labelText: 'pages.people.birth-date'.translate,
                     hintText: 'fields.datetime.hint'.translate,
                     dialogConfirmText: 'confirm'.translate,
@@ -134,16 +162,64 @@ class MyHomePage extends StatelessWidget {
                     dialogErrorInvalidText:
                         'fields.datetime.error-invalid'.translate,
                     isDateTime: true,
-                    onSaved: (value) =>
-                        print('Is Datetime Value: ${value is DateTime}'),
+                    onSaved: (value) => person.birthDate = value,
                     validator: (value) => (value?.isEmpty ?? true)
                         ? 'Insira a data de nascimento'
                         : null,
                   ),
                   GrxSwitchFormField(
-                    labelText: 'Alberta Fleming',
-                    onSaved: (value) =>
-                        print('Switch Form Field Value: $value'),
+                    initialValue: person.createUser,
+                    labelText: 'Criar usuário',
+                    onSaved: (value) => person.createUser = value,
+                  ),
+                  GrxDropdownFormField<Person>(
+                    initialValue: person.leadership,
+                    labelText: 'Liderança Direta',
+                    onSelectItem: (value) =>
+                        print('Selected Value: ${value?.name}'),
+                    data: _leaders,
+                    itemBuilder: (context, index, value) => SizedBox(
+                      height: 50,
+                      child: GrxHeadlineMediumText(value.name),
+                    ),
+                    displayText: (value) => value.name,
+                    onSaved: (value) => person.leadership = value,
+                    validator: (value) => (value?.isEmpty ?? true)
+                        ? 'O líder deve ser informado'
+                        : null,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  ElevatedButton(
+                    child: const GrxCaptionText(
+                      'Alterar Valores',
+                      color: GrxColors.cffffffff,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        person = Person(
+                          id: 22,
+                          name: 'Pâmela Gabriel',
+                          birthDate: DateTime.now(),
+                          createUser: true,
+                          leadership: _leaders.last,
+                        );
+                      });
+                    },
+                  ),
+                  ElevatedButton(
+                    child: const GrxCaptionText(
+                      'Adicionar Líder',
+                      color: GrxColors.cffffffff,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _leaders.add(
+                          Person(id: 8, name: '8th Person'),
+                        );
+                      });
+                    },
                   ),
                 ],
               ),
@@ -154,7 +230,7 @@ class MyHomePage extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: _validateForm,
         tooltip: 'Increment',
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.save_rounded),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }

@@ -38,11 +38,13 @@ export 'widgets/cupertino/cupertino_switch_list_tile.dart'
     show CupertinoSwitchListTile;
 
 /// Widgets/Fields
-export 'widgets/fields/grx_date_time_picker.widget.dart' show GrxDateTimePicker;
-export 'widgets/fields/grx_switch_form_field.widget.dart'
-    show GrxSwitchFormField;
 export 'widgets/fields/grx_text_field.widget.dart' show GrxTextField;
 export 'widgets/fields/grx_text_form_field.widget.dart' show GrxTextFormField;
+export 'widgets/fields/grx_switch_form_field.widget.dart'
+    show GrxSwitchFormField;
+export 'widgets/fields/grx_date_time_picker_form_field.widget.dart' show GrxDateTimePickerFormField;
+export 'widgets/fields/grx_dropdown_form_field.widget.dart' show GrxDropdownFormField;
+export 'widgets/fields/grx_filter_field.widget.dart' show GrxFilterField;
 
 /// Widgets/Typography
 export 'widgets/typography/grx_text.widget.dart' show GrxText;

@@ -11,7 +11,7 @@ const _defaultInputLabel = GrxHeadlineSmallStyle(color: GrxColors.cff2e2e2e);
 /// A Design System's [FormField] used like a switch
 class GrxSwitchFormField extends FormField<bool> {
   final String labelText;
-  final void Function(bool?)? onChanged;
+  final void Function(bool)? onChanged;
   final bool changeOnInitialValue;
 
   GrxSwitchFormField({
@@ -19,12 +19,12 @@ class GrxSwitchFormField extends FormField<bool> {
     this.onChanged,
     this.changeOnInitialValue = false,
     final Key? key,
-    final FormFieldSetter<bool>? onSaved,
+    final void Function(bool)? onSaved,
     final bool? initialValue,
     final bool enabled = true,
     final TextStyle? style,
   }) : super(
-          key: key,
+          key: key ?? UniqueKey(),
           initialValue: initialValue,
           onSaved: onSaved != null ? (value) => onSaved(value ?? false) : null,
           autovalidateMode: AutovalidateMode.always,

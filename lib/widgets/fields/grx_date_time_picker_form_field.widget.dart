@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../utils/grx_form_field.util.dart';
+import '../grx_stateful.widget.dart';
 import 'grx_text_field.widget.dart';
 
-class GrxDateTimePicker extends StatefulWidget {
-  const GrxDateTimePicker({
+class GrxDateTimePickerFormField extends GrxStatefulWidget {
+  GrxDateTimePickerFormField({
     super.key,
-    required this.controller,
+    this.initialValue,
     this.labelText,
     this.hintText = '02/10/1997',
     this.dialogConfirmText = 'Confirmar',
@@ -20,9 +21,10 @@ class GrxDateTimePicker extends StatefulWidget {
     this.isDateTime = false,
     this.enabled = true,
     this.futureDate = false,
+    this.controller,
   });
 
-  final TextEditingController controller;
+  final DateTime? initialValue;
   final String? labelText;
   final String? hintText;
   final String dialogConfirmText;
@@ -35,21 +37,29 @@ class GrxDateTimePicker extends StatefulWidget {
   final bool isDateTime;
   final bool enabled;
   final bool futureDate;
+  final TextEditingController? controller;
 
   @override
-  State<StatefulWidget> createState() => _GrxDateTimePickerState();
+  State<StatefulWidget> createState() => _GrxDateTimePickerFormFieldState();
 }
 
-class _GrxDateTimePickerState extends State<GrxDateTimePicker> {
+class _GrxDateTimePickerFormFieldState
+    extends State<GrxDateTimePickerFormField> {
   late final String locale;
+  late final TextEditingController controller;
 
   DateTime? value;
 
   @override
   void initState() {
-    if (widget.controller.text.isNotEmpty) {
-      value = DateTime.parse(widget.controller.text);
-      widget.controller.text = _formatValue(value!);
+    controller = widget.controller ?? TextEditingController();
+
+    if (widget.initialValue != null && value == null) {
+      value = widget.initialValue;
+      controller.text = _formatValue(value!);
+      if (widget.onChanged != null) {
+        widget.onChanged!(controller.text);
+      }
     }
 
     super.initState();
@@ -63,19 +73,18 @@ class _GrxDateTimePickerState extends State<GrxDateTimePicker> {
   Widget build(_) {
     return FormField<String>(
       autovalidateMode: AutovalidateMode.always,
-      validator: (_) => widget.validator != null
-          ? widget.validator!(widget.controller.text)
-          : null,
+      initialValue: widget.initialValue?.toIso8601String(),
+      validator: widget.validator,
       onSaved: (_) => widget.onSaved != null ? widget.onSaved!(value) : null,
       builder: (FormFieldState<String> field) {
         GrxFormFieldUtils.onValueChange(
           field,
-          widget.controller,
+          controller,
           onChanged: widget.onChanged,
         );
 
         return GrxTextField(
-          controller: widget.controller,
+          controller: controller,
           readOnly: true,
           hintText: widget.hintText,
           labelText: widget.labelText,
@@ -134,7 +143,7 @@ class _GrxDateTimePickerState extends State<GrxDateTimePicker> {
               setState(
                 () {
                   value = date;
-                  widget.controller.text = _formatValue(value!);
+                  controller.text = _formatValue(value!);
                 },
               );
             }
