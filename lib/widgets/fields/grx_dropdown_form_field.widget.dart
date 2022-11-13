@@ -118,7 +118,6 @@ class _GrxDropdownStateFormField<T> extends State<GrxDropdownFormField<T>> {
               context: context,
               builder: (controller) {
                 return StatefulBuilder(
-                  key: UniqueKey(),
                   builder: (BuildContext context, StateSetter setModalState) {
                     _setModalState = setModalState;
 
@@ -149,7 +148,14 @@ class _GrxDropdownStateFormField<T> extends State<GrxDropdownFormField<T>> {
                                 ),
                               ),
                               SliverPadding(
-                                padding: const EdgeInsets.all(20),
+                                padding: EdgeInsets.only(
+                                  left: 8,
+                                  top: 15,
+                                  right: 8,
+                                  bottom:
+                                      MediaQuery.of(context).viewInsets.bottom +
+                                          8,
+                                ),
                                 sliver: SliverList(
                                   delegate: SliverChildBuilderDelegate(
                                     childCount: _list.length,
