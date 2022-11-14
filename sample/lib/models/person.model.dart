@@ -4,6 +4,7 @@ class Person {
   Person? leadership;
   DateTime? birthDate;
   bool createUser;
+  bool single;
   Uri? avatar;
 
   Person({
@@ -12,6 +13,7 @@ class Person {
     this.leadership,
     this.birthDate,
     this.createUser = false,
+    this.single = false,
     this.avatar,
   });
 }

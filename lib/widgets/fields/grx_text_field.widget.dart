@@ -77,7 +77,7 @@ class GrxTextField extends TextField {
             hintStyle: _inputHintTextStyle,
             errorText: errorText,
             suffix: Visibility(
-              visible: controller.text.isNotEmpty,
+              visible: controller.text.isNotEmpty && enabled,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Container(

@@ -189,6 +189,15 @@ class _MyHomePageState extends State<MyHomePage> {
                           ? 'O líder deve ser informado'
                           : null,
                     ),
+                    GrxCheckboxListTile(
+                      title: 'Solteiro',
+                      isChecked: person.single,
+                      onTap: () {
+                        setState(() {
+                          person.single = !person.single;
+                        });
+                      },
+                    ),
                     const SizedBox(
                       height: 20,
                     ),
@@ -204,6 +213,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             name: 'Pâmela Gabriel',
                             birthDate: DateTime.now(),
                             createUser: true,
+                            single: true,
                             leadership: _leaders.last,
                           );
                         });

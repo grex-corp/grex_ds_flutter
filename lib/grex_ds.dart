@@ -30,7 +30,7 @@ export 'themes/typography/styles/grx_overline_text.style.dart'
 export 'themes/typography/utils/grx_font_families.dart' show GrxFontFamilies;
 export 'themes/typography/utils/grx_font_weights.dart' show GrxFontWeights;
 
-/// Themes/Text Theme
+/// Themes/TextTheme
 export 'themes/grx_text_theme.theme.dart' show GrxTextTheme;
 
 /// Themes/Icons
@@ -67,3 +67,8 @@ export 'widgets/typography/grx_caption_text.widget.dart' show GrxCaptionText;
 export 'widgets/typography/grx_caption_small_text.widget.dart'
     show GrxCaptionSmallText;
 export 'widgets/typography/grx_overline_text.widget.dart' show GrxOverlineText;
+
+/// Widgets/Checkbox
+export 'widgets/checkbox/grx_checkbox.widget.dart' show GrxCheckbox;
+export 'widgets/checkbox/grx_checkbox_list_tile.widget.dart'
+    show GrxCheckboxListTile;
