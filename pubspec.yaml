@@ -93,5 +93,8 @@ flutter:
         - asset: fonts/Montserrat/BlackItalic.otf
           weight: 900
           style: italic
+    - family: GrxIcons
+      fonts:
+        - asset: fonts/GrxIcons/GrxIcons.ttf
   # For details regarding fonts in packages, see
   # https://flutter.dev/custom-fonts/#from-packages

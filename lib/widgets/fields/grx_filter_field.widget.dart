@@ -26,6 +26,10 @@ class GrxFilterField extends StatelessWidget {
           autocorrect: false,
           style: _inputTextStyle,
           decoration: InputDecoration(
+            suffixIconConstraints: const BoxConstraints(
+              minHeight: 24,
+              minWidth: 40,
+            ),
             isDense: true,
             border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(
@@ -49,7 +53,7 @@ class GrxFilterField extends StatelessWidget {
             filled: true,
             suffixIcon: searchFieldController.text.isEmpty
                 ? const Icon(
-                    Icons.search,
+                    GrxIcons.search,
                     color: GrxColors.cff9bb2ce,
                   )
                 : ClearInputButton(

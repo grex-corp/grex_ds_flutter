@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../themes/colors/grx_colors.dart';
+import '../../themes/icons/grx_icons.dart';
 
 class ClearInputButton extends StatelessWidget {
   const ClearInputButton({
@@ -15,7 +16,7 @@ class ClearInputButton extends StatelessWidget {
     return InkWell(
       onTap: onClear,
       child: const Icon(
-        Icons.close,
+        GrxIcons.close,
         size: 16,
         color: GrxColors.cff7892b7,
       ),

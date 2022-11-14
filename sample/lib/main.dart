@@ -210,9 +210,18 @@ class _MyHomePageState extends State<MyHomePage> {
                       },
                     ),
                     ElevatedButton(
-                      child: const GrxCaptionText(
-                        'Adicionar Líder',
-                        color: GrxColors.cffffffff,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: const [
+                          Icon(GrxIcons.whatsapp),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          GrxCaptionText(
+                            'Adicionar Líder',
+                            color: GrxColors.cffffffff,
+                          ),
+                        ],
                       ),
                       onPressed: () {
                         setState(() {
@@ -232,7 +241,7 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: _validateForm,
         tooltip: 'Increment',
-        child: const Icon(Icons.save_rounded),
+        child: const Icon(GrxIcons.save_alt),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
