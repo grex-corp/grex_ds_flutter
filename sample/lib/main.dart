@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:grex_ds/grex_ds.dart';
+import 'package:grex_ds/utils/grx_utils.util.dart';
 import 'package:sample/extensions/string_extension.dart';
 
 import 'localization/app_localizations.dart';
@@ -68,9 +69,10 @@ class MyHomePage extends StatefulWidget {
   State<StatefulWidget> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   final formKey = GlobalKey<FormState>();
   late Person person;
+  late AnimationController iconAnimationController;
 
   @override
   void initState() {
@@ -80,6 +82,12 @@ class _MyHomePageState extends State<MyHomePage> {
       birthDate: DateTime.now(),
       leadership: _leaders.first,
     );
+
+    iconAnimationController = AnimationController(
+      vsync: this,
+      duration: GrxUtils.defaultAnimationDuration,
+    );
+    iconAnimationController.forward();
 
     super.initState();
   }
@@ -196,6 +204,22 @@ class _MyHomePageState extends State<MyHomePage> {
                         setState(() {
                           person.single = !person.single;
                         });
+                      },
+                    ),
+                    GrxFloatingActionButton(
+                      isLoading: false,
+                      icon: AnimatedIcon(
+                        icon: AnimatedIcons.close_menu,
+                        progress: iconAnimationController,
+                        color: GrxColors.cffffffff,
+                        size: 30,
+                      ),
+                      onPressed: () {
+                        if (iconAnimationController.isCompleted) {
+                          iconAnimationController.reverse();
+                        } else {
+                          iconAnimationController.forward();
+                        }
                       },
                     ),
                     const SizedBox(

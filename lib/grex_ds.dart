@@ -72,3 +72,7 @@ export 'widgets/typography/grx_overline_text.widget.dart' show GrxOverlineText;
 export 'widgets/checkbox/grx_checkbox.widget.dart' show GrxCheckbox;
 export 'widgets/checkbox/grx_checkbox_list_tile.widget.dart'
     show GrxCheckboxListTile;
+
+///Widget/Buttons
+export 'widgets/buttons/grx_floating_action_button.widget.dart'
+    show GrxFloatingActionButton;

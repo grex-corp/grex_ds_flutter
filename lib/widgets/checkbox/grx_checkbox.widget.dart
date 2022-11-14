@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:grex_ds/grex_ds.dart';
+import 'package:grex_ds/utils/grx_utils.util.dart';
 
 class GrxCheckbox extends StatelessWidget {
   const GrxCheckbox({
@@ -22,7 +23,7 @@ class GrxCheckbox extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(2),
         child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
+          duration: GrxUtils.defaultAnimationDuration,
           decoration: BoxDecoration(
             color: isChecked ? GrxColors.cff289fff : Colors.transparent,
             borderRadius: BorderRadius.circular(2.0),
