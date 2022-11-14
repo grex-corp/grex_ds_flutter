@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../../themes/colors/grx_colors.dart';
 import '../../themes/icons/grx_icons.dart';
 
-class ClearInputButton extends StatelessWidget {
-  const ClearInputButton({
+class GrxClearInputButton extends StatelessWidget {
+  const GrxClearInputButton({
     super.key,
     required this.onClear,
   });

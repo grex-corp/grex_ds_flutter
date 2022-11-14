@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:grex_ds/grex_ds.dart';
 
-import '../buttons/clear_input_button.widget.dart';
+import '../buttons/grx_clear_input_button.widget.dart';
 
 const _inputTextStyle = GrxCaptionLargeTextStyle(color: GrxColors.cff7892b7);
 
@@ -56,7 +56,7 @@ class GrxFilterField extends StatelessWidget {
                     GrxIcons.search,
                     color: GrxColors.cff9bb2ce,
                   )
-                : ClearInputButton(
+                : GrxClearInputButton(
                     onClear: () {
                       searchFieldController.clear();
                       onChanged(searchFieldController.text);

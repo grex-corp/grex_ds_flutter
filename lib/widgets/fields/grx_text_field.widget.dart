@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../themes/colors/grx_colors.dart';
 import '../../themes/typography/styles/grx_caption_large_text.style.dart';
 import '../../themes/typography/styles/grx_headline_small.style.dart';
-import '../buttons/clear_input_button.widget.dart';
+import '../buttons/grx_clear_input_button.widget.dart';
 
 const _inputTextStyle = GrxCaptionLargeTextStyle(color: GrxColors.cff7892b7);
 const _inputHintTextStyle =
@@ -86,7 +86,7 @@ class GrxTextField extends TextField {
                     borderRadius: BorderRadius.all(Radius.circular(20)),
                     color: GrxColors.cffd6dfea,
                   ),
-                  child: ClearInputButton(
+                  child: GrxClearInputButton(
                     onClear: controller.clear,
                   ),
                 ),
