@@ -59,16 +59,33 @@ class GrxText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formattedText = [
-      textSpan ??
-          TextSpan(
-            text: transform == GrxTextTransform.uppercase
-                ? text!.toUpperCase()
-                : transform == GrxTextTransform.lowercase
-                    ? text!.toLowerCase()
-                    : text!,
-          ),
-    ];
+    final formattedText = <InlineSpan>[];
+
+    if (textSpan != null) {
+      textSpan?.visitChildren((span) {
+        if (span is TextSpan) {
+          final spanText = span.text;
+          final spanStyle = span.style ?? style;
+
+          formattedText.add(
+            TextSpan(
+              text: _capitalize(spanText),
+              style: spanStyle,
+            ),
+          );
+        } else {
+          formattedText.add(span);
+        }
+
+        return true;
+      });
+    } else {
+      formattedText.add(
+        TextSpan(
+          text: _capitalize(text),
+        ),
+      );
+    }
 
     return Text.rich(
       TextSpan(
@@ -89,4 +106,10 @@ class GrxText extends StatelessWidget {
       selectionColor: selectionColor,
     );
   }
+
+  String? _capitalize(String? text) => transform == GrxTextTransform.uppercase
+      ? text?.toUpperCase()
+      : transform == GrxTextTransform.lowercase
+          ? text?.toLowerCase()
+          : text;
 }

@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 
 import '../../enums/grx_align.enum.dart';
+import '../../enums/grx_text_transform.enum.dart';
 import 'grx_button.widget.dart';
 
 class GrxRoundedButton extends StatelessWidget {
   const GrxRoundedButton({
     super.key,
-    required this.foregroundColor,
     this.text,
     this.textSpan,
-    this.backgroundColor,
+    this.transform = GrxTextTransform.none,
     this.onPressed,
     this.margin,
     this.height = 48,
     this.mainAxisSize = MainAxisSize.max,
+    required this.foregroundColor,
+    this.backgroundColor,
     this.icon,
     this.iconAlign = GrxAlign.left,
     this.iconSize = 20,
@@ -24,12 +26,13 @@ class GrxRoundedButton extends StatelessWidget {
 
   final String? text;
   final InlineSpan? textSpan;
+  final GrxTextTransform transform;
   final void Function()? onPressed;
   final EdgeInsets? margin;
   final double height;
   final MainAxisSize mainAxisSize;
-  final Color? backgroundColor;
   final Color foregroundColor;
+  final Color? backgroundColor;
   final IconData? icon;
   final GrxAlign iconAlign;
   final double iconSize;
@@ -42,6 +45,7 @@ class GrxRoundedButton extends StatelessWidget {
     return GrxButton(
       text: text,
       textSpan: textSpan,
+      transform: transform,
       onPressed: onPressed,
       margin: margin,
       height: height,

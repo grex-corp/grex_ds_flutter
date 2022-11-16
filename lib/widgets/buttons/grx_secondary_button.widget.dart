@@ -5,6 +5,7 @@ class GrxSecondaryButton extends GrxRoundedButton {
   const GrxSecondaryButton({
     super.key,
     required super.text,
+    super.transform,
     super.onPressed,
     super.height,
     super.margin,

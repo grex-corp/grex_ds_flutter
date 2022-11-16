@@ -7,6 +7,7 @@ class GrxButton extends StatelessWidget {
     required this.foregroundColor,
     this.text,
     this.textSpan,
+    this.transform = GrxTextTransform.none,
     this.backgroundColor,
     this.onPressed,
     this.margin,
@@ -25,6 +26,7 @@ class GrxButton extends StatelessWidget {
 
   final String? text;
   final InlineSpan? textSpan;
+  final GrxTextTransform transform;
   final void Function()? onPressed;
   final EdgeInsets? margin;
   final double? height;
@@ -87,12 +89,14 @@ class GrxButton extends StatelessWidget {
                 style: (style ?? const GrxHeadlineSmallStyle())
                     .copyWith(color: foregroundColor),
                 textAlign: TextAlign.center,
+                transform: transform,
               )
             : GrxText(
                 text,
                 style: (style ?? const GrxHeadlineSmallStyle())
                     .copyWith(color: foregroundColor),
                 textAlign: TextAlign.center,
+                transform: transform,
               ),
       ),
     ];

@@ -6,6 +6,7 @@ class GrxBottomButton extends StatelessWidget {
   const GrxBottomButton({
     super.key,
     required this.text,
+    this.transform = GrxTextTransform.none,
     this.onPressed,
     this.icon,
     this.iconAlign = GrxAlign.left,
@@ -15,6 +16,7 @@ class GrxBottomButton extends StatelessWidget {
   });
 
   final String text;
+  final GrxTextTransform transform;
   final void Function()? onPressed;
   final IconData? icon;
   final GrxAlign iconAlign;
@@ -26,6 +28,7 @@ class GrxBottomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GrxButton(
       text: text,
+      transform: transform,
       elevation: 0,
       height: null,
       padding: EdgeInsets.only(

@@ -4,6 +4,7 @@ class GrxTertiaryButton extends GrxRoundedButton {
   const GrxTertiaryButton({
     super.key,
     required super.text,
+    super.transform,
     super.foregroundColor = GrxColors.cff7593b5,
     super.onPressed,
     super.height,
