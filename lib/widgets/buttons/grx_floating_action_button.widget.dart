@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:grex_ds/grex_ds.dart';
 import 'package:grex_ds/utils/grx_utils.util.dart';
 
-const kSize = 72.0;
+const kSize = 70.0;
 const kBorder = kSize / 2.0;
 const kBorderRadius = BorderRadius.all(Radius.circular(kBorder));
 final kShape =
@@ -25,10 +25,7 @@ class GrxFloatingActionButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: isLoading ? null : onPressed,
       style: ElevatedButton.styleFrom(
-        shape: kShape,
-        padding: const EdgeInsets.all(0.0),
-        elevation: 0
-      ),
+          shape: kShape, padding: const EdgeInsets.all(0.0), elevation: 0),
       child: Material(
         elevation: 10,
         shape: kShape,
@@ -71,28 +68,19 @@ class GrxFloatingActionButton extends StatelessWidget {
               height: kSize,
               width: kSize,
               alignment: Alignment.center,
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  AnimatedOpacity(
-                    opacity: isLoading ? 1 : 0,
-                    duration: GrxUtils.defaultAnimationDuration,
-                    child: const SizedBox(
-                      height: kSize,
-                      width: kSize,
-                      child: CircularProgressIndicator(
+              child: AnimatedSwitcher(
+                duration: GrxUtils.defaultAnimationDuration,
+                child: isLoading
+                    ? const CircularProgressIndicator(
                         backgroundColor: Colors.white,
                         strokeWidth: 2,
-                      ),
-                    ),
-                  ),
-                  icon ??
-                      const Icon(
-                        GrxIcons.arrow_forward,
-                        color: Colors.white,
-                        size: 30,
-                      ),
-                ],
+                      )
+                    : icon ??
+                        const Icon(
+                          GrxIcons.arrow_forward,
+                          color: Colors.white,
+                          size: 30,
+                        ),
               ),
             ),
           ),

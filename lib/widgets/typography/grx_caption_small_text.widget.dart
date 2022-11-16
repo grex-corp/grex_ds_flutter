@@ -11,16 +11,27 @@ import 'grx_text.widget.dart';
 class GrxCaptionSmallText extends StatelessWidget {
   /// Creates a Design System's [Text].
   const GrxCaptionSmallText(
-    this.data, {
+    this.text, {
     super.key,
     this.textAlign,
     this.transform = GrxTextTransform.none,
     this.color = GrxColors.cff2e2e2e,
     this.decoration,
     this.overflow,
-  });
+  }) : textSpan = null;
 
-  final String data;
+  const GrxCaptionSmallText.rich(
+    this.textSpan, {
+    super.key,
+    this.textAlign,
+    this.transform = GrxTextTransform.none,
+    this.color = GrxColors.cff2e2e2e,
+    this.decoration,
+    this.overflow,
+  }) : text = null;
+
+  final String? text;
+  final InlineSpan? textSpan;
   final GrxTextTransform transform;
   final TextAlign? textAlign;
   final Color color;
@@ -29,15 +40,24 @@ class GrxCaptionSmallText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GrxText(
-      data,
-      transform: transform,
-      textAlign: textAlign,
-      style: GrxCaptionSmallTextStyle(
-        color: color,
-        decoration: decoration,
-        overflow: overflow,
-      ),
+    final style = GrxCaptionSmallTextStyle(
+      color: color,
+      decoration: decoration,
+      overflow: overflow,
     );
+
+    return textSpan != null
+        ? GrxText.rich(
+            textSpan,
+            transform: transform,
+            textAlign: textAlign,
+            style: style,
+          )
+        : GrxText(
+            text,
+            transform: transform,
+            textAlign: textAlign,
+            style: style,
+          );
   }
 }

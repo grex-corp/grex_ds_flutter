@@ -6,7 +6,7 @@ import '../../enums/grx_text_transform.enum.dart';
 class GrxText extends StatelessWidget {
   /// Creates a Design System's [Text].
   const GrxText(
-    this.data, {
+    this.text, {
     super.key,
     this.transform = GrxTextTransform.none,
     this.style,
@@ -21,9 +21,28 @@ class GrxText extends StatelessWidget {
     this.textWidthBasis,
     this.textHeightBehavior,
     this.selectionColor,
-  }) : super();
+  }) : textSpan = null;
 
-  final String data;
+  const GrxText.rich(
+    this.textSpan, {
+    super.key,
+    this.transform = GrxTextTransform.none,
+    this.style,
+    this.strutStyle,
+    this.textAlign,
+    this.textDirection,
+    this.locale,
+    this.softWrap,
+    this.textScaleFactor,
+    this.maxLines,
+    this.semanticsLabel,
+    this.textWidthBasis,
+    this.textHeightBehavior,
+    this.selectionColor,
+  }) : text = null;
+
+  final String? text;
+  final InlineSpan? textSpan;
   final GrxTextTransform transform;
   final TextStyle? style;
   final StrutStyle? strutStyle;
@@ -40,12 +59,21 @@ class GrxText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      transform == GrxTextTransform.uppercase
-          ? data.toUpperCase()
-          : transform == GrxTextTransform.lowercase
-              ? data.toLowerCase()
-              : data,
+    final formattedText = [
+      textSpan ??
+          TextSpan(
+            text: transform == GrxTextTransform.uppercase
+                ? text!.toUpperCase()
+                : transform == GrxTextTransform.lowercase
+                    ? text!.toLowerCase()
+                    : text!,
+          ),
+    ];
+
+    return Text.rich(
+      TextSpan(
+        children: formattedText,
+      ),
       overflow: TextOverflow.ellipsis,
       style: style,
       strutStyle: strutStyle,

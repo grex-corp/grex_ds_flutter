@@ -852,7 +852,7 @@ class GrxIcons {
   static const IconData perm_media = GrxIconData(0xeb52);
   static const IconData perm_phone_msg = GrxIconData(0xeb53);
   static const IconData perm_scan_wifi = GrxIconData(0xeb54);
-  static const IconData person_add_alt_1 = GrxIconData(0xeb55);
+  static const IconData person_add_right = GrxIconData(0xeb55);
   static const IconData person_add_disabled = GrxIconData(0xeb56);
   static const IconData person_add = GrxIconData(0xeb57);
   static const IconData person_outline = GrxIconData(0xeb58);

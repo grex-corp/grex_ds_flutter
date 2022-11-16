@@ -1,0 +1,4 @@
+enum GrxAlign {
+  left,
+  right,
+}

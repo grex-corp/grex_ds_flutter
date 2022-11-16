@@ -2,6 +2,12 @@ library grex_ds;
 
 /// Enums
 export 'enums/grx_text_transform.enum.dart' show GrxTextTransform;
+/// Enums
+export 'enums/grx_align.enum.dart' show GrxAlign;
+
+/// Themes
+export 'themes/grx_theme_data.theme.dart' show GrxThemeData;
+export 'themes/grx_text_theme.theme.dart' show GrxTextTheme;
 
 /// Themes/Colors
 export 'themes/colors/grx_colors.dart' show GrxColors;
@@ -29,9 +35,6 @@ export 'themes/typography/styles/grx_overline_text.style.dart'
 /// Themes/Typography/Utils
 export 'themes/typography/utils/grx_font_families.dart' show GrxFontFamilies;
 export 'themes/typography/utils/grx_font_weights.dart' show GrxFontWeights;
-
-/// Themes/TextTheme
-export 'themes/grx_text_theme.theme.dart' show GrxTextTheme;
 
 /// Themes/Icons
 export 'themes/icons/grx_icons.dart' show GrxIcons;
@@ -76,3 +79,9 @@ export 'widgets/checkbox/grx_checkbox_list_tile.widget.dart'
 ///Widget/Buttons
 export 'widgets/buttons/grx_floating_action_button.widget.dart'
     show GrxFloatingActionButton;
+export 'widgets/buttons/grx_rounded_button.widget.dart' show GrxRoundedButton;
+export 'widgets/buttons/grx_rounded_button.widget.dart' show GrxRoundedButton;
+export 'widgets/buttons/grx_primary_button.widget.dart' show GrxPrimaryButton;
+export 'widgets/buttons/grx_secondary_button.widget.dart' show GrxSecondaryButton;
+export 'widgets/buttons/grx_tertiary_button.widget.dart' show GrxTertiaryButton;
+export 'widgets/buttons/grx_bottom_button.widget.dart' show GrxBottomButton;

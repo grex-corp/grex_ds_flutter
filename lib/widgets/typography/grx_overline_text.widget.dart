@@ -11,16 +11,27 @@ import 'grx_text.widget.dart';
 class GrxOverlineText extends StatelessWidget {
   /// Creates a Design System's [Text].
   const GrxOverlineText(
-    this.data, {
+    this.text, {
     super.key,
     this.textAlign,
     this.transform = GrxTextTransform.uppercase,
     this.color = GrxColors.cff2e2e2e,
     this.decoration,
     this.overflow,
-  });
+  }) : textSpan = null;
 
-  final String data;
+  const GrxOverlineText.rich(
+    this.textSpan, {
+    super.key,
+    this.textAlign,
+    this.transform = GrxTextTransform.uppercase,
+    this.color = GrxColors.cff2e2e2e,
+    this.decoration,
+    this.overflow,
+  }) : text = null;
+
+  final String? text;
+  final InlineSpan? textSpan;
   final GrxTextTransform transform;
   final TextAlign? textAlign;
   final Color color;
@@ -29,15 +40,24 @@ class GrxOverlineText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GrxText(
-      data,
-      transform: transform,
-      textAlign: textAlign,
-      style: GrxOverlineTextStyle(
-        color: color,
-        decoration: decoration,
-        overflow: overflow,
-      ),
+    final style = GrxOverlineTextStyle(
+      color: color,
+      decoration: decoration,
+      overflow: overflow,
     );
+
+    return textSpan != null
+        ? GrxText.rich(
+            textSpan,
+            transform: transform,
+            textAlign: textAlign,
+            style: style,
+          )
+        : GrxText(
+            text,
+            transform: transform,
+            textAlign: textAlign,
+            style: style,
+          );
   }
 }
