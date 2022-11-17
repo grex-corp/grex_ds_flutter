@@ -222,7 +222,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                         children: [
                           GrxIconButton(
                             icon: const Icon(GrxIcons.whatsapp),
-                            margin: const EdgeInsets.only(bottom: 16, right: 10),
+                            margin:
+                                const EdgeInsets.only(bottom: 16, right: 10),
                             onPressed: () {},
                           ),
                           GrxIconButton(
@@ -231,6 +232,13 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                             onPressed: () {},
                           ),
                         ],
+                      ),
+                      GrxTextIconButton(
+                        icon: GrxIcons.whatsapp,
+                        text: 'WhatsApp',
+                        iconSize: 50,
+                        margin: const EdgeInsets.only(bottom: 16),
+                        onPressed: () {},
                       ),
                       GrxSecondaryButton(
                         text: 'Cadastrar',
