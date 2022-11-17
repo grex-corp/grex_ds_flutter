@@ -91,3 +91,6 @@ export 'widgets/buttons/grx_bottom_button.widget.dart' show GrxBottomButton;
 export 'widgets/buttons/grx_icon_button.widget.dart' show GrxIconButton;
 export 'widgets/buttons/grx_text_icon_button.widget.dart'
     show GrxTextIconButton;
+
+/// Widget/Avatar
+export 'widgets/grx_user_avatar.widget.dart' show GrxUserAvatar;
