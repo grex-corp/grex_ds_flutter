@@ -217,6 +217,21 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                         icon: GrxIcons.check,
                         onPressed: () {},
                       ),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          GrxIconButton(
+                            icon: const Icon(GrxIcons.whatsapp),
+                            margin: const EdgeInsets.only(bottom: 16, right: 10),
+                            onPressed: () {},
+                          ),
+                          GrxIconButton(
+                            icon: const Icon(GrxIcons.phone),
+                            margin: const EdgeInsets.only(bottom: 16),
+                            onPressed: () {},
+                          ),
+                        ],
+                      ),
                       GrxSecondaryButton(
                         text: 'Cadastrar',
                         mainAxisSize: MainAxisSize.min,

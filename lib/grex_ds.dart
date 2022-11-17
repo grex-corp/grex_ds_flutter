@@ -85,3 +85,4 @@ export 'widgets/buttons/grx_primary_button.widget.dart' show GrxPrimaryButton;
 export 'widgets/buttons/grx_secondary_button.widget.dart' show GrxSecondaryButton;
 export 'widgets/buttons/grx_tertiary_button.widget.dart' show GrxTertiaryButton;
 export 'widgets/buttons/grx_bottom_button.widget.dart' show GrxBottomButton;
+export 'widgets/buttons/grx_icon_button.widget.dart' show GrxIconButton;
