@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
 import '../../themes/colors/grx_colors.dart';
-import '../../themes/typography/styles/grx_headline_small.style.dart';
+import '../../themes/typography/styles/grx_headline_small_text.style.dart';
 import '../cupertino/cupertino_switch_list_tile.dart';
 
-const _defaultInputLabel = GrxHeadlineSmallStyle(color: GrxColors.cff2e2e2e);
+const _defaultInputLabel =
+    GrxHeadlineSmallTextStyle(color: GrxColors.cff2e2e2e);
 
 /// A Design System's [FormField] used like a switch
 class GrxSwitchFormField extends FormField<bool> {

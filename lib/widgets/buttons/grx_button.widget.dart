@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:grex_ds/grex_ds.dart';
+
+import '../../enums/grx_align.enum.dart';
+import '../../enums/grx_text_transform.enum.dart';
+import '../../themes/colors/grx_colors.dart';
+import '../../themes/typography/styles/grx_headline_small_text.style.dart';
+import '../typography/grx_text.widget.dart';
 
 class GrxButton extends StatelessWidget {
   const GrxButton({
@@ -86,14 +91,14 @@ class GrxButton extends StatelessWidget {
         child: textSpan != null
             ? GrxText.rich(
                 textSpan,
-                style: (style ?? const GrxHeadlineSmallStyle())
+                style: (style ?? const GrxHeadlineSmallTextStyle())
                     .copyWith(color: foregroundColor),
                 textAlign: TextAlign.center,
                 transform: transform,
               )
             : GrxText(
                 text,
-                style: (style ?? const GrxHeadlineSmallStyle())
+                style: (style ?? const GrxHeadlineSmallTextStyle())
                     .copyWith(color: foregroundColor),
                 textAlign: TextAlign.center,
                 transform: transform,

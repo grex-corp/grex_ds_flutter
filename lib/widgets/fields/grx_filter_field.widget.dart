@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:grex_ds/grex_ds.dart';
 
+import '../../themes/colors/grx_colors.dart';
+import '../../themes/icons/grx_icons.dart';
+import '../../themes/typography/styles/grx_caption_large_text.style.dart';
 import '../buttons/grx_clear_input_button.widget.dart';
 
 const _inputTextStyle = GrxCaptionLargeTextStyle(color: GrxColors.cff7892b7);

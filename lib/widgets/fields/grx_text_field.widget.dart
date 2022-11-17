@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 import '../../themes/colors/grx_colors.dart';
 import '../../themes/typography/styles/grx_caption_large_text.style.dart';
-import '../../themes/typography/styles/grx_headline_small.style.dart';
+import '../../themes/typography/styles/grx_headline_small_text.style.dart';
 import '../buttons/grx_clear_input_button.widget.dart';
 
 const _inputTextStyle = GrxCaptionLargeTextStyle(color: GrxColors.cff7892b7);
 const _inputHintTextStyle =
     GrxCaptionLargeTextStyle(color: GrxColors.cff7892b7);
-const _labelTextStyle = GrxHeadlineSmallStyle(color: GrxColors.cff2e2e2e);
+const _labelTextStyle = GrxHeadlineSmallTextStyle(color: GrxColors.cff2e2e2e);
 
 const _underlineInputBorder = UnderlineInputBorder(
   borderSide: BorderSide(color: GrxColors.cff75f3ab),

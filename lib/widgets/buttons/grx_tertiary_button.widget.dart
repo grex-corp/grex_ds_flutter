@@ -1,4 +1,5 @@
-import 'package:grex_ds/grex_ds.dart';
+import '../../themes/colors/grx_colors.dart';
+import 'grx_rounded_button.widget.dart';
 
 class GrxTertiaryButton extends GrxRoundedButton {
   const GrxTertiaryButton({

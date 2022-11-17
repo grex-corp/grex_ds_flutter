@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:grex_ds/grex_ds.dart';
+
+import '../../themes/colors/grx_colors.dart';
+import '../typography/grx_body_text.widget.dart';
+import 'grx_checkbox.widget.dart';
 
 class GrxCheckboxListTile extends StatelessWidget {
   final String title;

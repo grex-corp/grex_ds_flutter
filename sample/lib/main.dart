@@ -290,7 +290,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                             ),
                             TextSpan(
                               text: 'Desligamento',
-                              style: GrxHeadlineSmallStyle(
+                              style: GrxHeadlineSmallTextStyle(
                                 color: GrxColors.cffef6969,
                               ),
                             )

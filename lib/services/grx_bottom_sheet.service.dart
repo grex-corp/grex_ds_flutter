@@ -15,7 +15,7 @@ class GrxBottomSheetService {
 
   Widget _buildBottomSheet({ScrollController? controller}) {
     final window = WidgetsBinding.instance.window;
-    
+
     return Container(
       margin: EdgeInsets.only(
         top: MediaQueryData.fromWindow(window).padding.top + 10,

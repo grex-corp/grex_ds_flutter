@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 import '../../enums/grx_text_transform.enum.dart';
 import '../../themes/colors/grx_colors.dart';
-import '../../themes/typography/styles/grx_headline.style.dart';
+import '../../themes/typography/styles/grx_headline_text.style.dart';
 import 'grx_text.widget.dart';
 
 /// A Design System's [Text] primarily used by normal titles
 ///
-/// Sets [GrxHeadlineStyle] as [style] default value.
+/// Sets [GrxHeadlineTextStyle] as [style] default value.
 class GrxHeadlineText extends StatelessWidget {
   /// Creates a Design System's [Text].
   const GrxHeadlineText(
@@ -40,7 +40,7 @@ class GrxHeadlineText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final style = GrxHeadlineStyle(
+    final style = GrxHeadlineTextStyle(
       color: color,
       decoration: decoration,
       overflow: overflow,

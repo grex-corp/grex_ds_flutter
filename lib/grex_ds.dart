@@ -2,6 +2,7 @@ library grex_ds;
 
 /// Enums
 export 'enums/grx_text_transform.enum.dart' show GrxTextTransform;
+
 /// Enums
 export 'enums/grx_align.enum.dart' show GrxAlign;
 
@@ -14,13 +15,14 @@ export 'themes/colors/grx_colors.dart' show GrxColors;
 
 /// Themes/Typography/Text Styles
 export 'themes/typography/styles/grx_text.style.dart' show GrxTextStyle;
-export 'themes/typography/styles/grx_headline_large.style.dart'
-    show GrxHeadlineLargeStyle;
-export 'themes/typography/styles/grx_headline_medium.style.dart'
-    show GrxHeadlineMediumStyle;
-export 'themes/typography/styles/grx_headline.style.dart' show GrxHeadlineStyle;
-export 'themes/typography/styles/grx_headline_small.style.dart'
-    show GrxHeadlineSmallStyle;
+export 'themes/typography/styles/grx_headline_large_text.style.dart'
+    show GrxHeadlineLargeTextStyle;
+export 'themes/typography/styles/grx_headline_medium_text.style.dart'
+    show GrxHeadlineMediumTextStyle;
+export 'themes/typography/styles/grx_headline_text.style.dart'
+    show GrxHeadlineTextStyle;
+export 'themes/typography/styles/grx_headline_small_text.style.dart'
+    show GrxHeadlineSmallTextStyle;
 export 'themes/typography/styles/grx_body_text.style.dart'
     show GrxBodyTextStyle;
 export 'themes/typography/styles/grx_caption_large_text.style.dart'
@@ -82,8 +84,10 @@ export 'widgets/buttons/grx_floating_action_button.widget.dart'
 export 'widgets/buttons/grx_rounded_button.widget.dart' show GrxRoundedButton;
 export 'widgets/buttons/grx_rounded_button.widget.dart' show GrxRoundedButton;
 export 'widgets/buttons/grx_primary_button.widget.dart' show GrxPrimaryButton;
-export 'widgets/buttons/grx_secondary_button.widget.dart' show GrxSecondaryButton;
+export 'widgets/buttons/grx_secondary_button.widget.dart'
+    show GrxSecondaryButton;
 export 'widgets/buttons/grx_tertiary_button.widget.dart' show GrxTertiaryButton;
 export 'widgets/buttons/grx_bottom_button.widget.dart' show GrxBottomButton;
 export 'widgets/buttons/grx_icon_button.widget.dart' show GrxIconButton;
-export 'widgets/buttons/grx_text_icon_button.widget.dart' show GrxTextIconButton;
+export 'widgets/buttons/grx_text_icon_button.widget.dart'
+    show GrxTextIconButton;
