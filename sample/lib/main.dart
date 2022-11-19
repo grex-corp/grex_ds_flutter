@@ -240,8 +240,16 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                         margin: const EdgeInsets.only(bottom: 16),
                         onPressed: () {},
                       ),
-                      const GrxUserAvatar(radius: 40,),
-                      const SizedBox(height: 16,),
+                      GrxUserAvatar(
+                        radius: 40,
+                        uri: Uri.parse(
+                            'https://firebasestorage.googleapis.com/v0/b/appgrexdb.appspot.com/o/Images%2FPeople%2FWK242KO734Q9nPKThs9B?alt=media&token=e8906f71-58d5-42cb-9184-6f77a6c15694'),
+                        heroTag: 4,
+                        // openPreview: false,
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
                       GrxSecondaryButton(
                         text: 'Cadastrar',
                         mainAxisSize: MainAxisSize.min,

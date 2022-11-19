@@ -1,35 +1,66 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
+import '../pages/image_preview.page.dart';
+import '../routes/fade_page.route.dart';
 import '../themes/colors/grx_colors.dart';
 import '../utils/grx_utils.util.dart';
 import 'typography/grx_body_text.widget.dart';
 
 class GrxUserAvatar extends StatelessWidget {
-  final String? text;
-  final Uri? uri;
-  final double radius;
-  final Color backgroundColor;
-  final Color textColor;
-
   const GrxUserAvatar({
     Key? key,
     this.text,
     this.uri,
     this.radius = 25.0,
-    this.backgroundColor = GrxColors.cff1eb35e,
-    this.textColor = Colors.black,
+    this.backgroundColor = GrxColors.cff6bbaf0,
+    this.textColor = GrxColors.cffffffff,
+    this.heroTag,
+    this.openPreview = true,
   }) : super(key: key);
+
+  final String? text;
+  final Uri? uri;
+  final double radius;
+  final Color backgroundColor;
+  final Color textColor;
+  final Object? heroTag;
+  final bool openPreview;
 
   @override
   Widget build(BuildContext context) {
+    CircleAvatar buildAvatar(ImageProvider? image) {
+      return CircleAvatar(
+        radius: radius,
+        backgroundColor: backgroundColor,
+        backgroundImage: image,
+      );
+    }
+
     return uri != null
         ? CachedNetworkImage(
             imageUrl: uri.toString(),
-            imageBuilder: (context, image) => CircleAvatar(
-              radius: radius,
-              backgroundColor: backgroundColor,
-              backgroundImage: image,
+            imageBuilder: (context, image) => GestureDetector(
+              onTap: openPreview
+                  ? () {
+                      Navigator.of(context).push(
+                        FadePageRoute(
+                          builder: (context) => ImagePreview(
+                            image: image,
+                            title: 'Preview',
+                            heroTag: heroTag,
+                          ),
+                        ),
+                      );
+                    }
+                  : null,
+              child: heroTag != null
+                  ? Hero(
+                      tag: heroTag!,
+                      transitionOnUserGestures: true,
+                      child: buildAvatar(image),
+                    )
+                  : buildAvatar(image),
             ),
             progressIndicatorBuilder: (context, url, downloadProgress) {
               final size = radius * 2;
