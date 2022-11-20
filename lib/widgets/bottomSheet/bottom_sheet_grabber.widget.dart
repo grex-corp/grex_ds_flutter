@@ -4,7 +4,12 @@ import '../../themes/colors/grx_colors.dart';
 import '../typography/grx_headline_medium_text.widget.dart';
 
 class BottomSheetGrabber extends StatefulWidget {
-  const BottomSheetGrabber({super.key});
+  const BottomSheetGrabber({
+    super.key,
+    this.title,
+  });
+
+  final String? title;
 
   @override
   State<StatefulWidget> createState() => _BottomSheetGrabberState();
@@ -18,7 +23,7 @@ class _BottomSheetGrabberState extends State<BottomSheetGrabber> {
       children: <Widget>[
         Container(
           decoration: const BoxDecoration(
-            color: GrxColors.cff83a6cf,
+            color: GrxColors.cfff2f7fd,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20),
               topRight: Radius.circular(20),
@@ -30,7 +35,7 @@ class _BottomSheetGrabberState extends State<BottomSheetGrabber> {
             children: <Widget>[
               Container(
                 decoration: const BoxDecoration(
-                  color: GrxColors.cffffffff,
+                  color: GrxColors.cff9bb2ce,
                   borderRadius: BorderRadius.all(
                     Radius.circular(2),
                   ),
@@ -40,9 +45,9 @@ class _BottomSheetGrabberState extends State<BottomSheetGrabber> {
               ),
               Container(
                 padding: const EdgeInsets.all(15),
-                child: const GrxHeadlineMediumText(
-                  'Selecione uma opção',
-                  color: GrxColors.cffffffff,
+                child: GrxHeadlineMediumText(
+                  widget.title ?? 'Selecione uma Opção',
+                  color: GrxColors.cff83a6cf,
                   textAlign: TextAlign.center,
                 ),
               ),

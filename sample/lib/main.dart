@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
@@ -60,6 +62,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   final formKey = GlobalKey<FormState>();
   late Person person;
   late AnimationController iconAnimationController;
+  File? selectedImage;
 
   @override
   void initState() {
@@ -99,6 +102,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
@@ -221,13 +225,13 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           GrxIconButton(
-                            icon: const Icon(GrxIcons.whatsapp),
+                            icon: GrxIcons.whatsapp,
                             margin:
                                 const EdgeInsets.only(bottom: 16, right: 10),
                             onPressed: () {},
                           ),
                           GrxIconButton(
-                            icon: const Icon(GrxIcons.phone),
+                            icon: GrxIcons.phone,
                             margin: const EdgeInsets.only(bottom: 16),
                             onPressed: () {},
                           ),
@@ -246,6 +250,23 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                             'https://firebasestorage.googleapis.com/v0/b/appgrexdb.appspot.com/o/Images%2FPeople%2FWK242KO734Q9nPKThs9B?alt=media&token=e8906f71-58d5-42cb-9184-6f77a6c15694'),
                         heroTag: 4,
                         // openPreview: false,
+                        // editable: true,
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      GrxUserAvatar(
+                        radius: 70,
+                        imageFile: selectedImage,
+                        uri: Uri.parse(
+                            'https://firebasestorage.googleapis.com/v0/b/appgrexdb.appspot.com/o/Images%2FPeople%2FWK242KO734Q9nPKThs9B?alt=media&token=e8906f71-58d5-42cb-9184-6f77a6c15694'),
+                        heroTag: 5,
+                        // openPreview: false,
+                        editable: true,
+                        onPickAvatar: (file) async {
+                          selectedImage = file;
+                          setState(() {});
+                        },
                       ),
                       const SizedBox(
                         height: 16,

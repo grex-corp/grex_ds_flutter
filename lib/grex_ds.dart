@@ -2,9 +2,10 @@ library grex_ds;
 
 /// Enums
 export 'enums/grx_text_transform.enum.dart' show GrxTextTransform;
-
-/// Enums
 export 'enums/grx_align.enum.dart' show GrxAlign;
+
+/// Extensions
+export 'extensions/uint8_list.extension.dart' show Uint8ListExtension;
 
 /// Themes
 export 'themes/grx_theme_data.theme.dart' show GrxThemeData;
@@ -40,6 +41,9 @@ export 'themes/typography/utils/grx_font_weights.dart' show GrxFontWeights;
 
 /// Themes/Icons
 export 'themes/icons/grx_icons.dart' show GrxIcons;
+
+/// Services
+export 'services/grx_image_picker.service.dart' show ImagePickerService;
 
 /// Widgets/Cupertino
 export 'widgets/cupertino/cupertino_switch_list_tile.dart'
@@ -91,6 +95,10 @@ export 'widgets/buttons/grx_bottom_button.widget.dart' show GrxBottomButton;
 export 'widgets/buttons/grx_icon_button.widget.dart' show GrxIconButton;
 export 'widgets/buttons/grx_text_icon_button.widget.dart'
     show GrxTextIconButton;
+export 'widgets/buttons/grx_circle_button.widget.dart' show GrxCircleButton;
 
 /// Widget/Avatar
 export 'widgets/grx_user_avatar.widget.dart' show GrxUserAvatar;
+
+/// Widget/Divider
+export 'widgets/grx_divider.widget.dart' show GrxDivider;

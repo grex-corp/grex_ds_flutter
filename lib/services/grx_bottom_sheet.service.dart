@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 
 import '../themes/colors/grx_colors.dart';
+import '../widgets/bottomSheet/bottom_sheet_grabber.widget.dart';
 
 class GrxBottomSheetService {
-  final BuildContext context;
-  final Widget Function(ScrollController?) builder;
-  final Widget? fixedHeader;
-
   GrxBottomSheetService({
     required this.context,
     required this.builder,
-    this.fixedHeader,
+    this.title,
   });
+
+  final BuildContext context;
+  final Widget Function(ScrollController?) builder;
+  final String? title;
 
   Widget _buildBottomSheet({ScrollController? controller}) {
     final window = WidgetsBinding.instance.window;
@@ -21,7 +22,15 @@ class GrxBottomSheetService {
         top: MediaQueryData.fromWindow(window).padding.top + 10,
       ),
       decoration: _border(),
-      child: builder(controller),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          BottomSheetGrabber(
+            title: title,
+          ),
+          builder(controller),
+        ],
+      ),
     );
   }
 
@@ -55,8 +64,8 @@ class GrxBottomSheetService {
     );
   }
 
-  Future<void> show() {
-    return showModalBottomSheet<void>(
+  Future<T?> show<T>() {
+    return showModalBottomSheet<T>(
       backgroundColor: Colors.transparent,
       context: context,
       builder: (_) => _buildBottomSheet(),

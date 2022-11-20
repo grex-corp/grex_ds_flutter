@@ -46,7 +46,7 @@ class ImagePreview extends StatelessWidget {
                       color: GrxColors.cffffffff,
                     ),
                     GrxIconButton(
-                      icon: const Icon(GrxIcons.close),
+                      icon: GrxIcons.close,
                       color: GrxColors.cffffffff,
                       iconSize: 24,
                       onPressed: () {

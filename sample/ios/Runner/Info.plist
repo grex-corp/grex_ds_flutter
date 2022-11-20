@@ -24,6 +24,12 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>User can take photos to use as avatar</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>User can record videos to store on the app</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>User can select their photos to use as avatar</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
