@@ -28,7 +28,7 @@ class GrxBottomSheetService {
           BottomSheetGrabber(
             title: title,
           ),
-          builder(controller),
+          _buildChild(controller),
         ],
       ),
     );
@@ -41,6 +41,12 @@ class GrxBottomSheetService {
         topLeft: Radius.circular(22.0),
         topRight: Radius.circular(22.0),
       ),
+    );
+  }
+
+  Widget _buildChild(ScrollController? controller) {
+    return Flexible(
+      child: builder(controller),
     );
   }
 
@@ -66,8 +72,9 @@ class GrxBottomSheetService {
 
   Future<T?> show<T>() {
     return showModalBottomSheet<T>(
-      backgroundColor: Colors.transparent,
       context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
       builder: (_) => _buildBottomSheet(),
     );
   }

@@ -123,73 +123,72 @@ class _GrxDropdownStateFormField<T> extends State<GrxDropdownFormField<T>> {
                   builder: (BuildContext context, StateSetter setModalState) {
                     _setModalState = setModalState;
 
-                    return Expanded(
-                      child: CustomScrollView(
-                        controller: controller,
-                        slivers: [
-                          SliverAppBar(
-                            titleSpacing: 0.0,
-                            toolbarHeight: 65,
-                            backgroundColor: Colors.transparent,
-                            automaticallyImplyLeading: false,
-                            title: Container(
-                              color: GrxColors.cfff2f7fd,
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 10,
-                                horizontal: 8,
-                              ),
-                              child: GrxFilterField(
-                                searchFieldController:
-                                    quickSearchFieldController,
-                                onChanged: _filterData,
-                                hintText: 'Pesquisar',
-                              ),
+                    return CustomScrollView(
+                      controller: controller,
+                      shrinkWrap: true,
+                      slivers: [
+                        SliverAppBar(
+                          titleSpacing: 0.0,
+                          toolbarHeight: 65,
+                          backgroundColor: Colors.transparent,
+                          automaticallyImplyLeading: false,
+                          title: Container(
+                            color: GrxColors.cfff2f7fd,
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 10,
+                              horizontal: 8,
+                            ),
+                            child: GrxFilterField(
+                              searchFieldController: quickSearchFieldController,
+                              onChanged: _filterData,
+                              hintText: 'Pesquisar',
                             ),
                           ),
-                          SliverPadding(
-                            padding: EdgeInsets.only(
-                              left: 8,
-                              top: 15,
-                              right: 8,
-                              bottom:
-                                  MediaQuery.of(context).viewInsets.bottom + 8,
-                            ),
-                            sliver: SliverList(
-                              delegate: SliverChildBuilderDelegate(
-                                childCount: _list.length,
-                                (context, index) {
-                                  final item = _list[index];
+                        ),
+                        SliverPadding(
+                          padding: EdgeInsets.only(
+                            left: 8,
+                            top: 15,
+                            right: 8,
+                            bottom: MediaQuery.of(context).viewInsets.bottom +
+                                MediaQuery.of(context).padding.bottom +
+                                8,
+                          ),
+                          sliver: SliverList(
+                            delegate: SliverChildBuilderDelegate(
+                              childCount: _list.length,
+                              (context, index) {
+                                final item = _list[index];
 
-                                  return InkWell(
-                                    onTap: () {
-                                      Navigator.pop(context, true);
+                                return InkWell(
+                                  onTap: () {
+                                    Navigator.pop(context, true);
 
-                                      if (widget.onSelectItem != null) {
-                                        widget.onSelectItem!(item);
-                                      }
+                                    if (widget.onSelectItem != null) {
+                                      widget.onSelectItem!(item);
+                                    }
 
-                                      setState(() {
-                                        value = item;
-                                        this.controller.text =
-                                            widget.displayText(item);
-                                      });
-                                    },
-                                    child: widget.itemBuilder(
-                                        context, index, item),
-                                  );
-                                },
-                              ),
+                                    setState(() {
+                                      value = item;
+                                      this.controller.text =
+                                          widget.displayText(item);
+                                    });
+                                  },
+                                  child:
+                                      widget.itemBuilder(context, index, item),
+                                );
+                              },
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     );
                   },
                 );
               },
             );
 
-            await bottomSheet.showDraggable<bool>();
+            await bottomSheet.show<bool>();
           },
         );
       },

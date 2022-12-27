@@ -18,6 +18,11 @@ final _leaders = [
   Person(id: 5, name: '5th Person'),
   Person(id: 6, name: '6th Person'),
   Person(id: 7, name: '7th Person'),
+  Person(id: 7, name: '8th Person'),
+  Person(id: 7, name: '9th Person'),
+  Person(id: 7, name: '10th Person'),
+  Person(id: 7, name: '11th Person'),
+  Person(id: 7, name: '12th Person'),
 ];
 
 void main() {
@@ -179,7 +184,13 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                         data: _leaders,
                         itemBuilder: (context, index, value) => SizedBox(
                           height: 50,
-                          child: GrxHeadlineMediumText(value.name),
+                          child: Center(
+                            child: Row(
+                              children: [
+                                GrxHeadlineMediumText(value.name),
+                              ],
+                            ),
+                          ),
                         ),
                         displayText: (value) => value.name,
                         onSaved: (value) => person.leadership = value,
