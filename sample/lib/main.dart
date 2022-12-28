@@ -277,6 +277,9 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                           });
                         },
                       ),
+                      GrxRoundedCheckbox(
+                        initialValue: person.single,
+                      ),
                       GrxFloatingActionButton(
                         isLoading: false,
                         icon: AnimatedIcon(
