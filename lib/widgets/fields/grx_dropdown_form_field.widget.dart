@@ -41,7 +41,6 @@ class GrxDropdownFormField<T> extends GrxStatefulWidget {
 class _GrxDropdownStateFormField<T> extends State<GrxDropdownFormField<T>> {
   T? value;
   final List<T> _list = [];
-  StateSetter? _setModalState;
   late final TextEditingController controller;
   final TextEditingController quickSearchFieldController =
       TextEditingController();
@@ -62,29 +61,6 @@ class _GrxDropdownStateFormField<T> extends State<GrxDropdownFormField<T>> {
     }
 
     super.initState();
-  }
-
-  void _filterData(String val) {
-    void filter() {
-      _list.clear();
-      _list.addAll(
-        widget.data.where(
-          (x) =>
-              val.isEmpty ||
-              widget.displayText(x).toString().toLowerCase().contains(
-                    val.toLowerCase(),
-                  ),
-        ),
-      );
-    }
-
-    _setModalState != null
-        ? _setModalState!(
-            () {
-              filter();
-            },
-          )
-        : filter();
   }
 
   @override
@@ -119,11 +95,10 @@ class _GrxDropdownStateFormField<T> extends State<GrxDropdownFormField<T>> {
               builder: (controller) {
                 return StatefulBuilder(
                   builder: (BuildContext context, StateSetter setModalState) {
-                    _setModalState = setModalState;
-
                     return GrxDropdownBody<T>(
                       controller: controller,
-                      filterData: _filterData,
+                      onFilterSetState: setModalState,
+                      displayText: widget.displayText,
                       quickSearchFieldController: quickSearchFieldController,
                       onSelectItem: widget.onSelectItem,
                       itemBuilder: (context, index, item, _, __) =>

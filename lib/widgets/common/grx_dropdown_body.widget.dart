@@ -10,7 +10,8 @@ class GrxDropdownBody<T> extends StatefulWidget {
   const GrxDropdownBody({
     super.key,
     this.controller,
-    this.filterData,
+    this.onFilterSetState,
+    this.displayText,
     this.quickSearchFieldController,
     this.onSelectItem,
     required this.itemBuilder,
@@ -30,10 +31,12 @@ class GrxDropdownBody<T> extends StatefulWidget {
         assert(!searchable ||
             (searchable &&
                 quickSearchFieldController != null &&
-                filterData != null));
+                onFilterSetState != null &&
+                displayText != null));
 
   final ScrollController? controller;
-  final void Function(String val)? filterData;
+  final StateSetter? onFilterSetState;
+  final String Function(T data)? displayText;
   final TextEditingController? quickSearchFieldController;
   final void Function(T?)? onSelectItem;
   final Widget Function(BuildContext context, int index, T value,
@@ -55,11 +58,16 @@ class GrxDropdownBody<T> extends StatefulWidget {
 }
 
 class _GrxDropdownBodyState<T> extends State<GrxDropdownBody<T>> {
+  final _list = <T>[];
   final _selectedValues = <T>[];
 
   @override
   void initState() {
     super.initState();
+
+    _list.clear();
+    _list.addAll(widget.items);
+
     if (widget.initialSelectedValues != null) {
       _selectedValues.addAll(widget.initialSelectedValues!);
     }
@@ -75,6 +83,29 @@ class _GrxDropdownBodyState<T> extends State<GrxDropdownBody<T>> {
         _selectedValues.remove(itemValue);
       }
     });
+  }
+
+  void _filterData(String val) {
+    void filter() {
+      _list.clear();
+      _list.addAll(
+        widget.items.where(
+          (x) =>
+              val.isEmpty ||
+              widget.displayText!(x).toString().toLowerCase().contains(
+                    val.toLowerCase(),
+                  ),
+        ),
+      );
+    }
+
+    widget.onFilterSetState != null
+        ? widget.onFilterSetState!(
+            () {
+              filter();
+            },
+          )
+        : filter();
   }
 
   @override
@@ -103,12 +134,12 @@ class _GrxDropdownBodyState<T> extends State<GrxDropdownBody<T>> {
                     ),
                     child: GrxFilterField(
                       searchFieldController: widget.quickSearchFieldController!,
-                      onChanged: widget.filterData!,
+                      onChanged: _filterData,
                       hintText: widget.searchHintText ?? 'Search',
                     ),
                   ),
                 ),
-              widget.items.isEmpty
+              _list.isEmpty
                   ? SliverToBoxAdapter(
                       child: Center(
                         child: Padding(
@@ -131,9 +162,9 @@ class _GrxDropdownBodyState<T> extends State<GrxDropdownBody<T>> {
                       ),
                       sliver: SliverList(
                         delegate: SliverChildBuilderDelegate(
-                          childCount: widget.items.length,
+                          childCount: _list.length,
                           (context, index) {
-                            final item = widget.items.toList()[index];
+                            final item = _list.toList()[index];
 
                             if (widget.multiSelect) {
                               return widget.itemBuilder(

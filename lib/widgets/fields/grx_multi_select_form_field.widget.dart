@@ -52,7 +52,6 @@ class _GrxMultiSelectStateFormField<T>
     extends State<GrxMultiSelectFormField<T>> {
   Iterable<T>? values;
   final List<T> _list = [];
-  StateSetter? _setModalState;
   late final TextEditingController controller;
   final TextEditingController quickSearchFieldController =
       TextEditingController();
@@ -73,29 +72,6 @@ class _GrxMultiSelectStateFormField<T>
     }
 
     super.initState();
-  }
-
-  void _filterData(String val) {
-    void filter() {
-      _list.clear();
-      _list.addAll(
-        widget.data.where(
-          (x) =>
-              val.isEmpty ||
-              widget.displayText(x).toString().toLowerCase().contains(
-                    val.toLowerCase(),
-                  ),
-        ),
-      );
-    }
-
-    _setModalState != null
-        ? _setModalState!(
-            () {
-              filter();
-            },
-          )
-        : filter();
   }
 
   @override
@@ -146,17 +122,16 @@ class _GrxMultiSelectStateFormField<T>
               builder: (controller) {
                 return StatefulBuilder(
                   builder: (BuildContext context, StateSetter setModalState) {
-                    _setModalState = setModalState;
-
                     return GrxDropdownBody<T>(
                       initialSelectedValues: values,
                       items: _list,
                       itemBuilder: widget.itemBuilder,
+                      onFilterSetState: setModalState,
+                      displayText: widget.displayText,
                       valueKey: widget.valueKey,
                       shrinkWrap: !widget.searchable,
                       searchable: widget.searchable,
                       quickSearchFieldController: quickSearchFieldController,
-                      filterData: _filterData,
                       multiSelect: true,
                       confirmButtonLabel: widget.confirmButtonLabel,
                       cancelButtonLabel: widget.cancelButtonLabel,
