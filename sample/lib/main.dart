@@ -9,6 +9,7 @@ import 'package:sample/extensions/string_extension.dart';
 
 import 'localization/app_localizations.dart';
 import 'models/person.model.dart';
+import 'models/role.model.dart';
 
 final _leaders = [
   Person(id: 1, name: '1st Person'),
@@ -18,11 +19,34 @@ final _leaders = [
   Person(id: 5, name: '5th Person'),
   Person(id: 6, name: '6th Person'),
   Person(id: 7, name: '7th Person'),
-  Person(id: 7, name: '8th Person'),
-  Person(id: 7, name: '9th Person'),
-  Person(id: 7, name: '10th Person'),
-  Person(id: 7, name: '11th Person'),
-  Person(id: 7, name: '12th Person'),
+  Person(id: 8, name: '8th Person'),
+  Person(id: 9, name: '9th Person'),
+  Person(id: 10, name: '10th Person'),
+  Person(id: 11, name: '11th Person'),
+  Person(id: 12, name: '12th Person'),
+];
+
+final _roles = [
+  Role(id: 1, name: '1st Role', priority: 1),
+  Role(id: 2, name: '2nd Role', priority: 2),
+  Role(id: 3, name: '3rd Role', priority: 3),
+  Role(id: 4, name: '4th Role', priority: 4),
+  Role(id: 5, name: '5th Role', priority: 5),
+  Role(id: 6, name: '6th Role', priority: 6),
+  Role(id: 7, name: '7th Role', priority: 7),
+  Role(id: 8, name: '8th Role', priority: 8),
+  Role(id: 9, name: '9th Role', priority: 9),
+  Role(id: 10, name: '10th Role', priority: 10),
+  Role(id: 11, name: '11th Role', priority: 11),
+  Role(id: 12, name: '12th Role', priority: 12),
+  Role(id: 13, name: '13th Role', priority: 13),
+  Role(id: 14, name: '14th Role', priority: 14),
+  Role(id: 15, name: '15th Role', priority: 15),
+  Role(id: 16, name: '16th Role', priority: 16),
+  Role(id: 17, name: '17th Role', priority: 17),
+  Role(id: 18, name: '18th Role', priority: 18),
+  Role(id: 19, name: '19th Role', priority: 19),
+  Role(id: 20, name: '20th Role', priority: 20),
 ];
 
 void main() {
@@ -76,6 +100,9 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
       name: 'Leonardo Gabriel',
       birthDate: DateTime.now(),
       leadership: _leaders.first,
+      roles: [
+        _roles.first,
+      ],
     );
 
     iconAnimationController = AnimationController(
@@ -171,11 +198,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                             ? 'Insira a data de nascimento'
                             : null,
                       ),
-                      GrxSwitchFormField(
-                        initialValue: person.createUser,
-                        labelText: 'Criar usuário',
-                        onSaved: (value) => person.createUser = value,
-                      ),
                       GrxDropdownFormField<Person>(
                         initialValue: person.leadership,
                         labelText: 'Liderança Direta',
@@ -197,6 +219,45 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                         validator: (value) => (value?.isEmpty ?? true)
                             ? 'O líder deve ser informado'
                             : null,
+                      ),
+                      GrxMultiSelectFormField<Role>(
+                        initialValue: person.roles,
+                        labelText: 'Funções',
+                        onSelectItems: (value) =>
+                            print('Selected Value: ${value?.length}'),
+                        data: _roles,
+                        itemBuilder:
+                            (context, index, value, onChanged, isSelected) =>
+                                InkWell(
+                          onTap: onChanged,
+                          child: SizedBox(
+                            height: 50,
+                            child: Center(
+                              child: Row(
+                                children: [
+                                  GrxHeadlineMediumText(value.name),
+                                  isSelected
+                                      ? const Icon(
+                                          GrxIcons.check,
+                                          color: GrxColors.cff1eb35e,
+                                        )
+                                      : const SizedBox.shrink()
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        displayText: (value) => value.name,
+                        valueKey: (person) => person.id,
+                        onSaved: (value) => person.roles = value!,
+                        validator: (value) => (value?.isEmpty ?? true)
+                            ? 'Ao menos uma função deve ser informada'
+                            : null,
+                      ),
+                      GrxSwitchFormField(
+                        initialValue: person.createUser,
+                        labelText: 'Criar usuário',
+                        onSaved: (value) => person.createUser = value,
                       ),
                       GrxCheckboxListTile(
                         title: 'Solteiro',
@@ -357,7 +418,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
           GrxBottomButton(
             text: 'save'.translate,
             icon: GrxIcons.check,
-            onPressed: () {},
+            onPressed: _validateForm,
           ),
         ],
       ),

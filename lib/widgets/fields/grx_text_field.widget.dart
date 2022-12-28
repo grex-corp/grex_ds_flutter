@@ -1,30 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../themes/colors/grx_colors.dart';
-import '../../themes/typography/styles/grx_caption_large_text.style.dart';
-import '../../themes/typography/styles/grx_headline_small_text.style.dart';
-import '../buttons/grx_clear_input_button.widget.dart';
-
-const _inputTextStyle = GrxCaptionLargeTextStyle(color: GrxColors.cff7892b7);
-const _inputHintTextStyle =
-    GrxCaptionLargeTextStyle(color: GrxColors.cff7892b7);
-const _labelTextStyle = GrxHeadlineSmallTextStyle(color: GrxColors.cff2e2e2e);
-
-const _underlineInputBorder = UnderlineInputBorder(
-  borderSide: BorderSide(color: GrxColors.cff75f3ab),
-);
-
-const _underlineInputFocusedBorder = UnderlineInputBorder(
-  borderSide: BorderSide(color: GrxColors.cff75f3ab, width: 2),
-);
-
-const _underlineInputErrorBorder = UnderlineInputBorder(
-  borderSide: BorderSide(color: GrxColors.cfffc5858),
-);
-
-const _underlineInputFocusedErrorBorder = UnderlineInputBorder(
-  borderSide: BorderSide(color: GrxColors.cfffc5858, width: 2),
-);
+import '../../themes/fields/grx_field_styles.theme.dart';
+import 'grx_input_decoration.widget.dart';
 
 class GrxTextField extends TextField {
   GrxTextField({
@@ -55,44 +33,20 @@ class GrxTextField extends TextField {
           textCapitalization: textCapitalization,
           autocorrect: autocorrect,
           cursorColor: GrxColors.cff70efa7,
-          style: _inputTextStyle,
+          style: GrxFieldStyles.inputTextStyle,
           textInputAction: textInputAction,
           maxLines: obscureText ? 1 : maxLines,
           textAlignVertical: textAlignVertical,
-          decoration: InputDecoration(
+          decoration: GrxInputDecoration(
             labelText: labelText,
-            labelStyle: _labelTextStyle,
-            floatingLabelStyle: _labelTextStyle,
-            floatingLabelBehavior: (hintText?.isEmpty ?? true)
-                ? FloatingLabelBehavior.auto
-                : FloatingLabelBehavior.always,
             alignLabelWithHint: alignLabelWithHint,
-            enabledBorder: _underlineInputBorder,
-            focusedBorder: _underlineInputFocusedBorder,
-            errorBorder: _underlineInputErrorBorder,
-            focusedErrorBorder: _underlineInputFocusedErrorBorder,
             contentPadding: contentPadding,
             hintText: hintText,
             hintMaxLines: hintMaxLines,
-            hintStyle: _inputHintTextStyle,
             errorText: errorText,
-            suffix: Visibility(
-              visible: controller.text.isNotEmpty && enabled,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Container(
-                  padding: const EdgeInsets.all(3),
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(20)),
-                    color: GrxColors.cffd6dfea,
-                  ),
-                  child: GrxClearInputButton(
-                    onClear: controller.clear,
-                  ),
-                ),
-              ),
-            ),
             enabled: enabled,
+            onClear: controller.clear,
+            showClearButton: controller.text.isNotEmpty && enabled,
           ),
         );
 }

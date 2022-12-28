@@ -42,6 +42,10 @@ export 'themes/typography/utils/grx_font_weights.dart' show GrxFontWeights;
 /// Themes/Icons
 export 'themes/icons/grx_icons.dart' show GrxIcons;
 
+/// Themes/FormFieldStyles
+export 'themes/fields/grx_field_styles.theme.dart'
+    show GrxFieldStyles;
+
 /// Services
 export 'services/grx_image_picker.service.dart' show ImagePickerService;
 
@@ -58,6 +62,8 @@ export 'widgets/fields/grx_date_time_picker_form_field.widget.dart'
     show GrxDateTimePickerFormField;
 export 'widgets/fields/grx_dropdown_form_field.widget.dart'
     show GrxDropdownFormField;
+export 'widgets/fields/grx_multi_select_form_field.widget.dart'
+    show GrxMultiSelectFormField;
 export 'widgets/fields/grx_filter_field.widget.dart' show GrxFilterField;
 
 /// Widgets/Typography

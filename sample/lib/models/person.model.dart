@@ -1,3 +1,5 @@
+import 'role.model.dart';
+
 class Person {
   int id;
   String name;
@@ -6,6 +8,7 @@ class Person {
   bool createUser;
   bool single;
   Uri? avatar;
+  Iterable<Role> roles;
 
   Person({
     required this.id,
@@ -15,5 +18,6 @@ class Person {
     this.createUser = false,
     this.single = false,
     this.avatar,
+    this.roles = const [],
   });
 }

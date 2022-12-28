@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:grex_ds/services/grx_bottom_sheet.service.dart';
+import 'package:grex_ds/widgets/common/grx_dropdown_body.widget.dart';
 
-import '../../themes/colors/grx_colors.dart';
 import '../../utils/grx_form_field.util.dart';
-import '../bottomSheet/bottom_sheet_grabber.widget.dart';
 import '../grx_stateful.widget.dart';
-import 'grx_filter_field.widget.dart';
 import 'grx_text_field.widget.dart';
 
 class GrxDropdownFormField<T> extends GrxStatefulWidget {
@@ -123,65 +121,19 @@ class _GrxDropdownStateFormField<T> extends State<GrxDropdownFormField<T>> {
                   builder: (BuildContext context, StateSetter setModalState) {
                     _setModalState = setModalState;
 
-                    return CustomScrollView(
+                    return GrxDropdownBody<T>(
                       controller: controller,
-                      shrinkWrap: true,
-                      slivers: [
-                        SliverAppBar(
-                          titleSpacing: 0.0,
-                          toolbarHeight: 65,
-                          backgroundColor: Colors.transparent,
-                          automaticallyImplyLeading: false,
-                          title: Container(
-                            color: GrxColors.cfff2f7fd,
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 10,
-                              horizontal: 8,
-                            ),
-                            child: GrxFilterField(
-                              searchFieldController: quickSearchFieldController,
-                              onChanged: _filterData,
-                              hintText: 'Pesquisar',
-                            ),
-                          ),
-                        ),
-                        SliverPadding(
-                          padding: EdgeInsets.only(
-                            left: 8,
-                            top: 15,
-                            right: 8,
-                            bottom: MediaQuery.of(context).viewInsets.bottom +
-                                MediaQuery.of(context).padding.bottom +
-                                8,
-                          ),
-                          sliver: SliverList(
-                            delegate: SliverChildBuilderDelegate(
-                              childCount: _list.length,
-                              (context, index) {
-                                final item = _list[index];
-
-                                return InkWell(
-                                  onTap: () {
-                                    Navigator.pop(context, true);
-
-                                    if (widget.onSelectItem != null) {
-                                      widget.onSelectItem!(item);
-                                    }
-
-                                    setState(() {
-                                      value = item;
-                                      this.controller.text =
-                                          widget.displayText(item);
-                                    });
-                                  },
-                                  child:
-                                      widget.itemBuilder(context, index, item),
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                      ],
+                      filterData: _filterData,
+                      quickSearchFieldController: quickSearchFieldController,
+                      onSelectItem: widget.onSelectItem,
+                      itemBuilder: widget.itemBuilder,
+                      list: _list,
+                      changeState: (item) {
+                        setState(() {
+                          value = item;
+                          this.controller.text = widget.displayText(item);
+                        });
+                      },
                     );
                   },
                 );
