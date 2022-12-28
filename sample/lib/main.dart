@@ -24,6 +24,14 @@ final _leaders = [
   Person(id: 10, name: '10th Person'),
   Person(id: 11, name: '11th Person'),
   Person(id: 12, name: '12th Person'),
+  Person(id: 13, name: '13th Person'),
+  Person(id: 14, name: '14th Person'),
+  Person(id: 15, name: '15th Person'),
+  Person(id: 16, name: '16th Person'),
+  Person(id: 17, name: '17th Person'),
+  Person(id: 18, name: '18th Person'),
+  Person(id: 19, name: '19th Person'),
+  Person(id: 20, name: '20th Person'),
 ];
 
 final _roles = [
@@ -222,6 +230,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                       ),
                       GrxMultiSelectFormField<Role>(
                         initialValue: person.roles,
+                        searchable: true,
                         labelText: 'Funções',
                         onSelectItems: (value) =>
                             print('Selected Value: ${value?.length}'),

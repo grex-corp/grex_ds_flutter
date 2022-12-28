@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:grex_ds/grex_ds.dart';
 import 'package:grex_ds/services/grx_bottom_sheet.service.dart';
 
-import '../../models/grx_multi_select_body_item.model.dart';
 import '../common/grx_chip.widget.dart';
-import '../common/grx_multi_select_body.widget.dart';
+import '../common/grx_dropdown_body.widget.dart';
 import '../grx_stateful.widget.dart';
 import 'grx_input_decoration.widget.dart';
 
@@ -23,6 +22,7 @@ class GrxMultiSelectFormField<T> extends GrxStatefulWidget {
     this.onSelectItems,
     this.validator,
     this.enabled = true,
+    this.searchable = false,
     this.confirmButtonLabel,
     this.cancelButtonLabel,
   });
@@ -32,7 +32,7 @@ class GrxMultiSelectFormField<T> extends GrxStatefulWidget {
   final String? hintText;
   final Iterable<T> data;
   final Widget Function(BuildContext context, int index, T value,
-      void Function() onChanged, bool isSelected) itemBuilder;
+      void Function()? onChanged, bool isSelected) itemBuilder;
   final String Function(T data) displayText;
   final int Function(T data) valueKey;
   final Iterable<T>? initialValue;
@@ -40,6 +40,7 @@ class GrxMultiSelectFormField<T> extends GrxStatefulWidget {
   final FormFieldSetter<Iterable<T>> onSaved;
   final FormFieldValidator<Iterable<T>>? validator;
   final bool enabled;
+  final bool searchable;
   final String? confirmButtonLabel;
   final String? cancelButtonLabel;
 
@@ -72,6 +73,29 @@ class _GrxMultiSelectStateFormField<T>
     }
 
     super.initState();
+  }
+
+  void _filterData(String val) {
+    void filter() {
+      _list.clear();
+      _list.addAll(
+        widget.data.where(
+          (x) =>
+              val.isEmpty ||
+              widget.displayText(x).toString().toLowerCase().contains(
+                    val.toLowerCase(),
+                  ),
+        ),
+      );
+    }
+
+    _setModalState != null
+        ? _setModalState!(
+            () {
+              filter();
+            },
+          )
+        : filter();
   }
 
   @override
@@ -117,33 +141,27 @@ class _GrxMultiSelectStateFormField<T>
               inputFocusNode.requestFocus();
             });
 
-            final Iterable<T> initialSelected = values ?? <T>[];
-
-            final list = <GrxMultiSelectBodyItem<T>>[];
-            for (final item in widget.data) {
-              final selectedItem = initialSelected.singleWhere(
-                (x) => widget.valueKey(x) == widget.valueKey(item),
-                orElse: () => item,
-              );
-              list.add(
-                GrxMultiSelectBodyItem<T>(
-                  selectedItem,
-                  widget.displayText(item),
-                ),
-              );
-            }
-
             final bottomSheet = GrxBottomSheetService(
               context: field.context,
               builder: (controller) {
-                return GrxMultiSelectBody<T>(
-                  initialSelectedValues: initialSelected,
-                  items: list,
-                  itemBuilder: widget.itemBuilder,
-                  valueKey: widget.valueKey,
-                  shrinkWrap: true,
-                  confirmButtonLabel: widget.confirmButtonLabel,
-                  cancelButtonLabel: widget.cancelButtonLabel,
+                return StatefulBuilder(
+                  builder: (BuildContext context, StateSetter setModalState) {
+                    _setModalState = setModalState;
+
+                    return GrxDropdownBody<T>(
+                      initialSelectedValues: values,
+                      items: _list,
+                      itemBuilder: widget.itemBuilder,
+                      valueKey: widget.valueKey,
+                      shrinkWrap: !widget.searchable,
+                      searchable: widget.searchable,
+                      quickSearchFieldController: quickSearchFieldController,
+                      filterData: _filterData,
+                      multiSelect: true,
+                      confirmButtonLabel: widget.confirmButtonLabel,
+                      cancelButtonLabel: widget.cancelButtonLabel,
+                    );
+                  },
                 );
               },
             );

@@ -126,9 +126,10 @@ class _GrxDropdownStateFormField<T> extends State<GrxDropdownFormField<T>> {
                       filterData: _filterData,
                       quickSearchFieldController: quickSearchFieldController,
                       onSelectItem: widget.onSelectItem,
-                      itemBuilder: widget.itemBuilder,
-                      list: _list,
-                      changeState: (item) {
+                      itemBuilder: (context, index, item, _, __) =>
+                          widget.itemBuilder(context, index, item),
+                      items: _list,
+                      onChangeState: (item) {
                         setState(() {
                           value = item;
                           this.controller.text = widget.displayText(item);
