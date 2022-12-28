@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:grex_ds/services/grx_bottom_sheet.service.dart';
-import 'package:grex_ds/widgets/common/grx_dropdown_body.widget.dart';
+import 'package:grex_ds/widgets/common/grx_bottom_sheet_form_field_body.widget.dart';
 
 import '../../utils/grx_form_field.util.dart';
 import '../grx_stateful.widget.dart';
@@ -95,7 +95,7 @@ class _GrxDropdownStateFormField<T> extends State<GrxDropdownFormField<T>> {
               builder: (controller) {
                 return StatefulBuilder(
                   builder: (BuildContext context, StateSetter setModalState) {
-                    return GrxDropdownBody<T>(
+                    return GrxBottomSheetFormFieldBody<T>(
                       controller: controller,
                       onFilterSetState: setModalState,
                       displayText: widget.displayText,

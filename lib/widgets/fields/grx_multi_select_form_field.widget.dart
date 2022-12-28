@@ -3,7 +3,7 @@ import 'package:grex_ds/grex_ds.dart';
 import 'package:grex_ds/services/grx_bottom_sheet.service.dart';
 
 import '../common/grx_chip.widget.dart';
-import '../common/grx_dropdown_body.widget.dart';
+import '../common/grx_bottom_sheet_form_field_body.widget.dart';
 import '../grx_stateful.widget.dart';
 import 'grx_input_decoration.widget.dart';
 
@@ -122,7 +122,7 @@ class _GrxMultiSelectStateFormField<T>
               builder: (controller) {
                 return StatefulBuilder(
                   builder: (BuildContext context, StateSetter setModalState) {
-                    return GrxDropdownBody<T>(
+                    return GrxBottomSheetFormFieldBody<T>(
                       initialSelectedValues: values,
                       items: _list,
                       itemBuilder: widget.itemBuilder,

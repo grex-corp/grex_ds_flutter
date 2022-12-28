@@ -6,8 +6,8 @@ import '../buttons/grx_primary_button.widget.dart';
 import '../buttons/grx_secondary_button.widget.dart';
 import '../fields/grx_filter_field.widget.dart';
 
-class GrxDropdownBody<T> extends StatefulWidget {
-  const GrxDropdownBody({
+class GrxBottomSheetFormFieldBody<T> extends StatefulWidget {
+  const GrxBottomSheetFormFieldBody({
     super.key,
     this.controller,
     this.onFilterSetState,
@@ -54,10 +54,10 @@ class GrxDropdownBody<T> extends StatefulWidget {
   final String? cancelButtonLabel;
 
   @override
-  State<StatefulWidget> createState() => _GrxDropdownBodyState<T>();
+  State<StatefulWidget> createState() => _GrxBottomSheetFormFieldBodyState<T>();
 }
 
-class _GrxDropdownBodyState<T> extends State<GrxDropdownBody<T>> {
+class _GrxBottomSheetFormFieldBodyState<T> extends State<GrxBottomSheetFormFieldBody<T>> {
   final _list = <T>[];
   final _selectedValues = <T>[];
 
