@@ -4,12 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:grex_ds/grex_ds.dart';
-import 'package:grex_ds/utils/grx_utils.util.dart';
 import 'package:sample/extensions/string_extension.dart';
 
 import 'localization/app_localizations.dart';
+import 'models/knowledge_trail_model.dart';
 import 'models/person.model.dart';
 import 'models/role.model.dart';
+import 'pages/knowledge_trail_select.page.dart';
 
 final _leaders = [
   Person(id: 1, name: '1st Person'),
@@ -193,7 +194,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                       GrxDateTimePickerFormField(
                         initialValue: person.birthDate,
                         labelText: 'pages.people.birth-date'.translate,
-                        hintText: 'fields.datetime.hint'.translate,
+                        // hintText: 'fields.datetime.hint'.translate,
                         dialogConfirmText: 'confirm'.translate,
                         dialogCancelText: 'cancel'.translate,
                         dialogErrorFormatText:
@@ -201,10 +202,16 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                         dialogErrorInvalidText:
                             'fields.datetime.error-invalid'.translate,
                         isDateTime: true,
-                        onSaved: (value) => person.birthDate = value,
-                        validator: (value) => (value?.isEmpty ?? true)
-                            ? 'Insira a data de nascimento'
-                            : null,
+                        onSelectItem: (value) =>
+                            print('Selected birth date: $value'),
+                        onSaved: (value) {
+                          print('Saved Birthdate: $value');
+
+                          person.birthDate = value;
+                        },
+                        // validator: (value) => (value?.isEmpty ?? true)
+                        //     ? 'Insira a data de nascimento'
+                        //     : null,
                       ),
                       GrxDropdownFormField<Person>(
                         initialValue: person.leadership,
@@ -223,7 +230,11 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                           ),
                         ),
                         displayText: (value) => value.name,
-                        onSaved: (value) => person.leadership = value,
+                        onSaved: (value) {
+                          print('Saved leader: $value');
+
+                          person.leadership = value;
+                        },
                         validator: (value) => (value?.isEmpty ?? true)
                             ? 'O líder deve ser informado'
                             : null,
@@ -262,6 +273,26 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                         validator: (value) => (value?.isEmpty ?? true)
                             ? 'Ao menos uma função deve ser informada'
                             : null,
+                      ),
+                      GrxCustomDropdownFormField<KnowledgeTrail>(
+                        initialValue: person.trail,
+                        labelText: 'Trilho do Vencedor',
+                        onSelectItem: (value) =>
+                            print('Selected Value: ${value?.name}'),
+                        builder: (controller, selectedValue) =>
+                            KnowledgeTrailSelectPage(
+                          data: selectedValue,
+                          controller: controller,
+                        ),
+                        displayText: (value) => value.name,
+                        onSaved: (value) {
+                          print('Saved trail: $value');
+
+                          person.trail = value;
+                        },
+                        // validator: (value) => (value?.isEmpty ?? true)
+                        //     ? 'O líder deve ser informado'
+                        //     : null,
                       ),
                       GrxSwitchFormField(
                         initialValue: person.createUser,

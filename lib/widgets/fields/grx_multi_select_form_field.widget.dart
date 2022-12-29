@@ -3,7 +3,7 @@ import 'package:grex_ds/grex_ds.dart';
 import 'package:grex_ds/services/grx_bottom_sheet.service.dart';
 
 import '../common/grx_chip.widget.dart';
-import '../common/grx_bottom_sheet_form_field_body.widget.dart';
+import '../bottomsheet/grx_bottom_sheet_form_field_body.widget.dart';
 import '../grx_stateful.widget.dart';
 import 'grx_input_decoration.widget.dart';
 
@@ -11,11 +11,11 @@ class GrxMultiSelectFormField<T> extends GrxStatefulWidget {
   GrxMultiSelectFormField({
     super.key,
     required this.labelText,
-    required this.onSaved,
     required this.data,
     required this.itemBuilder,
     required this.displayText,
     required this.valueKey,
+    this.onSaved,
     this.controller,
     this.hintText,
     this.initialValue,
@@ -37,7 +37,7 @@ class GrxMultiSelectFormField<T> extends GrxStatefulWidget {
   final int Function(T data) valueKey;
   final Iterable<T>? initialValue;
   final void Function(Iterable<T>?)? onSelectItems;
-  final FormFieldSetter<Iterable<T>> onSaved;
+  final FormFieldSetter<Iterable<T>>? onSaved;
   final FormFieldValidator<Iterable<T>>? validator;
   final bool enabled;
   final bool searchable;
@@ -80,7 +80,7 @@ class _GrxMultiSelectStateFormField<T>
       initialValue: widget.initialValue,
       autovalidateMode: AutovalidateMode.always,
       validator: widget.validator,
-      onSaved: (_) => widget.onSaved(values),
+      onSaved: (_) => widget.onSaved != null ? widget.onSaved!(values) : null,
       enabled: widget.enabled,
       builder: (FormFieldState<Iterable<T>> field) {
         List<Widget> buildSelectedOptions(state) {

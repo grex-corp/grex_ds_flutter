@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:grex_ds/services/grx_bottom_sheet.service.dart';
-import 'package:grex_ds/widgets/bottomsheet/grx_bottom_sheet_form_field_body.widget.dart';
 
 import '../../utils/grx_form_field.util.dart';
 import '../grx_stateful.widget.dart';
 import 'grx_text_field.widget.dart';
 
-class GrxDropdownFormField<T> extends GrxStatefulWidget {
-  GrxDropdownFormField({
+class GrxCustomDropdownFormField<T> extends GrxStatefulWidget {
+  GrxCustomDropdownFormField({
     super.key,
     required this.labelText,
-    required this.data,
-    required this.itemBuilder,
+    required this.builder,
     required this.displayText,
     this.onSaved,
     this.hintText,
@@ -25,8 +23,8 @@ class GrxDropdownFormField<T> extends GrxStatefulWidget {
   final TextEditingController? controller;
   final String labelText;
   final String? hintText;
-  final Iterable<T> data;
-  final Widget Function(BuildContext, int, T) itemBuilder;
+  final Widget Function(ScrollController? scrollController, T? selectedValue)
+      builder;
   final String Function(T data) displayText;
   final T? initialValue;
   final void Function(T?)? onSelectItem;
@@ -38,18 +36,15 @@ class GrxDropdownFormField<T> extends GrxStatefulWidget {
   State<StatefulWidget> createState() => _GrxDropdownStateFormField<T>();
 }
 
-class _GrxDropdownStateFormField<T> extends State<GrxDropdownFormField<T>> {
+class _GrxDropdownStateFormField<T>
+    extends State<GrxCustomDropdownFormField<T>> {
   T? value;
-  final List<T> _list = [];
   late final TextEditingController controller;
   final TextEditingController quickSearchFieldController =
       TextEditingController();
 
   @override
   void initState() {
-    _list.clear();
-    _list.addAll(widget.data);
-
     controller = widget.controller ?? TextEditingController();
 
     if (widget.initialValue != null && value == null) {
@@ -93,31 +88,23 @@ class _GrxDropdownStateFormField<T> extends State<GrxDropdownFormField<T>> {
           onTap: () async {
             final bottomSheet = GrxBottomSheetService(
               context: context,
-              builder: (controller) {
-                return StatefulBuilder(
-                  builder: (BuildContext context, StateSetter setModalState) {
-                    return GrxBottomSheetFormFieldBody<T>(
-                      controller: controller,
-                      onFilterSetState: setModalState,
-                      displayText: widget.displayText,
-                      quickSearchFieldController: quickSearchFieldController,
-                      onSelectItem: widget.onSelectItem,
-                      itemBuilder: (context, index, item, _, __) =>
-                          widget.itemBuilder(context, index, item),
-                      items: _list,
-                      onChangeState: (item) {
-                        setState(() {
-                          value = item;
-                          this.controller.text = widget.displayText(item);
-                        });
-                      },
-                    );
-                  },
-                );
-              },
+              builder: (controller) => widget.builder(
+                controller,
+                value,
+              ),
             );
 
-            await bottomSheet.show<bool>();
+            final result = await bottomSheet.show<T>();
+
+            if (result != null) {
+              if (widget.onSelectItem != null) {
+                widget.onSelectItem!(result);
+              }
+              setState(() {
+                value = result;
+                controller.text = widget.displayText(result);
+              });
+            }
           },
         );
       },

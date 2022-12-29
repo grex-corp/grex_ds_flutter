@@ -10,12 +10,12 @@ class GrxDateTimePickerFormField extends GrxStatefulWidget {
     super.key,
     this.initialValue,
     this.labelText,
-    this.hintText = '02/10/1997',
-    this.dialogConfirmText = 'Confirmar',
-    this.dialogCancelText = 'Cancelar',
-    this.dialogErrorFormatText = 'Formato inválido',
-    this.dialogErrorInvalidText = 'A data informada não é válida',
-    this.onChanged,
+    this.hintText,
+    this.dialogConfirmText = 'Confirm',
+    this.dialogCancelText = 'Cancel',
+    this.dialogErrorFormatText = 'Invalid Format',
+    this.dialogErrorInvalidText = 'Provided date is not valid',
+    this.onSelectItem,
     this.onSaved,
     this.validator,
     this.isDateTime = false,
@@ -31,7 +31,7 @@ class GrxDateTimePickerFormField extends GrxStatefulWidget {
   final String dialogCancelText;
   final String dialogErrorFormatText;
   final String dialogErrorInvalidText;
-  final void Function(String?)? onChanged;
+  final void Function(DateTime?)? onSelectItem;
   final FormFieldSetter<DateTime?>? onSaved;
   final FormFieldValidator<String?>? validator;
   final bool isDateTime;
@@ -57,8 +57,8 @@ class _GrxDateTimePickerFormFieldState
     if (widget.initialValue != null && value == null) {
       value = widget.initialValue;
       controller.text = _formatValue(value!);
-      if (widget.onChanged != null) {
-        widget.onChanged!(controller.text);
+      if (widget.onSelectItem != null) {
+        widget.onSelectItem!(value);
       }
     }
 
@@ -80,7 +80,12 @@ class _GrxDateTimePickerFormFieldState
         GrxFormFieldUtils.onValueChange(
           field,
           controller,
-          onChanged: widget.onChanged,
+          onChanged: (value) {
+            if (value.isEmpty && widget.onSelectItem != null) {
+              widget.onSelectItem!(null);
+              this.value = null;
+            }
+          },
         );
 
         return GrxTextField(
@@ -144,6 +149,10 @@ class _GrxDateTimePickerFormFieldState
                 () {
                   value = date;
                   controller.text = _formatValue(value!);
+
+                  if (widget.onSelectItem != null) {
+                    widget.onSelectItem!(value);
+                  }
                 },
               );
             }

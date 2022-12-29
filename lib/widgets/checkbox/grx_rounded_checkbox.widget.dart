@@ -73,7 +73,7 @@ class _GrxRoundedCheckboxState extends State<GrxRoundedCheckbox> {
               child: _value
                   ? Icon(
                       Icons.check,
-                      size: widget.radius * 1.5,
+                      size: widget.radius * 1.65,
                       color: GrxColors.cffffffff,
                     )
                   : const SizedBox.shrink(),

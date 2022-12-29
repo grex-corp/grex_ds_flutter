@@ -43,8 +43,7 @@ export 'themes/typography/utils/grx_font_weights.dart' show GrxFontWeights;
 export 'themes/icons/grx_icons.dart' show GrxIcons;
 
 /// Themes/FormFieldStyles
-export 'themes/fields/grx_field_styles.theme.dart'
-    show GrxFieldStyles;
+export 'themes/fields/grx_field_styles.theme.dart' show GrxFieldStyles;
 
 /// Services
 export 'services/grx_image_picker.service.dart' show ImagePickerService;
@@ -64,6 +63,8 @@ export 'widgets/fields/grx_dropdown_form_field.widget.dart'
     show GrxDropdownFormField;
 export 'widgets/fields/grx_multi_select_form_field.widget.dart'
     show GrxMultiSelectFormField;
+export 'widgets/fields/grx_custom_dropdown_form_field.widget.dart'
+    show GrxCustomDropdownFormField;
 export 'widgets/fields/grx_filter_field.widget.dart' show GrxFilterField;
 
 /// Widgets/Typography
@@ -85,7 +86,8 @@ export 'widgets/typography/grx_overline_text.widget.dart' show GrxOverlineText;
 
 /// Widgets/Checkbox
 export 'widgets/checkbox/grx_checkbox.widget.dart' show GrxCheckbox;
-export 'widgets/checkbox/grx_rounded_checkbox.widget.dart' show GrxRoundedCheckbox;
+export 'widgets/checkbox/grx_rounded_checkbox.widget.dart'
+    show GrxRoundedCheckbox;
 export 'widgets/checkbox/grx_checkbox_list_tile.widget.dart'
     show GrxCheckboxListTile;
 
@@ -109,3 +111,6 @@ export 'widgets/grx_user_avatar.widget.dart' show GrxUserAvatar;
 
 /// Widget/Divider
 export 'widgets/grx_divider.widget.dart' show GrxDivider;
+
+/// Utils
+export 'utils/grx_utils.util.dart';

@@ -1,3 +1,4 @@
+import 'knowledge_trail_model.dart';
 import 'role.model.dart';
 
 class Person {
@@ -9,6 +10,7 @@ class Person {
   bool single;
   Uri? avatar;
   Iterable<Role> roles;
+  KnowledgeTrail? trail;
 
   Person({
     required this.id,
@@ -19,5 +21,6 @@ class Person {
     this.single = false,
     this.avatar,
     this.roles = const [],
+    this.trail,
   });
 }
