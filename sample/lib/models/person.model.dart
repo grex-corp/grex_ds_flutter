@@ -1,3 +1,4 @@
+import '../enums/parent_worship_type.dart';
 import 'knowledge_trail_model.dart';
 import 'role.model.dart';
 
@@ -11,6 +12,7 @@ class Person {
   Uri? avatar;
   Iterable<Role> roles;
   KnowledgeTrail? trail;
+  ParentWorshipType fatherType;
 
   Person({
     required this.id,
@@ -22,5 +24,6 @@ class Person {
     this.avatar,
     this.roles = const [],
     this.trail,
+    this.fatherType = ParentWorshipType.unknown,
   });
 }

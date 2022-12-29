@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:grex_ds/grex_ds.dart';
 import 'package:grex_ds/services/grx_bottom_sheet.service.dart';
 import 'package:grex_ds/widgets/bottomsheet/grx_bottom_sheet_form_field_body.widget.dart';
 
 import '../../utils/grx_form_field.util.dart';
 import '../grx_stateful.widget.dart';
-import 'grx_text_field.widget.dart';
 
 class GrxDropdownFormField<T> extends GrxStatefulWidget {
   GrxDropdownFormField({
     super.key,
     required this.labelText,
     required this.data,
-    required this.itemBuilder,
+    this.itemBuilder,
     required this.displayText,
     this.onSaved,
     this.hintText,
     this.initialValue,
     this.onSelectItem,
     this.validator,
+    this.searchable = false,
     this.enabled = true,
     this.controller,
   });
@@ -26,12 +27,13 @@ class GrxDropdownFormField<T> extends GrxStatefulWidget {
   final String labelText;
   final String? hintText;
   final Iterable<T> data;
-  final Widget Function(BuildContext, int, T) itemBuilder;
+  final Widget Function(BuildContext, int, T)? itemBuilder;
   final String Function(T data) displayText;
   final T? initialValue;
   final void Function(T?)? onSelectItem;
   final void Function(T?)? onSaved;
   final String? Function(String?)? validator;
+  final bool searchable;
   final bool enabled;
 
   @override
@@ -61,6 +63,36 @@ class _GrxDropdownStateFormField<T> extends State<GrxDropdownFormField<T>> {
     }
 
     super.initState();
+  }
+
+  Widget _defaultItemBuild(BuildContext context, int index, T value) {
+    const decoration = BoxDecoration(
+      border: Border(
+        bottom: BorderSide(
+          width: 1.0,
+          color: GrxColors.cffe0efff,
+        ),
+      ),
+    );
+
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
+      decoration: index == widget.data.length - 1 ? null : decoration,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          GrxHeadlineMediumText(
+            widget.displayText(value),
+          ),
+          if (this.value == value)
+            const GrxRoundedCheckbox(
+              radius: 8.0,
+              isTappable: false,
+              initialValue: true,
+            ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -103,8 +135,11 @@ class _GrxDropdownStateFormField<T> extends State<GrxDropdownFormField<T>> {
                       quickSearchFieldController: quickSearchFieldController,
                       onSelectItem: widget.onSelectItem,
                       itemBuilder: (context, index, item, _, __) =>
-                          widget.itemBuilder(context, index, item),
+                          (widget.itemBuilder ?? _defaultItemBuild)(
+                              context, index, item),
                       items: _list,
+                      searchable: widget.searchable,
+                      shrinkWrap: !widget.searchable,
                       onChangeState: (item) {
                         setState(() {
                           value = item;

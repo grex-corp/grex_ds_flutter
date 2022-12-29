@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:grex_ds/grex_ds.dart';
 import 'package:sample/extensions/string_extension.dart';
 
+import 'enums/parent_worship_type.dart';
 import 'localization/app_localizations.dart';
 import 'models/knowledge_trail_model.dart';
 import 'models/person.model.dart';
@@ -219,6 +220,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                         onSelectItem: (value) =>
                             print('Selected Value: ${value?.name}'),
                         data: _leaders,
+                        searchable: true,
                         itemBuilder: (context, index, value) => SizedBox(
                           height: 50,
                           child: Center(
@@ -237,6 +239,23 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                         },
                         validator: (value) => (value?.isEmpty ?? true)
                             ? 'O líder deve ser informado'
+                            : null,
+                      ),
+                      GrxDropdownFormField<ParentWorshipType>(
+                        initialValue: person.fatherType,
+                        labelText: 'O Pai é?',
+                        onSelectItem: (value) =>
+                            print('Selected Value: ${value?.name}'),
+                        data: ParentWorshipType.values,
+                        displayText: (value) => value.getDescription(),
+                        onSaved: (value) {
+                          print('Saved leader: $value');
+
+                          person.fatherType =
+                              value ?? ParentWorshipType.unknown;
+                        },
+                        validator: (value) => (value?.isEmpty ?? true)
+                            ? 'O Tipo deve ser informado'
                             : null,
                       ),
                       GrxMultiSelectFormField<Role>(
