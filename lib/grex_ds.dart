@@ -112,5 +112,11 @@ export 'widgets/grx_user_avatar.widget.dart' show GrxUserAvatar;
 /// Widget/Divider
 export 'widgets/grx_divider.widget.dart' show GrxDivider;
 
+/// Widget/Chip
+export 'widgets/grx_chip.widget.dart' show GrxChip;
+
+/// Widget/DashedDivider
+export 'widgets/grx_dashed_divider.widget.dart' show GrxDashedDivider;
+
 /// Utils
 export 'utils/grx_utils.util.dart';

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:grex_ds/grex_ds.dart';
 import 'package:grex_ds/services/grx_bottom_sheet.service.dart';
 
-import '../common/grx_chip.widget.dart';
+import '../../themes/colors/grx_colors.dart';
+import '../../themes/typography/styles/grx_caption_large_text.style.dart';
+import '../grx_chip.widget.dart';
 import '../bottomsheet/grx_bottom_sheet_form_field_body.widget.dart';
 import '../grx_stateful.widget.dart';
+import '../typography/grx_caption_text.widget.dart';
 import 'grx_input_decoration.widget.dart';
 
 class GrxMultiSelectFormField<T> extends GrxStatefulWidget {

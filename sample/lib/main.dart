@@ -313,10 +313,16 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                         //     ? 'O líder deve ser informado'
                         //     : null,
                       ),
+                      const GrxDashedDivider(
+                        padding: EdgeInsets.symmetric(vertical: 15.0),
+                      ),
                       GrxSwitchFormField(
                         initialValue: person.createUser,
                         labelText: 'Criar usuário',
                         onSaved: (value) => person.createUser = value,
+                      ),
+                      const GrxDashedDivider(
+                        title: 'Dados Auxiliares',
                       ),
                       GrxCheckboxListTile(
                         title: 'Solteiro',
