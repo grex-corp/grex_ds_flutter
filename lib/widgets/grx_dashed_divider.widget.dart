@@ -21,7 +21,7 @@ class GrxDashedDivider extends StatelessWidget {
   final double dashSize;
   final Color color;
 
-  _getTextWidth(BoxConstraints constraints) {
+  double _getTextWidth(BoxConstraints constraints) {
     const textStyle = GrxOverlineTextStyle();
 
     final renderParagraph = RenderParagraph(

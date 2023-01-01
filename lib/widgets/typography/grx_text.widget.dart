@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 import '../../enums/grx_text_transform.enum.dart';
+import '../grx_shimmer.widget.dart';
 
 /// A container that has some default properties which should be extended by others Design System's [Text].
 class GrxText extends StatelessWidget {
@@ -8,8 +10,8 @@ class GrxText extends StatelessWidget {
   const GrxText(
     this.text, {
     super.key,
+    required this.style,
     this.transform = GrxTextTransform.none,
-    this.style,
     this.strutStyle,
     this.textAlign,
     this.textDirection,
@@ -21,13 +23,14 @@ class GrxText extends StatelessWidget {
     this.textWidthBasis,
     this.textHeightBehavior,
     this.selectionColor,
+    this.isLoading = false,
   }) : textSpan = null;
 
   const GrxText.rich(
     this.textSpan, {
     super.key,
+    required this.style,
     this.transform = GrxTextTransform.none,
-    this.style,
     this.strutStyle,
     this.textAlign,
     this.textDirection,
@@ -39,12 +42,13 @@ class GrxText extends StatelessWidget {
     this.textWidthBasis,
     this.textHeightBehavior,
     this.selectionColor,
+    this.isLoading = false,
   }) : text = null;
 
   final String? text;
   final InlineSpan? textSpan;
   final GrxTextTransform transform;
-  final TextStyle? style;
+  final TextStyle style;
   final StrutStyle? strutStyle;
   final TextAlign? textAlign;
   final TextDirection? textDirection;
@@ -56,9 +60,37 @@ class GrxText extends StatelessWidget {
   final TextWidthBasis? textWidthBasis;
   final TextHeightBehavior? textHeightBehavior;
   final Color? selectionColor;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
+    if (isLoading) {
+      return LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+          final renderParagraph = RenderParagraph(
+            textSpan ??
+                TextSpan(
+                  text: _capitalize(text),
+                  style: style,
+
+                ),
+            textDirection: TextDirection.ltr,
+            maxLines: maxLines ?? 1,
+          );
+
+          renderParagraph.layout(constraints);
+
+          final height = renderParagraph.getMinIntrinsicHeight(style.fontSize!);
+          final width = renderParagraph.getMinIntrinsicWidth(style.fontSize!);
+
+          return GrxShimmer(
+            height: height,
+            width: width,
+          );
+        },
+      );
+    }
+
     final formattedText = <InlineSpan>[];
 
     if (textSpan != null) {

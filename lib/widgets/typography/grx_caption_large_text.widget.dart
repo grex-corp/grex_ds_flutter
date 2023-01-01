@@ -18,6 +18,7 @@ class GrxCaptionLargeText extends StatelessWidget {
     this.color = GrxColors.cff2e2e2e,
     this.decoration,
     this.overflow,
+    this.isLoading = false,
   }) : textSpan = null;
 
   const GrxCaptionLargeText.rich(
@@ -28,6 +29,7 @@ class GrxCaptionLargeText extends StatelessWidget {
     this.color = GrxColors.cff2e2e2e,
     this.decoration,
     this.overflow,
+    this.isLoading = false,
   }) : text = null;
 
   final String? text;
@@ -37,6 +39,7 @@ class GrxCaptionLargeText extends StatelessWidget {
   final Color color;
   final TextDecoration? decoration;
   final TextOverflow? overflow;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -52,12 +55,14 @@ class GrxCaptionLargeText extends StatelessWidget {
             transform: transform,
             textAlign: textAlign,
             style: style,
+            isLoading: isLoading,
           )
         : GrxText(
             text,
             transform: transform,
             textAlign: textAlign,
             style: style,
+            isLoading: isLoading,
           );
   }
 }

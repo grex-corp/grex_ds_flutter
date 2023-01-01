@@ -7,11 +7,13 @@ import 'package:grex_ds/grex_ds.dart';
 import 'package:sample/extensions/string_extension.dart';
 
 import 'enums/parent_worship_type.dart';
+import 'fields_sample.dart';
 import 'localization/app_localizations.dart';
 import 'models/knowledge_trail_model.dart';
 import 'models/person.model.dart';
 import 'models/role.model.dart';
 import 'pages/knowledge_trail_select.page.dart';
+import 'typo_sample.dart';
 
 final _leaders = [
   Person(id: 1, name: '1st Person'),
@@ -170,171 +172,15 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
               // horizontal).
               // mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                const GrxHeadlineLargeText('Healine Large Text'),
-                const GrxHeadlineText('Headline Text'),
-                const GrxHeadlineMediumText('Headline Medium Text'),
-                const GrxHeadlineSmallText('Headline Small Text'),
-                const GrxBodyText('Body Text'),
-                const GrxCaptionLargeText('Caption Large Text'),
-                const GrxCaptionText('Caption Text'),
-                const GrxCaptionSmallText('Caption Small Text'),
-                const GrxOverlineText('Overline Text'),
+                const TypoSample(),
                 Form(
                   key: formKey,
                   child: Column(
                     children: [
-                      GrxTextFormField(
-                        initialValue: person.name,
-                        labelText: 'pages.people.name'.translate,
-                        hintText: 'José Algusto',
-                        onSaved: (value) => person.name = value!,
-                        validator: (value) => (value?.isEmpty ?? true)
-                            ? 'Insira o nome da pessoa'
-                            : null,
-                      ),
-                      GrxDateTimePickerFormField(
-                        initialValue: person.birthDate,
-                        labelText: 'pages.people.birth-date'.translate,
-                        // hintText: 'fields.datetime.hint'.translate,
-                        dialogConfirmText: 'confirm'.translate,
-                        dialogCancelText: 'cancel'.translate,
-                        dialogErrorFormatText:
-                            'fields.datetime.error-format'.translate,
-                        dialogErrorInvalidText:
-                            'fields.datetime.error-invalid'.translate,
-                        isDateTime: true,
-                        onSelectItem: (value) =>
-                            print('Selected birth date: $value'),
-                        onSaved: (value) {
-                          print('Saved Birthdate: $value');
-
-                          person.birthDate = value;
-                        },
-                        // validator: (value) => (value?.isEmpty ?? true)
-                        //     ? 'Insira a data de nascimento'
-                        //     : null,
-                      ),
-                      GrxDropdownFormField<Person>(
-                        initialValue: person.leadership,
-                        labelText: 'Liderança Direta',
-                        onSelectItem: (value) =>
-                            print('Selected Value: ${value?.name}'),
-                        data: _leaders,
-                        searchable: true,
-                        itemBuilder: (context, index, value) => SizedBox(
-                          height: 50,
-                          child: Center(
-                            child: Row(
-                              children: [
-                                GrxHeadlineMediumText(value.name),
-                              ],
-                            ),
-                          ),
-                        ),
-                        displayText: (value) => value.name,
-                        onSaved: (value) {
-                          print('Saved leader: $value');
-
-                          person.leadership = value;
-                        },
-                        validator: (value) => (value?.isEmpty ?? true)
-                            ? 'O líder deve ser informado'
-                            : null,
-                      ),
-                      GrxDropdownFormField<ParentWorshipType>(
-                        initialValue: person.fatherType,
-                        labelText: 'O Pai é?',
-                        onSelectItem: (value) =>
-                            print('Selected Value: ${value?.name}'),
-                        data: ParentWorshipType.values,
-                        displayText: (value) => value.getDescription(),
-                        onSaved: (value) {
-                          print('Saved leader: $value');
-
-                          person.fatherType =
-                              value ?? ParentWorshipType.unknown;
-                        },
-                        validator: (value) => (value?.isEmpty ?? true)
-                            ? 'O Tipo deve ser informado'
-                            : null,
-                      ),
-                      GrxMultiSelectFormField<Role>(
-                        initialValue: person.roles,
-                        searchable: true,
-                        labelText: 'Funções',
-                        onSelectItems: (value) =>
-                            print('Selected Value: ${value?.length}'),
-                        data: _roles,
-                        itemBuilder:
-                            (context, index, value, onChanged, isSelected) =>
-                                InkWell(
-                          onTap: onChanged,
-                          child: SizedBox(
-                            height: 50,
-                            child: Center(
-                              child: Row(
-                                children: [
-                                  GrxHeadlineMediumText(value.name),
-                                  isSelected
-                                      ? const Icon(
-                                          GrxIcons.check,
-                                          color: GrxColors.cff1eb35e,
-                                        )
-                                      : const SizedBox.shrink()
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                        displayText: (value) => value.name,
-                        valueKey: (person) => person.id,
-                        onSaved: (value) => person.roles = value!,
-                        validator: (value) => (value?.isEmpty ?? true)
-                            ? 'Ao menos uma função deve ser informada'
-                            : null,
-                      ),
-                      GrxCustomDropdownFormField<KnowledgeTrail>(
-                        initialValue: person.trail,
-                        labelText: 'Trilho do Vencedor',
-                        onSelectItem: (value) =>
-                            print('Selected Value: ${value?.name}'),
-                        builder: (controller, selectedValue) =>
-                            KnowledgeTrailSelectPage(
-                          data: selectedValue,
-                          controller: controller,
-                        ),
-                        displayText: (value) => value.name,
-                        onSaved: (value) {
-                          print('Saved trail: $value');
-
-                          person.trail = value;
-                        },
-                        // validator: (value) => (value?.isEmpty ?? true)
-                        //     ? 'O líder deve ser informado'
-                        //     : null,
-                      ),
-                      const GrxDashedDivider(
-                        padding: EdgeInsets.symmetric(vertical: 15.0),
-                      ),
-                      GrxSwitchFormField(
-                        initialValue: person.createUser,
-                        labelText: 'Criar usuário',
-                        onSaved: (value) => person.createUser = value,
-                      ),
-                      const GrxDashedDivider(
-                        title: 'Dados Auxiliares',
-                      ),
-                      GrxCheckboxListTile(
-                        title: 'Solteiro',
-                        isChecked: person.single,
-                        onTap: () {
-                          setState(() {
-                            person.single = !person.single;
-                          });
-                        },
-                      ),
-                      GrxRoundedCheckbox(
-                        initialValue: person.single,
+                      FieldsSample(
+                        person: person,
+                        leaders: _leaders,
+                        roles: _roles,
                       ),
                       GrxFloatingActionButton(
                         isLoading: false,
