@@ -25,6 +25,19 @@ class FieldsSample extends StatefulWidget {
 }
 
 class _FieldsSampleState extends State<FieldsSample> {
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    Future.delayed(const Duration(seconds: 5), () {
+      setState(() {
+        _isLoading = false;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -37,6 +50,7 @@ class _FieldsSampleState extends State<FieldsSample> {
           onSaved: (value) => widget.person.name = value!,
           validator: (value) =>
               (value?.isEmpty ?? true) ? 'Insira o nome da pessoa' : null,
+          isLoading: _isLoading,
         ),
         GrxDateTimePickerFormField(
           initialValue: widget.person.birthDate,
@@ -56,6 +70,7 @@ class _FieldsSampleState extends State<FieldsSample> {
           // validator: (value) => (value?.isEmpty ?? true)
           //     ? 'Insira a data de nascimento'
           //     : null,
+          isLoading: _isLoading,
         ),
         GrxDropdownFormField<Person>(
           initialValue: widget.person.leadership,
@@ -81,6 +96,7 @@ class _FieldsSampleState extends State<FieldsSample> {
           },
           validator: (value) =>
               (value?.isEmpty ?? true) ? 'O líder deve ser informado' : null,
+          isLoading: _isLoading,
         ),
         GrxDropdownFormField<ParentWorshipType>(
           initialValue: widget.person.fatherType,
@@ -95,6 +111,7 @@ class _FieldsSampleState extends State<FieldsSample> {
           },
           validator: (value) =>
               (value?.isEmpty ?? true) ? 'O Tipo deve ser informado' : null,
+          isLoading: _isLoading,
         ),
         GrxMultiSelectFormField<Role>(
           initialValue: widget.person.roles,
@@ -128,6 +145,7 @@ class _FieldsSampleState extends State<FieldsSample> {
           validator: (value) => (value?.isEmpty ?? true)
               ? 'Ao menos uma função deve ser informada'
               : null,
+          isLoading: _isLoading,
         ),
         GrxCustomDropdownFormField<KnowledgeTrail>(
           initialValue: widget.person.trail,
@@ -146,6 +164,7 @@ class _FieldsSampleState extends State<FieldsSample> {
           // validator: (value) => (value?.isEmpty ?? true)
           //     ? 'O líder deve ser informado'
           //     : null,
+          isLoading: _isLoading,
         ),
         const GrxDashedDivider(
           padding: EdgeInsets.symmetric(vertical: 15.0),
@@ -154,6 +173,7 @@ class _FieldsSampleState extends State<FieldsSample> {
           initialValue: widget.person.createUser,
           labelText: 'Criar usuário',
           onSaved: (value) => widget.person.createUser = value,
+          isLoading: _isLoading,
         ),
         const GrxDashedDivider(
           title: 'Dados Auxiliares',

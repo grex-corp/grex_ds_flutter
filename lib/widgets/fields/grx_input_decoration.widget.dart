@@ -27,22 +27,21 @@ class GrxInputDecoration extends InputDecoration {
           errorStyle: GrxFieldStyles.inputErrorTextStyle,
           focusedErrorBorder: GrxFieldStyles.underlineInputFocusedErrorBorder,
           hintStyle: GrxFieldStyles.inputHintTextStyle,
-          suffix: Visibility(
-            visible: showClearButton,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Container(
-                padding: const EdgeInsets.all(3),
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                  color: GrxColors.cffd6dfea,
-                ),
-                child: GrxClearInputButton(
-                  onClear: onClear!,
-                ),
-              ),
-            ),
-          ),
+          suffix: showClearButton
+              ? Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Container(
+                    padding: const EdgeInsets.all(3),
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                      color: GrxColors.cffd6dfea,
+                    ),
+                    child: GrxClearInputButton(
+                      onClear: onClear!,
+                    ),
+                  ),
+                )
+              : null,
         );
 
   final void Function()? onClear;

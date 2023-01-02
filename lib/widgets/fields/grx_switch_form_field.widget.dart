@@ -11,10 +11,6 @@ const _defaultInputLabel =
 
 /// A Design System's [FormField] used like a switch
 class GrxSwitchFormField extends FormField<bool> {
-  final String labelText;
-  final void Function(bool)? onChanged;
-  final bool changeOnInitialValue;
-
   GrxSwitchFormField({
     required this.labelText,
     this.onChanged,
@@ -24,6 +20,7 @@ class GrxSwitchFormField extends FormField<bool> {
     final bool? initialValue,
     final bool enabled = true,
     final TextStyle? style,
+    this.isLoading = false,
   }) : super(
           key: key ?? UniqueKey(),
           initialValue: initialValue,
@@ -39,29 +36,32 @@ class GrxSwitchFormField extends FormField<bool> {
               });
             }
 
+            void onFieldChanged(data) {
+              state.didChange(data);
+
+              if (onChanged != null) onChanged(data);
+            }
+
             return Platform.isIOS
                 ? CupertinoSwitchListTile(
                     title: Text(labelText, style: style ?? _defaultInputLabel),
                     value: state.value ?? false,
                     activeColor: GrxColors.cff6bbaf0,
                     contentPadding: EdgeInsets.zero,
-                    onChanged: (data) {
-                      state.didChange(data);
-
-                      if (onChanged != null) onChanged(data);
-                    },
+                    onChanged: enabled && !isLoading ? onFieldChanged : null,
                   )
                 : SwitchListTile(
                     title: Text(labelText, style: style ?? _defaultInputLabel),
                     value: state.value ?? false,
                     activeColor: GrxColors.cff6bbaf0,
                     contentPadding: EdgeInsets.zero,
-                    onChanged: (data) {
-                      state.didChange(data);
-
-                      if (onChanged != null) onChanged(data);
-                    },
+                    onChanged: enabled && !isLoading ? onFieldChanged : null,
                   );
           },
         );
+
+  final String labelText;
+  final void Function(bool)? onChanged;
+  final bool changeOnInitialValue;
+  final bool isLoading;
 }

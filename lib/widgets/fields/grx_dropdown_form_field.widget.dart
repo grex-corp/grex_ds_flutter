@@ -5,14 +5,16 @@ import 'package:grex_ds/widgets/bottomsheet/grx_bottom_sheet_form_field_body.wid
 
 import '../../utils/grx_form_field.util.dart';
 import '../grx_stateful.widget.dart';
+import 'shimmers/grx_form_field_shimmer.widget.dart';
 
 class GrxDropdownFormField<T> extends GrxStatefulWidget {
   GrxDropdownFormField({
     super.key,
     required this.labelText,
     required this.data,
-    this.itemBuilder,
     required this.displayText,
+    this.controller,
+    this.itemBuilder,
     this.onSaved,
     this.hintText,
     this.initialValue,
@@ -20,7 +22,7 @@ class GrxDropdownFormField<T> extends GrxStatefulWidget {
     this.validator,
     this.searchable = false,
     this.enabled = true,
-    this.controller,
+    this.isLoading = false,
   });
 
   final TextEditingController? controller;
@@ -35,6 +37,7 @@ class GrxDropdownFormField<T> extends GrxStatefulWidget {
   final String? Function(String?)? validator;
   final bool searchable;
   final bool enabled;
+  final bool isLoading;
 
   @override
   State<StatefulWidget> createState() => _GrxDropdownStateFormField<T>();
@@ -97,6 +100,12 @@ class _GrxDropdownStateFormField<T> extends State<GrxDropdownFormField<T>> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.isLoading) {
+      return GrxFormFieldShimmer(
+        labelText: widget.labelText,
+      );
+    }
+
     return FormField<String>(
       initialValue: controller.text,
       autovalidateMode: AutovalidateMode.always,

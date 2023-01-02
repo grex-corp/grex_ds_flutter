@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:grex_ds/services/grx_bottom_sheet.service.dart';
 
 import '../../themes/colors/grx_colors.dart';
-import '../../themes/typography/styles/grx_caption_large_text.style.dart';
+import '../../themes/fields/grx_field_styles.theme.dart';
 import '../grx_chip.widget.dart';
 import '../bottomsheet/grx_bottom_sheet_form_field_body.widget.dart';
 import '../grx_stateful.widget.dart';
 import '../typography/grx_caption_text.widget.dart';
+import 'shimmers/grx_form_field_shimmer.widget.dart';
 import 'grx_input_decoration.widget.dart';
 
 class GrxMultiSelectFormField<T> extends GrxStatefulWidget {
@@ -27,6 +28,7 @@ class GrxMultiSelectFormField<T> extends GrxStatefulWidget {
     this.searchable = false,
     this.confirmButtonLabel,
     this.cancelButtonLabel,
+    this.isLoading = false,
   });
 
   final TextEditingController? controller;
@@ -43,6 +45,7 @@ class GrxMultiSelectFormField<T> extends GrxStatefulWidget {
   final FormFieldValidator<Iterable<T>>? validator;
   final bool enabled;
   final bool searchable;
+  final bool isLoading;
   final String? confirmButtonLabel;
   final String? cancelButtonLabel;
 
@@ -78,6 +81,12 @@ class _GrxMultiSelectStateFormField<T>
 
   @override
   Widget build(BuildContext context) {
+    if (widget.isLoading) {
+      return GrxFormFieldShimmer(
+        labelText: widget.labelText,
+      );
+    }
+
     return FormField<Iterable<T>>(
       initialValue: widget.initialValue,
       autovalidateMode: AutovalidateMode.always,
@@ -160,7 +169,7 @@ class _GrxMultiSelectStateFormField<T>
           child: Focus(
             focusNode: inputFocusNode,
             child: InputDecorator(
-              baseStyle: const GrxCaptionLargeTextStyle(),
+              baseStyle: GrxFieldStyles.inputTextStyle,
               decoration: GrxInputDecoration(
                 errorText: field.errorText,
                 labelText: widget.labelText,

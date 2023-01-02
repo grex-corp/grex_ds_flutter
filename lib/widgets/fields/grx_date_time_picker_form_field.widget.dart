@@ -3,13 +3,15 @@ import 'package:intl/intl.dart';
 
 import '../../utils/grx_form_field.util.dart';
 import '../grx_stateful.widget.dart';
+import 'shimmers/grx_form_field_shimmer.widget.dart';
 import 'grx_text_field.widget.dart';
 
 class GrxDateTimePickerFormField extends GrxStatefulWidget {
   GrxDateTimePickerFormField({
     super.key,
+    required this.labelText,
+    this.controller,
     this.initialValue,
-    this.labelText,
     this.hintText,
     this.dialogConfirmText = 'Confirm',
     this.dialogCancelText = 'Cancel',
@@ -21,11 +23,12 @@ class GrxDateTimePickerFormField extends GrxStatefulWidget {
     this.isDateTime = false,
     this.enabled = true,
     this.futureDate = false,
-    this.controller,
+    this.isLoading = false,
   });
 
+  final TextEditingController? controller;
   final DateTime? initialValue;
-  final String? labelText;
+  final String labelText;
   final String? hintText;
   final String dialogConfirmText;
   final String dialogCancelText;
@@ -37,7 +40,7 @@ class GrxDateTimePickerFormField extends GrxStatefulWidget {
   final bool isDateTime;
   final bool enabled;
   final bool futureDate;
-  final TextEditingController? controller;
+  final bool isLoading;
 
   @override
   State<StatefulWidget> createState() => _GrxDateTimePickerFormFieldState();
@@ -71,6 +74,12 @@ class _GrxDateTimePickerFormFieldState
 
   @override
   Widget build(_) {
+    if (widget.isLoading) {
+      return GrxFormFieldShimmer(
+        labelText: widget.labelText,
+      );
+    }
+    
     return FormField<String>(
       autovalidateMode: AutovalidateMode.always,
       initialValue: widget.initialValue?.toIso8601String(),

@@ -4,13 +4,15 @@ import 'package:flutter/services.dart';
 import '../../utils/grx_form_field.util.dart';
 import '../grx_stateful.widget.dart';
 import 'grx_text_field.widget.dart';
+import 'shimmers/grx_form_field_shimmer.widget.dart';
 
 /// A Design System's [FormField] used like text fields.
 class GrxTextFormField extends GrxStatefulWidget {
   GrxTextFormField({
     super.key,
+    required this.labelText,
+    this.controller,
     this.initialValue,
-    this.labelText,
     this.keyboardType,
     this.obscureText = false,
     this.onChanged,
@@ -30,11 +32,12 @@ class GrxTextFormField extends GrxStatefulWidget {
     this.autoFocus = false,
     this.enabled = true,
     this.inputFormatters,
-    this.controller,
+    this.isLoading = false,
   });
 
+  final TextEditingController? controller;
   final String? initialValue;
-  final String? labelText;
+  final String labelText;
   final TextInputType? keyboardType;
   final bool obscureText;
   final void Function(String?)? onChanged;
@@ -54,7 +57,7 @@ class GrxTextFormField extends GrxStatefulWidget {
   final bool autoFocus;
   final bool enabled;
   final List<TextInputFormatter>? inputFormatters;
-  final TextEditingController? controller;
+  final bool isLoading;
 
   @override
   State<StatefulWidget> createState() => _GrxTextFormFieldState();
@@ -79,6 +82,12 @@ class _GrxTextFormFieldState extends State<GrxTextFormField> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.isLoading) {
+      return GrxFormFieldShimmer(
+        labelText: widget.labelText,
+      );
+    }
+
     return FormField<String>(
       autovalidateMode: widget.autovalidateMode,
       initialValue: widget.initialValue,
