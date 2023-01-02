@@ -11,6 +11,7 @@ class GrxRoundedCheckbox extends StatefulWidget {
     this.onChanged,
     this.isTappable = true,
     this.enabled = true,
+    this.isLoading = false,
   });
 
   final bool initialValue;
@@ -18,6 +19,7 @@ class GrxRoundedCheckbox extends StatefulWidget {
   final Function(bool)? onChanged;
   final bool isTappable;
   final bool enabled;
+  final bool isLoading;
 
   @override
   State<StatefulWidget> createState() => _GrxRoundedCheckboxState();
@@ -42,9 +44,11 @@ class _GrxRoundedCheckboxState extends State<GrxRoundedCheckbox> {
 
   @override
   Widget build(BuildContext context) {
+    final opacity = widget.enabled && !widget.isLoading ? 1.0 : .5;
+
     return InkWell(
       splashColor: Colors.transparent,
-      onTap: widget.isTappable && widget.enabled
+      onTap: widget.isTappable && widget.enabled && !widget.isLoading
           ? () {
               setState(() {
                 _value = !_value;
@@ -60,9 +64,9 @@ class _GrxRoundedCheckboxState extends State<GrxRoundedCheckbox> {
           shape: BoxShape.circle,
           border: Border.all(
             width: 2,
-            color: _value ? GrxColors.cff1eb35e : GrxColors.cffdce2e8,
+            color: _value ? GrxColors.cff1eb35e.withOpacity(opacity) : GrxColors.cffdce2e8.withOpacity(opacity),
           ),
-          color: _value ? GrxColors.cff1eb35e : GrxColors.cfff9fbfd,
+          color: _value ? GrxColors.cff1eb35e.withOpacity(opacity) : GrxColors.cfff9fbfd.withOpacity(opacity),
         ),
         child: Padding(
           padding: const EdgeInsets.all(5.0),
@@ -74,7 +78,7 @@ class _GrxRoundedCheckboxState extends State<GrxRoundedCheckbox> {
                   ? Icon(
                       Icons.check,
                       size: widget.radius * 2,
-                      color: GrxColors.cffffffff,
+                      color: GrxColors.cffffffff.withOpacity(opacity),
                     )
                   : const SizedBox.shrink(),
             ),

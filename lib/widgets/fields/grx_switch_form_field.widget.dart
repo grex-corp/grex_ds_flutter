@@ -6,9 +6,6 @@ import '../../themes/colors/grx_colors.dart';
 import '../../themes/typography/styles/grx_headline_small_text.style.dart';
 import '../cupertino/cupertino_switch_list_tile.dart';
 
-const _defaultInputLabel =
-    GrxHeadlineSmallTextStyle(color: GrxColors.cff2e2e2e);
-
 /// A Design System's [FormField] used like a switch
 class GrxSwitchFormField extends FormField<bool> {
   GrxSwitchFormField({
@@ -17,9 +14,9 @@ class GrxSwitchFormField extends FormField<bool> {
     this.changeOnInitialValue = false,
     final Key? key,
     final void Function(bool)? onSaved,
+    final TextStyle? style,
     final bool? initialValue,
     final bool enabled = true,
-    final TextStyle? style,
     this.isLoading = false,
   }) : super(
           key: key ?? UniqueKey(),
@@ -42,16 +39,27 @@ class GrxSwitchFormField extends FormField<bool> {
               if (onChanged != null) onChanged(data);
             }
 
+            final opacity = enabled && !isLoading ? 1.0 : .5;
+            final defaultInputLabel = GrxHeadlineSmallTextStyle(
+              color: GrxColors.cff2e2e2e.withOpacity(opacity),
+            );
+
             return Platform.isIOS
                 ? CupertinoSwitchListTile(
-                    title: Text(labelText, style: style ?? _defaultInputLabel),
+                    title: Text(
+                      labelText,
+                      style: style ?? defaultInputLabel,
+                    ),
                     value: state.value ?? false,
                     activeColor: GrxColors.cff6bbaf0,
                     contentPadding: EdgeInsets.zero,
                     onChanged: enabled && !isLoading ? onFieldChanged : null,
                   )
                 : SwitchListTile(
-                    title: Text(labelText, style: style ?? _defaultInputLabel),
+                    title: Text(
+                      labelText,
+                      style: style ?? defaultInputLabel,
+                    ),
                     value: state.value ?? false,
                     activeColor: GrxColors.cff6bbaf0,
                     contentPadding: EdgeInsets.zero,

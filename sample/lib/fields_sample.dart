@@ -181,6 +181,7 @@ class _FieldsSampleState extends State<FieldsSample> {
         GrxCheckboxListTile(
           title: 'Solteiro',
           isChecked: widget.person.single,
+          isLoading: _isLoading,
           onTap: () {
             setState(() {
               widget.person.single = !widget.person.single;
@@ -189,6 +190,7 @@ class _FieldsSampleState extends State<FieldsSample> {
         ),
         GrxRoundedCheckbox(
           initialValue: widget.person.single,
+          isLoading: _isLoading,
         ),
       ],
     );

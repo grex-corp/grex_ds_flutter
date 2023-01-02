@@ -7,18 +7,27 @@ class GrxCheckbox extends StatelessWidget {
   const GrxCheckbox({
     super.key,
     this.isChecked = false,
+    this.enabled = true,
+    this.isLoading = false,
   });
 
   final bool isChecked;
+  final bool enabled;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
+    final opacity = enabled && !isLoading ? 1.0 : .4;
+
     return Container(
       height: 20,
       width: 20,
       decoration: BoxDecoration(
-        color: GrxColors.cfff9fbfd,
-        border: Border.all(color: GrxColors.cffdce2e8, width: 2.0),
+        color: GrxColors.cfff9fbfd.withOpacity(opacity),
+        border: Border.all(
+          color: GrxColors.cffdce2e8.withOpacity(opacity),
+          width: 2.0,
+        ),
         borderRadius: BorderRadius.circular(4.0),
       ),
       child: Padding(
