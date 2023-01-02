@@ -237,6 +237,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                         heroTag: 4,
                         // openPreview: false,
                         // editable: true,
+                        // isLoading: true,
                       ),
                       const SizedBox(
                         height: 16,

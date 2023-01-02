@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:grex_ds/widgets/grx_shimmer.widget.dart';
 
 import '../pages/image_preview.page.dart';
 import '../routes/fade_page.route.dart';
@@ -15,7 +16,7 @@ import 'typography/grx_body_text.widget.dart';
 
 class GrxUserAvatar extends StatefulWidget {
   const GrxUserAvatar({
-    Key? key,
+    super.key,
     this.text,
     this.uri,
     this.imageFile,
@@ -27,7 +28,8 @@ class GrxUserAvatar extends StatefulWidget {
     this.editable = false,
     this.avatarPickerButton,
     this.onPickAvatar,
-  }) : super(key: key);
+    this.isLoading = false,
+  });
 
   final String? text;
   final Uri? uri;
@@ -40,6 +42,7 @@ class GrxUserAvatar extends StatefulWidget {
   final bool editable;
   final Widget? avatarPickerButton;
   final void Function(File?)? onPickAvatar;
+  final bool isLoading;
 
   @override
   State<StatefulWidget> createState() => _GrxUserAvatarState();
@@ -50,6 +53,18 @@ class _GrxUserAvatarState extends State<GrxUserAvatar> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.isLoading) {
+      final size = Size.fromRadius(widget.radius);
+      return SizedBox.fromSize(
+        size: size,
+        child: GrxShimmer(
+          height: size.height,
+          width: size.width,
+          borderRadius: widget.radius,
+        ),
+      );
+    }
+
     return Stack(
       fit: StackFit.loose,
       clipBehavior: Clip.none,
@@ -85,13 +100,12 @@ class _GrxUserAvatarState extends State<GrxUserAvatar> {
                           : _buildAvatar(context, image),
                     ),
                     progressIndicatorBuilder: (context, url, downloadProgress) {
-                      final size = widget.radius * 2;
-
-                      return SizedBox(
-                        height: size,
-                        width: size,
+                      return SizedBox.fromSize(
+                        size: Size.fromRadius(widget.radius),
                         child: CircularProgressIndicator(
-                            value: downloadProgress.progress, strokeWidth: 1),
+                          value: downloadProgress.progress,
+                          strokeWidth: 1,
+                        ),
                       );
                     },
                     errorWidget: (context, url, error) =>
