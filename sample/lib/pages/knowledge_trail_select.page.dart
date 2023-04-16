@@ -63,32 +63,13 @@ class _KnowledgeTrailStateSelectPage extends State<KnowledgeTrailSelectPage> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Container(
-              margin: const EdgeInsets.only(top: 5, left: 20),
-              height: 45,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  const Text(
-                    "Trilho do Vencedor",
-                    // style: knowledgeTrailTitle,
-                  ),
-                  IconButton(
-                    icon: const Icon(
-                      Icons.close,
-                      color: Colors.grey,
-                      size: 24,
-                    ),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  )
-                ],
-              ),
+            GrxHeader(
+              title: 'Trilho do Vencedor',
+              showCloseButton: true,
             ),
-            const SizedBox(height: 100),
+            const SizedBox(height: 20),
             ListView.builder(
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: _knowledgeTrail.length,
               itemBuilder: (context, index) {
@@ -100,7 +81,7 @@ class _KnowledgeTrailStateSelectPage extends State<KnowledgeTrailSelectPage> {
                     children: <Widget>[
                       Column(
                         children: <Widget>[
-                          Text(
+                          GrxBodyText(
                             trail.priority.toString(),
                             // style: trail.priority > _data.priority
                             //     ? peopleDetailsEnumeratorText
@@ -140,12 +121,8 @@ class _KnowledgeTrailStateSelectPage extends State<KnowledgeTrailSelectPage> {
                       ),
                       Column(
                         children: <Widget>[
-                          Text(
+                          GrxCaptionLargeText(
                             trail.name,
-                            style: TextStyle(
-                                // fontFamily: fontName,
-                                color: Colors.grey[700],
-                                fontSize: 14),
                           ),
                           const SizedBox(
                             height: 35,

@@ -4,11 +4,11 @@ import 'package:grex_ds/utils/grx_utils.util.dart';
 import '../../themes/colors/grx_colors.dart';
 import '../../themes/icons/grx_icons.dart';
 
-const kSize = 70.0;
-const kBorder = kSize / 2.0;
-const kBorderRadius = BorderRadius.all(Radius.circular(kBorder));
-final kShape =
-    RoundedRectangleBorder(borderRadius: BorderRadius.circular(kBorder));
+const _kSize = 70.0;
+const _kBorder = _kSize / 2.0;
+const _kBorderRadius = BorderRadius.all(Radius.circular(_kBorder));
+final _kShape =
+    RoundedRectangleBorder(borderRadius: BorderRadius.circular(_kBorder));
 
 class GrxFloatingActionButton extends StatelessWidget {
   const GrxFloatingActionButton({
@@ -27,10 +27,10 @@ class GrxFloatingActionButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: isLoading ? null : onPressed,
       style: ElevatedButton.styleFrom(
-          shape: kShape, padding: const EdgeInsets.all(0.0), elevation: 0),
+          shape: _kShape, padding: const EdgeInsets.all(0.0), elevation: 0),
       child: Material(
         elevation: 10,
-        shape: kShape,
+        shape: _kShape,
         child: AnimatedContainer(
           duration: GrxUtils.defaultAnimationDuration,
           decoration: BoxDecoration(
@@ -51,12 +51,12 @@ class GrxFloatingActionButton extends StatelessWidget {
                       GrxColors.cff75f3ab,
                     ],
                   ),
-            borderRadius: kBorderRadius,
+            borderRadius: _kBorderRadius,
           ),
           child: CustomPaint(
             painter: _GradientPainter(
               strokeWidth: 1.5,
-              radius: kBorder,
+              radius: _kBorder,
               gradient: const LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
@@ -67,8 +67,8 @@ class GrxFloatingActionButton extends StatelessWidget {
               ),
             ),
             child: Container(
-              height: kSize,
-              width: kSize,
+              height: _kSize,
+              width: _kSize,
               alignment: Alignment.center,
               child: AnimatedSwitcher(
                 duration: GrxUtils.defaultAnimationDuration,

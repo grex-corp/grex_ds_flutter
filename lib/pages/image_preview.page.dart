@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:grex_ds/grex_ds.dart';
 import 'package:photo_view/photo_view.dart';
+
+import '../themes/colors/grx_colors.dart';
+import '../widgets/headers/grx_header.widger.dart';
 
 class ImagePreview extends StatelessWidget {
   const ImagePreview({
@@ -36,25 +38,11 @@ class ImagePreview extends StatelessWidget {
                       )
                     : null,
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    GrxHeadlineText(
-                      title,
-                      color: GrxColors.cffffffff,
-                    ),
-                    GrxIconButton(
-                      icon: GrxIcons.close,
-                      color: GrxColors.cffffffff,
-                      iconSize: 24,
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    )
-                  ],
-                ),
+              GrxHeader(
+                title: title,
+                foregroundColor: GrxColors.cffffffff,
+                showBackButton: false,
+                showCloseButton: true,
               ),
             ],
           ),

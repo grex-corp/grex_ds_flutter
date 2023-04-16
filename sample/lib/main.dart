@@ -6,13 +6,10 @@ import 'package:get/get.dart';
 import 'package:grex_ds/grex_ds.dart';
 import 'package:sample/extensions/string_extension.dart';
 
-import 'enums/parent_worship_type.dart';
 import 'fields_sample.dart';
 import 'localization/app_localizations.dart';
-import 'models/knowledge_trail_model.dart';
 import 'models/person.model.dart';
 import 'models/role.model.dart';
-import 'pages/knowledge_trail_select.page.dart';
 import 'typo_sample.dart';
 
 final _leaders = [
@@ -147,10 +144,12 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     // than having to individually change instances of widgets.
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
+      appBar: GrxHeader(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: widget.title,
+        backgroundColor: GrxColors.cff365278,
+        foregroundColor: GrxColors.cffffffff,
       ),
       body: Column(
         children: [
@@ -214,11 +213,13 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                             icon: GrxIcons.whatsapp,
                             margin:
                                 const EdgeInsets.only(bottom: 16, right: 10),
+                            iconSize: 30,
                             onPressed: () {},
                           ),
                           GrxIconButton(
                             icon: GrxIcons.phone,
                             margin: const EdgeInsets.only(bottom: 16),
+                            iconSize: 30,
                             onPressed: () {},
                           ),
                         ],
@@ -250,6 +251,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                         heroTag: 5,
                         // openPreview: false,
                         editable: true,
+                        // isLoading: true,
                         onPickAvatar: (file) async {
                           selectedImage = file;
                           setState(() {});
@@ -323,6 +325,30 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                       ),
                       const SizedBox(
                         height: 20,
+                      ),
+                      GrxHeader(
+                        title: 'Preview Header',
+                        showCloseButton: true,
+                      ),
+                      GrxHeader(
+                        title: 'Preview Header With Back Button',
+                        showBackButton: true,
+                        backgroundColor: Colors.blue,
+                        foregroundColor: Colors.white,
+                      ),
+                      GrxHeader(
+                        title: 'Preview Header With Actions a bit long',
+                        height: 70.0,
+                        actions: [
+                          GrxFilterButton(
+                            text: 'Filtros',
+                            onPressed: () {},
+                          ),
+                          GrxAddButton(
+                            onPressed: () {},
+                            margin: const EdgeInsets.only(right: 10.0),
+                          ),
+                        ],
                       ),
                     ],
                   ),

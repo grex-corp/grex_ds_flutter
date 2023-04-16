@@ -4,13 +4,13 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:grex_ds/widgets/grx_shimmer.widget.dart';
 
+import '../extensions/uint8_list.extension.dart';
 import '../pages/image_preview.page.dart';
 import '../routes/fade_page.route.dart';
 import '../services/grx_image_picker.service.dart';
 import '../themes/colors/grx_colors.dart';
 import '../themes/icons/grx_icons.dart';
 import '../utils/grx_utils.util.dart';
-import '../extensions/uint8_list.extension.dart';
 import 'buttons/grx_circle_button.widget.dart';
 import 'typography/grx_body_text.widget.dart';
 
@@ -175,15 +175,17 @@ class _GrxUserAvatarState extends State<GrxUserAvatar> {
                   onPressed: () async {
                     setLoading(true);
 
-                    final file = await ImagePickerService.pickImage(context);
+                    try {
+                      final file = await ImagePickerService.pickImage(context);
 
-                    setLoading(false);
-
-                    if (widget.onPickAvatar != null) {
-                      final bytes = await file?.readAsBytes();
-                      widget.onPickAvatar!(
-                        await bytes?.toFile(),
-                      );
+                      if (widget.onPickAvatar != null) {
+                        final bytes = await file?.readAsBytes();
+                        widget.onPickAvatar!(
+                          await bytes?.toFile(),
+                        );
+                      }
+                    } finally {
+                      setLoading(false);
                     }
                   },
                 ),

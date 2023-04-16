@@ -7,7 +7,7 @@ class GrxIconButton extends StatelessWidget {
     super.key,
     required this.icon,
     required this.onPressed,
-    this.iconSize = 30,
+    this.iconSize = 24.0,
     this.color = GrxColors.cff75f3ab,
     this.margin,
   });
@@ -27,7 +27,7 @@ class GrxIconButton extends StatelessWidget {
         onPressed: onPressed,
         iconSize: iconSize,
         color: color,
-        splashRadius: 22,
+        splashRadius: 22.0,
       ),
     );
   }
