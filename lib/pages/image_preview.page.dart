@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:photo_view/photo_view.dart';
 
 import '../themes/colors/grx_colors.dart';
-import '../widgets/headers/grx_header.widger.dart';
+import '../widgets/headers/grx_header.widget.dart';
 
 class ImagePreview extends StatelessWidget {
   const ImagePreview({

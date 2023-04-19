@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../themes/colors/grx_colors.dart';
 import '../../themes/system_overlay/grx_system_overlay.style.dart';
+import '../../themes/typography/styles/grx_headline_medium_text.style.dart';
+import '../../themes/typography/styles/grx_headline_text.style.dart';
+import '../../utils/grx_button.util.dart';
 import '../buttons/grx_back_button.widget.dart';
 import '../buttons/grx_close_button.widget.dart';
-import '../typography/grx_headline_medium_text.widget.dart';
+import '../typography/grx_text.widget.dart';
 
 const double _kHeight = 60;
 
@@ -18,9 +22,12 @@ class GrxHeader extends StatelessWidget implements PreferredSizeWidget {
     this.showBackButton = false,
     this.showCloseButton = false,
     this.height = _kHeight,
-  }) {
-    isLightBackground = backgroundColor.computeLuminance() > .5;
-  }
+    this.animationProgress = 0,
+    final SystemUiOverlayStyle? systemOverlayStyle,
+  }) : systemOverlayStyle = systemOverlayStyle ??
+            (backgroundColor.computeLuminance() > .5
+                ? GrxSystemOverlayStyle.dark
+                : GrxSystemOverlayStyle.light);
 
   final String title;
   final Color backgroundColor;
@@ -29,22 +36,29 @@ class GrxHeader extends StatelessWidget implements PreferredSizeWidget {
   final bool showBackButton;
   final bool showCloseButton;
   final double height;
-  late final bool isLightBackground;
+  final double animationProgress;
+  final SystemUiOverlayStyle systemOverlayStyle;
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: GrxHeadlineMediumText(
-        title,
-        color: foregroundColor,
+      title: Padding(
+        padding: EdgeInsets.lerp(EdgeInsets.zero,
+            const EdgeInsets.only(left: 8.0), animationProgress)!,
+        child: GrxText(
+          title,
+          style: TextStyle.lerp(
+            GrxHeadlineTextStyle(color: foregroundColor),
+            GrxHeadlineMediumTextStyle(color: foregroundColor),
+            animationProgress,
+          )!,
+        ),
       ),
       elevation: 0,
       centerTitle: false,
       backgroundColor: backgroundColor,
       foregroundColor: foregroundColor,
-      systemOverlayStyle: isLightBackground
-          ? GrxSystemOverlayStyle.dark
-          : GrxSystemOverlayStyle.light,
+      systemOverlayStyle: systemOverlayStyle,
       leading: Visibility(
         visible: showBackButton,
         child: GrxBackButton(
@@ -67,7 +81,10 @@ class GrxHeader extends StatelessWidget implements PreferredSizeWidget {
               .map(
                 (e) => Padding(
                   padding: EdgeInsets.symmetric(
-                    vertical: (height - 48.0) / 2,
+                    vertical: (height -
+                            GrxButtonUtils.buttonAnimationProgressCalc(
+                                animationProgress)) /
+                        2,
                     horizontal: 6.0,
                   ),
                   child: e,

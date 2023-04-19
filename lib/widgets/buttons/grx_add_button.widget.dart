@@ -9,6 +9,7 @@ class GrxAddButton extends GrxCircleButton {
     super.key,
     required super.onPressed,
     super.margin,
+    super.size = 48.0,
   }) : super(
           child: const Icon(
             GrxIcons.add,
@@ -18,6 +19,5 @@ class GrxAddButton extends GrxCircleButton {
           foregroundColor: GrxColors.cff7593b5,
           elevation: 5,
           showShadows: true,
-          size: 48.0,
         );
 }

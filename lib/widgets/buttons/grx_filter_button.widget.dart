@@ -12,7 +12,7 @@ class GrxFilterButton extends GrxSecondaryButton {
     super.margin,
   }) : super(
           icon: GrxIcons.filter_list,
-          iconSize: 18.0,
+          iconSize: 16.0,
           mainAxisSize: MainAxisSize.min,
         );
 }

@@ -10,5 +10,10 @@
   "fields.datetime.hint": "02/10/1997",
 
   "pages.people.name": "Nome",
-  "pages.people.birth-date": "Data de nascimento"
+  "pages.people.birth-date": "Data de nascimento",
+
+  "home.tab.dashboard": "Painel",
+  "home.tab.cellules": "Células",
+  "home.tab.people": "Pessoas",
+  "home.tab.settings": "Ajustes"
 }

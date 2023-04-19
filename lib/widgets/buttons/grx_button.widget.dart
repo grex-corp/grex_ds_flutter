@@ -25,7 +25,7 @@ class GrxButton extends StatelessWidget {
     this.iconPadding = 5,
     this.elevation = 5,
     this.shape,
-    this.padding = const EdgeInsets.symmetric(vertical: 12, horizontal: 25),
+    this.padding = const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
     this.style,
   }) : assert(text != null || textSpan != null);
 

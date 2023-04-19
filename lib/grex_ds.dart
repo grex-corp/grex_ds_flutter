@@ -93,7 +93,9 @@ export 'widgets/grx_divider.widget.dart' show GrxDivider;
 /// Widget/Avatar
 export 'widgets/grx_user_avatar.widget.dart' show GrxUserAvatar;
 /// Widget/Headers
-export 'widgets/headers/grx_header.widger.dart' show GrxHeader;
+export 'widgets/headers/grx_header.widget.dart' show GrxHeader;
+export 'widgets/headers/grx_searchable_header.widget.dart' show GrxSearchableHeader;
+export 'widgets/headers/grx_searchable_sliver_header.widget.dart' show GrxSearchableSliverHeader;
 /// Widgets/Typography
 export 'widgets/typography/grx_body_text.widget.dart' show GrxBodyText;
 export 'widgets/typography/grx_caption_large_text.widget.dart'
