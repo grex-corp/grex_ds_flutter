@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../../themes/colors/grx_colors.dart';
 import '../typography/grx_headline_medium_text.widget.dart';
 
-class BottomSheetGrabber extends StatefulWidget {
-  const BottomSheetGrabber({
+class GrxBottomSheetGrabber extends StatefulWidget {
+  const GrxBottomSheetGrabber({
     super.key,
     this.title,
   });
@@ -12,10 +12,10 @@ class BottomSheetGrabber extends StatefulWidget {
   final String? title;
 
   @override
-  State<StatefulWidget> createState() => _BottomSheetGrabberState();
+  State<StatefulWidget> createState() => _GrxBottomSheetGrabberState();
 }
 
-class _BottomSheetGrabberState extends State<BottomSheetGrabber> {
+class _GrxBottomSheetGrabberState extends State<GrxBottomSheetGrabber> {
   @override
   Widget build(BuildContext context) {
     return Column(
