@@ -15,5 +15,7 @@
   "home.tab.dashboard": "Dashboard",
   "home.tab.cellules": "Cellules",
   "home.tab.people": "People",
-  "home.tab.settings": "Settings"
+  "home.tab.settings": "Settings",
+
+  "login.signin.button.text": "Access"
 }

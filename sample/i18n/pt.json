@@ -15,5 +15,7 @@
   "home.tab.dashboard": "Painel",
   "home.tab.cellules": "Células",
   "home.tab.people": "Pessoas",
-  "home.tab.settings": "Ajustes"
+  "home.tab.settings": "Ajustes",
+
+  "login.signin.button.text": "Acessar"
 }

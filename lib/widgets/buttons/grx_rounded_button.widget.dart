@@ -12,16 +12,16 @@ class GrxRoundedButton extends StatelessWidget {
     this.transform = GrxTextTransform.none,
     this.onPressed,
     this.margin,
-    this.height = 48,
+    this.height = 48.0,
     this.mainAxisSize = MainAxisSize.max,
     required this.foregroundColor,
     this.backgroundColor,
     this.icon,
     this.iconAlign = GrxAlign.left,
-    this.iconSize = 20,
+    this.iconSize = 20.0,
     this.iconColor,
-    this.iconPadding = 5,
-    this.elevation = 5,
+    this.iconPadding = 5.0,
+    this.elevation = 5.0,
   });
 
   final String? text;

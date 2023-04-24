@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -275,7 +276,7 @@ class _DashboardPageState extends State<DashboardPage>
                           });
                         },
                       ),
-                      GrxRoundedButton(
+                      GrxAnimatedLoadingButton(
                         textSpan: const TextSpan(
                           children: [
                             TextSpan(
@@ -294,12 +295,46 @@ class _DashboardPageState extends State<DashboardPage>
                             )
                           ],
                         ),
-                        foregroundColor: GrxColors.cffffffff,
                         margin: const EdgeInsets.symmetric(
                           horizontal: 16,
                         ),
                         backgroundColor: GrxColors.cff365278,
-                        onPressed: () {},
+                        onPressed: (controller) async {
+                          controller.start();
+
+                          await Future.delayed(const Duration(seconds: 4));
+
+                          controller.error();
+
+                          Timer(
+                            const Duration(seconds: 2),
+                            () {
+                              controller.reset();
+                            },
+                          );
+                        },
+                      ),
+                      GrxAnimatedLoadingButton(
+                        text: 'login.signin.button.text'.translate,
+                        margin: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 8.0,
+                        ),
+                        backgroundColor: GrxColors.cff75f3ab,
+                        onPressed: (controller) async {
+                          controller.start();
+
+                          await Future.delayed(const Duration(seconds: 4));
+
+                          controller.success();
+
+                          Timer(
+                            const Duration(seconds: 2),
+                            () {
+                              controller.reset();
+                            },
+                          );
+                        },
                       ),
                       const SizedBox(
                         height: 20,
