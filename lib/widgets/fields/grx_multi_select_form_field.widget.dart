@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../services/grx_bottom_sheet.service.dart';
 import '../../themes/colors/grx_colors.dart';
 import '../../themes/fields/grx_field_styles.theme.dart';
-import '../bottomsheet/grx_bottom_sheet_form_field_body.widget.dart';
+import '../bottom_sheet/grx_bottom_sheet_form_field_body.widget.dart';
 import '../grx_chip.widget.dart';
 import '../grx_stateful.widget.dart';
 import '../typography/grx_caption_text.widget.dart';
