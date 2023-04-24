@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:grex_ds/widgets/grx_shimmer.widget.dart';
 
 import '../extensions/uint8_list.extension.dart';
 import '../pages/image_preview.page.dart';
@@ -12,6 +11,7 @@ import '../themes/colors/grx_colors.dart';
 import '../themes/icons/grx_icons.dart';
 import '../utils/grx_utils.util.dart';
 import 'buttons/grx_circle_button.widget.dart';
+import 'grx_shimmer.widget.dart';
 import 'typography/grx_body_text.widget.dart';
 
 class GrxUserAvatar extends StatefulWidget {

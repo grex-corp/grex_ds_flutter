@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:grex_ds/widgets/buttons/grx_button.widget.dart';
 
 import '../../enums/grx_align.enum.dart';
 import '../../enums/grx_text_transform.enum.dart';
 import '../../themes/colors/grx_colors.dart';
 import '../../themes/typography/styles/grx_headline_medium_text.style.dart';
+import 'grx_button.widget.dart';
 
 class GrxBottomButton extends StatelessWidget {
   const GrxBottomButton({

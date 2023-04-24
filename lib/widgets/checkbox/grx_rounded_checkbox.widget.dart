@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:grex_ds/utils/grx_utils.util.dart';
 
 import '../../themes/colors/grx_colors.dart';
+import '../../utils/grx_utils.util.dart';
 
 class GrxRoundedCheckbox extends StatefulWidget {
   const GrxRoundedCheckbox({
@@ -64,9 +64,13 @@ class _GrxRoundedCheckboxState extends State<GrxRoundedCheckbox> {
           shape: BoxShape.circle,
           border: Border.all(
             width: 2,
-            color: _value ? GrxColors.cff1eb35e.withOpacity(opacity) : GrxColors.cffdce2e8.withOpacity(opacity),
+            color: _value
+                ? GrxColors.cff1eb35e.withOpacity(opacity)
+                : GrxColors.cffdce2e8.withOpacity(opacity),
           ),
-          color: _value ? GrxColors.cff1eb35e.withOpacity(opacity) : GrxColors.cfff9fbfd.withOpacity(opacity),
+          color: _value
+              ? GrxColors.cff1eb35e.withOpacity(opacity)
+              : GrxColors.cfff9fbfd.withOpacity(opacity),
         ),
         child: Padding(
           padding: const EdgeInsets.all(5.0),

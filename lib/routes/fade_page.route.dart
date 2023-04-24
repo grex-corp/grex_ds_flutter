@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:grex_ds/utils/grx_utils.util.dart';
+
+import '../utils/grx_utils.util.dart';
 
 class FadePageRoute<T> extends PageRoute<T> {
   FadePageRoute({

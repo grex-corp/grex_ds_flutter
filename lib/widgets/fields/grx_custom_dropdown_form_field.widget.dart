@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:grex_ds/services/grx_bottom_sheet.service.dart';
 
+import '../../services/grx_bottom_sheet.service.dart';
 import '../../utils/grx_form_field.util.dart';
 import '../grx_stateful.widget.dart';
 import 'grx_text_field.widget.dart';
@@ -68,7 +68,7 @@ class _GrxDropdownStateFormField<T>
         labelText: widget.labelText,
       );
     }
-    
+
     return FormField<String>(
       initialValue: controller.text,
       autovalidateMode: AutovalidateMode.always,
