@@ -2,6 +2,7 @@ name: grex_ds
 description: Grex Design System for Flutter.
 version: 0.0.2
 homepage: https://grex.com.br
+repository: https://github.com/grex-corp/grex_ds_flutter
 
 environment:
   sdk: '>=2.18.2 <3.0.0'
