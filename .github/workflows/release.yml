@@ -33,7 +33,7 @@ jobs:
     steps:
       - name: Get latest published release tag
         id: get_latest_release
-        uses: pozetroninc/github-action-get-latest-release@v0.7.0
+        uses: pozetroninc/github-action-get-latest-release@2b51d48e904071035d6632715d41966f516711dd
         with:
           repository: ${{ github.repository }}
           excludes: prerelease, draft
