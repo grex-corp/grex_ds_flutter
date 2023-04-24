@@ -126,14 +126,13 @@ class _FieldsSampleState extends State<FieldsSample> {
               height: 50,
               child: Center(
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     GrxHeadlineMediumText(value.name),
-                    isSelected
-                        ? const Icon(
-                            GrxIcons.check,
-                            color: GrxColors.cff1eb35e,
-                          )
-                        : const SizedBox.shrink()
+                    GrxRoundedCheckbox(
+                      initialValue: isSelected,
+                      radius: 10,
+                    ),
                   ],
                 ),
               ),

@@ -10,10 +10,10 @@ class GrxTextTheme extends TextTheme {
   /// Creates a Design System's [TextTheme].
   const GrxTextTheme()
       : super(
-          headline6: const GrxHeadlineLargeTextStyle(),
-          subtitle2: const GrxHeadlineSmallTextStyle(),
-          bodyText1: const GrxBodyTextStyle(),
-          caption: const GrxCaptionTextStyle(),
-          button: const GrxHeadlineSmallTextStyle(),
+          titleLarge: const GrxHeadlineLargeTextStyle(),
+          titleSmall: const GrxHeadlineSmallTextStyle(),
+          bodyLarge: const GrxBodyTextStyle(),
+          bodySmall: const GrxCaptionTextStyle(),
+          labelLarge: const GrxHeadlineSmallTextStyle(),
         );
 }

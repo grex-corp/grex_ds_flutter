@@ -3,8 +3,8 @@ import 'package:intl/intl.dart';
 
 import '../../utils/grx_form_field.util.dart';
 import '../grx_stateful.widget.dart';
-import 'shimmers/grx_form_field_shimmer.widget.dart';
 import 'grx_text_field.widget.dart';
+import 'shimmers/grx_form_field_shimmer.widget.dart';
 
 class GrxDateTimePickerFormField extends GrxStatefulWidget {
   GrxDateTimePickerFormField({
@@ -79,7 +79,7 @@ class _GrxDateTimePickerFormFieldState
         labelText: widget.labelText,
       );
     }
-    
+
     return FormField<String>(
       autovalidateMode: AutovalidateMode.always,
       initialValue: widget.initialValue?.toIso8601String(),
@@ -125,7 +125,7 @@ class _GrxDateTimePickerFormFieldState
               keyboardType: TextInputType.datetime,
             );
 
-            if (selectedDate != null && widget.isDateTime) {
+            if (mounted && selectedDate != null && widget.isDateTime) {
               selectedTime = await showTimePicker(
                 context: context,
                 confirmText: widget.dialogConfirmText,

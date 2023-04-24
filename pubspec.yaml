@@ -1,18 +1,18 @@
 name: grex_ds
-description: A new Flutter package project.
+description: Grex Design System for Flutter.
 version: 0.0.1
-homepage:
+homepage: https://grex.com.br
 
 environment:
   sdk: '>=2.18.2 <3.0.0'
   flutter: '>=1.17.0'
 
 dependencies:
-  cached_network_image: ^3.2.2
   flutter:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
+  cached_network_image: ^3.2.2
   image_cropper: ^3.0.1
   image_picker: ^0.8.6
   intl: ^0.17.0
