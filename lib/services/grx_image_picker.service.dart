@@ -1,9 +1,13 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:grex_ds/grex_ds.dart';
-import 'package:grex_ds/services/grx_bottom_sheet.service.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '../themes/colors/grx_colors.dart';
+import '../themes/icons/grx_icons.dart';
+import '../widgets/typography/grx_body_text.widget.dart';
+import 'grx_bottom_sheet.service.dart';
 
 abstract class ImagePickerService {
   static final ImagePicker _picker = ImagePicker();

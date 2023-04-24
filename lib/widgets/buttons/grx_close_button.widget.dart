@@ -1,4 +1,6 @@
-import 'package:grex_ds/grex_ds.dart';
+import '../../themes/colors/grx_colors.dart';
+import '../../themes/icons/grx_icons.dart';
+import 'grx_icon_button.widget.dart';
 
 class GrxCloseButton extends GrxIconButton {
   const GrxCloseButton({

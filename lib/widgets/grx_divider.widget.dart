@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:grex_ds/grex_ds.dart';
+
+import '../themes/colors/grx_colors.dart';
 
 class GrxDivider extends Divider {
   const GrxDivider({

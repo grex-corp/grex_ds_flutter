@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:grex_ds/utils/grx_utils.util.dart';
 
 import '../../themes/colors/grx_colors.dart';
+import '../../utils/grx_utils.util.dart';
 
 class GrxCheckbox extends StatelessWidget {
   const GrxCheckbox({

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:grex_ds/utils/grx_utils.util.dart';
 
 import '../../themes/colors/grx_colors.dart';
 import '../../themes/icons/grx_icons.dart';
+import '../../utils/grx_utils.util.dart';
 
 const _kSize = 70.0;
 const _kBorder = _kSize / 2.0;
