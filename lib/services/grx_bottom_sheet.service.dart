@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../themes/colors/grx_colors.dart';
-import '../widgets/bottomSheet/bottom_sheet_grabber.widget.dart';
+import '../widgets/bottom_sheet/grx_bottom_sheet_grabber.widget.dart';
 
 class GrxBottomSheetService {
   GrxBottomSheetService({
@@ -25,7 +25,7 @@ class GrxBottomSheetService {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          BottomSheetGrabber(
+          GrxBottomSheetGrabber(
             title: title,
           ),
           _buildChild(controller),
