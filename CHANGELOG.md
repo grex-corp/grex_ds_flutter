@@ -1,6 +1,6 @@
 ## 0.0.6
 
-* Added Dart 3 compatibility
+* Created [GrxSvg] Widget
 
 ## 0.0.5
 
