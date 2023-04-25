@@ -9,7 +9,7 @@ import '../themes/icons/grx_icons.dart';
 import '../widgets/typography/grx_body_text.widget.dart';
 import 'grx_bottom_sheet.service.dart';
 
-abstract class ImagePickerService {
+abstract class GrxImagePickerService {
   static final ImagePicker _picker = ImagePicker();
 
   static Future<CroppedFile?> openCamera() async {

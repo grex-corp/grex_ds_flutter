@@ -257,6 +257,12 @@ class _DashboardPageState extends State<DashboardPage>
                               leadership: _leaders.last,
                             );
                           });
+
+                          GrxToastService.showSuccess(
+                            title: 'Nova pessoa criada',
+                            message: 'Cadastro realizado com sucesso',
+                            context: context,
+                          );
                         },
                       ),
                       GrxTertiaryButton(
@@ -335,6 +341,37 @@ class _DashboardPageState extends State<DashboardPage>
                             },
                           );
                         },
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Wrap(
+                        children: [
+                          GrxSecondaryButton(
+                            mainAxisSize: MainAxisSize.min,
+                            text: 'Show Error',
+                            onPressed: () => GrxToastService.showError(
+                              message: 'Error message inside error toast',
+                              context: context,
+                            ),
+                          ),
+                          GrxSecondaryButton(
+                            mainAxisSize: MainAxisSize.min,
+                            text: 'Show Warning',
+                            onPressed: () => GrxToastService.showWarning(
+                              message: 'Warning message inside warning toast',
+                              context: context,
+                            ),
+                          ),
+                          GrxSecondaryButton(
+                            mainAxisSize: MainAxisSize.min,
+                            text: 'Show Success',
+                            onPressed: () => GrxToastService.showSuccess(
+                              message: 'Success message inside success toast',
+                              context: context,
+                            ),
+                          ),
+                        ],
                       ),
                       const SizedBox(
                         height: 20,

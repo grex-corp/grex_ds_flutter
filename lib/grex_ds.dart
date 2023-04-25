@@ -9,7 +9,8 @@ export 'enums/grx_text_transform.enum.dart' show GrxTextTransform;
 /// Extensions
 export 'extensions/uint8_list.extension.dart' show Uint8ListExtension;
 /// Services
-export 'services/grx_image_picker.service.dart' show ImagePickerService;
+export 'services/grx_image_picker.service.dart' show GrxImagePickerService;
+export 'services/grx_toast.service.dart' show GrxToastService;
 /// Themes/Colors
 export 'themes/colors/grx_colors.dart' show GrxColors;
 /// Themes/FormFieldStyles
