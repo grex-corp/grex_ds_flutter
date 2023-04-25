@@ -1,3 +1,7 @@
+## 0.0.4
+
+* Exported [RoundedLoadingButtonController] from [RoundedLoadingButton] package
+
 ## 0.0.3
 
 * Created new [GrxAnimatedLoadingButton] widget

@@ -1,5 +1,8 @@
 library grex_ds;
 
+export 'package:rounded_loading_button/rounded_loading_button.dart'
+    show RoundedLoadingButtonController;
+
 export 'enums/grx_align.enum.dart' show GrxAlign;
 /// Enums
 export 'enums/grx_text_transform.enum.dart' show GrxTextTransform;
