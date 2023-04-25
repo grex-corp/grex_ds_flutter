@@ -176,7 +176,7 @@ class _GrxUserAvatarState extends State<GrxUserAvatar> {
                     setLoading(true);
 
                     try {
-                      final file = await ImagePickerService.pickImage(context);
+                      final file = await GrxImagePickerService.pickImage(context);
 
                       if (widget.onPickAvatar != null) {
                         final bytes = await file?.readAsBytes();

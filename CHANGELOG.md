@@ -1,3 +1,7 @@
+## 0.0.5
+
+* Created new [GrxToastService] service
+
 ## 0.0.4
 
 * Exported [RoundedLoadingButtonController] from [RoundedLoadingButton] package
