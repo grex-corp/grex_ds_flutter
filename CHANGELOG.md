@@ -1,3 +1,7 @@
+## 0.0.6
+
+* Added Dart 3 compatibility
+
 ## 0.0.5
 
 * Created new [GrxToastService] service
