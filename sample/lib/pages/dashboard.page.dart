@@ -400,6 +400,12 @@ class _DashboardPageState extends State<DashboardPage>
                           ),
                         ],
                       ),
+                      const SizedBox(
+                        height: 20.0,
+                      ),
+                      const GrxSvg(
+                        'assets/images/sheep.svg',
+                      ),
                     ],
                   ),
                 ),

@@ -1,3 +1,7 @@
+## 0.0.6
+
+* Created [GrxSvg] Widget
+
 ## 0.0.5
 
 * Created new [GrxToastService] service

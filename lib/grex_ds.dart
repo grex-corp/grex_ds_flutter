@@ -104,6 +104,8 @@ export 'widgets/headers/grx_searchable_header.widget.dart'
     show GrxSearchableHeader;
 export 'widgets/headers/grx_searchable_sliver_header.widget.dart'
     show GrxSearchableSliverHeader;
+///Widgets/Media
+export 'widgets/media/grx_svg.widget.dart' show GrxSvg;
 /// Widgets/Typography
 export 'widgets/typography/grx_body_text.widget.dart' show GrxBodyText;
 export 'widgets/typography/grx_caption_large_text.widget.dart'
