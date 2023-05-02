@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
@@ -9,17 +10,17 @@ import '../cupertino/cupertino_switch_list_tile.dart';
 /// A Design System's [FormField] used like a switch
 class GrxSwitchFormField extends FormField<bool> {
   GrxSwitchFormField({
+    final Key? key,
     required this.labelText,
     this.onChanged,
     this.changeOnInitialValue = false,
-    final Key? key,
     final void Function(bool)? onSaved,
     final TextStyle? style,
     final bool? initialValue,
     final bool enabled = true,
     this.isLoading = false,
   }) : super(
-          key: key ?? UniqueKey(),
+          key: key ?? ValueKey<int>(labelText.hashCode),
           initialValue: initialValue,
           onSaved: onSaved != null ? (value) => onSaved(value ?? false) : null,
           autovalidateMode: AutovalidateMode.always,

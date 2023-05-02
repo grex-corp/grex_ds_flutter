@@ -12,7 +12,7 @@ import 'shimmers/grx_form_field_shimmer.widget.dart';
 
 class GrxMultiSelectFormField<T> extends GrxStatefulWidget {
   GrxMultiSelectFormField({
-    super.key,
+    final Key? key,
     required this.labelText,
     required this.data,
     required this.itemBuilder,
@@ -29,7 +29,9 @@ class GrxMultiSelectFormField<T> extends GrxStatefulWidget {
     this.confirmButtonLabel,
     this.cancelButtonLabel,
     this.isLoading = false,
-  });
+  }) : super(
+          key: key ?? ValueKey<int>(labelText.hashCode),
+        );
 
   final TextEditingController? controller;
   final String labelText;

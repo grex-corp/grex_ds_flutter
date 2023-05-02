@@ -42,6 +42,7 @@ class GrxAnimatedLoadingButton extends StatelessWidget {
     return Container(
       margin: margin,
       child: RoundedLoadingButton(
+        key: UniqueKey(),
         controller: controller,
         onPressed: () => onPressed(controller),
         borderRadius: height / 2,

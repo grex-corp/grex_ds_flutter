@@ -72,7 +72,6 @@ class GrxText extends StatelessWidget {
                 TextSpan(
                   text: _capitalize(text),
                   style: style,
-
                 ),
             textDirection: TextDirection.ltr,
             maxLines: maxLines ?? 1,
@@ -123,7 +122,7 @@ class GrxText extends StatelessWidget {
       TextSpan(
         children: formattedText,
       ),
-      overflow: TextOverflow.ellipsis,
+      overflow: style.overflow,
       style: style,
       strutStyle: strutStyle,
       textAlign: textAlign,

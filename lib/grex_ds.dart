@@ -46,8 +46,9 @@ export 'themes/typography/styles/grx_text.style.dart' show GrxTextStyle;
 /// Themes/Typography/Utils
 export 'themes/typography/utils/grx_font_families.dart' show GrxFontFamilies;
 export 'themes/typography/utils/grx_font_weights.dart' show GrxFontWeights;
+export 'utils/grx_regex.util.dart' show GrxRegexUtils;
 /// Utils
-export 'utils/grx_utils.util.dart';
+export 'utils/grx_utils.util.dart' show GrxUtils;
 ///Widget/Buttons
 export 'widgets/buttons/grx_add_button.widget.dart' show GrxAddButton;
 export 'widgets/buttons/grx_animated_loading_button.widget.dart'
@@ -94,6 +95,9 @@ export 'widgets/fields/grx_text_form_field.widget.dart' show GrxTextFormField;
 export 'widgets/grx_chip.widget.dart' show GrxChip;
 /// Widget/DashedDivider
 export 'widgets/grx_dashed_divider.widget.dart' show GrxDashedDivider;
+///Widget/DismissibleScaffold
+export 'widgets/grx_dismissible_scaffold.widget.dart'
+    show GrxDismissibleScaffold;
 /// Widget/Divider
 export 'widgets/grx_divider.widget.dart' show GrxDivider;
 /// Widget/Avatar

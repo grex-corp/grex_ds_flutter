@@ -12,7 +12,7 @@ import 'shimmers/grx_form_field_shimmer.widget.dart';
 
 class GrxDropdownFormField<T> extends GrxStatefulWidget {
   GrxDropdownFormField({
-    super.key,
+    final Key? key,
     required this.labelText,
     required this.data,
     required this.displayText,
@@ -26,7 +26,9 @@ class GrxDropdownFormField<T> extends GrxStatefulWidget {
     this.searchable = false,
     this.enabled = true,
     this.isLoading = false,
-  });
+  }) : super(
+          key: key ?? ValueKey<int>(labelText.hashCode),
+        );
 
   final TextEditingController? controller;
   final String labelText;
