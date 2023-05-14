@@ -23,7 +23,10 @@ class GrxIconButton extends StatelessWidget {
     return Container(
       margin: margin,
       child: IconButton(
-        icon: Icon(icon),
+        icon: Icon(
+          icon,
+          size: iconSize,
+        ),
         onPressed: onPressed,
         iconSize: iconSize,
         color: color,

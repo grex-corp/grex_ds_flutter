@@ -46,6 +46,7 @@ export 'themes/typography/styles/grx_text.style.dart' show GrxTextStyle;
 /// Themes/Typography/Utils
 export 'themes/typography/utils/grx_font_families.dart' show GrxFontFamilies;
 export 'themes/typography/utils/grx_font_weights.dart' show GrxFontWeights;
+export 'utils/grx_linkify.util.dart' show GrxLinkify;
 export 'utils/grx_regex.util.dart' show GrxRegexUtils;
 /// Utils
 export 'utils/grx_utils.util.dart' show GrxUtils;

@@ -8,13 +8,20 @@ class GrxBottomSheetService {
     required this.context,
     required this.builder,
     this.title,
+    this.backgroundColor = GrxColors.cffffffff,
   });
 
   final BuildContext context;
   final Widget Function(ScrollController?) builder;
   final String? title;
+  final Color backgroundColor;
 
-  Widget _buildBottomSheet({ScrollController? controller}) {
+  bool isBottomSheetOpen = false;
+
+  Widget _buildBottomSheet({
+    ScrollController? controller,
+    final bool hideGrabber = false,
+  }) {
     final window = WidgetsBinding.instance.window;
 
     return Container(
@@ -25,8 +32,11 @@ class GrxBottomSheetService {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          GrxBottomSheetGrabber(
-            title: title,
+          Visibility(
+            visible: !hideGrabber,
+            child: GrxBottomSheetGrabber(
+              title: title,
+            ),
           ),
           _buildChild(controller),
         ],
@@ -35,9 +45,9 @@ class GrxBottomSheetService {
   }
 
   BoxDecoration _border() {
-    return const BoxDecoration(
-      color: GrxColors.cffffffff,
-      borderRadius: BorderRadius.only(
+    return BoxDecoration(
+      color: backgroundColor,
+      borderRadius: const BorderRadius.only(
         topLeft: Radius.circular(22.0),
         topRight: Radius.circular(22.0),
       ),
@@ -54,6 +64,8 @@ class GrxBottomSheetService {
     final double minSize = 0.25,
     final double initSize = 1.0,
   }) {
+    isBottomSheetOpen = true;
+
     return showModalBottomSheet<T>(
       backgroundColor: Colors.transparent,
       isScrollControlled: true,
@@ -67,15 +79,50 @@ class GrxBottomSheetService {
           builder: (_, controller) => _buildBottomSheet(controller: controller),
         );
       },
-    );
+    ).then((value) {
+      isBottomSheetOpen = false;
+      return value;
+    });
+  }
+
+  Future<T?> showUndisposable<T>() {
+    isBottomSheetOpen = true;
+
+    return showModalBottomSheet<T>(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      enableDrag: false,
+      isDismissible: false,
+      builder: (_) => WillPopScope(
+        onWillPop: () async => false,
+        child: _buildBottomSheet(
+          hideGrabber: true,
+        ),
+      ),
+    ).then((value) {
+      isBottomSheetOpen = false;
+      return value;
+    });
   }
 
   Future<T?> show<T>() {
+    isBottomSheetOpen = true;
+
     return showModalBottomSheet<T>(
       context: context,
       backgroundColor: Colors.transparent,
       isScrollControlled: true,
       builder: (_) => _buildBottomSheet(),
-    );
+    ).then((value) {
+      isBottomSheetOpen = false;
+      return value;
+    });
+  }
+
+  void dispose() {
+    if (isBottomSheetOpen) {
+      Navigator.of(context).pop();
+    }
   }
 }

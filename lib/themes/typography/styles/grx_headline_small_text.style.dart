@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import '../utils/grx_font_weights.dart';
 import 'grx_text.style.dart';
 
@@ -8,8 +10,9 @@ class GrxHeadlineSmallTextStyle extends GrxTextStyle {
     super.color,
     super.decoration,
     super.overflow,
+    final FontWeight? fontWeight,
   }) : super(
           fontSize: 14,
-          fontWeight: GrxFontWeights.semiBold,
+          fontWeight: fontWeight ?? GrxFontWeights.semiBold,
         );
 }

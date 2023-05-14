@@ -13,7 +13,7 @@ abstract class GrxToastService {
 
   static void init(BuildContext context) => _context = context;
 
-  static showError({
+  static void showError({
     required String message,
     String? title,
     Duration? toastDuration,
@@ -28,7 +28,7 @@ abstract class GrxToastService {
         context: context,
       );
 
-  static showWarning({
+  static void showWarning({
     required String message,
     String? title,
     Duration? toastDuration,
@@ -43,7 +43,7 @@ abstract class GrxToastService {
         context: context,
       );
 
-  static showSuccess({
+  static void showSuccess({
     required String message,
     String? title,
     Duration? toastDuration,
@@ -68,9 +68,15 @@ abstract class GrxToastService {
   }) {
     _validateContext(context);
 
+    int milliseconds = (message.length * 100 + (title?.length ?? 0) * 100);
+
+    if (milliseconds <= 3000) {
+      milliseconds = 3000;
+    }
+
     final duration = toastDuration ??
         Duration(
-          milliseconds: (message.length * 100 + (title?.length ?? 0) * 100),
+          milliseconds: milliseconds,
         );
 
     final buildContext = (context ?? _context)!;
