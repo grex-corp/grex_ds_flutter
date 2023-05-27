@@ -1,3 +1,7 @@
+## 0.0.7
+
+* Upgraded to Dart 3
+
 ## 0.0.6
 
 * Created [GrxSvg] Widget
