@@ -9,6 +9,7 @@ import '../routes/fade_page.route.dart';
 import '../services/grx_image_picker.service.dart';
 import '../themes/colors/grx_colors.dart';
 import '../themes/icons/grx_icons.dart';
+import '../utils/grx_regex.util.dart';
 import '../utils/grx_utils.util.dart';
 import 'buttons/grx_circle_button.widget.dart';
 import 'grx_shimmer.widget.dart';
@@ -118,9 +119,11 @@ class _GrxUserAvatarState extends State<GrxUserAvatar> {
                         child: Padding(
                           padding: const EdgeInsets.all(2),
                           child: GrxBodyText(
-                            RegExp(widget.text!.split(' ').length >= 2
-                                    ? r'\b[A-Za-z]'
-                                    : r'[A-Za-z]')
+                            RegExp(
+                              widget.text!.split(' ').length >= 2
+                                  ? GrxRegexUtils.fullNameAvatarRgx
+                                  : GrxRegexUtils.singleNameAvatarRgx,
+                            )
                                 .allMatches(widget.text!)
                                 .map((m) => m.group(0))
                                 .join()
@@ -176,7 +179,8 @@ class _GrxUserAvatarState extends State<GrxUserAvatar> {
                     setLoading(true);
 
                     try {
-                      final file = await GrxImagePickerService.pickImage(context);
+                      final file =
+                          await GrxImagePickerService.pickImage(context);
 
                       if (widget.onPickAvatar != null) {
                         final bytes = await file?.readAsBytes();

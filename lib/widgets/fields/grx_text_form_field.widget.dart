@@ -9,7 +9,7 @@ import 'shimmers/grx_form_field_shimmer.widget.dart';
 /// A Design System's [FormField] used like text fields.
 class GrxTextFormField extends GrxStatefulWidget {
   GrxTextFormField({
-    super.key,
+    final Key? key,
     required this.labelText,
     this.controller,
     this.initialValue,
@@ -33,7 +33,9 @@ class GrxTextFormField extends GrxStatefulWidget {
     this.enabled = true,
     this.inputFormatters,
     this.isLoading = false,
-  });
+  }) : super(
+          key: key ?? ValueKey<int>(labelText.hashCode),
+        );
 
   final TextEditingController? controller;
   final String? initialValue;

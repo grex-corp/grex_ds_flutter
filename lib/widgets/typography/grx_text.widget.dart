@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 import '../../enums/grx_text_transform.enum.dart';
+import '../../themes/colors/grx_colors.dart';
+import '../../utils/grx_linkify.util.dart';
 import '../grx_shimmer.widget.dart';
 
 /// A container that has some default properties which should be extended by others Design System's [Text].
@@ -24,6 +26,7 @@ class GrxText extends StatelessWidget {
     this.textHeightBehavior,
     this.selectionColor,
     this.isLoading = false,
+    this.shouldLinkify = false,
   }) : textSpan = null;
 
   const GrxText.rich(
@@ -43,6 +46,7 @@ class GrxText extends StatelessWidget {
     this.textHeightBehavior,
     this.selectionColor,
     this.isLoading = false,
+    this.shouldLinkify = false,
   }) : text = null;
 
   final String? text;
@@ -61,6 +65,7 @@ class GrxText extends StatelessWidget {
   final TextHeightBehavior? textHeightBehavior;
   final Color? selectionColor;
   final bool isLoading;
+  final bool shouldLinkify;
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +77,6 @@ class GrxText extends StatelessWidget {
                 TextSpan(
                   text: _capitalize(text),
                   style: style,
-
                 ),
             textDirection: TextDirection.ltr,
             maxLines: maxLines ?? 1,
@@ -91,10 +95,72 @@ class GrxText extends StatelessWidget {
       );
     }
 
+    final formattedText = formatText();
+
+    return Text.rich(
+      TextSpan(
+        children: formattedText,
+      ),
+      overflow: style.overflow,
+      style: style,
+      strutStyle: strutStyle,
+      textAlign: textAlign,
+      textDirection: textDirection,
+      locale: locale,
+      softWrap: softWrap,
+      textScaleFactor: textScaleFactor,
+      maxLines: maxLines,
+      semanticsLabel: semanticsLabel,
+      textWidthBasis: textWidthBasis,
+      textHeightBehavior: textHeightBehavior ??
+          const TextHeightBehavior(
+            leadingDistribution: TextLeadingDistribution.even,
+          ),
+      selectionColor: selectionColor,
+    );
+  }
+
+  String? _capitalize(String? text) => transform == GrxTextTransform.uppercase
+      ? text?.toUpperCase()
+      : transform == GrxTextTransform.lowercase
+          ? text?.toLowerCase()
+          : text;
+
+  List<InlineSpan> formatText() {
+    InlineSpan? textSpan;
+
+    if (shouldLinkify) {
+      final linkfyText = <InlineSpan>[];
+
+      if (text?.isNotEmpty ?? false) {
+        linkfyText.addAll(
+          GrxLinkify.plainText(
+            text: text!,
+            defaultStyle: style,
+            linkColor: GrxColors.cff289fff,
+          ),
+        );
+      } else if (this.textSpan != null) {
+        linkfyText.addAll(
+          GrxLinkify.textSpan(
+            textSpan: this.textSpan!,
+            defaultStyle: style,
+            linkColor: GrxColors.cff289fff,
+          ),
+        );
+      }
+
+      textSpan = TextSpan(
+        children: linkfyText,
+      );
+    } else {
+      textSpan = this.textSpan;
+    }
+
     final formattedText = <InlineSpan>[];
 
     if (textSpan != null) {
-      textSpan?.visitChildren((span) {
+      textSpan.visitChildren((span) {
         if (span is TextSpan) {
           final spanText = span.text;
           final spanStyle = span.style ?? style;
@@ -103,6 +169,14 @@ class GrxText extends StatelessWidget {
             TextSpan(
               text: _capitalize(spanText),
               style: spanStyle,
+              recognizer: span.recognizer,
+              children: span.children,
+              locale: span.locale,
+              mouseCursor: span.mouseCursor,
+              onEnter: span.onEnter,
+              onExit: span.onExit,
+              semanticsLabel: span.semanticsLabel,
+              spellOut: span.spellOut,
             ),
           );
         } else {
@@ -119,29 +193,6 @@ class GrxText extends StatelessWidget {
       );
     }
 
-    return Text.rich(
-      TextSpan(
-        children: formattedText,
-      ),
-      overflow: TextOverflow.ellipsis,
-      style: style,
-      strutStyle: strutStyle,
-      textAlign: textAlign,
-      textDirection: textDirection,
-      locale: locale,
-      softWrap: softWrap,
-      textScaleFactor: textScaleFactor,
-      maxLines: maxLines,
-      semanticsLabel: semanticsLabel,
-      textWidthBasis: textWidthBasis,
-      textHeightBehavior: textHeightBehavior,
-      selectionColor: selectionColor,
-    );
+    return formattedText;
   }
-
-  String? _capitalize(String? text) => transform == GrxTextTransform.uppercase
-      ? text?.toUpperCase()
-      : transform == GrxTextTransform.lowercase
-          ? text?.toLowerCase()
-          : text;
 }

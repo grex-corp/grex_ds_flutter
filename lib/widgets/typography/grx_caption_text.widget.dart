@@ -16,6 +16,7 @@ class GrxCaptionText extends StatelessWidget {
     this.textAlign,
     this.transform = GrxTextTransform.none,
     this.color = GrxColors.cff2e2e2e,
+    this.fontWeight,
     this.decoration,
     this.overflow,
     this.isLoading = false,
@@ -27,6 +28,7 @@ class GrxCaptionText extends StatelessWidget {
     this.textAlign,
     this.transform = GrxTextTransform.none,
     this.color = GrxColors.cff2e2e2e,
+    this.fontWeight,
     this.decoration,
     this.overflow,
     this.isLoading = false,
@@ -37,6 +39,7 @@ class GrxCaptionText extends StatelessWidget {
   final GrxTextTransform transform;
   final TextAlign? textAlign;
   final Color color;
+  final FontWeight? fontWeight;
   final TextDecoration? decoration;
   final TextOverflow? overflow;
   final bool isLoading;
@@ -47,6 +50,7 @@ class GrxCaptionText extends StatelessWidget {
       color: color,
       decoration: decoration,
       overflow: overflow,
+      fontWeight: fontWeight,
     );
 
     return textSpan != null

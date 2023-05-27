@@ -3,8 +3,7 @@ import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 import '../../enums/grx_text_transform.enum.dart';
 import '../../themes/colors/grx_colors.dart';
-import '../../themes/typography/styles/grx_headline_small_text.style.dart';
-import '../typography/grx_text.widget.dart';
+import '../typography/grx_headline_small_text.widget.dart';
 
 class GrxAnimatedLoadingButton extends StatelessWidget {
   GrxAnimatedLoadingButton({
@@ -53,17 +52,15 @@ class GrxAnimatedLoadingButton extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
           child: textSpan != null
-              ? GrxText.rich(
+              ? GrxHeadlineSmallText.rich(
                   textSpan,
-                  style: (const GrxHeadlineSmallTextStyle())
-                      .copyWith(color: foregroundColor),
+                  color: foregroundColor,
                   textAlign: TextAlign.center,
                   transform: transform,
                 )
-              : GrxText(
+              : GrxHeadlineSmallText(
                   text,
-                  style: (const GrxHeadlineSmallTextStyle())
-                      .copyWith(color: foregroundColor),
+                  color: foregroundColor,
                   textAlign: TextAlign.center,
                   transform: transform,
                 ),

@@ -1,6 +1,7 @@
-import 'package:grex_ds/themes/typography/styles/grx_text.style.dart';
+import 'dart:ui';
 
 import '../utils/grx_font_weights.dart';
+import 'grx_text.style.dart';
 
 /// A Design System's [TextStyle] primarily used by medium titles.
 class GrxHeadlineMediumTextStyle extends GrxTextStyle {
@@ -9,8 +10,9 @@ class GrxHeadlineMediumTextStyle extends GrxTextStyle {
     super.color,
     super.decoration,
     super.overflow,
+    final FontWeight? fontWeight,
   }) : super(
           fontSize: 16,
-          fontWeight: GrxFontWeights.semiBold,
+          fontWeight: fontWeight ?? GrxFontWeights.semiBold,
         );
 }

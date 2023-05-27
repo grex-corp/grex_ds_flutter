@@ -8,7 +8,7 @@ import 'shimmers/grx_form_field_shimmer.widget.dart';
 
 class GrxDateTimePickerFormField extends GrxStatefulWidget {
   GrxDateTimePickerFormField({
-    super.key,
+    final Key? key,
     required this.labelText,
     this.controller,
     this.initialValue,
@@ -24,7 +24,9 @@ class GrxDateTimePickerFormField extends GrxStatefulWidget {
     this.enabled = true,
     this.futureDate = false,
     this.isLoading = false,
-  });
+  }) : super(
+          key: key ?? ValueKey<int>(labelText.hashCode),
+        );
 
   final TextEditingController? controller;
   final DateTime? initialValue;

@@ -1,11 +1,11 @@
 name: grex_ds
 description: Grex Design System for Flutter.
-version: 0.0.6
+version: 0.0.7
 homepage: https://grex.com.br
 repository: https://github.com/grex-corp/grex_ds_flutter
 
 environment:
-  sdk: '>=2.18.2 <3.0.0'
+  sdk: '>=3.0.0 <4.0.0'
   flutter: '>=1.17.0'
 
 dependencies:
@@ -13,15 +13,17 @@ dependencies:
     sdk: flutter
 
   cached_network_image: ^3.2.2
-  image_cropper: ^3.0.1
+  image_cropper: ^4.0.1
   image_picker: ^0.8.6
   path_provider: ^2.0.11
   photo_view: ^0.14.0
-  shimmer: ^2.0.0
+  shimmer: ^3.0.0
   rounded_loading_button: ^2.1.0
   another_flushbar: ^1.12.29
-  intl: ^0.17.0
+  intl: ^0.18.0
   flutter_svg: ^2.0.5
+  linkify: ^5.0.0
+  url_launcher: ^6.1.11
 
 dev_dependencies:
   flutter_test:
