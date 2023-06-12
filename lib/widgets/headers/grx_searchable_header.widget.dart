@@ -82,8 +82,12 @@ class _GrxSearchableHeaderState extends State<GrxSearchableHeader> {
                   color: GrxColors.cfff2f7fd.withOpacity(
                     widget.animationProgress,
                   ),
-                  borderRadius: const BorderRadius.only(
-                    bottomLeft: Radius.circular(32),
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.lerp(
+                      const Radius.circular(0),
+                      const Radius.circular(32.0),
+                      widget.animationProgress,
+                    )!,
                   ),
                   boxShadow: <BoxShadow>[
                     BoxShadow(
@@ -145,7 +149,8 @@ class _GrxSearchableHeaderState extends State<GrxSearchableHeader> {
                                             const Duration(
                                               milliseconds: 500,
                                             ), () {
-                                          if (widget.onQuickSearchHandler != null) {
+                                          if (widget.onQuickSearchHandler !=
+                                              null) {
                                             widget.onQuickSearchHandler!(
                                               value,
                                             );

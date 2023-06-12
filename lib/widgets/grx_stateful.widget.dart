@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
 abstract class GrxStatefulWidget extends StatefulWidget {
-  GrxStatefulWidget({Key? key}) : super(key: key ?? UniqueKey());
+  GrxStatefulWidget({
+    Key? key,
+  }) : super(
+          key: key ?? UniqueKey(),
+        );
 
   @override
   @factory

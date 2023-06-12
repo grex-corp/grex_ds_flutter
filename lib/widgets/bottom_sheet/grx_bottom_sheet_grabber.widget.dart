@@ -23,7 +23,7 @@ class _GrxBottomSheetGrabberState extends State<GrxBottomSheetGrabber> {
       children: <Widget>[
         Container(
           decoration: const BoxDecoration(
-            color: GrxColors.cfff2f7fd,
+            color: GrxColors.cffffffff,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20),
               topRight: Radius.circular(20),
@@ -35,7 +35,7 @@ class _GrxBottomSheetGrabberState extends State<GrxBottomSheetGrabber> {
             children: <Widget>[
               Container(
                 decoration: const BoxDecoration(
-                  color: GrxColors.cff9bb2ce,
+                  color: GrxColors.cffd6dfea,
                   borderRadius: BorderRadius.all(
                     Radius.circular(2),
                   ),
@@ -47,7 +47,7 @@ class _GrxBottomSheetGrabberState extends State<GrxBottomSheetGrabber> {
                 padding: const EdgeInsets.all(15),
                 child: GrxHeadlineMediumText(
                   widget.title ?? 'Selecione uma Opção',
-                  color: GrxColors.cff83a6cf,
+                  color: GrxColors.cff2e2e2e,
                   textAlign: TextAlign.center,
                 ),
               ),

@@ -20,7 +20,8 @@ class GrxHeadlineMediumText extends StatelessWidget {
     this.decoration,
     this.overflow,
     this.isLoading = false,
-  }) : textSpan = null;
+  })  : textSpan = null,
+        style = null;
 
   const GrxHeadlineMediumText.rich(
     this.textSpan, {
@@ -32,7 +33,32 @@ class GrxHeadlineMediumText extends StatelessWidget {
     this.decoration,
     this.overflow,
     this.isLoading = false,
-  }) : text = null;
+  })  : text = null,
+        style = null;
+
+  GrxHeadlineMediumText.lerp(
+    this.text, {
+    super.key,
+    required final GrxHeadlineMediumTextStyle style,
+    required final double t,
+    this.textAlign,
+    this.transform = GrxTextTransform.none,
+    this.color = GrxColors.cff2e2e2e,
+    this.fontWeight,
+    this.decoration,
+    this.overflow,
+    this.isLoading = false,
+  })  : textSpan = null,
+        style = TextStyle.lerp(
+          GrxHeadlineMediumTextStyle(
+            color: color,
+            decoration: decoration,
+            overflow: overflow,
+            fontWeight: fontWeight,
+          ),
+          style,
+          t,
+        )!;
 
   final String? text;
   final InlineSpan? textSpan;
@@ -43,15 +69,17 @@ class GrxHeadlineMediumText extends StatelessWidget {
   final TextDecoration? decoration;
   final TextOverflow? overflow;
   final bool isLoading;
+  final TextStyle? style;
 
   @override
   Widget build(BuildContext context) {
-    final style = GrxHeadlineMediumTextStyle(
-      color: color,
-      decoration: decoration,
-      overflow: overflow,
-      fontWeight: fontWeight,
-    );
+    final style = this.style ??
+        GrxHeadlineMediumTextStyle(
+          color: color,
+          decoration: decoration,
+          overflow: overflow,
+          fontWeight: fontWeight,
+        );
 
     return textSpan != null
         ? GrxText.rich(

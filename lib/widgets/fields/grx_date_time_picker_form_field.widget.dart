@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 
 import '../../utils/grx_form_field.util.dart';
 import '../grx_stateful.widget.dart';
+import 'grx_form_field.widget.dart';
 import 'grx_text_field.widget.dart';
 import 'shimmers/grx_form_field_shimmer.widget.dart';
 
@@ -22,6 +23,7 @@ class GrxDateTimePickerFormField extends GrxStatefulWidget {
     this.validator,
     this.isDateTime = false,
     this.enabled = true,
+    this.flexible = false,
     this.futureDate = false,
     this.isLoading = false,
   }) : super(
@@ -41,6 +43,7 @@ class GrxDateTimePickerFormField extends GrxStatefulWidget {
   final FormFieldValidator<String?>? validator;
   final bool isDateTime;
   final bool enabled;
+  final bool flexible;
   final bool futureDate;
   final bool isLoading;
 
@@ -82,11 +85,12 @@ class _GrxDateTimePickerFormFieldState
       );
     }
 
-    return FormField<String>(
-      autovalidateMode: AutovalidateMode.always,
+    return GrxFormField<String>(
       initialValue: widget.initialValue?.toIso8601String(),
       validator: widget.validator,
       onSaved: (_) => widget.onSaved != null ? widget.onSaved!(value) : null,
+      enabled: widget.enabled,
+      flexible: widget.flexible,
       builder: (FormFieldState<String> field) {
         GrxFormFieldUtils.onValueChange(
           field,

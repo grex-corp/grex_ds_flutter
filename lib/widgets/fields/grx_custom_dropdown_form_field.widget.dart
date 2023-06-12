@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../services/grx_bottom_sheet.service.dart';
 import '../../utils/grx_form_field.util.dart';
 import '../grx_stateful.widget.dart';
+import 'grx_form_field.widget.dart';
 import 'grx_text_field.widget.dart';
 import 'shimmers/grx_form_field_shimmer.widget.dart';
 
@@ -15,10 +16,13 @@ class GrxCustomDropdownFormField<T> extends GrxStatefulWidget {
     this.controller,
     this.onSaved,
     this.hintText,
+    this.selectBottomSheetTitle,
     this.initialValue,
+    this.defaultValue,
     this.onSelectItem,
     this.validator,
     this.enabled = true,
+    this.flexible = false,
     this.isLoading = false,
   }) : super(
           key: key ?? ValueKey<int>(labelText.hashCode),
@@ -27,14 +31,17 @@ class GrxCustomDropdownFormField<T> extends GrxStatefulWidget {
   final TextEditingController? controller;
   final String labelText;
   final String? hintText;
+  final String? selectBottomSheetTitle;
   final Widget Function(ScrollController? scrollController, T? selectedValue)
       builder;
   final String Function(T data) displayText;
   final T? initialValue;
+  final T? defaultValue;
   final void Function(T?)? onSelectItem;
   final void Function(T?)? onSaved;
   final String? Function(String?)? validator;
   final bool enabled;
+  final bool flexible;
   final bool isLoading;
 
   @override
@@ -71,12 +78,12 @@ class _GrxDropdownStateFormField<T>
       );
     }
 
-    return FormField<String>(
+    return GrxFormField<String>(
       initialValue: controller.text,
-      autovalidateMode: AutovalidateMode.always,
       validator: widget.validator,
       onSaved: (_) => widget.onSaved != null ? widget.onSaved!(value) : null,
       enabled: widget.enabled,
+      flexible: widget.flexible,
       builder: (FormFieldState<String> field) {
         GrxFormFieldUtils.onValueChange(
           field,
@@ -96,9 +103,24 @@ class _GrxDropdownStateFormField<T>
           labelText: widget.labelText,
           errorText: field.errorText,
           enabled: widget.enabled,
+          onClear: () {
+            setState(
+              () {
+                value = widget.defaultValue;
+
+                if (widget.defaultValue != null) {
+                  controller.text =
+                      widget.displayText(widget.defaultValue as T);
+                } else {
+                  controller.clear();
+                }
+              },
+            );
+          },
           onTap: () async {
             final bottomSheet = GrxBottomSheetService(
               context: context,
+              title: widget.selectBottomSheetTitle,
               builder: (controller) => widget.builder(
                 controller,
                 value,

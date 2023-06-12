@@ -8,7 +8,7 @@ import '../widgets/buttons/grx_add_button.widget.dart';
 import '../widgets/buttons/grx_filter_button.widget.dart';
 import '../widgets/headers/grx_searchable_header.widget.dart';
 
-const double _kToolbarExtent = 130.0;
+const double _kToolbarExtent = 60.0;
 const double _kFilterFieldExtent = 70.0;
 
 class GrxSearchableSliverHeaderDelegate extends SliverPersistentHeaderDelegate {
@@ -16,6 +16,7 @@ class GrxSearchableSliverHeaderDelegate extends SliverPersistentHeaderDelegate {
     required this.animationController,
     required this.title,
     required this.filterButtonText,
+    this.topSafePadding = 0.0,
     this.onFilter,
     this.onAdd,
     this.onQuickSearchHandler,
@@ -26,6 +27,7 @@ class GrxSearchableSliverHeaderDelegate extends SliverPersistentHeaderDelegate {
   final AnimationController animationController;
   final String title;
   final String filterButtonText;
+  final double topSafePadding;
   final void Function()? onFilter;
   final void Function()? onAdd;
   final void Function(String)? onQuickSearchHandler;
@@ -73,11 +75,15 @@ class GrxSearchableSliverHeaderDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   double get maxExtent =>
-      _kToolbarExtent + (onQuickSearchHandler != null ? _kFilterFieldExtent : 0);
+      _kToolbarExtent +
+      topSafePadding +
+      (onQuickSearchHandler != null ? _kFilterFieldExtent : 0);
 
   @override
   double get minExtent =>
-      _kToolbarExtent + (onQuickSearchHandler != null ? _kFilterFieldExtent : 0);
+      _kToolbarExtent +
+      topSafePadding +
+      (onQuickSearchHandler != null ? _kFilterFieldExtent : 0);
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) =>

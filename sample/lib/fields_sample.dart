@@ -52,6 +52,17 @@ class _FieldsSampleState extends State<FieldsSample> {
               (value?.isEmpty ?? true) ? 'Insira o nome da pessoa' : null,
           isLoading: _isLoading,
         ),
+        GrxPhoneFormField(
+          initialValue: widget.person.phone,
+          labelText: 'pages.people.phone'.translate,
+          onSaved: (value) {
+            print('Phone: $value');
+            widget.person.phone = value!;
+          },
+          validator: (value) =>
+              (value?.isEmpty ?? true) ? 'Insira o telefone da pessoa' : null,
+          isLoading: _isLoading,
+        ),
         GrxDateTimePickerFormField(
           initialValue: widget.person.birthDate,
           labelText: 'pages.people.birth-date'.translate,

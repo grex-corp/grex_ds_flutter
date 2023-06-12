@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
 import '../../services/grx_bottom_sheet.service.dart';
-import '../../themes/colors/grx_colors.dart';
 import '../../utils/grx_form_field.util.dart';
 import '../bottom_sheet/grx_bottom_sheet_form_field_body.widget.dart';
 import '../checkbox/grx_rounded_checkbox.widget.dart';
+import '../grx_card.widget.dart';
 import '../grx_stateful.widget.dart';
-import '../typography/grx_headline_medium_text.widget.dart';
+import '../typography/grx_headline_small_text.widget.dart';
+import 'grx_form_field.widget.dart';
 import 'grx_text_field.widget.dart';
 import 'shimmers/grx_form_field_shimmer.widget.dart';
 
@@ -20,11 +21,14 @@ class GrxDropdownFormField<T> extends GrxStatefulWidget {
     this.itemBuilder,
     this.onSaved,
     this.hintText,
+    this.selectBottomSheetTitle,
     this.initialValue,
+    this.defaultValue,
     this.onSelectItem,
     this.validator,
     this.searchable = false,
     this.enabled = true,
+    this.flexible = false,
     this.isLoading = false,
   }) : super(
           key: key ?? ValueKey<int>(labelText.hashCode),
@@ -33,15 +37,18 @@ class GrxDropdownFormField<T> extends GrxStatefulWidget {
   final TextEditingController? controller;
   final String labelText;
   final String? hintText;
+  final String? selectBottomSheetTitle;
   final Iterable<T> data;
   final Widget Function(BuildContext, int, T)? itemBuilder;
   final String Function(T data) displayText;
   final T? initialValue;
+  final T? defaultValue;
   final void Function(T?)? onSelectItem;
   final void Function(T?)? onSaved;
   final String? Function(String?)? validator;
   final bool searchable;
   final bool enabled;
+  final bool flexible;
   final bool isLoading;
 
   @override
@@ -74,31 +81,22 @@ class _GrxDropdownStateFormField<T> extends State<GrxDropdownFormField<T>> {
   }
 
   Widget _defaultItemBuild(BuildContext context, int index, T value) {
-    const decoration = BoxDecoration(
-      border: Border(
-        bottom: BorderSide(
-          width: 1.0,
-          color: GrxColors.cffe0efff,
-        ),
-      ),
-    );
-
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
-      decoration: index == widget.data.length - 1 ? null : decoration,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          GrxHeadlineMediumText(
-            widget.displayText(value),
-          ),
-          if (this.value == value)
-            const GrxRoundedCheckbox(
+    return GrxCard(
+      child: Container(
+        padding: const EdgeInsets.all(16.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            GrxHeadlineSmallText(
+              widget.displayText(value),
+            ),
+            GrxRoundedCheckbox(
               radius: 8.0,
               isTappable: false,
-              initialValue: true,
+              initialValue: this.value == value,
             ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -111,12 +109,12 @@ class _GrxDropdownStateFormField<T> extends State<GrxDropdownFormField<T>> {
       );
     }
 
-    return FormField<String>(
+    return GrxFormField<String>(
       initialValue: controller.text,
-      autovalidateMode: AutovalidateMode.always,
       validator: widget.validator,
       onSaved: (_) => widget.onSaved != null ? widget.onSaved!(value) : null,
       enabled: widget.enabled,
+      flexible: widget.flexible,
       builder: (FormFieldState<String> field) {
         GrxFormFieldUtils.onValueChange(
           field,
@@ -136,9 +134,24 @@ class _GrxDropdownStateFormField<T> extends State<GrxDropdownFormField<T>> {
           labelText: widget.labelText,
           errorText: field.errorText,
           enabled: widget.enabled,
+          onClear: () {
+            setState(
+              () {
+                value = widget.defaultValue;
+
+                if (widget.defaultValue != null) {
+                  controller.text =
+                      widget.displayText(widget.defaultValue as T);
+                } else {
+                  controller.clear();
+                }
+              },
+            );
+          },
           onTap: () async {
             final bottomSheet = GrxBottomSheetService(
               context: context,
+              title: widget.selectBottomSheetTitle,
               builder: (controller) {
                 return StatefulBuilder(
                   builder: (BuildContext context, StateSetter setModalState) {

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import '../../utils/grx_form_field.util.dart';
 import '../grx_stateful.widget.dart';
+import 'grx_form_field.widget.dart';
 import 'grx_text_field.widget.dart';
 import 'shimmers/grx_form_field_shimmer.widget.dart';
 
@@ -31,8 +32,10 @@ class GrxTextFormField extends GrxStatefulWidget {
     this.focusNode,
     this.autoFocus = false,
     this.enabled = true,
+    this.flexible = false,
     this.inputFormatters,
     this.isLoading = false,
+    this.prefix,
   }) : super(
           key: key ?? ValueKey<int>(labelText.hashCode),
         );
@@ -58,8 +61,10 @@ class GrxTextFormField extends GrxStatefulWidget {
   final FocusNode? focusNode;
   final bool autoFocus;
   final bool enabled;
+  final bool flexible;
   final List<TextInputFormatter>? inputFormatters;
   final bool isLoading;
+  final Widget? prefix;
 
   @override
   State<StatefulWidget> createState() => _GrxTextFormFieldState();
@@ -90,11 +95,13 @@ class _GrxTextFormFieldState extends State<GrxTextFormField> {
       );
     }
 
-    return FormField<String>(
+    return GrxFormField<String>(
       autovalidateMode: widget.autovalidateMode,
       initialValue: widget.initialValue,
       onSaved: widget.onSaved,
       validator: widget.validator,
+      enabled: widget.enabled,
+      flexible: widget.flexible,
       builder: (FormFieldState<String> field) {
         GrxFormFieldUtils.onValueChange(
           field,
@@ -122,6 +129,7 @@ class _GrxTextFormFieldState extends State<GrxTextFormField> {
           hintMaxLines: widget.hintMaxLines,
           errorText: field.errorText,
           enabled: widget.enabled,
+          prefix: widget.prefix,
         );
       },
     );

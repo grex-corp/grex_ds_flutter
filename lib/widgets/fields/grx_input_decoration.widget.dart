@@ -12,6 +12,7 @@ class GrxInputDecoration extends InputDecoration {
     super.contentPadding,
     super.hintMaxLines,
     super.errorText,
+    super.prefix,
     this.onClear,
     super.enabled = true,
     this.showClearButton = false,

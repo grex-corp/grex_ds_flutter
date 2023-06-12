@@ -81,6 +81,7 @@ class _DashboardPageState extends State<DashboardPage>
     person = Person(
       id: 22,
       name: 'Leonardo Gabriel',
+      phone: '54992099544',
       birthDate: DateTime.now(),
       leadership: _leaders.first,
       roles: [

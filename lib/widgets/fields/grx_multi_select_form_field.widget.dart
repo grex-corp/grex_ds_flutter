@@ -7,6 +7,7 @@ import '../bottom_sheet/grx_bottom_sheet_form_field_body.widget.dart';
 import '../grx_chip.widget.dart';
 import '../grx_stateful.widget.dart';
 import '../typography/grx_caption_text.widget.dart';
+import 'grx_form_field.widget.dart';
 import 'grx_input_decoration.widget.dart';
 import 'shimmers/grx_form_field_shimmer.widget.dart';
 
@@ -21,10 +22,12 @@ class GrxMultiSelectFormField<T> extends GrxStatefulWidget {
     this.onSaved,
     this.controller,
     this.hintText,
+    this.selectBottomSheetTitle,
     this.initialValue,
     this.onSelectItems,
     this.validator,
     this.enabled = true,
+    this.flexible = false,
     this.searchable = false,
     this.confirmButtonLabel,
     this.cancelButtonLabel,
@@ -36,6 +39,7 @@ class GrxMultiSelectFormField<T> extends GrxStatefulWidget {
   final TextEditingController? controller;
   final String labelText;
   final String? hintText;
+  final String? selectBottomSheetTitle;
   final Iterable<T> data;
   final Widget Function(BuildContext context, int index, T value,
       void Function()? onChanged, bool isSelected) itemBuilder;
@@ -46,6 +50,7 @@ class GrxMultiSelectFormField<T> extends GrxStatefulWidget {
   final FormFieldSetter<Iterable<T>>? onSaved;
   final FormFieldValidator<Iterable<T>>? validator;
   final bool enabled;
+  final bool flexible;
   final bool searchable;
   final bool isLoading;
   final String? confirmButtonLabel;
@@ -89,12 +94,13 @@ class _GrxMultiSelectStateFormField<T>
       );
     }
 
-    return FormField<Iterable<T>>(
+    return GrxFormField<Iterable<T>>(
       initialValue: widget.initialValue,
       autovalidateMode: AutovalidateMode.always,
       validator: widget.validator,
       onSaved: (_) => widget.onSaved != null ? widget.onSaved!(values) : null,
       enabled: widget.enabled,
+      flexible: widget.flexible,
       builder: (FormFieldState<Iterable<T>> field) {
         List<Widget> buildSelectedOptions(state) {
           List<Widget> selectedOptions = [];
@@ -132,6 +138,7 @@ class _GrxMultiSelectStateFormField<T>
 
             final bottomSheet = GrxBottomSheetService(
               context: field.context,
+              title: widget.selectBottomSheetTitle,
               builder: (controller) {
                 return StatefulBuilder(
                   builder: (BuildContext context, StateSetter setModalState) {

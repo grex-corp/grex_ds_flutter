@@ -28,6 +28,8 @@ class GrxTextField extends TextField {
     final int? hintMaxLines,
     final String? errorText,
     final TextInputAction textInputAction = TextInputAction.done,
+    final void Function()? onClear,
+    final Widget? prefix,
   }) : super(
           controller: controller,
           textCapitalization: textCapitalization,
@@ -45,8 +47,9 @@ class GrxTextField extends TextField {
             hintMaxLines: hintMaxLines,
             errorText: errorText,
             enabled: enabled,
-            onClear: controller.clear,
+            onClear: onClear?.call ?? controller.clear,
             showClearButton: controller.text.isNotEmpty && enabled,
+            prefix: prefix,
           ),
         );
 }
