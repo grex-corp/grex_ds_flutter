@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
 abstract class GrxFormFieldUtils {
   static onValueChange(
@@ -12,7 +13,9 @@ abstract class GrxFormFieldUtils {
           onChanged(value);
         }
 
-        field.didChange(value);
+        SchedulerBinding.instance.addPostFrameCallback(
+          (_) => field.didChange(value),
+        );
       }
     }
 

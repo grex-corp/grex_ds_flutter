@@ -6,11 +6,13 @@ import '../../models/grx_country.model.dart';
 import '../../services/grx_bottom_sheet.service.dart';
 import '../../themes/colors/grx_colors.dart';
 import '../../themes/icons/grx_icons.dart';
+import '../../utils/grx_country.util.dart';
 import '../../utils/grx_utils.util.dart';
 import '../bottom_sheet/ds_bottom_sheet_countries.widget.dart';
 import '../grx_stateful.widget.dart';
 import '../media/grx_svg.widget.dart';
 import '../typography/grx_caption_large_text.widget.dart';
+import 'controllers/grx_form_field.controller.dart';
 import 'grx_text_form_field.widget.dart';
 
 class GrxPhoneFormField extends GrxStatefulWidget {
@@ -18,7 +20,8 @@ class GrxPhoneFormField extends GrxStatefulWidget {
     final Key? key,
     required this.labelText,
     this.controller,
-    this.initialValue,
+    this.value,
+    this.country,
     this.keyboardType,
     this.obscureText = false,
     this.onChanged,
@@ -33,7 +36,7 @@ class GrxPhoneFormField extends GrxStatefulWidget {
     this.selectBottomSheetTitle,
     this.hintMaxLines,
     this.autovalidateMode = AutovalidateMode.always,
-    this.textInputAction = TextInputAction.done,
+    this.textInputAction = TextInputAction.next,
     this.onFieldSubmitted,
     this.focusNode,
     this.autoFocus = false,
@@ -44,13 +47,14 @@ class GrxPhoneFormField extends GrxStatefulWidget {
           key: key ?? ValueKey<int>(labelText.hashCode),
         );
 
-  final TextEditingController? controller;
-  final String? initialValue;
+  final GrxFormFieldController<String>? controller;
+  final String? value;
+  final GrxCountryId? country;
   final String labelText;
   final TextInputType? keyboardType;
   final bool obscureText;
-  final void Function(String?)? onChanged;
-  final void Function(String?)? onSaved;
+  final void Function(String? value, GrxCountryId? country)? onChanged;
+  final void Function(String? value, GrxCountryId? country)? onSaved;
   final FormFieldValidator<String?>? validator;
   final EdgeInsets? contentPadding;
   final TextCapitalization textCapitalization;
@@ -62,7 +66,7 @@ class GrxPhoneFormField extends GrxStatefulWidget {
   final int? hintMaxLines;
   final AutovalidateMode autovalidateMode;
   final TextInputAction textInputAction;
-  final void Function(String?)? onFieldSubmitted;
+  final void Function(String? value, GrxCountryId? country)? onFieldSubmitted;
   final FocusNode? focusNode;
   final bool autoFocus;
   final bool enabled;
@@ -74,24 +78,29 @@ class GrxPhoneFormField extends GrxStatefulWidget {
 }
 
 class _GrxPhoneFormFieldState extends State<GrxPhoneFormField> {
-  late final controller = widget.controller ?? TextEditingController();
+  late final controller = widget.controller ?? GrxFormFieldController<String>();
   late final maskFormatter = MaskTextInputFormatter(
     mask: _getMask(
       country: selectedCountry,
-      value: widget.initialValue,
+      value: widget.value,
     ),
     filter: {
       "#": RegExp(r'[0-9]'),
     },
-    initialText: widget.initialValue,
-    type: widget.initialValue?.isNotEmpty ?? false
+    initialText: widget.value,
+    type: widget.value?.isNotEmpty ?? false
         ? MaskAutoCompletionType.eager
         : MaskAutoCompletionType.lazy,
   );
 
-  GrxCountry selectedCountry = GrxUtils.countriesList.first;
+  late GrxCountry selectedCountry =
+      GrxCountryUtils.getCountry(widget.country) ??
+          GrxCountryUtils.countries.first;
 
-  String _getMask({required final GrxCountry country, final String? value}) {
+  String _getMask({
+    required final GrxCountry country,
+    final String? value,
+  }) {
     switch (country.id) {
       case GrxCountryId.BR:
         return (value?.replaceAll(RegExp('[^0-9]'), '').length ?? 0) <= 10
@@ -112,10 +121,19 @@ class _GrxPhoneFormFieldState extends State<GrxPhoneFormField> {
   }
 
   @override
+  void dispose() {
+    if (widget.controller == null) {
+      controller.dispose();
+    }
+
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GrxTextFormField(
       controller: controller,
-      initialValue: maskFormatter.getMaskedText(),
+      value: maskFormatter.getMaskedText(),
       labelText: widget.labelText,
       keyboardType: widget.keyboardType,
       obscureText: widget.obscureText,
@@ -192,10 +210,11 @@ class _GrxPhoneFormFieldState extends State<GrxPhoneFormField> {
           maskFormatter.clear();
         }
 
-        widget.onChanged?.call(value);
+        widget.onChanged?.call(value, selectedCountry.id);
       },
-      onSaved: (value) => widget.onSaved?.call(_getFullNumber()),
-      validator: (value) => widget.validator?.call(_getFullNumber()),
+      onSaved: (value) =>
+          widget.onSaved?.call(_getFullNumber(), selectedCountry.id),
+      validator: widget.validator,
       contentPadding: widget.contentPadding,
       textCapitalization: widget.textCapitalization,
       textAlignVertical: widget.textAlignVertical,
@@ -205,7 +224,8 @@ class _GrxPhoneFormFieldState extends State<GrxPhoneFormField> {
       hintMaxLines: widget.hintMaxLines,
       autovalidateMode: widget.autovalidateMode,
       textInputAction: widget.textInputAction,
-      onFieldSubmitted: widget.onFieldSubmitted,
+      onFieldSubmitted: (value) =>
+          widget.onFieldSubmitted?.call(_getFullNumber(), selectedCountry.id),
       focusNode: widget.focusNode,
       autoFocus: widget.autoFocus,
       enabled: widget.enabled,

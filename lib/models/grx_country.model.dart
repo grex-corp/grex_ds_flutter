@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import '../enums/grx_country_id.enum.dart';
+import 'grx_federative_unit.model.dart';
 
 class GrxCountry {
   const GrxCountry({
@@ -11,6 +12,7 @@ class GrxCountry {
     this.language,
     this.phoneMasks = const [],
     this.zipcodeMasks = const [],
+    this.states = const [],
   });
 
   final GrxCountryId id;
@@ -20,6 +22,7 @@ class GrxCountry {
   final String? language;
   final List<String> phoneMasks;
   final List<String> zipcodeMasks;
+  final List<GrxFederativeUnit> states;
 
   GrxCountry.fromJson(Map<String, dynamic> json)
       : id = GrxCountryId.unknown.getValue(json['id']),
@@ -28,7 +31,10 @@ class GrxCountry {
         flag = json['flag'],
         language = json['language'],
         phoneMasks = json['phoneMasks'] ?? [],
-        zipcodeMasks = json['zipcodeMasks'] ?? [];
+        zipcodeMasks = json['zipcodeMasks'] ?? [],
+        states = List.from(json['states'] ?? [])
+            .map<GrxFederativeUnit>((x) => GrxFederativeUnit.fromJson(x))
+            .toList();
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
@@ -39,6 +45,7 @@ class GrxCountry {
       'language': language,
       'phoneMasks': phoneMasks,
       'zipcodeMasks': zipcodeMasks,
+      'states': states.map<Map<String, dynamic>>((e) => e.toJson()),
     };
   }
 

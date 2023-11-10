@@ -43,8 +43,11 @@ class GrxHeader extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       title: Padding(
-        padding: EdgeInsets.lerp(EdgeInsets.zero,
-            const EdgeInsets.only(left: 8.0), animationProgress)!,
+        padding: EdgeInsets.lerp(
+          EdgeInsets.zero,
+          const EdgeInsets.only(left: 4.0),
+          animationProgress,
+        )!,
         child: GrxText(
           title,
           style: TextStyle.lerp(
@@ -64,11 +67,11 @@ class GrxHeader extends StatelessWidget implements PreferredSizeWidget {
         child: GrxBackButton(
           onPressed: Navigator.of(context).pop,
           color: foregroundColor,
-          iconSize: 20.0,
+          iconSize: 20.0 - 2.0 * animationProgress,
         ),
       ),
       leadingWidth: showBackButton ? 48.0 : 16.0,
-      titleSpacing: 0,
+      titleSpacing: 0.0,
       toolbarHeight: height,
       actions: showCloseButton
           ? [

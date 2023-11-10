@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../extensions/list.extension.dart';
 import '../../services/grx_bottom_sheet.service.dart';
 import '../../utils/grx_form_field.util.dart';
 import '../bottom_sheet/grx_bottom_sheet_form_field_body.widget.dart';
@@ -7,6 +8,7 @@ import '../checkbox/grx_rounded_checkbox.widget.dart';
 import '../grx_card.widget.dart';
 import '../grx_stateful.widget.dart';
 import '../typography/grx_headline_small_text.widget.dart';
+import 'controllers/grx_form_field.controller.dart';
 import 'grx_form_field.widget.dart';
 import 'grx_text_field.widget.dart';
 import 'shimmers/grx_form_field_shimmer.widget.dart';
@@ -22,7 +24,7 @@ class GrxDropdownFormField<T> extends GrxStatefulWidget {
     this.onSaved,
     this.hintText,
     this.selectBottomSheetTitle,
-    this.initialValue,
+    this.value,
     this.defaultValue,
     this.onSelectItem,
     this.validator,
@@ -34,18 +36,18 @@ class GrxDropdownFormField<T> extends GrxStatefulWidget {
           key: key ?? ValueKey<int>(labelText.hashCode),
         );
 
-  final TextEditingController? controller;
+  final GrxFormFieldController<T>? controller;
   final String labelText;
   final String? hintText;
   final String? selectBottomSheetTitle;
   final Iterable<T> data;
   final Widget Function(BuildContext, int, T)? itemBuilder;
   final String Function(T data) displayText;
-  final T? initialValue;
+  final T? value;
   final T? defaultValue;
   final void Function(T?)? onSelectItem;
-  final void Function(T?)? onSaved;
-  final String? Function(String?)? validator;
+  final FormFieldSetter<T>? onSaved;
+  final FormFieldValidator<T>? validator;
   final bool searchable;
   final bool enabled;
   final bool flexible;
@@ -58,26 +60,57 @@ class GrxDropdownFormField<T> extends GrxStatefulWidget {
 class _GrxDropdownStateFormField<T> extends State<GrxDropdownFormField<T>> {
   T? value;
   final List<T> _list = [];
-  late final TextEditingController controller;
+  late final GrxFormFieldController<T> controller;
   final TextEditingController quickSearchFieldController =
       TextEditingController();
 
   @override
   void initState() {
+    super.initState();
+
     _list.clear();
     _list.addAll(widget.data);
 
-    controller = widget.controller ?? TextEditingController();
+    controller = widget.controller ?? GrxFormFieldController<T>();
 
-    if (widget.initialValue != null && value == null) {
-      value = widget.initialValue;
+    if (widget.value != null && value == null) {
+      value = widget.value;
       controller.text = widget.displayText(value as T);
       if (widget.onSelectItem != null) {
         widget.onSelectItem!(value);
       }
     }
 
-    super.initState();
+    _subscribeStreams();
+  }
+
+  @override
+  void dispose() {
+    if (widget.controller == null) {
+      controller.dispose();
+    }
+
+    super.dispose();
+  }
+
+  void _subscribeStreams() {
+    controller.onClearStream.stream.listen((_) {
+      value = null;
+    });
+
+    controller.onDidUpdateData.stream.listen((data) {
+      _list.assignAll(data);
+    });
+
+    controller.onDidUpdateValue.stream.listen((value) {
+      if (value == null) {
+        controller.clear();
+        return;
+      }
+
+      this.value = value;
+      controller.text = widget.displayText(value);
+    });
   }
 
   Widget _defaultItemBuild(BuildContext context, int index, T value) {
@@ -93,7 +126,7 @@ class _GrxDropdownStateFormField<T> extends State<GrxDropdownFormField<T>> {
             GrxRoundedCheckbox(
               radius: 8.0,
               isTappable: false,
-              initialValue: this.value == value,
+              value: this.value == value,
             ),
           ],
         ),
@@ -111,8 +144,8 @@ class _GrxDropdownStateFormField<T> extends State<GrxDropdownFormField<T>> {
 
     return GrxFormField<String>(
       initialValue: controller.text,
-      validator: widget.validator,
-      onSaved: (_) => widget.onSaved != null ? widget.onSaved!(value) : null,
+      validator: (_) => widget.validator?.call(value),
+      onSaved: (_) => widget.onSaved?.call(value),
       enabled: widget.enabled,
       flexible: widget.flexible,
       builder: (FormFieldState<String> field) {
@@ -142,6 +175,8 @@ class _GrxDropdownStateFormField<T> extends State<GrxDropdownFormField<T>> {
                 if (widget.defaultValue != null) {
                   controller.text =
                       widget.displayText(widget.defaultValue as T);
+
+                  widget.onSelectItem?.call(value);
                 } else {
                   controller.clear();
                 }

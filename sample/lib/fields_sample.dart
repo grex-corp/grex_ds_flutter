@@ -44,7 +44,7 @@ class _FieldsSampleState extends State<FieldsSample> {
       mainAxisSize: MainAxisSize.min,
       children: [
         GrxTextFormField(
-          initialValue: widget.person.name,
+          value: widget.person.name,
           labelText: 'pages.people.name'.translate,
           hintText: 'José Algusto',
           onSaved: (value) => widget.person.name = value!,
@@ -53,9 +53,9 @@ class _FieldsSampleState extends State<FieldsSample> {
           isLoading: _isLoading,
         ),
         GrxPhoneFormField(
-          initialValue: widget.person.phone,
+          value: widget.person.phone,
           labelText: 'pages.people.phone'.translate,
-          onSaved: (value) {
+          onSaved: (value, _) {
             print('Phone: $value');
             widget.person.phone = value!;
           },
@@ -64,7 +64,7 @@ class _FieldsSampleState extends State<FieldsSample> {
           isLoading: _isLoading,
         ),
         GrxDateTimePickerFormField(
-          initialValue: widget.person.birthDate,
+          value: widget.person.birthDate,
           labelText: 'pages.people.birth-date'.translate,
           // hintText: 'fields.datetime.hint'.translate,
           dialogConfirmText: 'confirm'.translate,
@@ -84,7 +84,7 @@ class _FieldsSampleState extends State<FieldsSample> {
           isLoading: _isLoading,
         ),
         GrxDropdownFormField<Person>(
-          initialValue: widget.person.leadership,
+          value: widget.person.leadership,
           labelText: 'Liderança Direta',
           onSelectItem: (value) => print('Selected Value: ${value?.name}'),
           data: widget.leaders,
@@ -106,11 +106,11 @@ class _FieldsSampleState extends State<FieldsSample> {
             widget.person.leadership = value;
           },
           validator: (value) =>
-              (value?.isEmpty ?? true) ? 'O líder deve ser informado' : null,
+              value == null ? 'O líder deve ser informado' : null,
           isLoading: _isLoading,
         ),
         GrxDropdownFormField<ParentWorshipType>(
-          initialValue: widget.person.fatherType,
+          value: widget.person.fatherType,
           labelText: 'O Pai é?',
           onSelectItem: (value) => print('Selected Value: ${value?.name}'),
           data: ParentWorshipType.values,
@@ -121,11 +121,11 @@ class _FieldsSampleState extends State<FieldsSample> {
             widget.person.fatherType = value ?? ParentWorshipType.unknown;
           },
           validator: (value) =>
-              (value?.isEmpty ?? true) ? 'O Tipo deve ser informado' : null,
+              value == null ? 'O Tipo deve ser informado' : null,
           isLoading: _isLoading,
         ),
         GrxMultiSelectFormField<Role>(
-          initialValue: widget.person.roles,
+          value: widget.person.roles,
           searchable: true,
           labelText: 'Funções',
           onSelectItems: (value) => print('Selected Value: ${value?.length}'),
@@ -141,7 +141,7 @@ class _FieldsSampleState extends State<FieldsSample> {
                   children: [
                     GrxHeadlineMediumText(value.name),
                     GrxRoundedCheckbox(
-                      initialValue: isSelected,
+                      value: isSelected,
                       radius: 10,
                     ),
                   ],
@@ -158,7 +158,7 @@ class _FieldsSampleState extends State<FieldsSample> {
           isLoading: _isLoading,
         ),
         GrxCustomDropdownFormField<KnowledgeTrail>(
-          initialValue: widget.person.trail,
+          value: widget.person.trail,
           labelText: 'Trilho do Vencedor',
           onSelectItem: (value) => print('Selected Value: ${value?.name}'),
           builder: (controller, selectedValue) => KnowledgeTrailSelectPage(
@@ -180,7 +180,7 @@ class _FieldsSampleState extends State<FieldsSample> {
           padding: EdgeInsets.symmetric(vertical: 15.0),
         ),
         GrxSwitchFormField(
-          initialValue: widget.person.createUser,
+          value: widget.person.createUser,
           labelText: 'Criar usuário',
           onSaved: (value) => widget.person.createUser = value,
           isLoading: _isLoading,
@@ -190,7 +190,7 @@ class _FieldsSampleState extends State<FieldsSample> {
         ),
         GrxCheckboxListTile(
           title: 'Solteiro',
-          isChecked: widget.person.single,
+          value: widget.person.single,
           isLoading: _isLoading,
           onTap: () {
             setState(() {
@@ -199,7 +199,7 @@ class _FieldsSampleState extends State<FieldsSample> {
           },
         ),
         GrxRoundedCheckbox(
-          initialValue: widget.person.single,
+          value: widget.person.single,
           isLoading: _isLoading,
         ),
       ],

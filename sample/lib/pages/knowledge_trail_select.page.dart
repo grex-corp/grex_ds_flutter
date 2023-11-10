@@ -134,8 +134,8 @@ class _KnowledgeTrailStateSelectPage extends State<KnowledgeTrailSelectPage> {
                     child: Container(
                       // margin: const EdgeInsets.only(bottom: 20),
                       child: GrxRoundedCheckbox(
+                        value: trail.priority == _data.priority,
                         radius: 10,
-                        initialValue: trail.priority == _data.priority,
                         isTappable: false,
                       ),
                     ),

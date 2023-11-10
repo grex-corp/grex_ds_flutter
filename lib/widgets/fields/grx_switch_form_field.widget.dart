@@ -1,5 +1,4 @@
-import 'dart:io';
-
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
@@ -19,21 +18,19 @@ class GrxSwitchFormField extends GrxFormField<bool> {
     this.isLoading = false,
     final void Function(bool)? onSaved,
     final TextStyle? style,
-    final bool? initialValue,
-    final bool enabled = true,
-    final bool flexible = false,
+    final bool? value,
+    super.enabled,
+    super.flexible,
   }) : super(
           key: key ?? ValueKey<int>(labelText.hashCode),
-          initialValue: initialValue,
+          initialValue: value,
           onSaved: onSaved != null ? (value) => onSaved(value ?? false) : null,
           autovalidateMode: AutovalidateMode.always,
-          enabled: enabled,
-          flexible: flexible,
           builder: (FormFieldState<bool> state) {
             if (changeOnInitialValue) {
               SchedulerBinding.instance.addPostFrameCallback((_) {
-                if (state.value != initialValue) {
-                  state.didChange(initialValue);
+                if (state.value != value) {
+                  state.didChange(value);
                 }
               });
             }
@@ -49,7 +46,7 @@ class GrxSwitchFormField extends GrxFormField<bool> {
               color: GrxColors.cff2e2e2e.withOpacity(opacity),
             );
 
-            return Platform.isIOS
+            return defaultTargetPlatform == TargetPlatform.iOS
                 ? CupertinoSwitchListTile(
                     title: Text(
                       labelText,

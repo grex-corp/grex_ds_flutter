@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../extensions/list.extension.dart';
 import '../../models/grx_country.model.dart';
 import '../../themes/colors/grx_colors.dart';
+import '../../utils/grx_country.util.dart';
 import '../../utils/grx_utils.util.dart';
 import '../checkbox/grx_rounded_checkbox.widget.dart';
 import '../fields/grx_filter_field.widget.dart';
@@ -25,7 +26,7 @@ class GrxBottomSheetCountries extends StatefulWidget {
 
 class _GrxBottomSheetCountriesState extends State<GrxBottomSheetCountries> {
   final searchFieldController = TextEditingController();
-  final _filteredCountries = <GrxCountry>[...GrxUtils.countriesList];
+  final _filteredCountries = <GrxCountry>[...GrxCountryUtils.countries];
 
   bool showClearButton = false;
   late GrxCountry selectedCountry = widget.selectedCountry;
@@ -34,7 +35,7 @@ class _GrxBottomSheetCountriesState extends State<GrxBottomSheetCountries> {
     setState(() {
       showClearButton = searchString.isNotEmpty;
       _filteredCountries.assignAll(
-        GrxUtils.countriesList.where((country) =>
+        GrxCountryUtils.countries.where((country) =>
             country.name.toLowerCase().contains(searchString.toLowerCase()) ||
             country.code.toLowerCase().contains(searchString.toLowerCase())),
       );
@@ -117,9 +118,8 @@ class _GrxBottomSheetCountriesState extends State<GrxBottomSheetCountries> {
                               ),
                             ),
                             GrxRoundedCheckbox(
-                              initialValue:
-                                  selectedCountry.code == country.code &&
-                                      selectedCountry.name == country.name,
+                              value: selectedCountry.code == country.code &&
+                                  selectedCountry.name == country.name,
                               radius: 8.0,
                               isTappable: false,
                             )
