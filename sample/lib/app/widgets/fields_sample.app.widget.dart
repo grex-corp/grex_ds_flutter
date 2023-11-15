@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:grex_ds/grex_ds.dart';
-import 'package:sample/extensions/string_extension.dart';
 
-import 'enums/parent_worship_type.dart';
-import 'models/knowledge_trail_model.dart';
-import 'models/person.model.dart';
-import 'models/role.model.dart';
-import 'pages/knowledge_trail_select.page.dart';
+import '../../enums/parent_worship_type.dart';
+import '../../extensions/string_extension.dart';
+import '../../models/knowledge_trail_model.dart';
+import '../../models/person.model.dart';
+import '../../models/role.model.dart';
+import '../../pages/knowledge_trail_select.page.dart';
 
-class FieldsSample extends StatefulWidget {
-  const FieldsSample({
+class FieldsSampleApp extends StatefulWidget {
+  const FieldsSampleApp({
     super.key,
     required this.person,
     required this.leaders,
@@ -21,10 +21,10 @@ class FieldsSample extends StatefulWidget {
   final List<Role> roles;
 
   @override
-  State<StatefulWidget> createState() => _FieldsSampleState();
+  State<StatefulWidget> createState() => _FieldsSampleAppState();
 }
 
-class _FieldsSampleState extends State<FieldsSample> {
+class _FieldsSampleAppState extends State<FieldsSampleApp> {
   bool _isLoading = true;
 
   @override

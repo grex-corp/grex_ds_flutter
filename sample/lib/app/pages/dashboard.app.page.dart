@@ -3,12 +3,12 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:grex_ds/grex_ds.dart';
-import 'package:sample/extensions/string_extension.dart';
 
-import '../fields_sample.dart';
-import '../models/person.model.dart';
-import '../models/role.model.dart';
-import '../typo_sample.dart';
+import '../../extensions/string_extension.dart';
+import '../../models/person.model.dart';
+import '../../models/role.model.dart';
+import '../../typo_sample.dart';
+import '../widgets/fields_sample.app.widget.dart';
 
 final _leaders = [
   Person(id: 1, name: '1st Person'),
@@ -56,8 +56,8 @@ final _roles = [
   Role(id: 20, name: '20th Role', priority: 20),
 ];
 
-class DashboardPage extends StatefulWidget {
-  const DashboardPage({
+class DashboardAppPage extends StatefulWidget {
+  const DashboardAppPage({
     super.key,
     required this.animationController,
   });
@@ -65,10 +65,10 @@ class DashboardPage extends StatefulWidget {
   final AnimationController animationController;
 
   @override
-  State<StatefulWidget> createState() => _DashboardPageState();
+  State<StatefulWidget> createState() => _DashboardAppPageState();
 }
 
-class _DashboardPageState extends State<DashboardPage>
+class _DashboardAppPageState extends State<DashboardAppPage>
     with TickerProviderStateMixin {
   final formKey = GlobalKey<FormState>();
   late Person person;
@@ -125,7 +125,7 @@ class _DashboardPageState extends State<DashboardPage>
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: GrxHeader(
-        // Here we take the value from the DashboardPage object that was created by
+        // Here we take the value from the DashboardAppPage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: 'Dashboard Page',
         backgroundColor: GrxColors.cff365278,
@@ -156,7 +156,7 @@ class _DashboardPageState extends State<DashboardPage>
                   key: formKey,
                   child: Column(
                     children: [
-                      FieldsSample(
+                      FieldsSampleApp(
                         person: person,
                         leaders: _leaders,
                         roles: _roles,

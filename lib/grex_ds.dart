@@ -129,6 +129,9 @@ export 'widgets/headers/grx_searchable_header.widget.dart'
     show GrxSearchableHeader;
 export 'widgets/headers/grx_searchable_sliver_header.widget.dart'
     show GrxSearchableSliverHeader;
+/// Widgets/Layout
+export 'widgets/layout/grx_responsive_layout.widget.dart'
+    show GrxResponsiveLayout;
 /// Widgets/Media
 export 'widgets/media/grx_svg.widget.dart' show GrxSvg;
 /// Widgets/Typography
