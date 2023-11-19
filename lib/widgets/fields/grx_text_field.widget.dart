@@ -15,6 +15,7 @@ class GrxTextField extends TextField {
     super.autofocus,
     super.inputFormatters,
     super.onTap,
+    super.onChanged,
     required TextEditingController super.controller,
     final String? labelText,
     final bool enabled = true,
@@ -31,6 +32,7 @@ class GrxTextField extends TextField {
     final void Function()? onClear,
     final bool showClearButton = true,
     final Widget? prefix,
+    final Widget? suffix,
   }) : super(
           cursorColor: GrxColors.cff70efa7,
           style: GrxFieldStyles.inputTextStyle,
@@ -46,6 +48,7 @@ class GrxTextField extends TextField {
             onClear: onClear?.call ?? controller.clear,
             showClearButton: showClearButton && controller.text.isNotEmpty && enabled,
             prefix: prefix,
+            suffix: suffix,
           ),
         );
 }

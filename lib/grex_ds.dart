@@ -90,6 +90,8 @@ export 'widgets/cupertino/cupertino_switch_list_tile.dart'
 /// Widget/Fields/Controllers
 export 'widgets/fields/controllers/grx_form_field.controller.dart'
     show GrxFormFieldController;
+export 'widgets/fields/grx_autocomplete_dropdown_form_field.widget.dart'
+    show GrxAutocompleteDropdownFormField;
 /// Widgets/Fields
 export 'widgets/fields/grx_custom_dropdown_form_field.widget.dart'
     show GrxCustomDropdownFormField;
