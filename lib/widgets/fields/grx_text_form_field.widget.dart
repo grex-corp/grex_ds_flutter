@@ -37,6 +37,7 @@ class GrxTextFormField extends GrxStatefulWidget {
     this.inputFormatters,
     this.isLoading = false,
     this.prefix,
+    this.mask,
   }) : super(
           key: key ?? ValueKey<int>(labelText.hashCode),
         );
@@ -66,6 +67,7 @@ class GrxTextFormField extends GrxStatefulWidget {
   final List<TextInputFormatter>? inputFormatters;
   final bool isLoading;
   final Widget? prefix;
+  final String? mask;
 
   @override
   State<StatefulWidget> createState() => _GrxTextFormFieldState();
@@ -80,7 +82,8 @@ class _GrxTextFormFieldState extends State<GrxTextFormField> {
   void initState() {
     super.initState();
 
-    controller = widget.controller ?? GrxFormFieldController<String>();
+    controller =
+        widget.controller ?? GrxFormFieldController<String>(mask: widget.mask);
 
     if (widget.value != null) {
       controller.text = widget.value!;
@@ -157,7 +160,10 @@ class _GrxTextFormFieldState extends State<GrxTextFormField> {
           maxLines: widget.obscureText ? 1 : widget.maxLines,
           textAlignVertical: widget.textAlignVertical,
           onSubmitted: widget.onFieldSubmitted,
-          inputFormatters: widget.inputFormatters,
+          inputFormatters: [
+            if (controller.maskFormatter != null) controller.maskFormatter!,
+            ...(widget.inputFormatters ?? []),
+          ],
           labelText: widget.labelText,
           alignLabelWithHint: widget.alignLabelWithHint,
           contentPadding: widget.contentPadding,
