@@ -94,7 +94,9 @@ class _GrxDateTimePickerFormFieldState
       value = null;
     });
 
-    controller.onDidUpdateValue.stream.listen((value) {
+    controller.onDidUpdateValue.stream.listen((data) {
+      final (value, _) = data;
+
       if (value == null) {
         controller.clear();
         return;

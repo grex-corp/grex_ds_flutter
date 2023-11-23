@@ -30,6 +30,7 @@ class GrxAutocompleteDropdownFormField<T> extends GrxStatefulWidget {
     this.enabled = true,
     this.flexible = false,
     this.isLoading = false,
+    this.setValueOnSelectItem = true,
   }) : super(
           key: key ?? ValueKey<int>(labelText.hashCode),
         );
@@ -51,6 +52,7 @@ class GrxAutocompleteDropdownFormField<T> extends GrxStatefulWidget {
   final bool enabled;
   final bool flexible;
   final bool isLoading;
+  final bool setValueOnSelectItem;
 
   @override
   State<StatefulWidget> createState() => _GrxDropdownStateFormField<T>();
@@ -67,6 +69,7 @@ class _GrxDropdownStateFormField<T>
 
   Timer? _timer;
   bool _isSearching = false;
+  var _notifyListeners = true;
 
   @override
   void initState() {
@@ -99,7 +102,11 @@ class _GrxDropdownStateFormField<T>
       _list.clear();
     });
 
-    controller.onDidUpdateValue.stream.listen((value) {
+    controller.onDidUpdateValue.stream.listen((data) {
+      final (value, notifyListeners) = data;
+
+      _notifyListeners = notifyListeners;
+
       if (value?.isEmpty ?? true) {
         controller.clear();
         return;
@@ -116,7 +123,11 @@ class _GrxDropdownStateFormField<T>
   }
 
   void _onSelectItem(T item) {
-    this.controller.text = widget.displayText(item);
+    if (widget.setValueOnSelectItem) {
+      _notifyListeners = false;
+
+      this.controller.text = widget.displayText(item);
+    }
 
     widget.onSelectItem?.call(item);
   }
@@ -139,89 +150,96 @@ class _GrxDropdownStateFormField<T>
         GrxFormFieldUtils.onValueChange(
           field,
           controller,
+          onChanged: (value) {
+            if (!_notifyListeners) {
+              _notifyListeners = true;
+              return;
+            }
+
+            _cancelTimer();
+
+            _timer = Timer(
+              const Duration(milliseconds: 500),
+              () async {
+                try {
+                  setState(() {
+                    _isSearching = true;
+                  });
+                  final result = await widget.onSearch?.call(value);
+
+                  if (result != null) {
+                    setState(() {
+                      _list.clear();
+                      _list.assignAll(result);
+                    });
+
+                    if (result.isNotEmpty) {
+                      menuController.open();
+                    } else {
+                      menuController.close();
+                    }
+                  }
+                } finally {
+                  setState(() {
+                    _isSearching = false;
+                  });
+                }
+              },
+            );
+          },
         );
 
-        return LayoutBuilder(builder: (context, constraints) {
-          return MenuAnchor(
-            controller: menuController,
-            menuChildren: _list
-                .map<Widget>(
-                  (item) =>
-                      widget.itemBuilder?.call(
-                          context, _list.indexOf(item), item, _onSelectItem) ??
-                      MenuItemButton(
-                        onPressed: () => _onSelectItem(item),
-                        child: SizedBox(
-                          width: constraints.constrainWidth() - 24,
-                          child: GrxCaptionText(
-                            widget.displayText(item),
+        return LayoutBuilder(
+          builder: (context, constraints) {
+            return MenuAnchor(
+              controller: menuController,
+              menuChildren: _list
+                  .map<Widget>(
+                    (item) =>
+                        widget.itemBuilder?.call(context, _list.indexOf(item),
+                            item, _onSelectItem) ??
+                        MenuItemButton(
+                          onPressed: () => _onSelectItem(item),
+                          child: SizedBox(
+                            width: constraints.constrainWidth() - 24,
+                            child: GrxCaptionText(
+                              widget.displayText(item),
+                            ),
                           ),
                         ),
-                      ),
-                )
-                .toList(),
-            child: GrxTextField(
-              controller: controller,
-              hintText: widget.hintText,
-              labelText: widget.labelText,
-              errorText: field.errorText,
-              enabled: widget.enabled,
-              onChanged: (value) {
-                _cancelTimer();
-
-                _timer = Timer(
-                  const Duration(milliseconds: 500),
-                  () async {
-                    try {
-                      setState(() {
-                        _isSearching = true;
-                      });
-                      final result = await widget.onSearch?.call(value);
-
-                      if (result != null) {
-                        setState(() {
-                          _list.clear();
-                          _list.assignAll(result);
-                        });
-
-                        if (result.isNotEmpty) {
-                          menuController.open();
-                        } else {
-                          menuController.close();
-                        }
-                      }
-                    } finally {
-                      setState(() {
-                        _isSearching = false;
-                      });
-                    }
-                  },
-                );
-              },
-              suffix: _isSearching
-                  ? const CircularProgressIndicator.adaptive(
-                      strokeWidth: 2.0,
-                    )
-                  : const SizedBox.shrink(),
-              onClear: () {
-                menuController.close();
-
-                if (widget.defaultValue?.isNotEmpty ?? false) {
-                  controller.text = widget.defaultValue!;
-                } else {
-                  controller.clear();
-                }
-              },
-              onTap: () async {
-                if (menuController.isOpen) {
+                  )
+                  .toList(),
+              child: GrxTextField(
+                controller: controller,
+                hintText: widget.hintText,
+                labelText: widget.labelText,
+                errorText: field.errorText,
+                enabled: widget.enabled,
+                suffix: _isSearching
+                    ? const CircularProgressIndicator.adaptive(
+                        strokeWidth: 2.0,
+                      )
+                    : const SizedBox.shrink(),
+                onClear: () {
                   menuController.close();
-                } else if (_list.isNotEmpty) {
-                  menuController.open();
-                }
-              },
-            ),
-          );
-        });
+
+                  if (widget.defaultValue?.isNotEmpty ?? false) {
+                    controller.text = widget.defaultValue!;
+                  } else {
+                    controller.clear();
+                  }
+                },
+                onTap: () async {
+                  if (menuController.isOpen) {
+                    menuController.close();
+                  } else if (_list.isNotEmpty) {
+                    menuController.open();
+                  }
+                },
+              ),
+            );
+          },
+        );
       },
     );
   }

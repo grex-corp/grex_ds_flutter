@@ -74,6 +74,8 @@ class GrxTextFormField extends GrxStatefulWidget {
 class _GrxTextFormFieldState extends State<GrxTextFormField> {
   late final GrxFormFieldController<String> controller;
 
+  var _notifyListeners = true;
+
   @override
   void initState() {
     super.initState();
@@ -100,13 +102,17 @@ class _GrxTextFormFieldState extends State<GrxTextFormField> {
   }
 
   void _subscribeStreams() {
-    controller.onDidUpdateValue.stream.listen((value) {
-      if (value == null) {
+    controller.onDidUpdateValue.stream.listen((data) {
+      final (value, notifyListeners) = data;
+
+      _notifyListeners = notifyListeners;
+
+      if (value?.isEmpty ?? true) {
         controller.clear();
         return;
       }
 
-      controller.text = value;
+      controller.text = value!;
     });
   }
 
@@ -129,7 +135,14 @@ class _GrxTextFormFieldState extends State<GrxTextFormField> {
         GrxFormFieldUtils.onValueChange(
           field,
           controller,
-          onChanged: widget.onChanged,
+          onChanged: (value) {
+            if (!_notifyListeners) {
+              _notifyListeners = true;
+              return;
+            }
+
+            widget.onChanged?.call(value);
+          },
         );
 
         return GrxTextField(

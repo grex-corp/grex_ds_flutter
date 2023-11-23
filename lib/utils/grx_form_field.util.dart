@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
+import '../widgets/fields/controllers/grx_form_field.controller.dart';
+
 abstract class GrxFormFieldUtils {
   static onValueChange(
     FormFieldState<String> field,
-    TextEditingController controller, {
+    GrxFormFieldController controller, {
     void Function(String)? onChanged,
   }) {
+    if (controller.hasListeners) return;
+
     void onChangedHandler(String value) {
       if (field.mounted && field.value != value) {
         if (onChanged != null) {

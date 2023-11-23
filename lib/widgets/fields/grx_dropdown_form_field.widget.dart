@@ -102,7 +102,9 @@ class _GrxDropdownStateFormField<T> extends State<GrxDropdownFormField<T>> {
       _list.assignAll(data);
     });
 
-    controller.onDidUpdateValue.stream.listen((value) {
+    controller.onDidUpdateValue.stream.listen((data) {
+      final (value, _) = data;
+
       if (value == null) {
         controller.clear();
         return;
