@@ -1,6 +1,6 @@
 library grex_ds;
 
-export 'package:rounded_loading_button/rounded_loading_button.dart'
+export 'package:rounded_loading_button_plus/rounded_loading_button.dart'
     show RoundedLoadingButtonController;
 
 /// Animations

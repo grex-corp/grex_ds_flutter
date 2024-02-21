@@ -1,4 +1,5 @@
-import 'package:another_flushbar/flushbar.dart';
+import 'package:delightful_toast/delight_toast.dart';
+import 'package:delightful_toast/toast/components/toast_card.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
@@ -14,61 +15,68 @@ abstract class GrxToastService {
   static void init(BuildContext context) => _context = context;
 
   static void showError({
-    required String message,
-    String? title,
+    required String title,
+    String? subtitle,
     Duration? toastDuration,
     BuildContext? context,
+    bool permanent = false,
   }) =>
       _show(
-        message: message,
+        title: title,
         icon: _getIcon(GrxIcons.cancel),
         backgroundColor: GrxColors.cffffa5a5,
-        title: title,
+        subtitle: subtitle,
         toastDuration: toastDuration,
         context: context,
+        permanent: permanent,
       );
 
   static void showWarning({
-    required String message,
-    String? title,
+    required String title,
+    String? subtitle,
     Duration? toastDuration,
     BuildContext? context,
+    bool permanent = false,
   }) =>
       _show(
-        message: message,
+        title: title,
         icon: _getIcon(GrxIcons.warning_amber),
         backgroundColor: GrxColors.fffff6a8,
-        title: title,
+        subtitle: subtitle,
         toastDuration: toastDuration,
         context: context,
+        permanent: permanent,
       );
 
   static void showSuccess({
-    required String message,
-    String? title,
+    required String title,
+    String? subtitle,
     Duration? toastDuration,
     BuildContext? context,
+    bool permanent = false,
   }) =>
       _show(
-        message: message,
+        title: title,
         icon: _getIcon(GrxIcons.check_circle_outline),
         backgroundColor: GrxColors.cff90e6bc,
-        title: title,
+        subtitle: subtitle,
         toastDuration: toastDuration,
         context: context,
+        permanent: permanent,
       );
 
   static void _show({
-    required String message,
+    required String title,
     required Icon icon,
     required Color backgroundColor,
-    String? title,
+    String? subtitle,
     Duration? toastDuration,
     BuildContext? context,
+    bool permanent = false,
   }) {
     _validateContext(context);
 
-    int milliseconds = (message.length * 100 + (title?.length ?? 0) * 100);
+    int milliseconds = (title.length * 100 + (subtitle?.length ?? 0) * 100);
 
     if (milliseconds <= 3000) {
       milliseconds = 3000;
@@ -81,33 +89,62 @@ abstract class GrxToastService {
 
     final buildContext = (context ?? _context)!;
 
-    Flushbar(
-      titleText: (title?.isNotEmpty ?? false)
-          ? GrxHeadlineSmallText(
-              title!,
-              color: GrxColors.cff202c44,
-            )
-          : null,
-      messageText: GrxCaptionLargeText(
-        message,
-        color: GrxColors.cff202c44,
+    // Flushbar(
+    //   titleText: (title?.isNotEmpty ?? false)
+    //       ? GrxHeadlineSmallText(
+    //           title!,
+    //           color: GrxColors.cff202c44,
+    //         )
+    //       : null,
+    //   messageText: GrxCaptionLargeText(
+    //     message,
+    //     color: GrxColors.cff202c44,
+    //   ),
+    //   flushbarPosition: FlushbarPosition.BOTTOM,
+    //   flushbarStyle: FlushbarStyle.GROUNDED,
+    //   backgroundColor: backgroundColor,
+    //   mainButton: GrxIconButton(
+    //     icon: GrxIcons.close,
+    //     color: GrxColors.cff202c44,
+    //     onPressed: Navigator.of(buildContext).pop,
+    //   ),
+    //   shouldIconPulse: false,
+    //   padding: const EdgeInsets.symmetric(
+    //     vertical: 18.0,
+    //     horizontal: 16.0,
+    //   ),
+    //   icon: icon,
+    //   duration: duration,
+    // ).show(buildContext);
+
+    DelightToastBar? toast;
+
+    toast = DelightToastBar(
+      autoDismiss: !permanent,
+      snackbarDuration:
+          permanent ? const Duration(milliseconds: 5000) : duration,
+      builder: (context) => ToastCard(
+        leading: icon,
+        title: GrxCaptionLargeText(
+          title,
+          color: GrxColors.cff202c44,
+          overflow: TextOverflow.visible,
+        ),
+        subtitle: (subtitle?.isNotEmpty ?? false)
+            ? GrxHeadlineSmallText(
+                subtitle!,
+                color: GrxColors.cff202c44,
+                overflow: TextOverflow.visible,
+              )
+            : null,
+        trailing: GrxIconButton(
+          icon: GrxIcons.close,
+          color: GrxColors.cff202c44,
+          onPressed: () => toast?.remove(),
+        ),
+        color: backgroundColor,
       ),
-      flushbarPosition: FlushbarPosition.BOTTOM,
-      flushbarStyle: FlushbarStyle.GROUNDED,
-      backgroundColor: backgroundColor,
-      mainButton: GrxIconButton(
-        icon: GrxIcons.close,
-        color: GrxColors.cff202c44,
-        onPressed: Navigator.of(buildContext).pop,
-      ),
-      shouldIconPulse: false,
-      padding: const EdgeInsets.symmetric(
-        vertical: 18.0,
-        horizontal: 16.0,
-      ),
-      icon: icon,
-      duration: duration,
-    ).show(buildContext);
+    )..show(buildContext);
   }
 
   static Icon _getIcon(IconData data) => Icon(

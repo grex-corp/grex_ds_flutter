@@ -261,7 +261,7 @@ class _DashboardWebPageState extends State<DashboardWebPage>
 
                           GrxToastService.showSuccess(
                             title: 'Nova pessoa criada',
-                            message: 'Cadastro realizado com sucesso',
+                            subtitle: 'Cadastro realizado com sucesso',
                             context: context,
                           );
                         },
@@ -352,7 +352,7 @@ class _DashboardWebPageState extends State<DashboardWebPage>
                             mainAxisSize: MainAxisSize.min,
                             text: 'Show Error',
                             onPressed: () => GrxToastService.showError(
-                              message: 'Error message inside error toast',
+                              title: 'Error message inside error toast',
                               context: context,
                             ),
                           ),
@@ -360,7 +360,7 @@ class _DashboardWebPageState extends State<DashboardWebPage>
                             mainAxisSize: MainAxisSize.min,
                             text: 'Show Warning',
                             onPressed: () => GrxToastService.showWarning(
-                              message: 'Warning message inside warning toast',
+                              title: 'Warning message inside warning toast',
                               context: context,
                             ),
                           ),
@@ -368,7 +368,18 @@ class _DashboardWebPageState extends State<DashboardWebPage>
                             mainAxisSize: MainAxisSize.min,
                             text: 'Show Success',
                             onPressed: () => GrxToastService.showSuccess(
-                              message: 'Success message inside success toast',
+                              title: 'Success message inside success toast',
+                              context: context,
+                            ),
+                          ),
+                          GrxSecondaryButton(
+                            mainAxisSize: MainAxisSize.min,
+                            text: 'Show Permanent Warning',
+                            onPressed: () => GrxToastService.showWarning(
+                              permanent: true,
+                              title: 'Showing permanent warning toast',
+                              subtitle:
+                                  'Adding a subtitle to show how it works',
                               context: context,
                             ),
                           ),
