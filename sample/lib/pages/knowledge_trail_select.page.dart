@@ -55,10 +55,9 @@ class _KnowledgeTrailStateSelectPage extends State<KnowledgeTrailSelectPage> {
         bottom: mediaQuery.viewInsets.bottom + mediaQuery.padding.bottom + 8.0,
       ),
       color: GrxColors.cfff2f7fd,
-      child: Card(
+      child: GrxCard(
         color: Colors.white,
         elevation: 0,
-        shape: GrxUtils.defaultCardBorder,
         // margin: const EdgeInsets.only(left: 15, right: 15, bottom: 15),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -135,8 +134,8 @@ class _KnowledgeTrailStateSelectPage extends State<KnowledgeTrailSelectPage> {
                     child: Container(
                       // margin: const EdgeInsets.only(bottom: 20),
                       child: GrxRoundedCheckbox(
+                        value: trail.priority == _data.priority,
                         radius: 10,
-                        initialValue: trail.priority == _data.priority,
                         isTappable: false,
                       ),
                     ),

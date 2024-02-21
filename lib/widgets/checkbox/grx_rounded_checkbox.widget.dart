@@ -6,7 +6,7 @@ import '../../utils/grx_utils.util.dart';
 class GrxRoundedCheckbox extends StatefulWidget {
   const GrxRoundedCheckbox({
     super.key,
-    this.initialValue = false,
+    this.value = false,
     this.radius = 18,
     this.onChanged,
     this.isTappable = true,
@@ -14,7 +14,7 @@ class GrxRoundedCheckbox extends StatefulWidget {
     this.isLoading = false,
   });
 
-  final bool initialValue;
+  final bool value;
   final double radius;
   final Function(bool)? onChanged;
   final bool isTappable;
@@ -32,14 +32,14 @@ class _GrxRoundedCheckboxState extends State<GrxRoundedCheckbox> {
   void initState() {
     super.initState();
 
-    _value = widget.initialValue;
+    _value = widget.value;
   }
 
   @override
   void didUpdateWidget(GrxRoundedCheckbox oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    _value = widget.initialValue;
+    _value = widget.value;
   }
 
   @override

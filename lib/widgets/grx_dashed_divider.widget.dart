@@ -63,7 +63,7 @@ class GrxDashedDivider extends StatelessWidget {
                       padding: const EdgeInsets.only(right: 10),
                       child: GrxOverlineText(
                         title!,
-                        color: GrxColors.cffb2c1d0,
+                        color: GrxColors.cff7892b7,
                       ),
                     )
                   : const SizedBox.shrink(),

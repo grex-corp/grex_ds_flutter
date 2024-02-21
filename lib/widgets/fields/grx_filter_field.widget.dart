@@ -4,6 +4,7 @@ import '../../themes/colors/grx_colors.dart';
 import '../../themes/icons/grx_icons.dart';
 import '../../themes/typography/styles/grx_caption_large_text.style.dart';
 import '../buttons/grx_clear_input_button.widget.dart';
+import 'grx_form_field.widget.dart';
 
 const _inputTextStyle = GrxCaptionLargeTextStyle(color: GrxColors.cff7892b7);
 
@@ -11,17 +12,20 @@ class GrxFilterField extends StatelessWidget {
   final TextEditingController searchFieldController;
   final Function(String) onChanged;
   final String hintText;
+  final bool flexible;
 
   const GrxFilterField({
     super.key,
     required this.searchFieldController,
     required this.onChanged,
     required this.hintText,
+    this.flexible = false,
   });
 
   @override
   Widget build(BuildContext context) {
-    return FormField<String>(
+    return GrxFormField<String>(
+      flexible: flexible,
       builder: (FormFieldState<String> field) {
         return TextField(
           controller: searchFieldController,

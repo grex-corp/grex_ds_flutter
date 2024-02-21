@@ -3,12 +3,12 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:grex_ds/grex_ds.dart';
-import 'package:sample/extensions/string_extension.dart';
 
-import '../fields_sample.dart';
-import '../models/person.model.dart';
-import '../models/role.model.dart';
-import '../typo_sample.dart';
+import '../../extensions/string_extension.dart';
+import '../../models/person.model.dart';
+import '../../models/role.model.dart';
+import '../../typo_sample.dart';
+import '../widgets/fields_sample.web.widget.dart';
 
 final _leaders = [
   Person(id: 1, name: '1st Person'),
@@ -56,8 +56,8 @@ final _roles = [
   Role(id: 20, name: '20th Role', priority: 20),
 ];
 
-class DashboardPage extends StatefulWidget {
-  const DashboardPage({
+class DashboardWebPage extends StatefulWidget {
+  const DashboardWebPage({
     super.key,
     required this.animationController,
   });
@@ -65,10 +65,10 @@ class DashboardPage extends StatefulWidget {
   final AnimationController animationController;
 
   @override
-  State<StatefulWidget> createState() => _DashboardPageState();
+  State<StatefulWidget> createState() => _DashboardWebPageState();
 }
 
-class _DashboardPageState extends State<DashboardPage>
+class _DashboardWebPageState extends State<DashboardWebPage>
     with TickerProviderStateMixin {
   final formKey = GlobalKey<FormState>();
   late Person person;
@@ -81,6 +81,7 @@ class _DashboardPageState extends State<DashboardPage>
     person = Person(
       id: 22,
       name: 'Leonardo Gabriel',
+      phone: '54992099544',
       birthDate: DateTime.now(),
       leadership: _leaders.first,
       roles: [
@@ -124,7 +125,7 @@ class _DashboardPageState extends State<DashboardPage>
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: GrxHeader(
-        // Here we take the value from the DashboardPage object that was created by
+        // Here we take the value from the DashboardWebPage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: 'Dashboard Page',
         backgroundColor: GrxColors.cff365278,
@@ -155,7 +156,7 @@ class _DashboardPageState extends State<DashboardPage>
                   key: formKey,
                   child: Column(
                     children: [
-                      FieldsSample(
+                      FieldsSampleWeb(
                         person: person,
                         leaders: _leaders,
                         roles: _roles,
@@ -260,7 +261,7 @@ class _DashboardPageState extends State<DashboardPage>
 
                           GrxToastService.showSuccess(
                             title: 'Nova pessoa criada',
-                            message: 'Cadastro realizado com sucesso',
+                            subtitle: 'Cadastro realizado com sucesso',
                             context: context,
                           );
                         },
@@ -351,7 +352,7 @@ class _DashboardPageState extends State<DashboardPage>
                             mainAxisSize: MainAxisSize.min,
                             text: 'Show Error',
                             onPressed: () => GrxToastService.showError(
-                              message: 'Error message inside error toast',
+                              title: 'Error message inside error toast',
                               context: context,
                             ),
                           ),
@@ -359,7 +360,7 @@ class _DashboardPageState extends State<DashboardPage>
                             mainAxisSize: MainAxisSize.min,
                             text: 'Show Warning',
                             onPressed: () => GrxToastService.showWarning(
-                              message: 'Warning message inside warning toast',
+                              title: 'Warning message inside warning toast',
                               context: context,
                             ),
                           ),
@@ -367,7 +368,18 @@ class _DashboardPageState extends State<DashboardPage>
                             mainAxisSize: MainAxisSize.min,
                             text: 'Show Success',
                             onPressed: () => GrxToastService.showSuccess(
-                              message: 'Success message inside success toast',
+                              title: 'Success message inside success toast',
+                              context: context,
+                            ),
+                          ),
+                          GrxSecondaryButton(
+                            mainAxisSize: MainAxisSize.min,
+                            text: 'Show Permanent Warning',
+                            onPressed: () => GrxToastService.showWarning(
+                              permanent: true,
+                              title: 'Showing permanent warning toast',
+                              subtitle:
+                                  'Adding a subtitle to show how it works',
                               context: context,
                             ),
                           ),

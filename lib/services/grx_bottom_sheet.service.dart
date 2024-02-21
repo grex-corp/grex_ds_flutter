@@ -16,7 +16,7 @@ class GrxBottomSheetService {
   final String? title;
   final Color backgroundColor;
 
-  bool isBottomSheetOpen = false;
+  bool isOpened = false;
 
   Widget _buildBottomSheet({
     ScrollController? controller,
@@ -64,7 +64,7 @@ class GrxBottomSheetService {
     final double minSize = 0.25,
     final double initSize = 1.0,
   }) {
-    isBottomSheetOpen = true;
+    isOpened = true;
 
     return showModalBottomSheet<T>(
       backgroundColor: Colors.transparent,
@@ -80,13 +80,13 @@ class GrxBottomSheetService {
         );
       },
     ).then((value) {
-      isBottomSheetOpen = false;
+      isOpened = false;
       return value;
     });
   }
 
   Future<T?> showUndisposable<T>() {
-    isBottomSheetOpen = true;
+    isOpened = true;
 
     return showModalBottomSheet<T>(
       context: context,
@@ -101,13 +101,13 @@ class GrxBottomSheetService {
         ),
       ),
     ).then((value) {
-      isBottomSheetOpen = false;
+      isOpened = false;
       return value;
     });
   }
 
   Future<T?> show<T>() {
-    isBottomSheetOpen = true;
+    isOpened = true;
 
     return showModalBottomSheet<T>(
       context: context,
@@ -115,13 +115,13 @@ class GrxBottomSheetService {
       isScrollControlled: true,
       builder: (_) => _buildBottomSheet(),
     ).then((value) {
-      isBottomSheetOpen = false;
+      isOpened = false;
       return value;
     });
   }
 
   void dispose() {
-    if (isBottomSheetOpen) {
+    if (isOpened) {
       Navigator.of(context).pop();
     }
   }

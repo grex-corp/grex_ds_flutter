@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
-import 'package:rounded_loading_button/rounded_loading_button.dart';
+// import 'package:rounded_loading_button/rounded_loading_button.dart';
+import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
 
 import '../../enums/grx_text_transform.enum.dart';
 import '../../themes/colors/grx_colors.dart';

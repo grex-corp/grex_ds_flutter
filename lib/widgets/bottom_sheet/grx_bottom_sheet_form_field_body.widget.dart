@@ -57,7 +57,8 @@ class GrxBottomSheetFormFieldBody<T> extends StatefulWidget {
   State<StatefulWidget> createState() => _GrxBottomSheetFormFieldBodyState<T>();
 }
 
-class _GrxBottomSheetFormFieldBodyState<T> extends State<GrxBottomSheetFormFieldBody<T>> {
+class _GrxBottomSheetFormFieldBodyState<T>
+    extends State<GrxBottomSheetFormFieldBody<T>> {
   final _list = <T>[];
   final _selectedValues = <T>[];
 
@@ -116,98 +117,105 @@ class _GrxBottomSheetFormFieldBodyState<T> extends State<GrxBottomSheetFormField
       mainAxisSize: MainAxisSize.min,
       children: [
         Flexible(
-          child: CustomScrollView(
-            controller: widget.controller,
-            shrinkWrap: widget.shrinkWrap,
-            slivers: [
-              if (widget.searchable)
-                SliverAppBar(
-                  titleSpacing: 0.0,
-                  toolbarHeight: 65,
-                  backgroundColor: Colors.transparent,
-                  automaticallyImplyLeading: false,
-                  title: Container(
-                    color: GrxColors.cfff2f7fd,
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 10,
-                      horizontal: 8,
-                    ),
-                    child: GrxFilterField(
-                      searchFieldController: widget.quickSearchFieldController!,
-                      onChanged: _filterData,
-                      hintText: widget.searchHintText ?? 'Search',
+          child: ColoredBox(
+            color: GrxColors.cfff2f7fd,
+            child: CustomScrollView(
+              controller: widget.controller,
+              shrinkWrap: widget.shrinkWrap,
+              slivers: [
+                if (widget.searchable)
+                  SliverAppBar(
+                    titleSpacing: 0.0,
+                    toolbarHeight: 65.0,
+                    backgroundColor: Colors.transparent,
+                    automaticallyImplyLeading: false,
+                    title: Container(
+                      color: GrxColors.cfff2f7fd,
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 10,
+                        horizontal: 8,
+                      ),
+                      child: GrxFilterField(
+                        searchFieldController:
+                            widget.quickSearchFieldController!,
+                        onChanged: _filterData,
+                        hintText: widget.searchHintText ?? 'Search',
+                      ),
                     ),
                   ),
-                ),
-              _list.isEmpty
-                  ? SliverToBoxAdapter(
-                      child: Center(
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 8),
-                          child: GrxCaptionLargeText(
-                              widget.emptyListText ?? 'No results found'),
+                _list.isEmpty
+                    ? SliverToBoxAdapter(
+                        child: SafeArea(
+                          top: false,
+                          child: Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: GrxCaptionLargeText(
+                                  widget.emptyListText ?? 'No results found'),
+                            ),
+                          ),
                         ),
-                      ),
-                    )
-                  : SliverPadding(
-                      padding: EdgeInsets.only(
-                        left: 8,
-                        top: 8,
-                        right: 8,
-                        bottom: !widget.multiSelect
-                            ? MediaQuery.of(context).viewInsets.bottom +
-                                MediaQuery.of(context).padding.bottom +
-                                8
-                            : 0,
-                      ),
-                      sliver: SliverList(
-                        delegate: SliverChildBuilderDelegate(
-                          childCount: _list.length,
-                          (context, index) {
-                            final item = _list.toList()[index];
+                      )
+                    : SliverPadding(
+                        padding: EdgeInsets.only(
+                          left: 8,
+                          top: 8,
+                          right: 8,
+                          bottom: !widget.multiSelect
+                              ? MediaQuery.of(context).viewInsets.bottom +
+                                  MediaQuery.of(context).padding.bottom +
+                                  8
+                              : 0,
+                        ),
+                        sliver: SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                            childCount: _list.length,
+                            (context, index) {
+                              final item = _list.toList()[index];
 
-                            if (widget.multiSelect) {
-                              return widget.itemBuilder(
-                                context,
-                                index,
-                                item,
-                                () => _onItemCheckedChange(item),
-                                _selectedValues.any(
-                                  (element) =>
-                                      widget.valueKey!(element) ==
-                                      widget.valueKey!(item),
-                                ),
-                              );
-                            } else {
-                              return InkWell(
-                                onTap: () {
-                                  Navigator.pop(context, true);
-
-                                  if (widget.onSelectItem != null) {
-                                    widget.onSelectItem!(item);
-                                  }
-                                  widget.onChangeState!(item);
-                                },
-                                child: widget.itemBuilder(
+                              if (widget.multiSelect) {
+                                return widget.itemBuilder(
                                   context,
                                   index,
                                   item,
-                                  null,
-                                  false,
-                                ),
-                              );
-                            }
-                          },
+                                  () => _onItemCheckedChange(item),
+                                  _selectedValues.any(
+                                    (element) =>
+                                        widget.valueKey!(element) ==
+                                        widget.valueKey!(item),
+                                  ),
+                                );
+                              } else {
+                                return InkWell(
+                                  onTap: () {
+                                    Navigator.pop(context, true);
+
+                                    if (widget.onSelectItem != null) {
+                                      widget.onSelectItem!(item);
+                                    }
+                                    widget.onChangeState!(item);
+                                  },
+                                  child: widget.itemBuilder(
+                                    context,
+                                    index,
+                                    item,
+                                    null,
+                                    false,
+                                  ),
+                                );
+                              }
+                            },
+                          ),
                         ),
                       ),
-                    ),
-            ],
+              ],
+            ),
           ),
         ),
         if (widget.multiSelect)
           Container(
             decoration: const BoxDecoration(
-              color: GrxColors.cfff2f7fd,
+              color: GrxColors.cffffffff,
               border: Border(
                 top: BorderSide(
                   color: GrxColors.cffe0efff,

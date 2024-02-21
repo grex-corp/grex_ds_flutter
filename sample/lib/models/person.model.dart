@@ -5,6 +5,7 @@ import 'role.model.dart';
 class Person {
   int id;
   String name;
+  String? phone;
   Person? leadership;
   DateTime? birthDate;
   bool createUser;
@@ -17,6 +18,7 @@ class Person {
   Person({
     required this.id,
     required this.name,
+    this.phone,
     this.leadership,
     this.birthDate,
     this.createUser = false,

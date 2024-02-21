@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../extensions/list.extension.dart';
 import '../../services/grx_bottom_sheet.service.dart';
 import '../../themes/colors/grx_colors.dart';
 import '../../themes/fields/grx_field_styles.theme.dart';
@@ -7,6 +8,8 @@ import '../bottom_sheet/grx_bottom_sheet_form_field_body.widget.dart';
 import '../grx_chip.widget.dart';
 import '../grx_stateful.widget.dart';
 import '../typography/grx_caption_text.widget.dart';
+import 'controllers/grx_form_field.controller.dart';
+import 'grx_form_field.widget.dart';
 import 'grx_input_decoration.widget.dart';
 import 'shimmers/grx_form_field_shimmer.widget.dart';
 
@@ -21,10 +24,12 @@ class GrxMultiSelectFormField<T> extends GrxStatefulWidget {
     this.onSaved,
     this.controller,
     this.hintText,
-    this.initialValue,
+    this.selectBottomSheetTitle,
+    this.value,
     this.onSelectItems,
     this.validator,
     this.enabled = true,
+    this.flexible = false,
     this.searchable = false,
     this.confirmButtonLabel,
     this.cancelButtonLabel,
@@ -33,19 +38,21 @@ class GrxMultiSelectFormField<T> extends GrxStatefulWidget {
           key: key ?? ValueKey<int>(labelText.hashCode),
         );
 
-  final TextEditingController? controller;
+  final GrxFormFieldController<T>? controller;
   final String labelText;
   final String? hintText;
+  final String? selectBottomSheetTitle;
   final Iterable<T> data;
   final Widget Function(BuildContext context, int index, T value,
       void Function()? onChanged, bool isSelected) itemBuilder;
   final String Function(T data) displayText;
   final int Function(T data) valueKey;
-  final Iterable<T>? initialValue;
+  final Iterable<T>? value;
   final void Function(Iterable<T>?)? onSelectItems;
   final FormFieldSetter<Iterable<T>>? onSaved;
   final FormFieldValidator<Iterable<T>>? validator;
   final bool enabled;
+  final bool flexible;
   final bool searchable;
   final bool isLoading;
   final String? confirmButtonLabel;
@@ -59,26 +66,59 @@ class _GrxMultiSelectStateFormField<T>
     extends State<GrxMultiSelectFormField<T>> {
   Iterable<T>? values;
   final List<T> _list = [];
-  late final TextEditingController controller;
+  late final GrxFormFieldController<T> controller;
   final TextEditingController quickSearchFieldController =
       TextEditingController();
   final FocusNode inputFocusNode = FocusNode();
 
   @override
   void initState() {
+    super.initState();
+
     _list.clear();
     _list.addAll(widget.data);
 
-    controller = widget.controller ?? TextEditingController();
+    controller = widget.controller ?? GrxFormFieldController<T>();
 
-    if (widget.initialValue != null && values == null) {
-      values = widget.initialValue;
+    if (widget.value != null && values == null) {
+      values = widget.value;
       if (widget.onSelectItems != null) {
         widget.onSelectItems!(values);
       }
     }
 
-    super.initState();
+    _subscribeStreams();
+  }
+
+  @override
+  void dispose() {
+    if (widget.controller == null) {
+      controller.dispose();
+    }
+
+    super.dispose();
+  }
+
+  void _subscribeStreams() {
+    controller.onClearStream.stream.listen((_) {
+      values = null;
+    });
+
+    controller.onDidUpdateData.stream.listen((data) {
+      _list.assignAll(data);
+    });
+
+    controller.onDidUpdateValue.stream.listen((data) {
+      final (value, _) = data;
+
+      if (value == null) {
+        controller.clear();
+        return;
+      }
+
+      this.values = [...(this.values?.toList() ?? []), value];
+      controller.text = widget.displayText(value);
+    });
   }
 
   @override
@@ -89,12 +129,13 @@ class _GrxMultiSelectStateFormField<T>
       );
     }
 
-    return FormField<Iterable<T>>(
-      initialValue: widget.initialValue,
+    return GrxFormField<Iterable<T>>(
+      initialValue: widget.value,
       autovalidateMode: AutovalidateMode.always,
       validator: widget.validator,
       onSaved: (_) => widget.onSaved != null ? widget.onSaved!(values) : null,
       enabled: widget.enabled,
+      flexible: widget.flexible,
       builder: (FormFieldState<Iterable<T>> field) {
         List<Widget> buildSelectedOptions(state) {
           List<Widget> selectedOptions = [];
@@ -132,6 +173,7 @@ class _GrxMultiSelectStateFormField<T>
 
             final bottomSheet = GrxBottomSheetService(
               context: field.context,
+              title: widget.selectBottomSheetTitle,
               builder: (controller) {
                 return StatefulBuilder(
                   builder: (BuildContext context, StateSetter setModalState) {

@@ -6,12 +6,12 @@ import '../../utils/grx_utils.util.dart';
 class GrxCheckbox extends StatelessWidget {
   const GrxCheckbox({
     super.key,
-    this.isChecked = false,
+    this.value = false,
     this.enabled = true,
     this.isLoading = false,
   });
 
-  final bool isChecked;
+  final bool value;
   final bool enabled;
   final bool isLoading;
 
@@ -35,7 +35,7 @@ class GrxCheckbox extends StatelessWidget {
         child: AnimatedContainer(
           duration: GrxUtils.defaultAnimationDuration,
           decoration: BoxDecoration(
-            color: isChecked ? GrxColors.cff289fff : Colors.transparent,
+            color: value ? GrxColors.cff289fff : Colors.transparent,
             borderRadius: BorderRadius.circular(2.0),
           ),
         ),

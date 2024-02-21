@@ -12,9 +12,11 @@ class GrxInputDecoration extends InputDecoration {
     super.contentPadding,
     super.hintMaxLines,
     super.errorText,
+    super.prefix,
     this.onClear,
     super.enabled = true,
     this.showClearButton = false,
+    final Widget? suffix,
   }) : super(
           labelStyle: GrxFieldStyles.labelTextStyle,
           floatingLabelStyle: GrxFieldStyles.labelTextStyle,
@@ -27,8 +29,12 @@ class GrxInputDecoration extends InputDecoration {
           errorStyle: GrxFieldStyles.inputErrorTextStyle,
           focusedErrorBorder: GrxFieldStyles.underlineInputFocusedErrorBorder,
           hintStyle: GrxFieldStyles.inputHintTextStyle,
-          suffix: showClearButton
-              ? Padding(
+          suffix: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (suffix != null) suffix,
+              if (showClearButton)
+                Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Container(
                     padding: const EdgeInsets.all(3),
@@ -41,7 +47,8 @@ class GrxInputDecoration extends InputDecoration {
                     ),
                   ),
                 )
-              : null,
+            ],
+          ),
         );
 
   final void Function()? onClear;

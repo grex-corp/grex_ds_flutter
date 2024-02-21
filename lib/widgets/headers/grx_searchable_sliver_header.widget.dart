@@ -26,11 +26,14 @@ class GrxSearchableSliverHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final padding = MediaQuery.of(context).padding;
+
     return SliverPersistentHeader(
       delegate: GrxSearchableSliverHeaderDelegate(
         animationController: animationController,
         title: title,
         onFilter: onFilter,
+        topSafePadding: padding.top,
         onAdd: onAdd,
         onQuickSearchHandler: onQuickSearchHandler,
         filterButtonText: filterButtonText,

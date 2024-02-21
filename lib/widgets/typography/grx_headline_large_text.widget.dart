@@ -20,7 +20,8 @@ class GrxHeadlineLargeText extends StatelessWidget {
     this.decoration,
     this.overflow,
     this.isLoading = false,
-  }) : textSpan = null;
+  })  : textSpan = null,
+        style = null;
 
   const GrxHeadlineLargeText.rich(
     this.textSpan, {
@@ -32,7 +33,32 @@ class GrxHeadlineLargeText extends StatelessWidget {
     this.decoration,
     this.overflow,
     this.isLoading = false,
-  }) : text = null;
+  })  : text = null,
+        style = null;
+
+  GrxHeadlineLargeText.lerp(
+    this.text, {
+    super.key,
+    required final GrxHeadlineLargeTextStyle style,
+    required final double t,
+    this.textAlign,
+    this.transform = GrxTextTransform.none,
+    this.color = GrxColors.cff2e2e2e,
+    this.fontWeight,
+    this.decoration,
+    this.overflow,
+    this.isLoading = false,
+  })  : textSpan = null,
+        style = TextStyle.lerp(
+          GrxHeadlineLargeTextStyle(
+            color: color,
+            decoration: decoration,
+            overflow: overflow,
+            fontWeight: fontWeight,
+          ),
+          style,
+          t,
+        )!;
 
   final String? text;
   final InlineSpan? textSpan;
@@ -43,15 +69,17 @@ class GrxHeadlineLargeText extends StatelessWidget {
   final TextDecoration? decoration;
   final TextOverflow? overflow;
   final bool isLoading;
+  final TextStyle? style;
 
   @override
   Widget build(BuildContext context) {
-    final style = GrxHeadlineLargeTextStyle(
-      color: color,
-      decoration: decoration,
-      overflow: overflow,
-      fontWeight: fontWeight,
-    );
+    final style = this.style ??
+        GrxHeadlineLargeTextStyle(
+          color: color,
+          decoration: decoration,
+          overflow: overflow,
+          fontWeight: fontWeight,
+        );
 
     return textSpan != null
         ? GrxText.rich(

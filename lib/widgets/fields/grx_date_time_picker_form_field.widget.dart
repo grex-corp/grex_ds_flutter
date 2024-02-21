@@ -3,6 +3,8 @@ import 'package:intl/intl.dart';
 
 import '../../utils/grx_form_field.util.dart';
 import '../grx_stateful.widget.dart';
+import 'controllers/grx_form_field.controller.dart';
+import 'grx_form_field.widget.dart';
 import 'grx_text_field.widget.dart';
 import 'shimmers/grx_form_field_shimmer.widget.dart';
 
@@ -11,7 +13,7 @@ class GrxDateTimePickerFormField extends GrxStatefulWidget {
     final Key? key,
     required this.labelText,
     this.controller,
-    this.initialValue,
+    this.value,
     this.hintText,
     this.dialogConfirmText = 'Confirm',
     this.dialogCancelText = 'Cancel',
@@ -22,14 +24,15 @@ class GrxDateTimePickerFormField extends GrxStatefulWidget {
     this.validator,
     this.isDateTime = false,
     this.enabled = true,
+    this.flexible = false,
     this.futureDate = false,
     this.isLoading = false,
   }) : super(
           key: key ?? ValueKey<int>(labelText.hashCode),
         );
 
-  final TextEditingController? controller;
-  final DateTime? initialValue;
+  final GrxFormFieldController<DateTime>? controller;
+  final DateTime? value;
   final String labelText;
   final String? hintText;
   final String dialogConfirmText;
@@ -38,9 +41,10 @@ class GrxDateTimePickerFormField extends GrxStatefulWidget {
   final String dialogErrorInvalidText;
   final void Function(DateTime?)? onSelectItem;
   final FormFieldSetter<DateTime?>? onSaved;
-  final FormFieldValidator<String?>? validator;
+  final FormFieldValidator<DateTime?>? validator;
   final bool isDateTime;
   final bool enabled;
+  final bool flexible;
   final bool futureDate;
   final bool isLoading;
 
@@ -51,27 +55,56 @@ class GrxDateTimePickerFormField extends GrxStatefulWidget {
 class _GrxDateTimePickerFormFieldState
     extends State<GrxDateTimePickerFormField> {
   late final String locale;
-  late final TextEditingController controller;
+  late final GrxFormFieldController<DateTime> controller;
 
   DateTime? value;
 
   @override
   void initState() {
-    controller = widget.controller ?? TextEditingController();
+    super.initState();
 
-    if (widget.initialValue != null && value == null) {
-      value = widget.initialValue;
+    controller = widget.controller ?? GrxFormFieldController<DateTime>();
+
+    if (widget.value != null && value == null) {
+      value = widget.value;
       controller.text = _formatValue(value!);
       if (widget.onSelectItem != null) {
         widget.onSelectItem!(value);
       }
     }
 
-    super.initState();
+    _subscribeStreams();
+  }
+
+  @override
+  void dispose() {
+    if (widget.controller == null) {
+      controller.dispose();
+    }
+
+    super.dispose();
   }
 
   String _formatValue(DateTime value) {
     return '${DateFormat.yMd().format(value)}${widget.isDateTime ? ' ${DateFormat.Hm().format(value)}' : ''}';
+  }
+
+  void _subscribeStreams() {
+    controller.onClearStream.stream.listen((_) {
+      value = null;
+    });
+
+    controller.onDidUpdateValue.stream.listen((data) {
+      final (value, _) = data;
+
+      if (value == null) {
+        controller.clear();
+        return;
+      }
+
+      this.value = value;
+      controller.text = _formatValue(value);
+    });
   }
 
   @override
@@ -82,18 +115,19 @@ class _GrxDateTimePickerFormFieldState
       );
     }
 
-    return FormField<String>(
-      autovalidateMode: AutovalidateMode.always,
-      initialValue: widget.initialValue?.toIso8601String(),
-      validator: widget.validator,
-      onSaved: (_) => widget.onSaved != null ? widget.onSaved!(value) : null,
+    return GrxFormField<String>(
+      initialValue: widget.value?.toIso8601String(),
+      validator: (_) => widget.validator?.call(value),
+      onSaved: (_) => widget.onSaved?.call(value),
+      enabled: widget.enabled,
+      flexible: widget.flexible,
       builder: (FormFieldState<String> field) {
         GrxFormFieldUtils.onValueChange(
           field,
           controller,
           onChanged: (value) {
-            if (value.isEmpty && widget.onSelectItem != null) {
-              widget.onSelectItem!(null);
+            if (value.isEmpty) {
+              widget.onSelectItem?.call(null);
               this.value = null;
             }
           },

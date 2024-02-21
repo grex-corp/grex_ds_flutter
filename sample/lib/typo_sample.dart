@@ -6,9 +6,9 @@ class TypoSample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       mainAxisSize: MainAxisSize.min,
-      children: const [
+      children: [
         GrxHeadlineLargeText('Healine Large Text'),
         GrxHeadlineLargeText(
           'Healine Large Text',

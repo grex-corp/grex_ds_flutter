@@ -11,9 +11,10 @@ class GrxTextStyle extends TextStyle {
     super.fontWeight,
     super.color,
     super.decoration,
-    super.overflow = TextOverflow.ellipsis,
+    final TextOverflow? overflow,
   }) : super(
           package: GrxUtils.packageName,
           fontFamily: GrxFontFamilies.montserrat,
+          overflow: overflow ?? TextOverflow.ellipsis,
         );
 }

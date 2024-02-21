@@ -1,4 +1,4 @@
-import 'dart:ui';
+import 'package:flutter/material.dart';
 
 import '../utils/grx_font_weights.dart';
 import 'grx_text.style.dart';

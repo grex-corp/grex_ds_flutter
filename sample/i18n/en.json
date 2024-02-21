@@ -10,6 +10,7 @@
   "fields.datetime.hint": "1997-10-02",
 
   "pages.people.name": "Name",
+  "pages.people.phone": "Phone",
   "pages.people.birth-date": "Birth date",
 
   "home.tab.dashboard": "Dashboard",
