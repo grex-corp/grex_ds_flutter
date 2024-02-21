@@ -5,7 +5,7 @@ homepage: https://grex.com.br
 repository: https://github.com/grex-corp/grex_ds_flutter
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
+  sdk: '>=3.3.0 <4.0.0'
   flutter: '>=1.17.0'
 
 dependencies:
@@ -18,14 +18,14 @@ dependencies:
   path_provider: ^2.0.11
   photo_view: ^0.14.0
   shimmer: ^3.0.0
-  rounded_loading_button: ^2.1.0
-  another_flushbar: ^1.12.29
-  intl: ^0.19.0
+  rounded_loading_button_plus: ^3.0.1
+  delightful_toast: ^1.1.0
+  intl: ^0.18.1
   flutter_svg: ^2.0.5
   linkify: ^5.0.0
   url_launcher: ^6.1.11
   mask_text_input_formatter: ^2.4.0
-  popover: ^0.2.8+2
+  popover: ^0.3.0
 
 dev_dependencies:
   flutter_test:
