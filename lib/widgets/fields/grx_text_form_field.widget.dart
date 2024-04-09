@@ -31,6 +31,7 @@ class GrxTextFormField extends GrxStatefulWidget {
     this.textInputAction = TextInputAction.next,
     this.onFieldSubmitted,
     this.focusNode,
+    this.autofillHints,
     this.autoFocus = false,
     this.enabled = true,
     this.flexible = false,
@@ -61,6 +62,7 @@ class GrxTextFormField extends GrxStatefulWidget {
   final TextInputAction textInputAction;
   final void Function(String?)? onFieldSubmitted;
   final FocusNode? focusNode;
+  final Iterable<String>? autofillHints;
   final bool autoFocus;
   final bool enabled;
   final bool flexible;
@@ -160,6 +162,7 @@ class _GrxTextFormFieldState extends State<GrxTextFormField> {
           maxLines: widget.obscureText ? 1 : widget.maxLines,
           textAlignVertical: widget.textAlignVertical,
           onSubmitted: widget.onFieldSubmitted,
+          autofillHints: widget.autofillHints,
           inputFormatters: [
             if (controller.maskFormatter != null) controller.maskFormatter!,
             ...(widget.inputFormatters ?? []),

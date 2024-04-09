@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:super_sliver_list/super_sliver_list.dart';
 
 import '../../themes/colors/grx_colors.dart';
 import '../buttons/grx_primary_button.widget.dart';
 import '../buttons/grx_secondary_button.widget.dart';
-import '../fields/grx_filter_field.widget.dart';
+import '../fields/grx_search_field.widget.dart';
 import '../typography/grx_caption_large_text.widget.dart';
 
 class GrxBottomSheetFormFieldBody<T> extends StatefulWidget {
@@ -135,7 +136,7 @@ class _GrxBottomSheetFormFieldBodyState<T>
                         vertical: 10,
                         horizontal: 8,
                       ),
-                      child: GrxFilterField(
+                      child: GrxSearchField(
                         searchFieldController:
                             widget.quickSearchFieldController!,
                         onChanged: _filterData,
@@ -167,7 +168,7 @@ class _GrxBottomSheetFormFieldBodyState<T>
                                   8
                               : 0,
                         ),
-                        sliver: SliverList(
+                        sliver: SuperSliverList(
                           delegate: SliverChildBuilderDelegate(
                             childCount: _list.length,
                             (context, index) {

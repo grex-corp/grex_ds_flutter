@@ -17,6 +17,7 @@ class GrxBottomButton extends StatelessWidget {
     this.iconSize = 23,
     this.iconColor,
     this.iconPadding = 5,
+    this.isLoading = false,
   });
 
   final String text;
@@ -27,6 +28,7 @@ class GrxBottomButton extends StatelessWidget {
   final double iconSize;
   final Color? iconColor;
   final double iconPadding;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -39,9 +41,13 @@ class GrxBottomButton extends StatelessWidget {
         left: 25,
         top: 22,
         right: 25,
-        bottom: 22 + MediaQuery.of(context).viewPadding.bottom,
+        bottom: 22 + MediaQuery.viewPaddingOf(context).bottom,
       ),
-      backgroundColor: GrxColors.cff69efa3,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.zero,
+        side: BorderSide.none,
+      ),
+      backgroundColor: GrxColors.primarySwatch,
       foregroundColor: GrxColors.cffffffff,
       style: const GrxHeadlineMediumTextStyle(),
       icon: icon,
@@ -50,6 +56,7 @@ class GrxBottomButton extends StatelessWidget {
       iconColor: iconColor,
       iconPadding: iconPadding,
       onPressed: onPressed,
+      isLoading: isLoading,
     );
   }
 }

@@ -4,7 +4,7 @@ import '../../themes/colors/grx_colors.dart';
 import '../../themes/icons/grx_icons.dart';
 import '../../utils/grx_utils.util.dart';
 
-const _kSize = 70.0;
+const _kSize = 50.0;
 const _kBorder = _kSize / 2.0;
 const _kBorderRadius = BorderRadius.all(Radius.circular(_kBorder));
 final _kShape =
@@ -24,10 +24,8 @@ class GrxFloatingActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: isLoading ? null : onPressed,
-      style: ElevatedButton.styleFrom(
-          shape: _kShape, padding: const EdgeInsets.all(0.0), elevation: 0),
+    return InkWell(
+      onTap: isLoading ? null : onPressed,
       child: Material(
         elevation: 10,
         shape: _kShape,

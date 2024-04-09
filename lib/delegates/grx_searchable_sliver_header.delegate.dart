@@ -10,6 +10,7 @@ import '../widgets/headers/grx_searchable_header.widget.dart';
 
 const double _kToolbarExtent = 60.0;
 const double _kFilterFieldExtent = 70.0;
+const double _kTotalWidgetExtent = 35.0;
 
 class GrxSearchableSliverHeaderDelegate extends SliverPersistentHeaderDelegate {
   const GrxSearchableSliverHeaderDelegate({
@@ -20,6 +21,7 @@ class GrxSearchableSliverHeaderDelegate extends SliverPersistentHeaderDelegate {
     this.onFilter,
     this.onAdd,
     this.onQuickSearchHandler,
+    this.onTotalWidgetBuilder,
     this.hintText,
     this.canPop = false,
   });
@@ -31,6 +33,7 @@ class GrxSearchableSliverHeaderDelegate extends SliverPersistentHeaderDelegate {
   final void Function()? onFilter;
   final void Function()? onAdd;
   final void Function(String)? onQuickSearchHandler;
+  final Widget Function(double progress)? onTotalWidgetBuilder;
   final String? hintText;
   final bool canPop;
 
@@ -69,6 +72,7 @@ class GrxSearchableSliverHeaderDelegate extends SliverPersistentHeaderDelegate {
             ),
         ],
         onQuickSearchHandler: onQuickSearchHandler,
+        extraWidget: onTotalWidgetBuilder?.call(progress),
       ),
     );
   }
@@ -77,13 +81,15 @@ class GrxSearchableSliverHeaderDelegate extends SliverPersistentHeaderDelegate {
   double get maxExtent =>
       _kToolbarExtent +
       topSafePadding +
-      (onQuickSearchHandler != null ? _kFilterFieldExtent : 0);
+      (onQuickSearchHandler != null ? _kFilterFieldExtent : 0) +
+      (onTotalWidgetBuilder != null ? _kTotalWidgetExtent : 0);
 
   @override
   double get minExtent =>
       _kToolbarExtent +
       topSafePadding +
-      (onQuickSearchHandler != null ? _kFilterFieldExtent : 0);
+      (onQuickSearchHandler != null ? _kFilterFieldExtent : 0) +
+      (onTotalWidgetBuilder != null ? _kTotalWidgetExtent : 0);
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) =>

@@ -76,6 +76,8 @@ class _DashboardWebPageState extends State<DashboardWebPage>
   late final AnimationController animationController;
   File? selectedImage;
 
+  bool isLoading = false;
+
   @override
   void initState() {
     person = Person(
@@ -103,15 +105,28 @@ class _DashboardWebPageState extends State<DashboardWebPage>
     super.initState();
   }
 
-  bool _validateForm() {
-    final form = formKey.currentState;
+  Future<bool> _validateForm() async {
+    try {
+      final form = formKey.currentState;
 
-    if (form?.validate() ?? false) {
-      form!.save();
-      return true;
+      if (form?.validate() ?? false) {
+        setState(() {
+          isLoading = true;
+        });
+        await Future.delayed(
+          const Duration(milliseconds: 4000),
+        );
+
+        form!.save();
+        return true;
+      }
+
+      return false;
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
     }
-
-    return false;
   }
 
   @override
@@ -150,6 +165,9 @@ class _DashboardWebPageState extends State<DashboardWebPage>
               // axis because Columns are vertical (the cross axis would be
               // horizontal).
               // mainAxisAlignment: MainAxisAlignment.center,
+              padding: EdgeInsets.only(
+                bottom: MediaQuery.paddingOf(context).bottom + 120,
+              ),
               children: <Widget>[
                 const TypoSample(),
                 Form(
@@ -421,13 +439,14 @@ class _DashboardWebPageState extends State<DashboardWebPage>
                     ],
                   ),
                 ),
+                GrxBottomButton(
+                  text: 'save'.translate,
+                  icon: GrxIcons.check,
+                  onPressed: _validateForm,
+                  isLoading: isLoading,
+                ),
               ],
             ),
-          ),
-          GrxBottomButton(
-            text: 'save'.translate,
-            icon: GrxIcons.check,
-            onPressed: _validateForm,
           ),
         ],
       ),

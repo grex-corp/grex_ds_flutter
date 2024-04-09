@@ -26,6 +26,7 @@ class GrxMultiSelectFormField<T> extends GrxStatefulWidget {
     this.hintText,
     this.selectBottomSheetTitle,
     this.value,
+    this.autovalidateMode = AutovalidateMode.always,
     this.onSelectItems,
     this.validator,
     this.enabled = true,
@@ -48,6 +49,7 @@ class GrxMultiSelectFormField<T> extends GrxStatefulWidget {
   final String Function(T data) displayText;
   final int Function(T data) valueKey;
   final Iterable<T>? value;
+  final AutovalidateMode autovalidateMode;
   final void Function(Iterable<T>?)? onSelectItems;
   final FormFieldSetter<Iterable<T>>? onSaved;
   final FormFieldValidator<Iterable<T>>? validator;
@@ -131,7 +133,7 @@ class _GrxMultiSelectStateFormField<T>
 
     return GrxFormField<Iterable<T>>(
       initialValue: widget.value,
-      autovalidateMode: AutovalidateMode.always,
+      autovalidateMode: widget.autovalidateMode,
       validator: widget.validator,
       onSaved: (_) => widget.onSaved != null ? widget.onSaved!(values) : null,
       enabled: widget.enabled,

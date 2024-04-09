@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:grex_ds/utils/grx_utils.util.dart';
 
 import '../../enums/grx_align.enum.dart';
 import '../../enums/grx_text_transform.enum.dart';
 import '../../themes/colors/grx_colors.dart';
+import '../grx_measure_size.widget.dart';
 import '../typography/grx_headline_small_text.widget.dart';
 
-class GrxButton extends StatelessWidget {
+class GrxButton extends StatefulWidget {
   const GrxButton({
     super.key,
     required this.foregroundColor,
@@ -26,6 +29,7 @@ class GrxButton extends StatelessWidget {
     this.shape,
     this.padding = const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
     this.style,
+    this.isLoading = false,
   }) : assert(text != null || textSpan != null);
 
   final String? text;
@@ -46,20 +50,28 @@ class GrxButton extends StatelessWidget {
   final OutlinedBorder? shape;
   final EdgeInsetsGeometry padding;
   final TextStyle? style;
+  final bool isLoading;
+
+  @override
+  State<GrxButton> createState() => _GrxButtonState();
+}
+
+class _GrxButtonState extends State<GrxButton> {
+  Size? childSize;
 
   Widget _createWidgetIcon() {
-    final iconAlignLeft = iconAlign == GrxAlign.left;
+    final iconAlignLeft = widget.iconAlign == GrxAlign.left;
 
     return Visibility(
-      visible: icon != null,
+      visible: widget.icon != null,
       child: Padding(
         padding: EdgeInsets.only(
-            left: iconAlignLeft ? 0 : iconPadding,
-            right: iconAlignLeft ? iconPadding : 0),
+            left: iconAlignLeft ? 0 : widget.iconPadding,
+            right: iconAlignLeft ? widget.iconPadding : 0),
         child: Icon(
-          icon,
-          size: iconSize,
-          color: iconColor ?? foregroundColor,
+          widget.icon,
+          size: widget.iconSize,
+          color: widget.iconColor ?? widget.foregroundColor,
         ),
       ),
     );
@@ -69,60 +81,83 @@ class GrxButton extends StatelessWidget {
     required final Widget child,
     required final ButtonStyle style,
   }) =>
-      backgroundColor != null
+      widget.backgroundColor != null
           ? ElevatedButton(
-              onPressed: onPressed,
+              onPressed: widget.onPressed,
               style: style,
               child: child,
             )
           : TextButton(
-              onPressed: onPressed,
+              onPressed: widget.onPressed,
               style: style,
               child: child,
             );
 
   @override
   Widget build(BuildContext context) {
-    final isTextButton = backgroundColor == null;
+    final isTextButton = widget.backgroundColor == null;
     final children = <Widget>[
       _createWidgetIcon(),
       Flexible(
-        child: textSpan != null
+        child: widget.textSpan != null
             ? GrxHeadlineSmallText.rich(
-                textSpan,
-                color: foregroundColor,
+                widget.textSpan,
+                color: widget.foregroundColor,
                 textAlign: TextAlign.center,
-                transform: transform,
+                transform: widget.transform,
               )
             : GrxHeadlineSmallText(
-                text,
-                color: foregroundColor,
+                widget.text,
+                color: widget.foregroundColor,
                 textAlign: TextAlign.center,
-                transform: transform,
+                transform: widget.transform,
               ),
       ),
     ];
 
     return Container(
-      margin: margin,
-      height: height,
+      margin: widget.margin,
+      height: widget.height,
       child: _getButton(
         style: ElevatedButton.styleFrom(
           foregroundColor: GrxColors.cff7593b5,
-          elevation: isTextButton ? null : elevation,
-          padding: padding,
-          backgroundColor: backgroundColor,
+          elevation: isTextButton ? null : widget.elevation,
+          padding: widget.padding,
+          backgroundColor: widget.backgroundColor,
           disabledBackgroundColor: isTextButton
               ? Theme.of(context).colorScheme.onSurface.withOpacity(0.12)
               : null,
-          shape: shape,
+          shape: widget.shape,
         ),
-        child: Row(
-          mainAxisSize: isTextButton ? MainAxisSize.min : mainAxisSize,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: iconAlign == GrxAlign.left
-              ? children
-              : children.reversed.toList(),
+        child: AnimatedSwitcher(
+          duration: GrxUtils.defaultAnimationDuration,
+          child: widget.isLoading
+              ? SizedBox(
+                  height: childSize?.height,
+                  width: childSize?.height,
+                  child: Center(
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2.5,
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        widget.foregroundColor,
+                      ),
+                    ),
+                  ),
+                )
+              : MeasureSize(
+                  onChange: (size) {
+                    SchedulerBinding.instance.addPostFrameCallback(
+                      (_) => setState(
+                        () => childSize = size,
+                      ),
+                    );
+                  },
+                  child: Row(
+                    mainAxisSize: widget.mainAxisSize,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: children,
+                  ),
+                ),
         ),
       ),
     );

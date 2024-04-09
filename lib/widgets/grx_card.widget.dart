@@ -11,7 +11,7 @@ class GrxCard extends Card {
     super.margin,
     super.semanticContainer,
     super.shadowColor,
-    super.surfaceTintColor,
+    super.surfaceTintColor = Colors.transparent,
   }) : super(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8.0),

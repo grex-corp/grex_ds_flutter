@@ -66,85 +66,96 @@ class _GrxUserAvatarState extends State<GrxUserAvatar> {
       );
     }
 
-    return Stack(
-      fit: StackFit.loose,
-      clipBehavior: Clip.none,
-      children: [
-        widget.imageFile != null
-            ? _buildAvatar(
-                context,
-                FileImage(widget.imageFile!),
-              )
-            : widget.uri != null
-                ? CachedNetworkImage(
-                    imageUrl: widget.uri.toString(),
-                    imageBuilder: (context, image) => GestureDetector(
-                      onTap: widget.openPreview
-                          ? () {
-                              Navigator.of(context).push(
-                                FadePageRoute(
-                                  builder: (context) => ImagePreview(
-                                    image: image,
-                                    title: 'Preview',
-                                    heroTag: widget.heroTag,
+    return Container(
+      padding: const EdgeInsets.all(2.0),
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: GrxColors.cff289fff,
+          width: 1.5,
+        ),
+        borderRadius: BorderRadius.circular(widget.radius + 2.0),
+      ),
+      child: Stack(
+        fit: StackFit.loose,
+        clipBehavior: Clip.none,
+        children: [
+          widget.imageFile != null
+              ? _buildAvatar(
+                  context,
+                  FileImage(widget.imageFile!),
+                )
+              : widget.uri != null
+                  ? CachedNetworkImage(
+                      imageUrl: widget.uri.toString(),
+                      imageBuilder: (context, image) => GestureDetector(
+                        onTap: widget.openPreview
+                            ? () {
+                                Navigator.of(context).push(
+                                  FadePageRoute(
+                                    builder: (context) => ImagePreview(
+                                      image: image,
+                                      title: 'Preview',
+                                      heroTag: widget.heroTag,
+                                    ),
                                   ),
-                                ),
-                              );
-                            }
-                          : null,
-                      child: widget.heroTag != null
-                          ? Hero(
-                              tag: widget.heroTag!,
-                              transitionOnUserGestures: true,
-                              child: _buildAvatar(context, image),
-                            )
-                          : _buildAvatar(context, image),
-                    ),
-                    progressIndicatorBuilder: (context, url, downloadProgress) {
-                      return SizedBox.fromSize(
-                        size: Size.fromRadius(widget.radius),
-                        child: CircularProgressIndicator(
-                          value: downloadProgress.progress,
-                          strokeWidth: 1,
-                        ),
-                      );
-                    },
-                    errorWidget: (context, url, error) =>
-                        const Icon(Icons.error),
-                  )
-                : (widget.text?.isNotEmpty ?? false)
-                    ? CircleAvatar(
-                        radius: widget.radius,
-                        backgroundColor: widget.backgroundColor,
-                        child: Padding(
-                          padding: const EdgeInsets.all(2),
-                          child: GrxBodyText(
-                            RegExp(
-                              widget.text!.split(' ').length >= 2
-                                  ? GrxRegexUtils.fullNameAvatarRgx
-                                  : GrxRegexUtils.singleNameAvatarRgx,
-                            )
-                                .allMatches(widget.text!)
-                                .map((m) => m.group(0))
-                                .join()
-                                .toUpperCase()
-                                .substring(0, 2),
-                            color: widget.textColor,
-                            overflow: TextOverflow.clip,
-                            textAlign: TextAlign.center,
+                                );
+                              }
+                            : null,
+                        child: widget.heroTag != null
+                            ? Hero(
+                                tag: widget.heroTag!,
+                                transitionOnUserGestures: true,
+                                child: _buildAvatar(context, image),
+                              )
+                            : _buildAvatar(context, image),
+                      ),
+                      progressIndicatorBuilder:
+                          (context, url, downloadProgress) {
+                        return SizedBox.fromSize(
+                          size: Size.fromRadius(widget.radius),
+                          child: CircularProgressIndicator(
+                            value: downloadProgress.progress,
+                            strokeWidth: 1,
+                          ),
+                        );
+                      },
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
+                    )
+                  : (widget.text?.isNotEmpty ?? false)
+                      ? CircleAvatar(
+                          radius: widget.radius,
+                          backgroundColor: widget.backgroundColor,
+                          child: Padding(
+                            padding: const EdgeInsets.all(2),
+                            child: GrxBodyText(
+                              RegExp(
+                                widget.text!.split(' ').length >= 2
+                                    ? GrxRegexUtils.fullNameAvatarRgx
+                                    : GrxRegexUtils.singleNameAvatarRgx,
+                              )
+                                  .allMatches(widget.text!)
+                                  .map((m) => m.group(0))
+                                  .join()
+                                  .toUpperCase()
+                                  .substring(0, 2),
+                              color: widget.textColor,
+                              overflow: TextOverflow.clip,
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        )
+                      : CircleAvatar(
+                          radius: widget.radius,
+                          backgroundColor: widget.backgroundColor,
+                          backgroundImage: const AssetImage(
+                            'assets/images/default-avatar.png',
+                            package: GrxUtils.packageName,
                           ),
                         ),
-                      )
-                    : CircleAvatar(
-                        radius: widget.radius,
-                        backgroundColor: widget.backgroundColor,
-                        backgroundImage: const AssetImage(
-                          'assets/images/default-avatar.png',
-                          package: GrxUtils.packageName,
-                        ),
-                      ),
-        _buildAvatarPickerIcon(context),
-      ],
+          _buildAvatarPickerIcon(context),
+        ],
+      ),
     );
   }
 

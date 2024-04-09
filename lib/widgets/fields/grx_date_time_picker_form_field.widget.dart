@@ -19,9 +19,11 @@ class GrxDateTimePickerFormField extends GrxStatefulWidget {
     this.dialogCancelText = 'Cancel',
     this.dialogErrorFormatText = 'Invalid Format',
     this.dialogErrorInvalidText = 'Provided date is not valid',
+    this.autovalidateMode = AutovalidateMode.always,
     this.onSelectItem,
     this.onSaved,
     this.validator,
+    this.focusNode,
     this.isDateTime = false,
     this.enabled = true,
     this.flexible = false,
@@ -39,9 +41,11 @@ class GrxDateTimePickerFormField extends GrxStatefulWidget {
   final String dialogCancelText;
   final String dialogErrorFormatText;
   final String dialogErrorInvalidText;
+  final AutovalidateMode autovalidateMode;
   final void Function(DateTime?)? onSelectItem;
   final FormFieldSetter<DateTime?>? onSaved;
   final FormFieldValidator<DateTime?>? validator;
+  final FocusNode? focusNode;
   final bool isDateTime;
   final bool enabled;
   final bool flexible;
@@ -117,6 +121,7 @@ class _GrxDateTimePickerFormFieldState
 
     return GrxFormField<String>(
       initialValue: widget.value?.toIso8601String(),
+      autovalidateMode: widget.autovalidateMode,
       validator: (_) => widget.validator?.call(value),
       onSaved: (_) => widget.onSaved?.call(value),
       enabled: widget.enabled,
@@ -138,6 +143,7 @@ class _GrxDateTimePickerFormFieldState
           readOnly: true,
           hintText: widget.hintText,
           labelText: widget.labelText,
+          focusNode: widget.focusNode,
           errorText: field.errorText,
           onTap: () async {
             final today = DateTime.now();

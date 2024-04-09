@@ -23,6 +23,7 @@ class GrxAutocompleteDropdownFormField<T> extends GrxStatefulWidget {
     this.selectBottomSheetTitle,
     this.value,
     this.defaultValue,
+    this.autovalidateMode = AutovalidateMode.always,
     this.onSelectItem,
     this.onSearch,
     this.validator,
@@ -44,6 +45,7 @@ class GrxAutocompleteDropdownFormField<T> extends GrxStatefulWidget {
   final String Function(T data) displayText;
   final String? value;
   final String? defaultValue;
+  final AutovalidateMode autovalidateMode;
   final void Function(T?)? onSelectItem;
   final Future<Iterable<T>?> Function(String?)? onSearch;
   final FormFieldSetter<String>? onSaved;
@@ -142,6 +144,7 @@ class _GrxDropdownStateFormField<T>
 
     return GrxFormField<String>(
       initialValue: controller.text,
+      autovalidateMode: widget.autovalidateMode,
       validator: (value) => widget.validator?.call(value),
       onSaved: (value) => widget.onSaved?.call(value),
       enabled: widget.enabled,

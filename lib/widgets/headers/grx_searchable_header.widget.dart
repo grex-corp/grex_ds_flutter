@@ -12,22 +12,24 @@ class GrxSearchableHeader extends StatefulWidget {
   const GrxSearchableHeader({
     super.key,
     required this.title,
+    required this.animationController,
     this.animationProgress = 0,
-    this.animationController,
     this.hintText,
     this.actions,
     this.onQuickSearchHandler,
     this.searchFieldController,
+    this.extraWidget,
     this.canPop = false,
   });
 
   final String title;
+  final AnimationController animationController;
   final double animationProgress;
-  final AnimationController? animationController;
   final String? hintText;
   final List<Widget>? actions;
   final void Function(String)? onQuickSearchHandler;
   final TextEditingController? searchFieldController;
+  final Widget? extraWidget;
   final bool canPop;
 
   @override
@@ -37,7 +39,7 @@ class GrxSearchableHeader extends StatefulWidget {
 }
 
 class _GrxSearchableHeaderState extends State<GrxSearchableHeader> {
-  late final animationController = widget.animationController!;
+  late final animationController = widget.animationController;
 
   late final Animation<double> topBarAnimation =
       Tween<double>(begin: 0, end: 1).animate(
@@ -49,6 +51,14 @@ class _GrxSearchableHeaderState extends State<GrxSearchableHeader> {
 
   late final Animation<double> searchBarAnimation =
       Tween<double>(begin: 0, end: 1).animate(
+    CurvedAnimation(
+      parent: animationController,
+      curve: const Interval(0, 0.8, curve: Curves.fastOutSlowIn),
+    ),
+  );
+
+  late final Animation<double> extraWidgetAnimation =
+      Tween<double>(begin: 0.2, end: 1).animate(
     CurvedAnimation(
       parent: animationController,
       curve: const Interval(0, 0.8, curve: Curves.fastOutSlowIn),
@@ -158,7 +168,7 @@ class _GrxSearchableHeaderState extends State<GrxSearchableHeader> {
                                         });
                                       },
                                       hintText:
-                                          widget.hintText ?? 'Pesquise Aqui',
+                                          widget.hintText ?? 'Pesquise aqui',
                                     ),
                                   ),
                                 ),
@@ -166,7 +176,18 @@ class _GrxSearchableHeaderState extends State<GrxSearchableHeader> {
                             ),
                           );
                         },
-                      )
+                      ),
+                    if (widget.extraWidget != null)
+                      AnimatedBuilder(
+                        animation: animationController,
+                        child: widget.extraWidget!,
+                        builder: (context, child) {
+                          return GrxFadeTransition(
+                            animation: extraWidgetAnimation,
+                            child: child!,
+                          );
+                        },
+                      ),
                   ],
                 ),
               ),

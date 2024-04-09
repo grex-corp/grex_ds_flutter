@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
-// import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
 
+import '../../controllers/grx_animated_loading_button.controller.dart';
 import '../../enums/grx_text_transform.enum.dart';
 import '../../themes/colors/grx_colors.dart';
 import '../typography/grx_headline_small_text.widget.dart';
@@ -19,12 +19,12 @@ class GrxAnimatedLoadingButton extends StatelessWidget {
     this.width,
     this.margin,
     this.animateOnTap = false,
-    final RoundedLoadingButtonController? controller,
-  })  : controller = controller ?? RoundedLoadingButtonController(),
+    final GrxAnimatedLoadingButtonController? controller,
+  })  : controller = controller ?? GrxAnimatedLoadingButtonController(),
         assert(text != null || textSpan != null);
 
-  final RoundedLoadingButtonController controller;
-  final void Function(RoundedLoadingButtonController controller) onPressed;
+  final GrxAnimatedLoadingButtonController controller;
+  final void Function(GrxAnimatedLoadingButtonController controller) onPressed;
   final String? text;
   final InlineSpan? textSpan;
   final GrxTextTransform transform;
@@ -47,7 +47,7 @@ class GrxAnimatedLoadingButton extends StatelessWidget {
         borderRadius: height / 2,
         color: backgroundColor,
         errorColor: GrxColors.cfffc5858,
-        successColor: GrxColors.cff75f3ab,
+        successColor: GrxColors.primarySwatch,
         animateOnTap: animateOnTap,
         width: this.width ?? width,
         child: Padding(

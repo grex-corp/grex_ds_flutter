@@ -8,7 +8,7 @@ class GrxIconButton extends StatelessWidget {
     required this.icon,
     required this.onPressed,
     this.iconSize = 24.0,
-    this.color = GrxColors.cff75f3ab,
+    this.color = GrxColors.primarySwatch,
     this.margin,
   });
 

@@ -21,11 +21,11 @@ abstract class GrxFieldStyles {
       GrxCaptionTextStyle(color: GrxColors.cfffc5858);
 
   static const underlineInputBorder = UnderlineInputBorder(
-    borderSide: BorderSide(color: GrxColors.cff75f3ab),
+    borderSide: BorderSide(color: GrxColors.primarySwatch),
   );
 
   static const underlineInputFocusedBorder = UnderlineInputBorder(
-    borderSide: BorderSide(color: GrxColors.cff75f3ab, width: 2),
+    borderSide: BorderSide(color: GrxColors.primarySwatch, width: 2),
   );
 
   static const underlineInputErrorBorder = UnderlineInputBorder(

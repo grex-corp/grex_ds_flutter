@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../../themes/colors/grx_colors.dart';
-import '../../themes/fields/grx_field_styles.theme.dart';
 import '../../themes/icons/grx_icons.dart';
+import '../../themes/typography/styles/grx_caption_large_text.style.dart';
+import '../buttons/grx_clear_input_button.widget.dart';
+import 'grx_form_field.widget.dart';
+
+const _inputTextStyle = GrxCaptionLargeTextStyle(color: GrxColors.cff7892b7);
 
 class GrxSearchField extends StatelessWidget {
   const GrxSearchField({
@@ -10,48 +14,66 @@ class GrxSearchField extends StatelessWidget {
     required this.onChanged,
     required this.hintText,
     this.searchFieldController,
+    this.flexible = false,
   });
 
+  final TextEditingController? searchFieldController;
   final Function(String) onChanged;
   final String hintText;
-  final TextEditingController? searchFieldController;
+  final bool flexible;
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: searchFieldController,
-      autocorrect: false,
-      decoration: InputDecoration(
-        isDense: true,
-        contentPadding: const EdgeInsets.only(left: 15),
-        border: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(5.0),
+    return GrxFormField<String>(
+      flexible: flexible,
+      builder: (FormFieldState<String> field) {
+        return TextField(
+          controller: searchFieldController,
+          autocorrect: false,
+          style: _inputTextStyle,
+          decoration: InputDecoration(
+            suffixIconConstraints: const BoxConstraints(
+              minHeight: 24,
+              minWidth: 40,
+            ),
+            isDense: true,
+            border: const OutlineInputBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(5.0),
+              ),
+              borderSide: BorderSide(
+                width: 0,
+                style: BorderStyle.none,
+              ),
+            ),
+            focusedBorder: const OutlineInputBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(5.0),
+              ),
+              borderSide: BorderSide(
+                width: 0,
+                style: BorderStyle.none,
+              ),
+            ),
+            fillColor: GrxColors.cffe8f2ff,
+            filled: true,
+            suffixIcon: searchFieldController?.text.isEmpty ?? true
+                ? const Icon(
+                    GrxIcons.search,
+                    color: GrxColors.cff9bb2ce,
+                  )
+                : GrxClearInputButton(
+                    onClear: () {
+                      searchFieldController?.clear();
+                      onChanged(searchFieldController?.text ?? '');
+                    },
+                  ),
+            hintText: hintText,
+            hintStyle: _inputTextStyle,
           ),
-          borderSide: BorderSide(
-            width: 0,
-            style: BorderStyle.none,
-          ),
-        ),
-        focusedBorder: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(5.0),
-          ),
-          borderSide: BorderSide(
-            width: 0,
-            style: BorderStyle.none,
-          ),
-        ),
-        fillColor: GrxColors.cffe8f2ff,
-        filled: true,
-        suffixIcon: const Icon(
-          GrxIcons.search,
-          color: GrxColors.cff9bb2ce,
-        ),
-        hintText: hintText,
-        hintStyle: GrxFieldStyles.inputHintTextStyle,
-      ),
-      onChanged: onChanged,
+          onChanged: onChanged,
+        );
+      },
     );
   }
 }

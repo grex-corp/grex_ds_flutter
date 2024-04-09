@@ -11,5 +11,8 @@ abstract class GrxThemeData {
         splashColor: GrxColors.cff7593b5.withOpacity(.3),
         highlightColor: GrxColors.cff7593b5.withOpacity(.2),
         textTheme: const GrxTextTheme(),
+        progressIndicatorTheme: const ProgressIndicatorThemeData(
+          color: GrxColors.primarySwatch,
+        ),
       );
 }

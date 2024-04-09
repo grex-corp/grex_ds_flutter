@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:super_sliver_list/super_sliver_list.dart';
 
 import '../../extensions/list.extension.dart';
 import '../../models/grx_country.model.dart';
@@ -7,7 +8,7 @@ import '../../themes/colors/grx_colors.dart';
 import '../../utils/grx_country.util.dart';
 import '../../utils/grx_utils.util.dart';
 import '../checkbox/grx_rounded_checkbox.widget.dart';
-import '../fields/grx_filter_field.widget.dart';
+import '../fields/grx_search_field.widget.dart';
 import '../grx_card.widget.dart';
 import '../typography/grx_body_text.widget.dart';
 import '../typography/grx_headline_small_text.widget.dart';
@@ -62,7 +63,7 @@ class _GrxBottomSheetCountriesState extends State<GrxBottomSheetCountries> {
                 vertical: 10.0,
                 horizontal: 8.0,
               ),
-              child: GrxFilterField(
+              child: GrxSearchField(
                 // searchFieldController: widget.quickSearchFieldController!,
                 searchFieldController: searchFieldController,
                 onChanged: _onSearch,
@@ -77,7 +78,7 @@ class _GrxBottomSheetCountriesState extends State<GrxBottomSheetCountries> {
               right: 8.0,
               bottom: viewInsets.bottom + padding.bottom + 8.0,
             ),
-            sliver: SliverList(
+            sliver: SuperSliverList(
               delegate: SliverChildBuilderDelegate(
                 childCount: _filteredCountries.length,
                 (context, index) {

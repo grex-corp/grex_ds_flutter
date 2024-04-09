@@ -42,6 +42,7 @@ class GrxHeader extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      surfaceTintColor: Colors.transparent,
       title: Padding(
         padding: EdgeInsets.lerp(
           EdgeInsets.zero,

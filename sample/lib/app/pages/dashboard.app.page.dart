@@ -131,306 +131,312 @@ class _DashboardAppPageState extends State<DashboardAppPage>
         backgroundColor: GrxColors.cff365278,
         foregroundColor: GrxColors.cffffffff,
       ),
-      body: Column(
-        children: [
-          Flexible(
-            child: ListView(
-              // Column is also a layout widget. It takes a list of children and
-              // arranges them vertically. By default, it sizes itself to fit its
-              // children horizontally, and tries to be as tall as its parent.
-              //
-              // Invoke "debug painting" (press "p" in the console, choose the
-              // "Toggle Debug Paint" action from the Flutter Inspector in Android
-              // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-              // to see the wireframe for each widget.
-              //
-              // Column has various properties to control how it sizes itself and
-              // how it positions its children. Here we use mainAxisAlignment to
-              // center the children vertically; the main axis here is the vertical
-              // axis because Columns are vertical (the cross axis would be
-              // horizontal).
-              // mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                const TypoSample(),
-                Form(
-                  key: formKey,
-                  child: Column(
-                    children: [
-                      FieldsSampleApp(
-                        person: person,
-                        leaders: _leaders,
-                        roles: _roles,
-                      ),
-                      GrxFloatingActionButton(
-                        isLoading: false,
-                        icon: AnimatedIcon(
-                          icon: AnimatedIcons.close_menu,
-                          progress: iconAnimationController,
-                          color: GrxColors.cffffffff,
-                          size: 30,
+      body: Padding(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.paddingOf(context).bottom + 120,
+        ),
+        child: Column(
+          children: [
+            Flexible(
+              child: ListView(
+                // Column is also a layout widget. It takes a list of children and
+                // arranges them vertically. By default, it sizes itself to fit its
+                // children horizontally, and tries to be as tall as its parent.
+                //
+                // Invoke "debug painting" (press "p" in the console, choose the
+                // "Toggle Debug Paint" action from the Flutter Inspector in Android
+                // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
+                // to see the wireframe for each widget.
+                //
+                // Column has various properties to control how it sizes itself and
+                // how it positions its children. Here we use mainAxisAlignment to
+                // center the children vertically; the main axis here is the vertical
+                // axis because Columns are vertical (the cross axis would be
+                // horizontal).
+                // mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  const TypoSample(),
+                  Form(
+                    key: formKey,
+                    child: Column(
+                      children: [
+                        FieldsSampleApp(
+                          person: person,
+                          leaders: _leaders,
+                          roles: _roles,
                         ),
-                        onPressed: () {
-                          if (iconAnimationController.isCompleted) {
-                            iconAnimationController.reverse();
-                          } else {
-                            iconAnimationController.forward();
-                          }
-                        },
-                      ),
-                      GrxPrimaryButton(
-                        text: 'Enviar',
-                        margin: const EdgeInsets.symmetric(
-                          vertical: 20,
-                          horizontal: 16,
-                        ),
-                        icon: GrxIcons.check,
-                        onPressed: () {},
-                      ),
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          GrxIconButton(
-                            icon: GrxIcons.whatsapp,
-                            margin:
-                                const EdgeInsets.only(bottom: 16, right: 10),
-                            iconSize: 30,
-                            onPressed: () {},
+                        GrxFloatingActionButton(
+                          isLoading: false,
+                          icon: AnimatedIcon(
+                            icon: AnimatedIcons.close_menu,
+                            progress: iconAnimationController,
+                            color: GrxColors.cffffffff,
+                            size: 30,
                           ),
-                          GrxIconButton(
-                            icon: GrxIcons.phone,
-                            margin: const EdgeInsets.only(bottom: 16),
-                            iconSize: 30,
-                            onPressed: () {},
+                          onPressed: () {
+                            if (iconAnimationController.isCompleted) {
+                              iconAnimationController.reverse();
+                            } else {
+                              iconAnimationController.forward();
+                            }
+                          },
+                        ),
+                        GrxPrimaryButton(
+                          text: 'Enviar',
+                          margin: const EdgeInsets.symmetric(
+                            vertical: 20,
+                            horizontal: 16,
                           ),
-                        ],
-                      ),
-                      GrxTextIconButton(
-                        icon: GrxIcons.whatsapp,
-                        text: 'WhatsApp',
-                        iconSize: 50,
-                        margin: const EdgeInsets.only(bottom: 16),
-                        onPressed: () {},
-                      ),
-                      GrxUserAvatar(
-                        radius: 40,
-                        uri: Uri.parse(
-                            'https://firebasestorage.googleapis.com/v0/b/appgrexdb.appspot.com/o/Images%2FPeople%2FWK242KO734Q9nPKThs9B?alt=media&token=e8906f71-58d5-42cb-9184-6f77a6c15694'),
-                        heroTag: 4,
-                        // openPreview: false,
-                        // editable: true,
-                        // isLoading: true,
-                      ),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      GrxUserAvatar(
-                        radius: 70,
-                        imageFile: selectedImage,
-                        uri: Uri.parse(
-                            'https://firebasestorage.googleapis.com/v0/b/appgrexdb.appspot.com/o/Images%2FPeople%2FWK242KO734Q9nPKThs9B?alt=media&token=e8906f71-58d5-42cb-9184-6f77a6c15694'),
-                        heroTag: 5,
-                        // openPreview: false,
-                        editable: true,
-                        // isLoading: true,
-                        onPickAvatar: (file) async {
-                          selectedImage = file;
-                          setState(() {});
-                        },
-                      ),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      GrxSecondaryButton(
-                        text: 'Cadastrar',
-                        mainAxisSize: MainAxisSize.min,
-                        margin: const EdgeInsets.symmetric(
-                          horizontal: 16,
+                          icon: GrxIcons.check,
+                          onPressed: () {},
                         ),
-                        icon: GrxIcons.person_add_right,
-                        onPressed: () {
-                          setState(() {
-                            person = Person(
-                              id: 22,
-                              name: 'Pâmela Gabriel',
-                              birthDate: DateTime.now(),
-                              createUser: true,
-                              single: true,
-                              leadership: _leaders.last,
-                            );
-                          });
-
-                          GrxToastService.showSuccess(
-                            title: 'Nova pessoa criada',
-                            subtitle: 'Cadastro realizado com sucesso',
-                            context: context,
-                          );
-                        },
-                      ),
-                      GrxTertiaryButton(
-                        text: 'Whatsapp',
-                        margin: const EdgeInsets.symmetric(
-                          vertical: 20,
-                          horizontal: 16,
-                        ),
-                        icon: GrxIcons.whatsapp,
-                        iconAlign: GrxAlign.right,
-                        foregroundColor: GrxColors.cff1eb35e,
-                        onPressed: () {
-                          setState(() {
-                            _leaders.add(
-                              Person(id: 8, name: '8th Person'),
-                            );
-                          });
-                        },
-                      ),
-                      GrxAnimatedLoadingButton(
-                        textSpan: const TextSpan(
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
                           children: [
-                            TextSpan(
-                              text: 'Confirmar',
+                            GrxIconButton(
+                              icon: GrxIcons.whatsapp,
+                              margin:
+                                  const EdgeInsets.only(bottom: 16, right: 10),
+                              iconSize: 30,
+                              onPressed: () {},
                             ),
-                            WidgetSpan(
-                              child: SizedBox(
-                                width: 5,
-                              ),
+                            GrxIconButton(
+                              icon: GrxIcons.phone,
+                              margin: const EdgeInsets.only(bottom: 16),
+                              iconSize: 30,
+                              onPressed: () {},
                             ),
-                            TextSpan(
-                              text: 'Desligamento',
-                              style: GrxHeadlineSmallTextStyle(
-                                color: GrxColors.cffef6969,
-                              ),
-                            )
                           ],
                         ),
-                        margin: const EdgeInsets.symmetric(
-                          horizontal: 16,
+                        GrxTextIconButton(
+                          icon: GrxIcons.whatsapp,
+                          text: 'WhatsApp',
+                          iconSize: 50,
+                          margin: const EdgeInsets.only(bottom: 16),
+                          onPressed: () {},
                         ),
-                        backgroundColor: GrxColors.cff365278,
-                        onPressed: (controller) async {
-                          controller.start();
-
-                          await Future.delayed(const Duration(seconds: 4));
-
-                          controller.error();
-
-                          Timer(
-                            const Duration(seconds: 2),
-                            () {
-                              controller.reset();
-                            },
-                          );
-                        },
-                      ),
-                      GrxAnimatedLoadingButton(
-                        text: 'login.signin.button.text'.translate,
-                        margin: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 8.0,
+                        GrxUserAvatar(
+                          radius: 40,
+                          uri: Uri.parse(
+                              'https://firebasestorage.googleapis.com/v0/b/appgrexdb.appspot.com/o/Images%2FPeople%2FWK242KO734Q9nPKThs9B?alt=media&token=e8906f71-58d5-42cb-9184-6f77a6c15694'),
+                          heroTag: 4,
+                          // openPreview: false,
+                          // editable: true,
+                          // isLoading: true,
                         ),
-                        backgroundColor: GrxColors.cff75f3ab,
-                        onPressed: (controller) async {
-                          controller.start();
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        GrxUserAvatar(
+                          radius: 70,
+                          imageFile: selectedImage,
+                          uri: Uri.parse(
+                              'https://firebasestorage.googleapis.com/v0/b/appgrexdb.appspot.com/o/Images%2FPeople%2FWK242KO734Q9nPKThs9B?alt=media&token=e8906f71-58d5-42cb-9184-6f77a6c15694'),
+                          heroTag: 5,
+                          // openPreview: false,
+                          editable: true,
+                          // isLoading: true,
+                          onPickAvatar: (file) async {
+                            selectedImage = file;
+                            setState(() {});
+                          },
+                        ),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        GrxSecondaryButton(
+                          text: 'Cadastrar',
+                          mainAxisSize: MainAxisSize.min,
+                          margin: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                          ),
+                          icon: GrxIcons.person_add_right,
+                          onPressed: () {
+                            setState(() {
+                              person = Person(
+                                id: 22,
+                                name: 'Pâmela Gabriel',
+                                birthDate: DateTime.now(),
+                                createUser: true,
+                                single: true,
+                                leadership: _leaders.last,
+                              );
+                            });
 
-                          await Future.delayed(const Duration(seconds: 4));
+                            GrxToastService.showSuccess(
+                              title: 'Nova pessoa criada',
+                              subtitle: 'Cadastro realizado com sucesso',
+                              context: context,
+                            );
+                          },
+                        ),
+                        GrxTertiaryButton(
+                          text: 'Whatsapp',
+                          margin: const EdgeInsets.symmetric(
+                            vertical: 20,
+                            horizontal: 16,
+                          ),
+                          icon: GrxIcons.whatsapp,
+                          iconAlign: GrxAlign.right,
+                          foregroundColor: GrxColors.cff1eb35e,
+                          onPressed: () {
+                            setState(() {
+                              _leaders.add(
+                                Person(id: 8, name: '8th Person'),
+                              );
+                            });
+                          },
+                        ),
+                        GrxAnimatedLoadingButton(
+                          textSpan: const TextSpan(
+                            children: [
+                              TextSpan(
+                                text: 'Confirmar',
+                              ),
+                              WidgetSpan(
+                                child: SizedBox(
+                                  width: 5,
+                                ),
+                              ),
+                              TextSpan(
+                                text: 'Desligamento',
+                                style: GrxHeadlineSmallTextStyle(
+                                  color: GrxColors.cffef6969,
+                                ),
+                              )
+                            ],
+                          ),
+                          margin: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                          ),
+                          backgroundColor: GrxColors.cff365278,
+                          onPressed: (controller) async {
+                            controller.start();
 
-                          controller.success();
+                            await Future.delayed(const Duration(seconds: 4));
 
-                          Timer(
-                            const Duration(seconds: 2),
-                            () {
-                              controller.reset();
-                            },
-                          );
-                        },
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Wrap(
-                        spacing: 8.0,
-                        runSpacing: 16.0,
-                        children: [
-                          GrxSecondaryButton(
-                            mainAxisSize: MainAxisSize.min,
-                            text: 'Show Error',
-                            onPressed: () => GrxToastService.showError(
-                              title: 'Error message inside error toast',
-                              context: context,
+                            controller.error();
+
+                            Timer(
+                              const Duration(seconds: 2),
+                              () {
+                                controller.reset();
+                              },
+                            );
+                          },
+                        ),
+                        GrxAnimatedLoadingButton(
+                          text: 'login.signin.button.text'.translate,
+                          margin: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 8.0,
+                          ),
+                          backgroundColor: GrxColors.cff75f3ab,
+                          onPressed: (controller) async {
+                            controller.start();
+
+                            await Future.delayed(const Duration(seconds: 4));
+
+                            controller.success();
+
+                            Timer(
+                              const Duration(seconds: 2),
+                              () {
+                                controller.reset();
+                              },
+                            );
+                          },
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Wrap(
+                          spacing: 8.0,
+                          runSpacing: 16.0,
+                          children: [
+                            GrxSecondaryButton(
+                              mainAxisSize: MainAxisSize.min,
+                              text: 'Show Error',
+                              onPressed: () => GrxToastService.showError(
+                                title: 'Error message inside error toast',
+                                context: context,
+                              ),
                             ),
-                          ),
-                          GrxSecondaryButton(
-                            mainAxisSize: MainAxisSize.min,
-                            text: 'Show Warning',
-                            onPressed: () => GrxToastService.showWarning(
-                              title: 'Warning message inside warning toast',
-                              context: context,
+                            GrxSecondaryButton(
+                              mainAxisSize: MainAxisSize.min,
+                              text: 'Show Warning',
+                              onPressed: () => GrxToastService.showWarning(
+                                title: 'Warning message inside warning toast',
+                                context: context,
+                              ),
                             ),
-                          ),
-                          GrxSecondaryButton(
-                            mainAxisSize: MainAxisSize.min,
-                            text: 'Show Success',
-                            onPressed: () => GrxToastService.showSuccess(
-                              title: 'Success message inside success toast',
-                              context: context,
+                            GrxSecondaryButton(
+                              mainAxisSize: MainAxisSize.min,
+                              text: 'Show Success',
+                              onPressed: () => GrxToastService.showSuccess(
+                                title: 'Success message inside success toast',
+                                context: context,
+                              ),
                             ),
-                          ),
-                          GrxSecondaryButton(
-                            mainAxisSize: MainAxisSize.min,
-                            text: 'Show Permanent Warning',
-                            onPressed: () => GrxToastService.showWarning(
-                              title: 'Showing permanent warning toast',
-                              subtitle: 'Adding a subtitle to show how it works',
-                              context: context,
-                              permanent: true,
+                            GrxSecondaryButton(
+                              mainAxisSize: MainAxisSize.min,
+                              text: 'Show Permanent Warning',
+                              onPressed: () => GrxToastService.showWarning(
+                                title: 'Showing permanent warning toast',
+                                subtitle:
+                                    'Adding a subtitle to show how it works',
+                                context: context,
+                                permanent: true,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      GrxHeader(
-                        title: 'Preview Header',
-                        showCloseButton: true,
-                      ),
-                      GrxHeader(
-                        title: 'Preview Header With Back Button',
-                        showBackButton: true,
-                        backgroundColor: Colors.blue,
-                        foregroundColor: Colors.white,
-                      ),
-                      GrxHeader(
-                        title: 'Preview Header With Actions a bit long',
-                        height: 70.0,
-                        actions: [
-                          GrxFilterButton(
-                            text: 'Filtros',
-                            onPressed: () {},
-                          ),
-                          GrxAddButton(
-                            onPressed: () {},
-                            margin: const EdgeInsets.only(right: 10.0),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 20.0,
-                      ),
-                      const GrxSvg(
-                        'assets/images/sheep.svg',
-                      ),
-                    ],
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        GrxHeader(
+                          title: 'Preview Header',
+                          showCloseButton: true,
+                        ),
+                        GrxHeader(
+                          title: 'Preview Header With Back Button',
+                          showBackButton: true,
+                          backgroundColor: Colors.blue,
+                          foregroundColor: Colors.white,
+                        ),
+                        GrxHeader(
+                          title: 'Preview Header With Actions a bit long',
+                          height: 70.0,
+                          actions: [
+                            GrxFilterButton(
+                              text: 'Filtros',
+                              onPressed: () {},
+                            ),
+                            GrxAddButton(
+                              onPressed: () {},
+                              margin: const EdgeInsets.only(right: 10.0),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 20.0,
+                        ),
+                        const GrxSvg(
+                          'assets/images/sheep.svg',
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          GrxBottomButton(
-            text: 'save'.translate,
-            icon: GrxIcons.check,
-            onPressed: _validateForm,
-          ),
-        ],
+            GrxBottomButton(
+              text: 'save'.translate,
+              icon: GrxIcons.check,
+              onPressed: _validateForm,
+            ),
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
