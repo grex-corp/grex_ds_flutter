@@ -11,6 +11,9 @@ class GrxTextStyle extends TextStyle {
     super.fontWeight,
     super.color,
     super.decoration,
+    super.decorationColor,
+    super.decorationStyle,
+    super.decorationThickness,
     final TextOverflow? overflow,
   }) : super(
           package: GrxUtils.packageName,

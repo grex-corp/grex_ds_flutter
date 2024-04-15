@@ -42,10 +42,10 @@ class _GrxSearchableHeaderState extends State<GrxSearchableHeader> {
   late final animationController = widget.animationController;
 
   late final Animation<double> topBarAnimation =
-      Tween<double>(begin: 0, end: 1).animate(
+      Tween<double>(begin: .2, end: 1).animate(
     CurvedAnimation(
       parent: animationController,
-      curve: const Interval(0, 0.6, curve: Curves.fastOutSlowIn),
+      curve: const Interval(0, 0.9, curve: Curves.fastOutSlowIn),
     ),
   );
 
@@ -88,10 +88,17 @@ class _GrxSearchableHeaderState extends State<GrxSearchableHeader> {
             return GrxFadeTransition(
               animation: topBarAnimation,
               child: Container(
+                clipBehavior: Clip.antiAlias,
                 decoration: BoxDecoration(
-                  color: GrxColors.cfff2f7fd.withOpacity(
-                    widget.animationProgress,
-                  ),
+                  color: GrxColors.cff429af1
+                  // .withOpacity(
+                  //   clampDouble(
+                  //     (widget.animationProgress + 1) * .95,
+                  //     0.0,
+                  //     1.0,
+                  //   ),
+                  // )
+                  ,
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.lerp(
                       const Radius.circular(0),
@@ -102,21 +109,22 @@ class _GrxSearchableHeaderState extends State<GrxSearchableHeader> {
                   boxShadow: <BoxShadow>[
                     BoxShadow(
                       color: GrxColors.cff8795a9
-                          .withOpacity(0.4 * widget.animationProgress),
+                          .withOpacity(.4 * widget.animationProgress),
                       offset: const Offset(1.1, 1.1),
                       blurRadius: 10,
                     ),
                   ],
                 ),
                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     Padding(
                       padding: EdgeInsets.lerp(
                         EdgeInsets.only(
-                          bottom: widget.onQuickSearchHandler == null ? 0 : 15,
+                          bottom: widget.onQuickSearchHandler == null ? 0.0 : 8.0,
                         ),
                         EdgeInsets.only(
-                          bottom: widget.onQuickSearchHandler == null ? 0 : 0,
+                          bottom: widget.onQuickSearchHandler == null ? 0.0 : 0,
                         ),
                         widget.animationProgress,
                       )!,
@@ -125,7 +133,8 @@ class _GrxSearchableHeaderState extends State<GrxSearchableHeader> {
                         actions: widget.actions ?? [],
                         showBackButton: widget.canPop,
                         animationProgress: widget.animationProgress,
-                        systemOverlayStyle: GrxSystemOverlayStyle.dark,
+                        foregroundColor: GrxColors.cffffffff,
+                        systemOverlayStyle: GrxSystemOverlayStyle.light,
                       ),
                     ),
                     if (widget.onQuickSearchHandler != null)
@@ -136,8 +145,11 @@ class _GrxSearchableHeaderState extends State<GrxSearchableHeader> {
                             animation: searchBarAnimation,
                             child: Padding(
                               padding: EdgeInsets.lerp(
-                                const EdgeInsets.symmetric(
-                                  horizontal: 8.0,
+                                EdgeInsets.only(
+                                  left: 8.0,
+                                  right: 8.0,
+                                  bottom:
+                                      widget.extraWidget != null ? 0.0 : 8.0,
                                 ),
                                 EdgeInsets.zero,
                                 widget.animationProgress,

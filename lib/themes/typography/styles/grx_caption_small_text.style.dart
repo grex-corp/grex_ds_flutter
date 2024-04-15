@@ -9,6 +9,9 @@ class GrxCaptionSmallTextStyle extends GrxTextStyle {
   const GrxCaptionSmallTextStyle({
     super.color,
     super.decoration,
+    super.decorationColor,
+    super.decorationStyle,
+    super.decorationThickness,
     super.overflow,
     final FontWeight? fontWeight,
   }) : super(

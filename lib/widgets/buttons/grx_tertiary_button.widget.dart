@@ -15,5 +15,6 @@ class GrxTertiaryButton extends GrxRoundedButton {
     super.iconSize,
     super.iconColor,
     super.iconPadding,
+    super.borderRadius,
   });
 }

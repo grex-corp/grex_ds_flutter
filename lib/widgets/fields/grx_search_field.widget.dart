@@ -6,7 +6,9 @@ import '../../themes/typography/styles/grx_caption_large_text.style.dart';
 import '../buttons/grx_clear_input_button.widget.dart';
 import 'grx_form_field.widget.dart';
 
-const _inputTextStyle = GrxCaptionLargeTextStyle(color: GrxColors.cff7892b7);
+const _inputTextStyle = GrxCaptionLargeTextStyle(
+  color: GrxColors.cff365278,
+);
 
 class GrxSearchField extends StatelessWidget {
   const GrxSearchField({
@@ -55,7 +57,7 @@ class GrxSearchField extends StatelessWidget {
                 style: BorderStyle.none,
               ),
             ),
-            fillColor: GrxColors.cffe8f2ff,
+            fillColor: GrxColors.cffffffff,
             filled: true,
             suffixIcon: searchFieldController?.text.isEmpty ?? true
                 ? const Icon(

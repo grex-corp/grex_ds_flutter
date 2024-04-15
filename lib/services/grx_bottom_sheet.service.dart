@@ -22,12 +22,7 @@ class GrxBottomSheetService {
     ScrollController? controller,
     final bool hideGrabber = false,
   }) {
-    final view = View.of(context);
-
     return Container(
-      margin: EdgeInsets.only(
-        top: MediaQueryData.fromView(view).padding.top + 10,
-      ),
       decoration: _border(),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -85,17 +80,19 @@ class GrxBottomSheetService {
     });
   }
 
-  Future<T?> showUndisposable<T>() {
+  Future<T?> showUndisposable<T>({
+    final bool isScrollControlled = true,
+  }) {
     isOpened = true;
 
     return showModalBottomSheet<T>(
       context: context,
       backgroundColor: Colors.transparent,
-      isScrollControlled: true,
+      isScrollControlled: isScrollControlled,
       enableDrag: false,
       isDismissible: false,
-      builder: (_) => WillPopScope(
-        onWillPop: () async => false,
+      builder: (_) => PopScope(
+        canPop: false,
         child: _buildBottomSheet(
           hideGrabber: true,
         ),
@@ -106,13 +103,16 @@ class GrxBottomSheetService {
     });
   }
 
-  Future<T?> show<T>() {
+  Future<T?> show<T>({
+    final bool isScrollControlled = true,
+  }) {
     isOpened = true;
 
     return showModalBottomSheet<T>(
       context: context,
       backgroundColor: Colors.transparent,
-      isScrollControlled: true,
+      isScrollControlled: isScrollControlled,
+      useSafeArea: true,
       builder: (_) => _buildBottomSheet(),
     ).then((value) {
       isOpened = false;

@@ -15,6 +15,7 @@ class GrxPrimaryButton extends GrxRoundedButton {
     super.iconSize,
     super.iconColor,
     super.iconPadding,
+    super.borderRadius,
   }) : super(
           backgroundColor: GrxColors.cff69efa3,
           foregroundColor: GrxColors.cffffffff,

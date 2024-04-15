@@ -9,6 +9,9 @@ class GrxBodyTextStyle extends GrxTextStyle {
   const GrxBodyTextStyle({
     super.color,
     super.decoration,
+    super.decorationColor,
+    super.decorationStyle,
+    super.decorationThickness,
     super.overflow,
     final FontWeight? fontWeight,
   }) : super(

@@ -9,6 +9,9 @@ class GrxHeadlineMediumTextStyle extends GrxTextStyle {
   const GrxHeadlineMediumTextStyle({
     super.color,
     super.decoration,
+    super.decorationColor,
+    super.decorationStyle,
+    super.decorationThickness,
     super.overflow,
     final FontWeight? fontWeight,
   }) : super(

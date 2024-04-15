@@ -9,8 +9,8 @@ import '../widgets/buttons/grx_filter_button.widget.dart';
 import '../widgets/headers/grx_searchable_header.widget.dart';
 
 const double _kToolbarExtent = 60.0;
-const double _kFilterFieldExtent = 70.0;
-const double _kTotalWidgetExtent = 35.0;
+const double _kFilterFieldExtent = 56.0;
+const double _kTotalWidgetExtent = 36.0;
 
 class GrxSearchableSliverHeaderDelegate extends SliverPersistentHeaderDelegate {
   const GrxSearchableSliverHeaderDelegate({
@@ -81,14 +81,18 @@ class GrxSearchableSliverHeaderDelegate extends SliverPersistentHeaderDelegate {
   double get maxExtent =>
       _kToolbarExtent +
       topSafePadding +
-      (onQuickSearchHandler != null ? _kFilterFieldExtent : 0) +
-      (onTotalWidgetBuilder != null ? _kTotalWidgetExtent : 0);
+      (onQuickSearchHandler != null
+          ? _kFilterFieldExtent + (onTotalWidgetBuilder == null ? 8.0 : 0.0)
+          : 0.0) +
+      (onTotalWidgetBuilder != null ? _kTotalWidgetExtent : 0.0);
 
   @override
   double get minExtent =>
       _kToolbarExtent +
       topSafePadding +
-      (onQuickSearchHandler != null ? _kFilterFieldExtent : 0) +
+      (onQuickSearchHandler != null
+          ? _kFilterFieldExtent + (onTotalWidgetBuilder == null ? 8.0 : 0.0)
+          : 0.0) +
       (onTotalWidgetBuilder != null ? _kTotalWidgetExtent : 0);
 
   @override

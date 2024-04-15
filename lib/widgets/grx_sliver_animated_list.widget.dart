@@ -95,9 +95,9 @@ class GrxSliverAnimatedList<T> extends StatelessWidget {
           ),
         SliverPadding(
           padding: EdgeInsets.only(
-            left: this.padding?.left ?? 0,
-            top: this.padding?.top ?? 0,
-            right: this.padding?.right ?? 0,
+            left: this.padding?.left ?? 0.0,
+            top: this.padding?.top ?? 0.0,
+            right: this.padding?.right ?? 0.0,
             bottom: (this.padding?.bottom ?? 16.0) + padding.bottom,
           ),
           sliver: pagingController != null

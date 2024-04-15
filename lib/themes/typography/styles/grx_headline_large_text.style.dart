@@ -9,6 +9,9 @@ class GrxHeadlineLargeTextStyle extends GrxTextStyle {
   const GrxHeadlineLargeTextStyle({
     super.color,
     super.decoration,
+    super.decorationColor,
+    super.decorationStyle,
+    super.decorationThickness,
     super.overflow,
     final FontWeight? fontWeight,
   }) : super(

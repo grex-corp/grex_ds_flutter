@@ -46,7 +46,7 @@ class GrxSearchableSliverHeader extends StatelessWidget {
                 return Opacity(
                   opacity: (1 - progress * 1.5).clamp(0.0, 1.0),
                   child: SizedBox(
-                    height: (42.0 - (42.0 * progress * 1.5)).clamp(0.0, 42.0),
+                    height: (36.0 - (36.0 * progress * 1.5)).clamp(0.0, 36.0),
                     child: Center(
                       child: totalWidget!,
                     ),

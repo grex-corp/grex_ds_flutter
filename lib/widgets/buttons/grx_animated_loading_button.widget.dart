@@ -19,8 +19,10 @@ class GrxAnimatedLoadingButton extends StatelessWidget {
     this.width,
     this.margin,
     this.animateOnTap = false,
+    final double? borderRadius,
     final GrxAnimatedLoadingButtonController? controller,
   })  : controller = controller ?? GrxAnimatedLoadingButtonController(),
+        borderRadius = borderRadius ?? height / 2.0,
         assert(text != null || textSpan != null);
 
   final GrxAnimatedLoadingButtonController controller;
@@ -32,6 +34,7 @@ class GrxAnimatedLoadingButton extends StatelessWidget {
   final Color backgroundColor;
   final double height;
   final double? width;
+  final double borderRadius;
   final EdgeInsets? margin;
   final bool animateOnTap;
 
@@ -41,17 +44,13 @@ class GrxAnimatedLoadingButton extends StatelessWidget {
 
     return Container(
       margin: margin,
-      child: RoundedLoadingButton(
-        controller: controller,
-        onPressed: () => onPressed(controller),
-        borderRadius: height / 2,
-        color: backgroundColor,
-        errorColor: GrxColors.cfffc5858,
-        successColor: GrxColors.primarySwatch,
-        animateOnTap: animateOnTap,
-        width: this.width ?? width,
+      child: ValueListenableBuilder<bool>(
+        valueListenable: controller.hasStarted,
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
+          padding: const EdgeInsets.symmetric(
+            vertical: 12.0,
+            horizontal: 24.0,
+          ),
           child: textSpan != null
               ? GrxHeadlineSmallText.rich(
                   textSpan,
@@ -66,6 +65,20 @@ class GrxAnimatedLoadingButton extends StatelessWidget {
                   transform: transform,
                 ),
         ),
+        builder: (BuildContext context, bool value, child) {
+          return RoundedLoadingButton(
+            controller: controller,
+            onPressed: () => onPressed(controller),
+            borderRadius:
+                controller.hasStarted.value ? height / 2 : borderRadius,
+            color: backgroundColor,
+            errorColor: GrxColors.cfffc5858,
+            successColor: GrxColors.primarySwatch,
+            animateOnTap: animateOnTap,
+            width: this.width ?? width,
+            child: child!,
+          );
+        },
       ),
     );
   }

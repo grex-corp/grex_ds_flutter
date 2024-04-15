@@ -22,7 +22,8 @@ class GrxRoundedButton extends StatelessWidget {
     this.iconColor,
     this.iconPadding = 5.0,
     this.elevation = 5.0,
-  });
+    final double? borderRadius,
+  }) : borderRadius = borderRadius ?? height / 2.0;
 
   final String? text;
   final InlineSpan? textSpan;
@@ -39,6 +40,7 @@ class GrxRoundedButton extends StatelessWidget {
   final Color? iconColor;
   final double iconPadding;
   final double elevation;
+  final double borderRadius;
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +62,7 @@ class GrxRoundedButton extends StatelessWidget {
       elevation: elevation,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(
-          (height / 2),
+          borderRadius,
         ),
       ),
     );
