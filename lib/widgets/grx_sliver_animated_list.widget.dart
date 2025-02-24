@@ -26,8 +26,8 @@ class GrxSliverAnimatedList<T> extends StatelessWidget {
     this.header,
     this.padding,
     this.canPop = false,
-  })  : assert(title != null || header != null),
-        assert(list != null || pagingController != null);
+  }) : assert(title != null || header != null),
+       assert(list != null || pagingController != null);
 
   final AnimationController animationController;
   final Widget Function(T item, int index) itemBuilder;
@@ -47,11 +47,7 @@ class GrxSliverAnimatedList<T> extends StatelessWidget {
     final contentAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: animationController,
-        curve: Interval(
-          begin,
-          1.0,
-          curve: Curves.fastOutSlowIn,
-        ),
+        curve: Interval(begin, 1.0, curve: Curves.fastOutSlowIn),
       ),
     );
 
@@ -59,10 +55,7 @@ class GrxSliverAnimatedList<T> extends StatelessWidget {
       animation: animationController,
       child: child,
       builder: (context, child) {
-        return GrxFadeTransition(
-          animation: contentAnimation,
-          child: child!,
-        );
+        return GrxFadeTransition(animation: contentAnimation, child: child!);
       },
     );
   }
@@ -72,10 +65,13 @@ class GrxSliverAnimatedList<T> extends StatelessWidget {
     final padding = MediaQuery.of(context).padding;
 
     return CustomScrollView(
-      physics: [TargetPlatform.iOS, TargetPlatform.macOS]
-              .any((platform) => platform == defaultTargetPlatform)
-          ? null
-          : const BouncingScrollPhysics(),
+      physics:
+          [
+                TargetPlatform.iOS,
+                TargetPlatform.macOS,
+              ].any((platform) => platform == defaultTargetPlatform)
+              ? null
+              : const BouncingScrollPhysics(),
       slivers: [
         header ??
             GrxSearchableSliverHeader(
@@ -86,12 +82,13 @@ class GrxSliverAnimatedList<T> extends StatelessWidget {
         if (onRefresh != null)
           CupertinoSliverRefreshControl(
             onRefresh: onRefresh!,
-            builder: (_, __, ___, ____, _____) => const Center(
-              child: Padding(
-                padding: EdgeInsets.all(8.0),
-                child: GrxSpinnerLoading(),
-              ),
-            ),
+            builder:
+                (_, __, ___, ____, _____) => const Center(
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: GrxSpinnerLoading(),
+                  ),
+                ),
           ),
         SliverPadding(
           padding: EdgeInsets.only(
@@ -100,60 +97,75 @@ class GrxSliverAnimatedList<T> extends StatelessWidget {
             right: this.padding?.right ?? 0.0,
             bottom: (this.padding?.bottom ?? 16.0) + padding.bottom,
           ),
-          sliver: pagingController != null
-              ? PagedSliverList<int, T>.separated(
-                  pagingController: pagingController!,
-                  separatorBuilder: separatorBuilder ??
-                      (context, index) => const SizedBox.shrink(),
-                  builderDelegate: PagedChildBuilderDelegate<T>(
-                    firstPageProgressIndicatorBuilder: (context) {
-                      const loadingListSize = 10;
+          sliver:
+              pagingController != null
+                  ? PagingListener(
+                    controller: pagingController!,
 
-                      return GrxListLoading(
-                        itemBuilder: (index) => _buildItem(
-                          loadingItemBuilder!(),
-                          loadingListSize,
-                          index,
+                    builder: (context, state, fetchNextPage) {
+                      return PagedSliverList<int, T>.separated(
+                        state: state,
+                        fetchNextPage: fetchNextPage,
+                        separatorBuilder:
+                            separatorBuilder ??
+                            (context, index) => const SizedBox.shrink(),
+                        builderDelegate: PagedChildBuilderDelegate<T>(
+                          firstPageProgressIndicatorBuilder: (context) {
+                            const loadingListSize = 10;
+
+                            return GrxListLoading(
+                              itemBuilder:
+                                  (index) => _buildItem(
+                                    loadingItemBuilder!(),
+                                    loadingListSize,
+                                    index,
+                                  ),
+                              separatorBuilder: separatorBuilder,
+                              animationController: animationController,
+                            );
+                          },
+                          firstPageErrorIndicatorBuilder:
+                              (context) => GrxListError(
+                                title: 'Algo deu errado!',
+                                subTitle:
+                                    'Encontramos um erro desconhecido ao tentar processar seus dados, por gentileza, tente novamente!',
+                                animationController: animationController,
+                              ),
+                          noItemsFoundIndicatorBuilder:
+                              (context) => GrxListEmpty(
+                                title: 'Nenhum item encontrado!',
+                                subTitle:
+                                    'Não encontramos nenhum item para exibir.',
+                                animationController: animationController,
+                              ),
+                          newPageErrorIndicatorBuilder:
+                              (context) => GrxListInfiniteLoadingError(
+                                text:
+                                    'Algo deu errado, por favor, tente novamente!',
+                                onTap: pagingController!.refresh,
+                              ),
+                          newPageProgressIndicatorBuilder:
+                              (context) => const GrxListInfiniteLoading(),
+                          itemBuilder:
+                              (context, item, index) => _buildItem(
+                                itemBuilder(item, index),
+                                pagingController!.items!.length,
+                                index,
+                              ),
                         ),
-                        separatorBuilder: separatorBuilder,
-                        animationController: animationController,
                       );
                     },
-                    firstPageErrorIndicatorBuilder: (context) => GrxListError(
-                      title: 'Algo deu errado!',
-                      subTitle:
-                          'Encontramos um erro desconhecido ao tentar processar seus dados, por gentileza, tente novamente!',
-                      animationController: animationController,
-                    ),
-                    noItemsFoundIndicatorBuilder: (context) => GrxListEmpty(
-                      title: 'Nenhum item encontrado!',
-                      subTitle: 'Não encontramos nenhum item para exibir.',
-                      animationController: animationController,
-                    ),
-                    newPageErrorIndicatorBuilder: (context) =>
-                        GrxListInfiniteLoadingError(
-                      text: 'Algo deu errado, por favor, tente novamente!',
-                      onTap: pagingController!.retryLastFailedRequest,
-                    ),
-                    newPageProgressIndicatorBuilder: (context) =>
-                        const GrxListInfiniteLoading(),
-                    itemBuilder: (context, item, index) => _buildItem(
-                      itemBuilder(item, index),
-                      pagingController!.itemList!.length,
-                      index,
+                  )
+                  : SuperSliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) => _buildItem(
+                        itemBuilder(list!.elementAt(index), index),
+                        list!.length,
+                        index,
+                      ),
+                      childCount: list!.length,
                     ),
                   ),
-                )
-              : SuperSliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) => _buildItem(
-                      itemBuilder(list!.elementAt(index), index),
-                      list!.length,
-                      index,
-                    ),
-                    childCount: list!.length,
-                  ),
-                ),
         ),
       ],
     );
