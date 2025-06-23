@@ -3,10 +3,10 @@ import 'dart:ui';
 import '../utils/grx_font_weights.dart';
 import 'grx_text.style.dart';
 
-/// A Design System's [TextStyle] primarily used by extra small texts.
-class GrxOverlineTextStyle extends GrxTextStyle {
+/// A Design System's [TextStyle] primarily used by small captions.
+class GrxLabelSmallTextStyle extends GrxTextStyle {
   /// Creates a Design System's [TextStyle] with pre-defined font size and font weight
-  const GrxOverlineTextStyle({
+  const GrxLabelSmallTextStyle({
     super.color,
     super.decoration,
     super.decorationColor,
@@ -15,7 +15,7 @@ class GrxOverlineTextStyle extends GrxTextStyle {
     super.overflow,
     final FontWeight? fontWeight,
   }) : super(
-          fontSize: 9,
+          fontSize: 10,
           fontWeight: fontWeight ?? GrxFontWeights.regular,
         );
 }

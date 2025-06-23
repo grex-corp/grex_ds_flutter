@@ -5,7 +5,7 @@ import '../../models/grx_button_options.model.dart';
 import '../../themes/colors/grx_colors.dart';
 import '../../themes/icons/grx_icons.dart';
 import '../buttons/grx_rounded_button.widget.dart';
-import '../typography/grx_caption_large_text.widget.dart';
+import '../typography/grx_label_large_text.widget.dart';
 import '../typography/grx_headline_text.widget.dart';
 
 class GrxListEmpty extends StatelessWidget {
@@ -15,7 +15,7 @@ class GrxListEmpty extends StatelessWidget {
     required this.subTitle,
     this.icon = const Icon(
       GrxIcons.format_list_bulleted,
-      color: GrxColors.primarySwatch,
+      color: GrxColors.primary,
       size: 86.0,
     ),
     this.animationController,
@@ -64,7 +64,7 @@ class GrxListEmpty extends StatelessWidget {
             const SizedBox(
               height: 8.0,
             ),
-            GrxCaptionLargeText(
+            GrxLabelLargeText(
               subTitle,
               textAlign: TextAlign.center,
             ),

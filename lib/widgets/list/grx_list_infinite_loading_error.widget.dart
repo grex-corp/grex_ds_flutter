@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../themes/icons/grx_icons.dart';
-import '../typography/grx_caption_large_text.widget.dart';
+import '../typography/grx_label_large_text.widget.dart';
 
 class GrxListInfiniteLoadingError extends StatelessWidget {
   const GrxListInfiniteLoadingError({
@@ -24,7 +24,7 @@ class GrxListInfiniteLoadingError extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                GrxCaptionLargeText(
+                GrxLabelLargeText(
                   text,
                   textAlign: TextAlign.center,
                 ),

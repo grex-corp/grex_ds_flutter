@@ -54,7 +54,7 @@ class _KnowledgeTrailStateSelectPage extends State<KnowledgeTrailSelectPage> {
         right: 8.0,
         bottom: mediaQuery.viewInsets.bottom + mediaQuery.padding.bottom + 8.0,
       ),
-      color: GrxColors.cfff2f7fd,
+      color: GrxColors.background,
       child: GrxCard(
         color: Colors.white,
         elevation: 0,
@@ -120,7 +120,7 @@ class _KnowledgeTrailStateSelectPage extends State<KnowledgeTrailSelectPage> {
                       ),
                       Column(
                         children: <Widget>[
-                          GrxCaptionLargeText(
+                          GrxLabelLargeText(
                             trail.name,
                           ),
                           const SizedBox(

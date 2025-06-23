@@ -8,7 +8,7 @@ class GrxButtonOptions {
     this.onPressed,
     this.icon,
     this.backgroundColor,
-    this.foregroundColor = GrxColors.cffffffff,
+    this.foregroundColor = GrxColors.neutrals,
   });
 
   final String title;

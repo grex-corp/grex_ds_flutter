@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:super_sliver_list/super_sliver_list.dart';
 
 import '../animations/grx_fade_transition.animation.dart';
 import 'grx_spinner_loading.widget.dart';
@@ -83,7 +82,7 @@ class GrxSliverAnimatedList<T> extends StatelessWidget {
           CupertinoSliverRefreshControl(
             onRefresh: onRefresh!,
             builder:
-                (_, __, ___, ____, _____) => const Center(
+                (_, _, _, _, _) => Center(
                   child: Padding(
                     padding: EdgeInsets.all(8.0),
                     child: GrxSpinnerLoading(),
@@ -156,7 +155,7 @@ class GrxSliverAnimatedList<T> extends StatelessWidget {
                       );
                     },
                   )
-                  : SuperSliverList(
+                  : SliverList(
                     delegate: SliverChildBuilderDelegate(
                       (context, index) => _buildItem(
                         itemBuilder(list!.elementAt(index), index),

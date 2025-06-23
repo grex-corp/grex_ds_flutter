@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../enums/grx_align.enum.dart';
 import '../../enums/grx_text_transform.enum.dart';
 import '../../themes/colors/grx_colors.dart';
-import '../../themes/typography/styles/grx_headline_medium_text.style.dart';
+import '../../themes/typography/styles/grx_headline_text.style.dart';
 import 'grx_button.widget.dart';
 
 class GrxBottomButton extends StatelessWidget {
@@ -47,9 +47,9 @@ class GrxBottomButton extends StatelessWidget {
         borderRadius: BorderRadius.zero,
         side: BorderSide.none,
       ),
-      backgroundColor: GrxColors.primarySwatch,
-      foregroundColor: GrxColors.cffffffff,
-      style: const GrxHeadlineMediumTextStyle(),
+      backgroundColor: GrxColors.primary,
+      foregroundColor: GrxColors.neutrals,
+      style: const GrxHeadlineTextStyle(),
       icon: icon,
       iconAlign: iconAlign,
       iconSize: iconSize,

@@ -9,9 +9,24 @@ class TypoSample extends StatelessWidget {
     return const Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        GrxHeadlineLargeText('Healine Large Text'),
+        GrxDisplayLargeText('Display Large Text'),
+        GrxDisplayLargeText(
+          'Display Large Text',
+          isLoading: true,
+        ),
+        GrxDisplayText('Display Text'),
+        GrxDisplayText(
+          'Display Text', 
+          isLoading: true,
+        ),
+        GrxDisplaySmallText('Display Small Text'),
+        GrxDisplaySmallText(
+          'Display Small Text',
+          isLoading: true,
+        ),
+        GrxHeadlineLargeText('Headline Large Text'),
         GrxHeadlineLargeText(
-          'Healine Large Text',
+          'Headline Large Text',
           isLoading: true,
         ),
         GrxHeadlineText('Headline Text'),
@@ -19,8 +34,8 @@ class TypoSample extends StatelessWidget {
           'Headline Text',
           isLoading: true,
         ),
-        GrxHeadlineMediumText('Headline Medium Text'),
-        GrxHeadlineMediumText(
+        GrxHeadlineText('Headline Medium Text'),
+        GrxHeadlineText(
           'Headline Medium Text',
           isLoading: true,
         ),
@@ -29,29 +44,49 @@ class TypoSample extends StatelessWidget {
           'Headline Small Text',
           isLoading: true,
         ),
+        GrxTitleLargeText('Title Large Text'),
+        GrxTitleLargeText(
+          'Title Large Text',
+          isLoading: true,
+        ),
+        GrxTitleText('Title Text'),
+        GrxTitleText(
+          'Title Text',
+          isLoading: true,
+        ),
+        GrxTitleSmallText('Title Small Text'),
+        GrxTitleSmallText(
+          'Title Small Text',
+          isLoading: true,
+        ),
+        GrxBodyLargeText('Body Large Text'),
+        GrxBodyLargeText(
+          'Body Large Text',
+          isLoading: true,
+        ),
         GrxBodyText('Body Text'),
         GrxBodyText(
           'Body Text',
           isLoading: true,
         ),
-        GrxCaptionLargeText('Caption Large Text'),
-        GrxCaptionLargeText(
-          'Caption Large Text',
+        GrxBodySmallText('Body Small Text'),
+        GrxBodySmallText(
+          'Body Small Text',
           isLoading: true,
         ),
-        GrxCaptionText('Caption Text'),
-        GrxCaptionText(
-          'Caption Text',
+        GrxLabelLargeText('Label Large Text'),
+        GrxLabelLargeText(
+          'Label Large Text',
           isLoading: true,
         ),
-        GrxCaptionSmallText('Caption Small Text'),
-        GrxCaptionSmallText(
-          'Caption Small Text',
+        GrxLabelText('Label Text'),
+        GrxLabelText(
+          'Label Text',
           isLoading: true,
         ),
-        GrxOverlineText('Overline Text'),
-        GrxOverlineText(
-          'Overline Text',
+        GrxLabelSmallText('Label Small Text'),
+        GrxLabelSmallText(
+          'Label Small Text',
           isLoading: true,
         ),
       ],

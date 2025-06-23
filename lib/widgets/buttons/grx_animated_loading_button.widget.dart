@@ -13,17 +13,17 @@ class GrxAnimatedLoadingButton extends StatelessWidget {
     this.text,
     this.textSpan,
     this.transform = GrxTextTransform.none,
-    this.foregroundColor = GrxColors.cffffffff,
-    this.backgroundColor = GrxColors.c7075f3aa,
+    this.foregroundColor = GrxColors.neutrals,
+    this.backgroundColor = GrxColors.secondary,
     this.height = 48.0,
     this.width,
     this.margin,
     this.animateOnTap = false,
     final double? borderRadius,
     final GrxAnimatedLoadingButtonController? controller,
-  })  : controller = controller ?? GrxAnimatedLoadingButtonController(),
-        borderRadius = borderRadius ?? height / 2.0,
-        assert(text != null || textSpan != null);
+  }) : controller = controller ?? GrxAnimatedLoadingButtonController(),
+       borderRadius = borderRadius ?? height / 2.0,
+       assert(text != null || textSpan != null);
 
   final GrxAnimatedLoadingButtonController controller;
   final void Function(GrxAnimatedLoadingButtonController controller) onPressed;
@@ -47,23 +47,21 @@ class GrxAnimatedLoadingButton extends StatelessWidget {
       child: ValueListenableBuilder<bool>(
         valueListenable: controller.hasStarted,
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: 12.0,
-            horizontal: 24.0,
-          ),
-          child: textSpan != null
-              ? GrxHeadlineSmallText.rich(
-                  textSpan,
-                  color: foregroundColor,
-                  textAlign: TextAlign.center,
-                  transform: transform,
-                )
-              : GrxHeadlineSmallText(
-                  text,
-                  color: foregroundColor,
-                  textAlign: TextAlign.center,
-                  transform: transform,
-                ),
+          padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 24.0),
+          child:
+              textSpan != null
+                  ? GrxHeadlineSmallText.rich(
+                    textSpan,
+                    color: foregroundColor,
+                    textAlign: TextAlign.center,
+                    transform: transform,
+                  )
+                  : GrxHeadlineSmallText(
+                    text,
+                    color: foregroundColor,
+                    textAlign: TextAlign.center,
+                    transform: transform,
+                  ),
         ),
         builder: (BuildContext context, bool value, child) {
           return RoundedLoadingButton(
@@ -72,8 +70,8 @@ class GrxAnimatedLoadingButton extends StatelessWidget {
             borderRadius:
                 controller.hasStarted.value ? height / 2 : borderRadius,
             color: backgroundColor,
-            errorColor: GrxColors.cfffc5858,
-            successColor: GrxColors.primarySwatch,
+            errorColor: GrxColors.error,
+            successColor: GrxColors.primary,
             animateOnTap: animateOnTap,
             width: this.width ?? width,
             child: child!,

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import '../../extensions/list.extension.dart';
 import '../../utils/grx_form_field.util.dart';
 import '../grx_stateful.widget.dart';
-import '../typography/grx_caption_text.widget.dart';
+import '../typography/grx_label_text.widget.dart';
 import 'controllers/grx_form_field.controller.dart';
 import 'grx_form_field.widget.dart';
 import 'grx_text_field.widget.dart';
@@ -205,7 +205,7 @@ class _GrxDropdownStateFormField<T>
                           onPressed: () => _onSelectItem(item),
                           child: SizedBox(
                             width: constraints.constrainWidth() - 24,
-                            child: GrxCaptionText(
+                            child: GrxLabelText(
                               widget.displayText(item),
                             ),
                           ),

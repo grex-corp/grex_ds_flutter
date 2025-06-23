@@ -1,12 +1,12 @@
-import 'package:flutter/material.dart';
+import 'dart:ui';
 
 import '../utils/grx_font_weights.dart';
 import 'grx_text.style.dart';
 
-/// A Design System's [TextStyle] primarily used by normal captions.
-class GrxCaptionTextStyle extends GrxTextStyle {
+/// A Design System's [TextStyle] primarily used by large titles.
+class GrxDisplaySmallTextStyle extends GrxTextStyle {
   /// Creates a Design System's [TextStyle] with pre-defined font size and font weight
-  const GrxCaptionTextStyle({
+  const GrxDisplaySmallTextStyle({
     super.color,
     super.decoration,
     super.decorationColor,
@@ -14,8 +14,5 @@ class GrxCaptionTextStyle extends GrxTextStyle {
     super.decorationThickness,
     super.overflow,
     final FontWeight? fontWeight,
-  }) : super(
-          fontSize: 12,
-          fontWeight: fontWeight ?? GrxFontWeights.regular,
-        );
+  }) : super(fontSize: 32, fontWeight: fontWeight ?? GrxFontWeights.semiBold);
 }

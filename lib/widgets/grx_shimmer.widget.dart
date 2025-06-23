@@ -11,15 +11,16 @@ class GrxShimmer extends StatelessWidget {
   final Color highlightColor;
   final BoxDecoration? decoration;
 
-  const GrxShimmer({
+  GrxShimmer({
     super.key,
     required this.height,
     required this.width,
     this.borderRadius = 20,
-    this.baseColor = GrxColors.cffeeeeee,
-    this.highlightColor = GrxColors.cfffafafa,
     this.decoration,
-  });
+    final Color? baseColor,
+    final Color? highlightColor,
+  }) : baseColor = baseColor ?? GrxColors.primary.shade50,
+       highlightColor = highlightColor ?? GrxColors.primary.shade200;
 
   @override
   Widget build(BuildContext context) {
@@ -36,12 +37,11 @@ class GrxShimmer extends StatelessWidget {
               minHeight: height,
               minWidth: width,
             ),
-            decoration: decoration ??
+            decoration:
+                decoration ??
                 BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(borderRadius),
-                  ),
+                  borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
                 ),
           ),
         ),

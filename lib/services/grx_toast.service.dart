@@ -6,7 +6,7 @@ import 'package:flutter/widgets.dart';
 import '../themes/colors/grx_colors.dart';
 import '../themes/icons/grx_icons.dart';
 import '../widgets/buttons/grx_icon_button.widget.dart';
-import '../widgets/typography/grx_caption_large_text.widget.dart';
+import '../widgets/typography/grx_label_large_text.widget.dart';
 import '../widgets/typography/grx_headline_small_text.widget.dart';
 
 abstract class GrxToastService {
@@ -20,16 +20,15 @@ abstract class GrxToastService {
     Duration? toastDuration,
     BuildContext? context,
     bool permanent = false,
-  }) =>
-      _show(
-        title: title,
-        icon: _getIcon(GrxIcons.cancel),
-        backgroundColor: GrxColors.cffffa5a5,
-        subtitle: subtitle,
-        toastDuration: toastDuration,
-        context: context,
-        permanent: permanent,
-      );
+  }) => _show(
+    title: title,
+    icon: _getIcon(GrxIcons.cancel),
+    backgroundColor: GrxColors.error,
+    subtitle: subtitle,
+    toastDuration: toastDuration,
+    context: context,
+    permanent: permanent,
+  );
 
   static void showWarning({
     required String title,
@@ -37,16 +36,15 @@ abstract class GrxToastService {
     Duration? toastDuration,
     BuildContext? context,
     bool permanent = false,
-  }) =>
-      _show(
-        title: title,
-        icon: _getIcon(GrxIcons.warning_amber),
-        backgroundColor: GrxColors.fffff6a8,
-        subtitle: subtitle,
-        toastDuration: toastDuration,
-        context: context,
-        permanent: permanent,
-      );
+  }) => _show(
+    title: title,
+    icon: _getIcon(GrxIcons.warning_amber),
+    backgroundColor: GrxColors.warning,
+    subtitle: subtitle,
+    toastDuration: toastDuration,
+    context: context,
+    permanent: permanent,
+  );
 
   static void showSuccess({
     required String title,
@@ -54,16 +52,15 @@ abstract class GrxToastService {
     Duration? toastDuration,
     BuildContext? context,
     bool permanent = false,
-  }) =>
-      _show(
-        title: title,
-        icon: _getIcon(GrxIcons.check_circle_outline),
-        backgroundColor: GrxColors.cff90e6bc,
-        subtitle: subtitle,
-        toastDuration: toastDuration,
-        context: context,
-        permanent: permanent,
-      );
+  }) => _show(
+    title: title,
+    icon: _getIcon(GrxIcons.check_circle_outline),
+    backgroundColor: GrxColors.success,
+    subtitle: subtitle,
+    toastDuration: toastDuration,
+    context: context,
+    permanent: permanent,
+  );
 
   static void _show({
     required String title,
@@ -82,10 +79,7 @@ abstract class GrxToastService {
       milliseconds = 3000;
     }
 
-    final duration = toastDuration ??
-        Duration(
-          milliseconds: milliseconds,
-        );
+    final duration = toastDuration ?? Duration(milliseconds: milliseconds);
 
     final buildContext = (context ?? _context)!;
 
@@ -96,7 +90,7 @@ abstract class GrxToastService {
     //           color: GrxColors.cff202c44,
     //         )
     //       : null,
-    //   messageText: GrxCaptionLargeText(
+    //   messageText: GrxLabelLargeText(
     //     message,
     //     color: GrxColors.cff202c44,
     //   ),
@@ -123,35 +117,34 @@ abstract class GrxToastService {
       autoDismiss: !permanent,
       snackbarDuration:
           permanent ? const Duration(milliseconds: 5000) : duration,
-      builder: (context) => ToastCard(
-        leading: icon,
-        title: GrxCaptionLargeText(
-          title,
-          color: GrxColors.cff202c44,
-          overflow: TextOverflow.visible,
-        ),
-        subtitle: (subtitle?.isNotEmpty ?? false)
-            ? GrxHeadlineSmallText(
-                subtitle!,
-                color: GrxColors.cff202c44,
-                overflow: TextOverflow.visible,
-              )
-            : null,
-        trailing: GrxIconButton(
-          icon: GrxIcons.close,
-          color: GrxColors.cff202c44,
-          onPressed: () => toast?.remove(),
-        ),
-        color: backgroundColor,
-      ),
+      builder:
+          (context) => ToastCard(
+            leading: icon,
+            title: GrxLabelLargeText(
+              title,
+              color: GrxColors.primary.shade900,
+              overflow: TextOverflow.visible,
+            ),
+            subtitle:
+                (subtitle?.isNotEmpty ?? false)
+                    ? GrxHeadlineSmallText(
+                      subtitle!,
+                      color: GrxColors.primary.shade900,
+                      overflow: TextOverflow.visible,
+                    )
+                    : null,
+            trailing: GrxIconButton(
+              icon: GrxIcons.close,
+              color: GrxColors.primary.shade900,
+              onPressed: () => toast?.remove(),
+            ),
+            color: backgroundColor,
+          ),
     )..show(buildContext);
   }
 
-  static Icon _getIcon(IconData data) => Icon(
-        data,
-        size: 24.0,
-        color: GrxColors.cff202c44,
-      );
+  static Icon _getIcon(IconData data) =>
+      Icon(data, size: 24.0, color: GrxColors.primary.shade900);
 
   static void _validateContext(BuildContext? context) {
     if ((context ?? _context) == null) {

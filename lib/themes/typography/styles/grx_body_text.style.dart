@@ -14,8 +14,5 @@ class GrxBodyTextStyle extends GrxTextStyle {
     super.decorationThickness,
     super.overflow,
     final FontWeight? fontWeight,
-  }) : super(
-          fontSize: 16,
-          fontWeight: fontWeight ?? GrxFontWeights.regular,
-        );
+  }) : super(fontSize: 14, fontWeight: fontWeight ?? GrxFontWeights.regular);
 }

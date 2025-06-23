@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 import '../../themes/colors/grx_colors.dart';
 import '../../themes/icons/grx_icons.dart';
-import '../../themes/typography/styles/grx_caption_large_text.style.dart';
+import '../../themes/typography/styles/grx_label_large_text.style.dart';
 import '../buttons/grx_clear_input_button.widget.dart';
 import 'grx_form_field.widget.dart';
 
-const _inputTextStyle = GrxCaptionLargeTextStyle(
-  color: GrxColors.cff365278,
+final _inputTextStyle = GrxLabelLargeTextStyle(
+  color: GrxColors.primary.shade800,
 );
 
 class GrxSearchField extends StatelessWidget {
@@ -40,36 +40,24 @@ class GrxSearchField extends StatelessWidget {
             ),
             isDense: true,
             border: const OutlineInputBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(5.0),
-              ),
-              borderSide: BorderSide(
-                width: 0,
-                style: BorderStyle.none,
-              ),
+              borderRadius: BorderRadius.all(Radius.circular(5.0)),
+              borderSide: BorderSide(width: 0, style: BorderStyle.none),
             ),
             focusedBorder: const OutlineInputBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(5.0),
-              ),
-              borderSide: BorderSide(
-                width: 0,
-                style: BorderStyle.none,
-              ),
+              borderRadius: BorderRadius.all(Radius.circular(5.0)),
+              borderSide: BorderSide(width: 0, style: BorderStyle.none),
             ),
-            fillColor: GrxColors.cffffffff,
+            fillColor: GrxColors.neutrals,
             filled: true,
-            suffixIcon: searchFieldController?.text.isEmpty ?? true
-                ? const Icon(
-                    GrxIcons.search,
-                    color: GrxColors.cff9bb2ce,
-                  )
-                : GrxClearInputButton(
-                    onClear: () {
-                      searchFieldController?.clear();
-                      onChanged(searchFieldController?.text ?? '');
-                    },
-                  ),
+            suffixIcon:
+                searchFieldController?.text.isEmpty ?? true
+                    ? Icon(GrxIcons.search)
+                    : GrxClearInputButton(
+                      onClear: () {
+                        searchFieldController?.clear();
+                        onChanged(searchFieldController?.text ?? '');
+                      },
+                    ),
             hintText: hintText,
             hintStyle: _inputTextStyle,
           ),

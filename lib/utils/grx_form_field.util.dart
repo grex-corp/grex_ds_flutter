@@ -4,7 +4,7 @@ import 'package:flutter/scheduler.dart';
 import '../widgets/fields/controllers/grx_form_field.controller.dart';
 
 abstract class GrxFormFieldUtils {
-  static onValueChange(
+  static void onValueChange(
     FormFieldState<String> field,
     GrxFormFieldController controller, {
     void Function(String)? onChanged,

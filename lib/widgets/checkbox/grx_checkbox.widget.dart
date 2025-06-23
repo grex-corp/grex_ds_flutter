@@ -17,15 +17,15 @@ class GrxCheckbox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final opacity = enabled && !isLoading ? 1.0 : .4;
+    final double opacity = enabled && !isLoading ? 255 : 102;
 
     return Container(
       height: 20,
       width: 20,
       decoration: BoxDecoration(
-        color: GrxColors.cfff9fbfd.withOpacity(opacity),
+        color: GrxColors.primary.shade50.withValues(alpha: opacity),
         border: Border.all(
-          color: GrxColors.cffdce2e8.withOpacity(opacity),
+          color: GrxColors.neutrals.shade100.withValues(alpha: opacity),
           width: 2.0,
         ),
         borderRadius: BorderRadius.circular(4.0),
@@ -35,7 +35,7 @@ class GrxCheckbox extends StatelessWidget {
         child: AnimatedContainer(
           duration: GrxUtils.defaultAnimationDuration,
           decoration: BoxDecoration(
-            color: value ? GrxColors.cff289fff : Colors.transparent,
+            color: value ? GrxColors.primary.shade600 : Colors.transparent,
             borderRadius: BorderRadius.circular(2.0),
           ),
         ),

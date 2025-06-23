@@ -7,8 +7,9 @@ import '../../utils/grx_utils.util.dart';
 const _kSize = 50.0;
 const _kBorder = _kSize / 2.0;
 const _kBorderRadius = BorderRadius.all(Radius.circular(_kBorder));
-final _kShape =
-    RoundedRectangleBorder(borderRadius: BorderRadius.circular(_kBorder));
+final _kShape = RoundedRectangleBorder(
+  borderRadius: BorderRadius.circular(_kBorder),
+);
 
 class GrxFloatingActionButton extends StatelessWidget {
   const GrxFloatingActionButton({
@@ -32,35 +33,36 @@ class GrxFloatingActionButton extends StatelessWidget {
         child: AnimatedContainer(
           duration: GrxUtils.defaultAnimationDuration,
           decoration: BoxDecoration(
-            gradient: isLoading
-                ? const LinearGradient(
-                    begin: Alignment(-0.7, -2.5),
-                    end: Alignment(0.1, 0.4),
-                    colors: <Color>[
-                      GrxColors.c7057de91,
-                      GrxColors.c7075f3aa,
-                    ],
-                  )
-                : const LinearGradient(
-                    begin: Alignment(-0.7, -2.5),
-                    end: Alignment(0.1, 0.4),
-                    colors: <Color>[
-                      GrxColors.cff1eb35e,
-                      GrxColors.cff75f3ab,
-                    ],
-                  ),
+            gradient:
+                isLoading
+                    ? LinearGradient(
+                      begin: Alignment(-0.7, -2.5),
+                      end: Alignment(0.1, 0.4),
+                      colors: <Color>[
+                        GrxColors.secondary,
+                        GrxColors.secondary.shade400,
+                      ],
+                    )
+                    : LinearGradient(
+                      begin: Alignment(-0.7, -2.5),
+                      end: Alignment(0.1, 0.4),
+                      colors: <Color>[
+                        GrxColors.success.shade300,
+                        GrxColors.secondary.shade500,
+                      ],
+                    ),
             borderRadius: _kBorderRadius,
           ),
           child: CustomPaint(
             painter: _GradientPainter(
               strokeWidth: 1.5,
               radius: _kBorder,
-              gradient: const LinearGradient(
+              gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-                  GrxColors.cff93ffcf,
-                  GrxColors.cff75f3ab,
+                  GrxColors.secondary.shade50,
+                  GrxColors.secondary.shade500,
                 ],
               ),
             ),
@@ -70,17 +72,18 @@ class GrxFloatingActionButton extends StatelessWidget {
               alignment: Alignment.center,
               child: AnimatedSwitcher(
                 duration: GrxUtils.defaultAnimationDuration,
-                child: isLoading
-                    ? const CircularProgressIndicator(
-                        backgroundColor: Colors.white,
-                        strokeWidth: 2,
-                      )
-                    : icon ??
-                        const Icon(
-                          GrxIcons.arrow_forward,
-                          color: Colors.white,
-                          size: 30,
-                        ),
+                child:
+                    isLoading
+                        ? const CircularProgressIndicator(
+                          backgroundColor: Colors.white,
+                          strokeWidth: 2,
+                        )
+                        : icon ??
+                            const Icon(
+                              GrxIcons.arrow_forward,
+                              color: Colors.white,
+                              size: 30,
+                            ),
               ),
             ),
           ),
@@ -106,14 +109,22 @@ class _GradientPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     // create outer rectangle equals size
     Rect outerRect = Offset.zero & size;
-    var outerRRect =
-        RRect.fromRectAndRadius(outerRect, Radius.circular(radius));
+    var outerRRect = RRect.fromRectAndRadius(
+      outerRect,
+      Radius.circular(radius),
+    );
 
     // create inner rectangle smaller by strokeWidth
-    Rect innerRect = Rect.fromLTWH(strokeWidth, strokeWidth,
-        size.width - strokeWidth * 2, size.height - strokeWidth * 2);
+    Rect innerRect = Rect.fromLTWH(
+      strokeWidth,
+      strokeWidth,
+      size.width - strokeWidth * 2,
+      size.height - strokeWidth * 2,
+    );
     var innerRRect = RRect.fromRectAndRadius(
-        innerRect, Radius.circular(radius - strokeWidth));
+      innerRect,
+      Radius.circular(radius - strokeWidth),
+    );
 
     // apply gradient shader
     _paint.shader = gradient.createShader(outerRect);

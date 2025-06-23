@@ -50,8 +50,9 @@ class _FieldsSampleAppState extends State<FieldsSampleApp> {
             labelText: 'pages.people.name'.translate,
             hintText: 'José Algusto',
             onSaved: (value) => widget.person.name = value!,
-            validator: (value) =>
-                (value?.isEmpty ?? true) ? 'Insira o nome da pessoa' : null,
+            validator:
+                (value) =>
+                    (value?.isEmpty ?? true) ? 'Insira o nome da pessoa' : null,
             isLoading: _isLoading,
           ),
           GrxPhoneFormField(
@@ -61,8 +62,11 @@ class _FieldsSampleAppState extends State<FieldsSampleApp> {
               print('Phone: $value');
               widget.person.phone = value!;
             },
-            validator: (value) =>
-                (value?.isEmpty ?? true) ? 'Insira o telefone da pessoa' : null,
+            validator:
+                (value) =>
+                    (value?.isEmpty ?? true)
+                        ? 'Insira o telefone da pessoa'
+                        : null,
             isLoading: _isLoading,
           ),
           GrxDateTimePickerFormField(
@@ -91,24 +95,21 @@ class _FieldsSampleAppState extends State<FieldsSampleApp> {
             onSelectItem: (value) => print('Selected Value: ${value?.name}'),
             data: widget.leaders,
             searchable: true,
-            itemBuilder: (context, index, value) => SizedBox(
-              height: 50,
-              child: Center(
-                child: Row(
-                  children: [
-                    GrxHeadlineMediumText(value.name),
-                  ],
+            itemBuilder:
+                (context, index, value) => SizedBox(
+                  height: 50,
+                  child: Center(
+                    child: Row(children: [GrxHeadlineText(value.name)]),
+                  ),
                 ),
-              ),
-            ),
             displayText: (value) => value.name,
             onSaved: (value) {
               print('Saved leader: $value');
 
               widget.person.leadership = value;
             },
-            validator: (value) =>
-                value == null ? 'O líder deve ser informado' : null,
+            validator:
+                (value) => value == null ? 'O líder deve ser informado' : null,
             isLoading: _isLoading,
           ),
           GrxDropdownFormField<ParentWorshipType>(
@@ -122,15 +123,15 @@ class _FieldsSampleAppState extends State<FieldsSampleApp> {
 
               widget.person.fatherType = value ?? ParentWorshipType.unknown;
             },
-            validator: (value) =>
-                value == null ? 'O Tipo deve ser informado' : null,
+            validator:
+                (value) => value == null ? 'O Tipo deve ser informado' : null,
             isLoading: _isLoading,
           ),
           GrxAutocompleteDropdownFormField<ParentWorshipType>(
             value: ParentWorshipType.unknown.getDescription(),
             labelText: 'Rua',
-            onSelectItem: (value) =>
-                print('Selected Value Rua: ${value?.name}'),
+            onSelectItem:
+                (value) => print('Selected Value Rua: ${value?.name}'),
             onSearch: (value) async {
               if (value?.isEmpty ?? true) return null;
 
@@ -144,8 +145,9 @@ class _FieldsSampleAppState extends State<FieldsSampleApp> {
             onSaved: (value) {
               print('Saved Street: $value');
             },
-            validator: (value) =>
-                value?.isEmpty ?? true ? 'A rua deve ser informada' : null,
+            validator:
+                (value) =>
+                    value?.isEmpty ?? true ? 'A rua deve ser informada' : null,
             isLoading: _isLoading,
           ),
           GrxMultiSelectFormField<Role>(
@@ -154,41 +156,41 @@ class _FieldsSampleAppState extends State<FieldsSampleApp> {
             labelText: 'Funções',
             onSelectItems: (value) => print('Selected Value: ${value?.length}'),
             data: widget.roles,
-            itemBuilder: (context, index, value, onChanged, isSelected) =>
-                InkWell(
-              onTap: onChanged,
-              child: SizedBox(
-                height: 50,
-                child: Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      GrxHeadlineMediumText(value.name),
-                      GrxRoundedCheckbox(
-                        value: isSelected,
-                        radius: 10,
+            itemBuilder:
+                (context, index, value, onChanged, isSelected) => InkWell(
+                  onTap: onChanged,
+                  child: SizedBox(
+                    height: 50,
+                    child: Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          GrxHeadlineText(value.name),
+                          GrxRoundedCheckbox(value: isSelected, radius: 10),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
                 ),
-              ),
-            ),
             displayText: (value) => value.name,
             valueKey: (person) => person.id,
             onSaved: (value) => widget.person.roles = value!,
-            validator: (value) => (value?.isEmpty ?? true)
-                ? 'Ao menos uma função deve ser informada'
-                : null,
+            validator:
+                (value) =>
+                    (value?.isEmpty ?? true)
+                        ? 'Ao menos uma função deve ser informada'
+                        : null,
             isLoading: _isLoading,
           ),
           GrxCustomDropdownFormField<KnowledgeTrail>(
             value: widget.person.trail,
             labelText: 'Trilho do Vencedor',
             onSelectItem: (value) => print('Selected Value: ${value?.name}'),
-            builder: (controller, selectedValue) => KnowledgeTrailSelectPage(
-              data: selectedValue,
-              controller: controller,
-            ),
+            builder:
+                (controller, selectedValue) => KnowledgeTrailSelectPage(
+                  data: selectedValue,
+                  controller: controller,
+                ),
             displayText: (value) => value.name,
             onSaved: (value) {
               print('Saved trail: $value');
@@ -200,32 +202,29 @@ class _FieldsSampleAppState extends State<FieldsSampleApp> {
             //     : null,
             isLoading: _isLoading,
           ),
-          const GrxDashedDivider(
-            padding: EdgeInsets.symmetric(vertical: 15.0),
-          ),
+          GrxDashedDivider(padding: EdgeInsets.symmetric(vertical: 15.0)),
           GrxSwitchFormField(
             value: widget.person.createUser,
             labelText: 'Criar usuário',
             onSaved: (value) => widget.person.createUser = value,
+            onChanged: (value) => print('Changed: $value'),
             isLoading: _isLoading,
           ),
-          const GrxDashedDivider(
-            title: 'Dados Auxiliares',
-          ),
-          GrxCheckboxListTile(
-            title: 'Solteiro',
-            value: widget.person.single,
-            isLoading: _isLoading,
-            onTap: () {
-              setState(() {
-                widget.person.single = !widget.person.single;
-              });
-            },
-          ),
-          GrxRoundedCheckbox(
-            value: widget.person.single,
-            isLoading: _isLoading,
-          ),
+          GrxDashedDivider(title: 'Dados Auxiliares'),
+          // GrxCheckboxListTile(
+          //   title: 'Solteiro',
+          //   value: widget.person.single,
+          //   isLoading: _isLoading,
+          //   onTap: () {
+          //     setState(() {
+          //       widget.person.single = !widget.person.single;
+          //     });
+          //   },
+          // ),
+          // GrxRoundedCheckbox(
+          //   value: widget.person.single,
+          //   isLoading: _isLoading,
+          // ),
         ],
       ),
     );

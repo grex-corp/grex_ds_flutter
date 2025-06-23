@@ -70,11 +70,7 @@ class GrxText extends StatelessWidget {
   Widget build(BuildContext context) {
     if (isLoading) {
       final renderParagraph = RenderParagraph(
-        textSpan ??
-            TextSpan(
-              text: _capitalize(text),
-              style: style,
-            ),
+        textSpan ?? TextSpan(text: _capitalize(text), style: style),
         textDirection: TextDirection.ltr,
         maxLines: maxLines ?? 1,
       );
@@ -84,7 +80,7 @@ class GrxText extends StatelessWidget {
         BoxConstraints(maxHeight: size.height, maxWidth: size.width),
       );
 
-      final height = renderParagraph.getMinIntrinsicHeight(style.fontSize!) + 3.0;
+      final height = renderParagraph.getMinIntrinsicHeight(style.fontSize!);
       final width = renderParagraph.getMinIntrinsicWidth(style.fontSize!);
 
       return GrxShimmer(
@@ -96,9 +92,7 @@ class GrxText extends StatelessWidget {
     final formattedText = formatText();
 
     return Text.rich(
-      TextSpan(
-        children: formattedText,
-      ),
+      TextSpan(children: formattedText),
       overflow: style.overflow,
       style: style,
       strutStyle: strutStyle,
@@ -109,7 +103,8 @@ class GrxText extends StatelessWidget {
       maxLines: maxLines,
       semanticsLabel: semanticsLabel,
       textWidthBasis: textWidthBasis,
-      textHeightBehavior: textHeightBehavior ??
+      textHeightBehavior:
+          textHeightBehavior ??
           const TextHeightBehavior(
             leadingDistribution: TextLeadingDistribution.even,
           ),
@@ -117,9 +112,10 @@ class GrxText extends StatelessWidget {
     );
   }
 
-  String? _capitalize(String? text) => transform == GrxTextTransform.uppercase
-      ? text?.toUpperCase()
-      : transform == GrxTextTransform.lowercase
+  String? _capitalize(String? text) =>
+      transform == GrxTextTransform.uppercase
+          ? text?.toUpperCase()
+          : transform == GrxTextTransform.lowercase
           ? text?.toLowerCase()
           : text;
 
@@ -134,7 +130,7 @@ class GrxText extends StatelessWidget {
           GrxLinkify.plainText(
             text: text!,
             defaultStyle: style,
-            linkColor: GrxColors.cff289fff,
+            linkColor: GrxColors.primary.shade600,
           ),
         );
       } else if (this.textSpan != null) {
@@ -142,14 +138,12 @@ class GrxText extends StatelessWidget {
           GrxLinkify.textSpan(
             textSpan: this.textSpan!,
             defaultStyle: style,
-            linkColor: GrxColors.cff289fff,
+            linkColor: GrxColors.primary.shade600,
           ),
         );
       }
 
-      textSpan = TextSpan(
-        children: linkfyText,
-      );
+      textSpan = TextSpan(children: linkfyText);
     } else {
       textSpan = this.textSpan;
     }
@@ -183,11 +177,7 @@ class GrxText extends StatelessWidget {
         return true;
       });
     } else {
-      formattedText.add(
-        TextSpan(
-          text: _capitalize(text),
-        ),
-      );
+      formattedText.add(TextSpan(text: _capitalize(text)));
     }
 
     return formattedText;

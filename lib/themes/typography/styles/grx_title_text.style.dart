@@ -3,10 +3,10 @@ import 'dart:ui';
 import '../utils/grx_font_weights.dart';
 import 'grx_text.style.dart';
 
-/// A Design System's [TextStyle] primarily used by small captions.
-class GrxCaptionSmallTextStyle extends GrxTextStyle {
+/// A Design System's [TextStyle] primarily used by normal titles.
+class GrxTitleTextStyle extends GrxTextStyle {
   /// Creates a Design System's [TextStyle] with pre-defined font size and font weight
-  const GrxCaptionSmallTextStyle({
+  const GrxTitleTextStyle({
     super.color,
     super.decoration,
     super.decorationColor,
@@ -14,8 +14,5 @@ class GrxCaptionSmallTextStyle extends GrxTextStyle {
     super.decorationThickness,
     super.overflow,
     final FontWeight? fontWeight,
-  }) : super(
-          fontSize: 10,
-          fontWeight: fontWeight ?? GrxFontWeights.regular,
-        );
+  }) : super(fontSize: 16, fontWeight: fontWeight ?? GrxFontWeights.semiBold);
 }

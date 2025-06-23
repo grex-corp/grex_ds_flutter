@@ -8,7 +8,7 @@ abstract class GrxSystemOverlayStyle {
     statusBarColor: Colors.transparent,
     statusBarIconBrightness: Brightness.dark,
     statusBarBrightness: Brightness.light,
-    systemNavigationBarColor: GrxColors.cffffffff,
+    systemNavigationBarColor: GrxColors.neutrals,
     systemNavigationBarIconBrightness: Brightness.dark,
   );
 
@@ -24,7 +24,7 @@ abstract class GrxSystemOverlayStyle {
     statusBarColor: Colors.transparent,
     statusBarIconBrightness: Brightness.light,
     statusBarBrightness: Brightness.dark,
-    systemNavigationBarColor: GrxColors.cffffffff,
+    systemNavigationBarColor: GrxColors.neutrals,
     systemNavigationBarIconBrightness: Brightness.dark,
   );
 }

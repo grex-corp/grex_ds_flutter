@@ -128,8 +128,8 @@ class _DashboardAppPageState extends State<DashboardAppPage>
         // Here we take the value from the DashboardAppPage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: 'Dashboard Page',
-        backgroundColor: GrxColors.cff365278,
-        foregroundColor: GrxColors.cffffffff,
+        backgroundColor: GrxColors.primary.shade800,
+        foregroundColor: GrxColors.neutrals,
       ),
       body: Padding(
         padding: EdgeInsets.only(
@@ -170,7 +170,7 @@ class _DashboardAppPageState extends State<DashboardAppPage>
                           icon: AnimatedIcon(
                             icon: AnimatedIcons.close_menu,
                             progress: iconAnimationController,
-                            color: GrxColors.cffffffff,
+                            color: GrxColors.neutrals,
                             size: 30,
                           ),
                           onPressed: () {
@@ -278,7 +278,7 @@ class _DashboardAppPageState extends State<DashboardAppPage>
                           ),
                           icon: GrxIcons.whatsapp,
                           iconAlign: GrxAlign.right,
-                          foregroundColor: GrxColors.cff1eb35e,
+                          foregroundColor: GrxColors.success.shade300,
                           onPressed: () {
                             setState(() {
                               _leaders.add(
@@ -301,7 +301,7 @@ class _DashboardAppPageState extends State<DashboardAppPage>
                               TextSpan(
                                 text: 'Desligamento',
                                 style: GrxHeadlineSmallTextStyle(
-                                  color: GrxColors.cffef6969,
+                                  color: GrxColors.neutrals,
                                 ),
                               )
                             ],
@@ -309,7 +309,7 @@ class _DashboardAppPageState extends State<DashboardAppPage>
                           margin: const EdgeInsets.symmetric(
                             horizontal: 16,
                           ),
-                          backgroundColor: GrxColors.cff365278,
+                          backgroundColor: GrxColors.primary.shade800,
                           onPressed: (controller) async {
                             controller.start();
 
@@ -331,7 +331,7 @@ class _DashboardAppPageState extends State<DashboardAppPage>
                             horizontal: 16,
                             vertical: 8.0,
                           ),
-                          backgroundColor: GrxColors.cff75f3ab,
+                          backgroundColor: GrxColors.secondary.shade500,
                           onPressed: (controller) async {
                             controller.start();
 

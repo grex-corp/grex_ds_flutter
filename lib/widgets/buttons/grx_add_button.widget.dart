@@ -5,19 +5,16 @@ import '../../themes/icons/grx_icons.dart';
 import 'grx_circle_button.widget.dart';
 
 class GrxAddButton extends GrxCircleButton {
-  const GrxAddButton({
+  GrxAddButton({
     super.key,
     required super.onPressed,
     super.margin,
     super.size = 48.0,
   }) : super(
-          child: const Icon(
-            GrxIcons.add,
-            color: GrxColors.cff75f3ab,
-          ),
-          backgroundColor: GrxColors.cffffffff,
-          foregroundColor: GrxColors.cff7593b5,
-          elevation: 5,
-          showShadows: true,
-        );
+         child: Icon(GrxIcons.add, color: GrxColors.secondary.shade500),
+         backgroundColor: GrxColors.neutrals,
+         foregroundColor: GrxColors.primary.shade800,
+         elevation: 5,
+         showShadows: true,
+       );
 }

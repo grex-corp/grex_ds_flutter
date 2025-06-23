@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../themes/colors/grx_colors.dart';
-import '../../themes/fields/grx_field_styles.theme.dart';
+import '../../themes/typography/styles/grx_label_large_text.style.dart';
 import 'grx_input_decoration.widget.dart';
 
 class GrxTextField extends TextField {
@@ -37,23 +37,23 @@ class GrxTextField extends TextField {
     final TextStyle? style,
     final BoxConstraints? suffixIconConstraints,
   }) : super(
-          cursorColor: GrxColors.primarySwatch,
-          style: style ?? GrxFieldStyles.inputTextStyle,
-          maxLines: obscureText ? 1 : maxLines,
-          decoration: GrxInputDecoration(
-            labelText: labelText,
-            alignLabelWithHint: alignLabelWithHint,
-            contentPadding: contentPadding,
-            hintText: hintText,
-            hintMaxLines: hintMaxLines,
-            errorText: errorText,
-            enabled: enabled,
-            onClear: onClear?.call ?? controller.clear,
-            showClearButton:
-                showClearButton && controller.text.isNotEmpty && enabled,
-            prefix: prefix,
-            suffix: suffix,
-            suffixIconConstraints: suffixIconConstraints,
-          ),
-        );
+         cursorColor: GrxColors.primary.shade900,
+         style: style ?? GrxLabelLargeTextStyle(),
+         maxLines: obscureText ? 1 : maxLines,
+         decoration: GrxInputDecoration(
+           labelText: labelText,
+           alignLabelWithHint: alignLabelWithHint,
+           contentPadding: contentPadding,
+           hintText: hintText,
+           hintMaxLines: hintMaxLines,
+           errorText: errorText,
+           enabled: enabled,
+           onClear: onClear?.call ?? controller.clear,
+           showClearButton:
+               showClearButton && controller.text.isNotEmpty && enabled,
+           prefix: prefix,
+           suffix: suffix,
+           suffixIconConstraints: suffixIconConstraints,
+         ),
+       );
 }

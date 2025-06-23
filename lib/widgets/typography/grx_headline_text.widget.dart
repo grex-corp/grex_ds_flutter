@@ -5,7 +5,7 @@ import '../../themes/colors/grx_colors.dart';
 import '../../themes/typography/styles/grx_headline_text.style.dart';
 import 'grx_text.widget.dart';
 
-/// A Design System's [Text] primarily used by normal titles
+/// A Design System's [Text] primarily used by medium titles
 ///
 /// Sets [GrxHeadlineTextStyle] as [style] default value.
 class GrxHeadlineText extends StatelessWidget {
@@ -15,26 +15,26 @@ class GrxHeadlineText extends StatelessWidget {
     super.key,
     this.textAlign,
     this.transform = GrxTextTransform.none,
-    this.color = GrxColors.cff2e2e2e,
+    this.color,
     this.fontWeight,
     this.decoration,
     this.overflow,
     this.isLoading = false,
-  })  : textSpan = null,
-        style = null;
+  }) : textSpan = null,
+       style = null;
 
   const GrxHeadlineText.rich(
     this.textSpan, {
     super.key,
     this.textAlign,
     this.transform = GrxTextTransform.none,
-    this.color = GrxColors.cff2e2e2e,
+    this.color,
     this.fontWeight,
     this.decoration,
     this.overflow,
     this.isLoading = false,
-  })  : text = null,
-        style = null;
+  }) : text = null,
+       style = null;
 
   GrxHeadlineText.lerp(
     this.text, {
@@ -43,28 +43,29 @@ class GrxHeadlineText extends StatelessWidget {
     required final double t,
     this.textAlign,
     this.transform = GrxTextTransform.none,
-    this.color = GrxColors.cff2e2e2e,
+    this.color,
     this.fontWeight,
     this.decoration,
     this.overflow,
     this.isLoading = false,
-  })  : textSpan = null,
-        style = TextStyle.lerp(
-          GrxHeadlineTextStyle(
-            color: color,
-            decoration: decoration,
-            overflow: overflow,
-            fontWeight: fontWeight,
-          ),
-          style,
-          t,
-        )!;
+  }) : textSpan = null,
+       style =
+           TextStyle.lerp(
+             GrxHeadlineTextStyle(
+               color: color,
+               decoration: decoration,
+               overflow: overflow,
+               fontWeight: fontWeight,
+             ),
+             style,
+             t,
+           )!;
 
   final String? text;
   final InlineSpan? textSpan;
   final GrxTextTransform transform;
   final TextAlign? textAlign;
-  final Color color;
+  final Color? color;
   final FontWeight? fontWeight;
   final TextDecoration? decoration;
   final TextOverflow? overflow;
@@ -73,7 +74,10 @@ class GrxHeadlineText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final style = this.style ??
+    final color = this.color ?? GrxColors.neutrals.shade1000;
+
+    final style =
+        this.style ??
         GrxHeadlineTextStyle(
           color: color,
           decoration: decoration,
@@ -83,18 +87,18 @@ class GrxHeadlineText extends StatelessWidget {
 
     return textSpan != null
         ? GrxText.rich(
-            textSpan,
-            transform: transform,
-            textAlign: textAlign,
-            style: style,
-            isLoading: isLoading,
-          )
+          textSpan,
+          transform: transform,
+          textAlign: textAlign,
+          style: style,
+          isLoading: isLoading,
+        )
         : GrxText(
-            text,
-            transform: transform,
-            textAlign: textAlign,
-            style: style,
-            isLoading: isLoading,
-          );
+          text,
+          transform: transform,
+          textAlign: textAlign,
+          style: style,
+          isLoading: isLoading,
+        );
   }
 }

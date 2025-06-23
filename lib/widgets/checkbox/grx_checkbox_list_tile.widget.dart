@@ -41,7 +41,7 @@ class GrxCheckboxListTile extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 20),
                 child: GrxBodyText(
                   title,
-                  color: GrxColors.cff7593b5
+                  color: GrxColors.primary.shade800
                       .withOpacity(enabled && !isLoading ? 1.0 : .5),
                 ),
               ),

@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 import '../themes/colors/grx_colors.dart';
 
 class GrxSpinnerLoading extends StatefulWidget {
-  const GrxSpinnerLoading({
+  GrxSpinnerLoading({
     super.key,
-    this.color = GrxColors.cff289fff,
     this.lineWidth = 5.0,
     this.size = 30.0,
     this.duration = const Duration(milliseconds: 500),
     this.controller,
-  });
+    final Color? color,
+  }) : color = color ?? GrxColors.primary.shade600;
 
   final Color color;
   final double size;
@@ -33,10 +33,11 @@ class GrxSpinnerLoadingState extends State<GrxSpinnerLoading>
   void initState() {
     super.initState();
 
-    _controller = (widget.controller ??
-        AnimationController(vsync: this, duration: widget.duration))
-      ..addListener(() => setState(() {}))
-      ..repeat();
+    _controller =
+        (widget.controller ??
+              AnimationController(vsync: this, duration: widget.duration))
+          ..addListener(() => setState(() {}))
+          ..repeat();
 
     _animation = Tween(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
@@ -66,15 +67,15 @@ class GrxSpinnerLoadingState extends State<GrxSpinnerLoading>
               color: Colors.transparent,
               border: Border.all(
                 width: widget.lineWidth,
-                color: GrxColors.cffd2dfe6,
+                color: GrxColors.neutrals.shade100,
                 style: BorderStyle.solid,
               ),
             ),
           ),
         ),
         Transform(
-          transform: Matrix4.identity()
-            ..rotateZ((_animation.value) * 6.0 * pi / 6.0),
+          transform:
+              Matrix4.identity()..rotateZ((_animation.value) * 6.0 * pi / 6.0),
           alignment: FractionalOffset.center,
           child: SizedBox.fromSize(
             size: Size.square(widget.size),
@@ -99,11 +100,12 @@ class Painter extends CustomPainter {
     this.progressPercent,
     this.startAngle,
     required this.trackColor,
-  }) : trackPaint = Paint()
-          ..color = trackColor
-          ..style = PaintingStyle.stroke
-          ..strokeWidth = paintWidth
-          ..strokeCap = StrokeCap.round;
+  }) : trackPaint =
+           Paint()
+             ..color = trackColor
+             ..style = PaintingStyle.stroke
+             ..strokeWidth = paintWidth
+             ..strokeCap = StrokeCap.round;
 
   final double paintWidth;
   final Paint trackPaint;

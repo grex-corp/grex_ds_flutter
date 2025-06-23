@@ -143,8 +143,8 @@ class _DashboardWebPageState extends State<DashboardWebPage>
         // Here we take the value from the DashboardWebPage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: 'Dashboard Page',
-        backgroundColor: GrxColors.cff365278,
-        foregroundColor: GrxColors.cffffffff,
+        backgroundColor: GrxColors.primary.shade800,
+        foregroundColor: GrxColors.neutrals,
       ),
       body: Column(
         children: [
@@ -184,7 +184,7 @@ class _DashboardWebPageState extends State<DashboardWebPage>
                         icon: AnimatedIcon(
                           icon: AnimatedIcons.close_menu,
                           progress: iconAnimationController,
-                          color: GrxColors.cffffffff,
+                          color: GrxColors.neutrals,
                           size: 30,
                         ),
                         onPressed: () {
@@ -292,7 +292,7 @@ class _DashboardWebPageState extends State<DashboardWebPage>
                         ),
                         icon: GrxIcons.whatsapp,
                         iconAlign: GrxAlign.right,
-                        foregroundColor: GrxColors.cff1eb35e,
+                        foregroundColor: GrxColors.success.shade300,
                         onPressed: () {
                           setState(() {
                             _leaders.add(
@@ -315,7 +315,7 @@ class _DashboardWebPageState extends State<DashboardWebPage>
                             TextSpan(
                               text: 'Desligamento',
                               style: GrxHeadlineSmallTextStyle(
-                                color: GrxColors.cffef6969,
+                                color: GrxColors.error,
                               ),
                             )
                           ],
@@ -323,7 +323,7 @@ class _DashboardWebPageState extends State<DashboardWebPage>
                         margin: const EdgeInsets.symmetric(
                           horizontal: 16,
                         ),
-                        backgroundColor: GrxColors.cff365278,
+                        backgroundColor: GrxColors.primary.shade800,
                         onPressed: (controller) async {
                           controller.start();
 
@@ -345,7 +345,7 @@ class _DashboardWebPageState extends State<DashboardWebPage>
                           horizontal: 16,
                           vertical: 8.0,
                         ),
-                        backgroundColor: GrxColors.cff75f3ab,
+                        backgroundColor: GrxColors.secondary.shade500,
                         onPressed: (controller) async {
                           controller.start();
 

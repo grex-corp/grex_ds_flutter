@@ -2,69 +2,70 @@ import 'package:flutter/material.dart';
 
 import '../../enums/grx_text_transform.enum.dart';
 import '../../themes/colors/grx_colors.dart';
-import '../../themes/typography/styles/grx_caption_text.style.dart';
+import '../../themes/typography/styles/grx_body_small_text.style.dart';
 import 'grx_text.widget.dart';
 
-/// A Design System's [Text] primarily used by normal captions.
+/// A Design System's [Text] primarily used by body texts
 ///
-/// Sets [GrxCaptionTextStyle] as [style] default value.
-class GrxCaptionText extends StatelessWidget {
+/// Sets [GrxBodySmallTextStyle] as [style] default value.
+class GrxBodySmallText extends StatelessWidget {
   /// Creates a Design System's [Text].
-  const GrxCaptionText(
+  const GrxBodySmallText(
     this.text, {
     super.key,
     this.textAlign,
     this.transform = GrxTextTransform.none,
-    this.color = GrxColors.cff2e2e2e,
+    this.color,
     this.fontWeight,
     this.decoration,
     this.overflow,
     this.isLoading = false,
-  })  : textSpan = null,
-        style = null;
+  }) : textSpan = null,
+       style = null;
 
-  const GrxCaptionText.rich(
+  const GrxBodySmallText.rich(
     this.textSpan, {
     super.key,
     this.textAlign,
     this.transform = GrxTextTransform.none,
-    this.color = GrxColors.cff2e2e2e,
+    this.color,
     this.fontWeight,
     this.decoration,
     this.overflow,
     this.isLoading = false,
-  })  : text = null,
-        style = null;
+  }) : text = null,
+       style = null;
 
-  GrxCaptionText.lerp(
+  GrxBodySmallText.lerp(
     this.text, {
     super.key,
-    required final GrxCaptionTextStyle style,
+    required final GrxBodySmallTextStyle style,
     required final double t,
     this.textAlign,
     this.transform = GrxTextTransform.none,
-    this.color = GrxColors.cff2e2e2e,
+    this.color,
     this.fontWeight,
     this.decoration,
     this.overflow,
     this.isLoading = false,
-  })  : textSpan = null,
-        style = TextStyle.lerp(
-          GrxCaptionTextStyle(
-            color: color,
-            decoration: decoration,
-            overflow: overflow,
-            fontWeight: fontWeight,
-          ),
-          style,
-          t,
-        )!;
+  }) : textSpan = null,
+       style =
+           TextStyle.lerp(
+             GrxBodySmallTextStyle(
+               color: color,
+               decoration: decoration,
+               overflow: overflow,
+               fontWeight: fontWeight,
+             ),
+             style,
+             t,
+           )!;
 
   final String? text;
   final InlineSpan? textSpan;
   final GrxTextTransform transform;
   final TextAlign? textAlign;
-  final Color color;
+  final Color? color;
   final FontWeight? fontWeight;
   final TextDecoration? decoration;
   final TextOverflow? overflow;
@@ -73,8 +74,11 @@ class GrxCaptionText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final style = this.style ??
-        GrxCaptionTextStyle(
+    final color = this.color ?? GrxColors.neutrals.shade1000;
+
+    final style =
+        this.style ??
+        GrxBodySmallTextStyle(
           color: color,
           decoration: decoration,
           overflow: overflow,
@@ -83,18 +87,18 @@ class GrxCaptionText extends StatelessWidget {
 
     return textSpan != null
         ? GrxText.rich(
-            textSpan,
-            transform: transform,
-            textAlign: textAlign,
-            style: style,
-            isLoading: isLoading,
-          )
+          textSpan,
+          transform: transform,
+          textAlign: textAlign,
+          style: style,
+          isLoading: isLoading,
+        )
         : GrxText(
-            text,
-            transform: transform,
-            textAlign: textAlign,
-            style: style,
-            isLoading: isLoading,
-          );
+          text,
+          transform: transform,
+          textAlign: textAlign,
+          style: style,
+          isLoading: isLoading,
+        );
   }
 }

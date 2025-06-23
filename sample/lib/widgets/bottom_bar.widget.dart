@@ -61,38 +61,28 @@ class _BottomBarViewState extends State<BottomBarView>
       margin: margin,
       padding: EdgeInsets.all(showMenuDialog ? 20.0 : 0),
       alignment: FractionalOffset.center,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: bgColor,
-      ),
+      decoration: BoxDecoration(shape: BoxShape.circle, color: bgColor),
       child: AnimatedSwitcher(
         duration: const Duration(milliseconds: 200),
-        child: showMenuDialog
-            ? SizedBox(
-                height: 65,
-                width: 65,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
-                  children: <Widget>[
-                    Image.asset(
-                      assetImage,
-                      height: 45,
-                    ),
-                    const SizedBox(
-                      height: 13,
-                    ),
-                    Text(
-                      label,
-                      // style: menuIconContextText,
-                    )
-                  ],
-                ),
-              )
-            : const SizedBox(
-                height: 0,
-                width: 0,
-              ),
+        child:
+            showMenuDialog
+                ? SizedBox(
+                  height: 65,
+                  width: 65,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.max,
+                    children: <Widget>[
+                      Image.asset(assetImage, height: 45),
+                      const SizedBox(height: 13),
+                      Text(
+                        label,
+                        // style: menuIconContextText,
+                      ),
+                    ],
+                  ),
+                )
+                : const SizedBox(height: 0, width: 0),
       ),
     );
   }
@@ -100,14 +90,14 @@ class _BottomBarViewState extends State<BottomBarView>
   @override
   Widget build(BuildContext context) {
     Widget buildItem(TabIconData data, int index) => Expanded(
-          child: TabIcon(
-            tabIconData: data,
-            removeAllSelect: () {
-              setRemoveAllSelection(data);
-              widget.onChangeIndex(index);
-            },
-          ),
-        );
+      child: TabIcon(
+        tabIconData: data,
+        removeAllSelect: () {
+          setRemoveAllSelection(data);
+          widget.onChangeIndex(index);
+        },
+      ),
+    );
 
     return Stack(
       alignment: AlignmentDirectional.bottomCenter,
@@ -118,14 +108,11 @@ class _BottomBarViewState extends State<BottomBarView>
           opacity: showMenuDialog ? 1 : 0,
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 300),
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment(0.0, -1),
                 end: Alignment(0.0, 0.5),
-                colors: <Color>[
-                  GrxColors.c00ffffff,
-                  GrxColors.cff83a6cf,
-                ],
+                colors: <Color>[Colors.transparent, GrxColors.primary.shade300],
               ),
             ),
             height:
@@ -139,10 +126,11 @@ class _BottomBarViewState extends State<BottomBarView>
               transform: Matrix4.translationValues(0.0, 0.0, 0.0),
               child: PhysicalShape(
                 clipBehavior: Clip.hardEdge,
-                color: GrxColors.cffffffff,
+                color: GrxColors.neutrals,
                 elevation: 20.0,
                 clipper: TabClipper(
-                  radius: Tween<double>(begin: 0.0, end: 1.0)
+                  radius:
+                      Tween<double>(begin: 0.0, end: 1.0)
                           .animate(
                             CurvedAnimation(
                               parent: animationController,
@@ -161,13 +149,16 @@ class _BottomBarViewState extends State<BottomBarView>
                         SizedBox(
                           height: 75.0,
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8.0,
+                            ),
                             child: Row(
                               children: <Widget>[
                                 buildItem(widget.tabIconsList[0], 0),
                                 buildItem(widget.tabIconsList[1], 1),
                                 SizedBox(
-                                  width: Tween<double>(begin: 0.0, end: 1.0)
+                                  width:
+                                      Tween<double>(begin: 0.0, end: 1.0)
                                           .animate(
                                             CurvedAnimation(
                                               parent: animationController,
@@ -259,7 +250,8 @@ class _BottomBarViewState extends State<BottomBarView>
         // Botão do menu
         Padding(
           padding: EdgeInsets.only(
-              bottom: MediaQuery.of(context).padding.bottom + 45),
+            bottom: MediaQuery.of(context).padding.bottom + 45,
+          ),
           child: ScaleTransition(
             alignment: Alignment.center,
             scale: Tween<double>(begin: 0.0, end: 1.0).animate(
@@ -273,7 +265,7 @@ class _BottomBarViewState extends State<BottomBarView>
               icon: AnimatedIcon(
                 icon: AnimatedIcons.close_menu,
                 progress: iconAnimationController,
-                color: GrxColors.cffffffff,
+                color: GrxColors.neutrals,
                 size: 30,
               ),
               onPressed: () {

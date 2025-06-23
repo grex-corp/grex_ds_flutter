@@ -8,7 +8,7 @@ class GrxBottomSheetService {
     required this.context,
     required this.builder,
     this.title,
-    this.backgroundColor = GrxColors.cffffffff,
+    this.backgroundColor = GrxColors.neutrals,
   });
 
   final BuildContext context;

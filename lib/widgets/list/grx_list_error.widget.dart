@@ -2,10 +2,9 @@ import 'package:flutter/widgets.dart';
 
 import '../../animations/grx_fade_transition.animation.dart';
 import '../../models/grx_button_options.model.dart';
-import '../../themes/colors/grx_colors.dart';
 import '../../themes/icons/grx_icons.dart';
 import '../buttons/grx_rounded_button.widget.dart';
-import '../typography/grx_caption_large_text.widget.dart';
+import '../typography/grx_label_large_text.widget.dart';
 import '../typography/grx_headline_text.widget.dart';
 
 class GrxListError extends StatelessWidget {
@@ -13,25 +12,18 @@ class GrxListError extends StatelessWidget {
     super.key,
     required this.title,
     required this.subTitle,
-    this.icon = const Icon(
-      GrxIcons.error_outline,
-      size: 86.0,
-      color: GrxColors.cff7593b5,
-    ),
+    this.icon = const Icon(GrxIcons.error_outline, size: 86.0),
     this.buttonOptions,
     this.animationController,
-  }) : animation = animationController != null
-            ? Tween<double>(begin: 0.0, end: 1.0).animate(
-                CurvedAnimation(
-                  parent: animationController,
-                  curve: const Interval(
-                    .3,
-                    1.0,
-                    curve: Curves.fastOutSlowIn,
-                  ),
-                ),
-              )
-            : null;
+  }) : animation =
+           animationController != null
+               ? Tween<double>(begin: 0.0, end: 1.0).animate(
+                 CurvedAnimation(
+                   parent: animationController,
+                   curve: const Interval(.3, 1.0, curve: Curves.fastOutSlowIn),
+                 ),
+               )
+               : null;
 
   final String title;
   final String subTitle;
@@ -43,18 +35,13 @@ class GrxListError extends StatelessWidget {
   Widget _buildErrorListWidget() {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          vertical: 8.0,
-          horizontal: 32.0,
-        ),
+        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 32.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             if (icon != null)
               Padding(
-                padding: const EdgeInsets.only(
-                  bottom: 24.0,
-                ),
+                padding: const EdgeInsets.only(bottom: 24.0),
                 child: icon,
               ),
             GrxHeadlineText(
@@ -62,10 +49,8 @@ class GrxListError extends StatelessWidget {
               overflow: TextOverflow.visible,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(
-              height: 8.0,
-            ),
-            GrxCaptionLargeText(
+            const SizedBox(height: 8.0),
+            GrxLabelLargeText(
               subTitle,
               overflow: TextOverflow.visible,
               textAlign: TextAlign.center,
@@ -91,15 +76,12 @@ class GrxListError extends StatelessWidget {
   Widget build(BuildContext context) {
     return animationController != null
         ? AnimatedBuilder(
-            animation: animationController!,
-            child: _buildErrorListWidget(),
-            builder: (context, child) {
-              return GrxFadeTransition(
-                animation: animation!,
-                child: child!,
-              );
-            },
-          )
+          animation: animationController!,
+          child: _buildErrorListWidget(),
+          builder: (context, child) {
+            return GrxFadeTransition(animation: animation!, child: child!);
+          },
+        )
         : _buildErrorListWidget();
   }
 }

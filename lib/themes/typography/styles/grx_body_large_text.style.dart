@@ -3,10 +3,10 @@ import 'dart:ui';
 import '../utils/grx_font_weights.dart';
 import 'grx_text.style.dart';
 
-/// A Design System's [TextStyle] primarily used by large captions.
-class GrxCaptionLargeTextStyle extends GrxTextStyle {
+/// A Design System's [TextStyle] primarily used by body texts.
+class GrxBodyLargeTextStyle extends GrxTextStyle {
   /// Creates a Design System's [TextStyle] with pre-defined font size and font weight
-  const GrxCaptionLargeTextStyle({
+  const GrxBodyLargeTextStyle({
     super.color,
     super.decoration,
     super.decorationColor,
@@ -14,8 +14,5 @@ class GrxCaptionLargeTextStyle extends GrxTextStyle {
     super.decorationThickness,
     super.overflow,
     final FontWeight? fontWeight,
-  }) : super(
-          fontSize: 14,
-          fontWeight: fontWeight ?? GrxFontWeights.regular,
-        );
+  }) : super(fontSize: 16, fontWeight: fontWeight ?? GrxFontWeights.regular);
 }

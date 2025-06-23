@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:super_sliver_list/super_sliver_list.dart';
 
 import '../../extensions/list.extension.dart';
 import '../../models/grx_country.model.dart';
@@ -14,10 +13,7 @@ import '../typography/grx_body_text.widget.dart';
 import '../typography/grx_headline_small_text.widget.dart';
 
 class GrxBottomSheetCountries extends StatefulWidget {
-  const GrxBottomSheetCountries({
-    super.key,
-    required this.selectedCountry,
-  });
+  const GrxBottomSheetCountries({super.key, required this.selectedCountry});
 
   final GrxCountry selectedCountry;
 
@@ -36,9 +32,11 @@ class _GrxBottomSheetCountriesState extends State<GrxBottomSheetCountries> {
     setState(() {
       showClearButton = searchString.isNotEmpty;
       _filteredCountries.assignAll(
-        GrxCountryUtils.countries.where((country) =>
-            country.name.toLowerCase().contains(searchString.toLowerCase()) ||
-            country.code.toLowerCase().contains(searchString.toLowerCase())),
+        GrxCountryUtils.countries.where(
+          (country) =>
+              country.name.toLowerCase().contains(searchString.toLowerCase()) ||
+              country.code.toLowerCase().contains(searchString.toLowerCase()),
+        ),
       );
     });
   }
@@ -50,7 +48,7 @@ class _GrxBottomSheetCountriesState extends State<GrxBottomSheetCountries> {
     final padding = mediaQuery.padding;
 
     return ColoredBox(
-      color: GrxColors.cfff2f7fd,
+      color: GrxColors.background,
       child: CustomScrollView(
         slivers: [
           SliverAppBar(
@@ -78,7 +76,7 @@ class _GrxBottomSheetCountriesState extends State<GrxBottomSheetCountries> {
               right: 8.0,
               bottom: viewInsets.bottom + padding.bottom + 8.0,
             ),
-            sliver: SuperSliverList(
+            sliver: SliverList(
               delegate: SliverChildBuilderDelegate(
                 childCount: _filteredCountries.length,
                 (context, index) {
@@ -93,9 +91,7 @@ class _GrxBottomSheetCountriesState extends State<GrxBottomSheetCountries> {
                     },
                     child: GrxCard(
                       child: Padding(
-                        padding: const EdgeInsets.all(
-                          16.0,
-                        ),
+                        padding: const EdgeInsets.all(16.0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -119,11 +115,12 @@ class _GrxBottomSheetCountriesState extends State<GrxBottomSheetCountries> {
                               ),
                             ),
                             GrxRoundedCheckbox(
-                              value: selectedCountry.code == country.code &&
+                              value:
+                                  selectedCountry.code == country.code &&
                                   selectedCountry.name == country.name,
                               radius: 8.0,
                               isTappable: false,
-                            )
+                            ),
                           ],
                         ),
                       ),

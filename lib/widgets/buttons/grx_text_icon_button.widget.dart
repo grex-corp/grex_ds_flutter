@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 
 import '../../themes/colors/grx_colors.dart';
-import '../typography/grx_caption_small_text.widget.dart';
+import '../typography/grx_label_small_text.widget.dart';
 
 class GrxTextIconButton extends StatelessWidget {
-  const GrxTextIconButton({
+  GrxTextIconButton({
     super.key,
     required this.text,
     required this.icon,
-    this.textColor = GrxColors.cff8795a9,
     this.iconSize = 30,
-    this.iconColor = GrxColors.cff70efa7,
     this.onPressed,
     this.margin,
-  });
+    final Color? textColor,
+    final Color? iconColor,
+  }) : textColor = textColor ?? GrxColors.neutrals.shade500,
+       iconColor = iconColor ?? GrxColors.secondary.shade500;
 
   final String text;
   final Color textColor;
@@ -36,18 +37,9 @@ class GrxTextIconButton extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(
-                  icon,
-                  size: iconSize,
-                  color: iconColor,
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                GrxCaptionSmallText(
-                  text,
-                  color: textColor,
-                ),
+                Icon(icon, size: iconSize, color: iconColor),
+                const SizedBox(height: 5),
+                GrxLabelSmallText(text, color: textColor),
               ],
             ),
           ),

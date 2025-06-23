@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import '../../extensions/list.extension.dart';
 import '../../services/grx_bottom_sheet.service.dart';
 import '../../themes/colors/grx_colors.dart';
-import '../../themes/fields/grx_field_styles.theme.dart';
+import '../../themes/typography/styles/grx_label_large_text.style.dart';
 import '../bottom_sheet/grx_bottom_sheet_form_field_body.widget.dart';
 import '../grx_chip.widget.dart';
 import '../grx_stateful.widget.dart';
-import '../typography/grx_caption_text.widget.dart';
+import '../typography/grx_label_text.widget.dart';
 import 'controllers/grx_form_field.controller.dart';
 import 'grx_form_field.widget.dart';
 import 'grx_input_decoration.widget.dart';
@@ -35,17 +35,21 @@ class GrxMultiSelectFormField<T> extends GrxStatefulWidget {
     this.confirmButtonLabel,
     this.cancelButtonLabel,
     this.isLoading = false,
-  }) : super(
-          key: key ?? ValueKey<int>(labelText.hashCode),
-        );
+  }) : super(key: key ?? ValueKey<int>(labelText.hashCode));
 
   final GrxFormFieldController<T>? controller;
   final String labelText;
   final String? hintText;
   final String? selectBottomSheetTitle;
   final Iterable<T> data;
-  final Widget Function(BuildContext context, int index, T value,
-      void Function()? onChanged, bool isSelected) itemBuilder;
+  final Widget Function(
+    BuildContext context,
+    int index,
+    T value,
+    void Function()? onChanged,
+    bool isSelected,
+  )
+  itemBuilder;
   final String Function(T data) displayText;
   final int Function(T data) valueKey;
   final Iterable<T>? value;
@@ -126,9 +130,7 @@ class _GrxMultiSelectStateFormField<T>
   @override
   Widget build(BuildContext context) {
     if (widget.isLoading) {
-      return GrxFormFieldShimmer(
-        labelText: widget.labelText,
-      );
+      return GrxFormFieldShimmer(labelText: widget.labelText);
     }
 
     return GrxFormField<Iterable<T>>(
@@ -150,10 +152,10 @@ class _GrxMultiSelectStateFormField<T>
 
               selectedOptions.add(
                 GrxChip(
-                  backgroundColor: GrxColors.cff1eb35e,
-                  label: GrxCaptionText(
+                  backgroundColor: GrxColors.success.shade300,
+                  label: GrxLabelText(
                     widget.displayText(existingItem),
-                    color: GrxColors.cffffffff,
+                    color: GrxColors.neutrals,
                   ),
                 ),
               );
@@ -215,7 +217,7 @@ class _GrxMultiSelectStateFormField<T>
           child: Focus(
             focusNode: inputFocusNode,
             child: InputDecorator(
-              baseStyle: GrxFieldStyles.inputTextStyle,
+              baseStyle: GrxLabelLargeTextStyle(),
               decoration: GrxInputDecoration(
                 errorText: field.errorText,
                 labelText: widget.labelText,
@@ -229,18 +231,17 @@ class _GrxMultiSelectStateFormField<T>
               ),
               isEmpty: isEmpty(),
               isFocused: inputFocusNode.hasFocus,
-              child: (values?.isNotEmpty ?? false)
-                  ? Padding(
-                      padding: const EdgeInsets.only(top: 6.0),
-                      child: Wrap(
-                        spacing: 4.0,
-                        runSpacing: 2.0,
-                        children: buildSelectedOptions(field),
-                      ),
-                    )
-                  : const SizedBox(
-                      height: 14,
-                    ),
+              child:
+                  (values?.isNotEmpty ?? false)
+                      ? Padding(
+                        padding: const EdgeInsets.only(top: 6.0),
+                        child: Wrap(
+                          spacing: 4.0,
+                          runSpacing: 2.0,
+                          children: buildSelectedOptions(field),
+                        ),
+                      )
+                      : const SizedBox(height: 14),
             ),
           ),
         );

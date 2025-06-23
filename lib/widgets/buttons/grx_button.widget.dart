@@ -120,7 +120,7 @@ class _GrxButtonState extends State<GrxButton> {
       height: widget.height,
       child: _getButton(
         style: ElevatedButton.styleFrom(
-          foregroundColor: GrxColors.cff7593b5,
+          foregroundColor: GrxColors.primary.shade800,
           elevation: isTextButton ? null : widget.elevation,
           padding: widget.padding,
           backgroundColor: widget.backgroundColor,

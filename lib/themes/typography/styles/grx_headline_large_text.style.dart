@@ -15,7 +15,7 @@ class GrxHeadlineLargeTextStyle extends GrxTextStyle {
     super.overflow,
     final FontWeight? fontWeight,
   }) : super(
-          fontSize: 21,
+          fontSize: 28,
           fontWeight: fontWeight ?? GrxFontWeights.semiBold,
         );
 }

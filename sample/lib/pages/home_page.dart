@@ -146,7 +146,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: GrxColors.cfff2f7fd,
+      color: GrxColors.background,
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Stack(

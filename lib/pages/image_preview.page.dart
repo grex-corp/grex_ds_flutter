@@ -22,25 +22,26 @@ class ImagePreview extends StatelessWidget {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.light,
       child: Scaffold(
-        backgroundColor: GrxColors.cff1c1c1c,
+        backgroundColor: GrxColors.neutrals.shade900,
         body: SafeArea(
           child: Stack(
             children: [
               PhotoView(
                 imageProvider: image,
-                backgroundDecoration: const BoxDecoration(
-                  color: GrxColors.cff1c1c1c,
+                backgroundDecoration: BoxDecoration(
+                  color: GrxColors.neutrals.shade900,
                 ),
-                heroAttributes: heroTag != null
-                    ? PhotoViewHeroAttributes(
-                        tag: heroTag!,
-                        transitionOnUserGestures: true,
-                      )
-                    : null,
+                heroAttributes:
+                    heroTag != null
+                        ? PhotoViewHeroAttributes(
+                          tag: heroTag!,
+                          transitionOnUserGestures: true,
+                        )
+                        : null,
               ),
               GrxHeader(
                 title: title,
-                foregroundColor: GrxColors.cffffffff,
+                foregroundColor: GrxColors.neutrals,
                 showBackButton: false,
                 showCloseButton: true,
               ),

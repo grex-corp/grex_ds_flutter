@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 import '../../themes/colors/grx_colors.dart';
-import '../../themes/typography/styles/grx_overline_text.style.dart';
-import 'typography/grx_overline_text.widget.dart';
+import '../themes/typography/styles/grx_label_small_text.style.dart';
+import 'typography/grx_label_small_text.widget.dart';
 
 class GrxDashedDivider extends StatelessWidget {
-  const GrxDashedDivider({
+  GrxDashedDivider({
     super.key,
     this.title,
     this.padding = EdgeInsets.zero,
     this.stroke = 1.0,
     this.dashSize = 3.0,
-    this.color = GrxColors.cffc8e2ff,
-  });
+    final Color? color,
+  }) : color = color ?? GrxColors.primary.shade600;
 
   final String? title;
   final EdgeInsets padding;
@@ -22,13 +22,10 @@ class GrxDashedDivider extends StatelessWidget {
   final Color color;
 
   double _getTextWidth(BoxConstraints constraints) {
-    const textStyle = GrxOverlineTextStyle();
+    const textStyle = GrxLabelSmallTextStyle();
 
     final renderParagraph = RenderParagraph(
-      TextSpan(
-        text: title,
-        style: textStyle,
-      ),
+      TextSpan(text: title, style: textStyle),
       textDirection: TextDirection.ltr,
       maxLines: 1,
     );
@@ -60,25 +57,20 @@ class GrxDashedDivider extends StatelessWidget {
             children: [
               title?.isNotEmpty ?? false
                   ? Padding(
-                      padding: const EdgeInsets.only(right: 10),
-                      child: GrxOverlineText(
-                        title!,
-                        color: GrxColors.cff7892b7,
-                      ),
-                    )
-                  : const SizedBox.shrink(),
-              ...List.generate(
-                dashCount,
-                (_) {
-                  return SizedBox(
-                    width: dashWidth,
-                    height: dashHeight,
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(color: color),
+                    padding: const EdgeInsets.only(right: 10),
+                    child: GrxLabelSmallText(
+                      title!,
+                      color: GrxColors.primary.shade900,
                     ),
-                  );
-                },
-              )
+                  )
+                  : const SizedBox.shrink(),
+              ...List.generate(dashCount, (_) {
+                return SizedBox(
+                  width: dashWidth,
+                  height: dashHeight,
+                  child: DecoratedBox(decoration: BoxDecoration(color: color)),
+                );
+              }),
             ],
           );
         },

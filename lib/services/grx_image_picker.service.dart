@@ -35,10 +35,10 @@ abstract class GrxImagePickerService {
         uiSettings: [
           AndroidUiSettings(
             toolbarTitle: 'Cortar Foto',
-            toolbarColor: GrxColors.cff6bbaf0,
-            statusBarColor: GrxColors.cff6bbaf0,
+            toolbarColor: GrxColors.primary.shade400,
+            statusBarColor: GrxColors.primary.shade400,
             toolbarWidgetColor: Colors.white,
-            activeControlsWidgetColor: GrxColors.cff75f3ab,
+            activeControlsWidgetColor: GrxColors.secondary.shade400,
           ),
           IOSUiSettings(
             title: 'Cortar Foto',
@@ -53,32 +53,33 @@ abstract class GrxImagePickerService {
 
     final dialog = GrxBottomSheetService(
       context: context,
-      builder: (controller) => Container(
-        padding: const EdgeInsets.all(10),
-        child: SafeArea(
-          child: Wrap(
-            alignment: WrapAlignment.center,
-            children: <Widget>[
-              ListTile(
-                leading: const Icon(GrxIcons.photo_camera),
-                title: const GrxBodyText('Camera'),
-                onTap: () {
-                  Navigator.pop(context, false);
-                  completer.complete(openCamera());
-                },
+      builder:
+          (controller) => Container(
+            padding: const EdgeInsets.all(10),
+            child: SafeArea(
+              child: Wrap(
+                alignment: WrapAlignment.center,
+                children: <Widget>[
+                  ListTile(
+                    leading: const Icon(GrxIcons.photo_camera),
+                    title: const GrxBodyText('Camera'),
+                    onTap: () {
+                      Navigator.pop(context, false);
+                      completer.complete(openCamera());
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(GrxIcons.photo_library),
+                    title: const GrxBodyText('Galeria'),
+                    onTap: () {
+                      Navigator.pop(context, false);
+                      completer.complete(openGallery());
+                    },
+                  ),
+                ],
               ),
-              ListTile(
-                leading: const Icon(GrxIcons.photo_library),
-                title: const GrxBodyText('Galeria'),
-                onTap: () {
-                  Navigator.pop(context, false);
-                  completer.complete(openGallery());
-                },
-              ),
-            ],
+            ),
           ),
-        ),
-      ),
     );
 
     dialog.show<bool?>().then((value) {

@@ -24,12 +24,12 @@ class _TabIconsState extends State<TabIcon> with TickerProviderStateMixin {
       vsync: this,
       duration: const Duration(milliseconds: 400),
     )..addStatusListener((AnimationStatus status) {
-        if (status == AnimationStatus.completed) {
-          if (!mounted) return;
-          widget.removeAllSelect();
-          widget.tabIconData.animationController!.reverse();
-        }
-      });
+      if (status == AnimationStatus.completed) {
+        if (!mounted) return;
+        widget.removeAllSelect();
+        widget.tabIconData.animationController!.reverse();
+      }
+    });
     super.initState();
   }
 
@@ -63,12 +63,18 @@ class _TabIconsState extends State<TabIcon> with TickerProviderStateMixin {
                     scale: Tween<double>(begin: 0.8, end: 0.9).animate(
                       CurvedAnimation(
                         parent: widget.tabIconData.animationController!,
-                        curve: const Interval(0.1, 1.0, curve: Curves.fastOutSlowIn),
+                        curve: const Interval(
+                          0.1,
+                          1.0,
+                          curve: Curves.fastOutSlowIn,
+                        ),
                       ),
                     ),
-                    child: Image.asset(widget.tabIconData.isSelected
-                        ? widget.tabIconData.selectedImagePath
-                        : widget.tabIconData.imagePath),
+                    child: Image.asset(
+                      widget.tabIconData.isSelected
+                          ? widget.tabIconData.selectedImagePath
+                          : widget.tabIconData.imagePath,
+                    ),
                   ),
                 ),
                 Column(
@@ -84,7 +90,7 @@ class _TabIconsState extends State<TabIcon> with TickerProviderStateMixin {
                             : widget.tabIconData.name!,
                         // style: menuIconText,
                       ),
-                    )
+                    ),
                   ],
                 ),
                 Positioned(
@@ -96,14 +102,18 @@ class _TabIconsState extends State<TabIcon> with TickerProviderStateMixin {
                     scale: Tween<double>(begin: 0.0, end: 1.0).animate(
                       CurvedAnimation(
                         parent: widget.tabIconData.animationController!,
-                        curve: const Interval(0.2, 1.0, curve: Curves.fastOutSlowIn),
+                        curve: const Interval(
+                          0.2,
+                          1.0,
+                          curve: Curves.fastOutSlowIn,
+                        ),
                       ),
                     ),
                     child: Container(
                       width: 8,
                       height: 8,
-                      decoration: const BoxDecoration(
-                        color: GrxColors.cff1eb35e,
+                      decoration: BoxDecoration(
+                        color: GrxColors.success.shade300,
                         shape: BoxShape.circle,
                       ),
                     ),
@@ -118,14 +128,18 @@ class _TabIconsState extends State<TabIcon> with TickerProviderStateMixin {
                     scale: Tween<double>(begin: 0.0, end: 1.0).animate(
                       CurvedAnimation(
                         parent: widget.tabIconData.animationController!,
-                        curve: const Interval(0.5, 0.8, curve: Curves.fastOutSlowIn),
+                        curve: const Interval(
+                          0.5,
+                          0.8,
+                          curve: Curves.fastOutSlowIn,
+                        ),
                       ),
                     ),
                     child: Container(
                       width: 4,
                       height: 4,
-                      decoration: const BoxDecoration(
-                        color: GrxColors.cff1eb35e,
+                      decoration: BoxDecoration(
+                        color: GrxColors.success.shade300,
                         shape: BoxShape.circle,
                       ),
                     ),
@@ -140,14 +154,18 @@ class _TabIconsState extends State<TabIcon> with TickerProviderStateMixin {
                     scale: Tween<double>(begin: 0.0, end: 1.0).animate(
                       CurvedAnimation(
                         parent: widget.tabIconData.animationController!,
-                        curve: const Interval(0.5, 0.6, curve: Curves.fastOutSlowIn),
+                        curve: const Interval(
+                          0.5,
+                          0.6,
+                          curve: Curves.fastOutSlowIn,
+                        ),
                       ),
                     ),
                     child: Container(
                       width: 6,
                       height: 6,
-                      decoration: const BoxDecoration(
-                        color: GrxColors.cff1eb35e,
+                      decoration: BoxDecoration(
+                        color: GrxColors.success.shade300,
                         shape: BoxShape.circle,
                       ),
                     ),

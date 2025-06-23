@@ -1,65 +1,62 @@
 import 'package:flutter/material.dart';
 
-/// All [Color] constants that are used by this Design System.
-abstract class GrxColors {
-  static const Map<int, Color> primaryColors = {
-    50: Color(0x1a6bbaf0),
-    100: Color(0x336bbaf0),
-    200: Color(0x4d6bbaf0),
-    300: Color(0x666bbaf0),
-    400: Color(0x806bbaf0),
-    500: Color(0x996bbaf0),
-    600: Color(0xb36bbaf0),
-    700: Color(0xcc6bbaf0),
-    800: Color(0xe66bbaf0),
-    900: Color(0xff6bbaf0),
-  };
+import 'grx_color.dart';
 
-  static const MaterialColor primarySwatch =
-      MaterialColor(0xff6bbaf0, primaryColors);
+sealed class GrxColors {
+  static const primary = GrxColor(0xff28b3f9, {
+    50: Color(0xffddf1fc),
+    100: Color(0xffb7e6fd),
+    200: Color(0xff93d9fc),
+    300: Color(0xff70ccfb),
+    400: Color(0xff4cc0fa),
+    500: Color(0xff07a5f5),
+    600: Color(0xff068cd0),
+    700: Color(0xff0574ab),
+    800: Color(0xff045b87),
+    900: Color(0xff034262),
+  });
 
-  static const Color c7057de91 = Color(0x7057de91);
-  static const Color c7075f3aa = Color(0x7075f3aa);
-  static const Color cff1eb35e = Color(0xff1eb35e);
-  static const Color cff90e6bc = Color(0xff90e6bc);
-  static const Color cff75f3ab = Color(0xff75f3ab);
-  static const Color cff70efa7 = Color(0xff70efa7);
-  static const Color cff69efa3 = Color(0xff69efa3);
-  static const Color cff93ffcf = Color(0xff93ffcf);
+  static const secondary = GrxColor(0xff00ed97, {
+    50: Color(0xffd8fff1),
+    100: Color(0xffb1ffe3),
+    200: Color(0xff8affd5),
+    300: Color(0xff63ffc6),
+    400: Color(0xff3cffb8),
+    500: Color(0xff15ffaa),
+    600: Color(0xff00ca81),
+    700: Color(0xff00a76a),
+    800: Color(0xff008354),
+    900: Color(0xff00603d),
+  });
 
-  static const Color cff1c1c1c = Color(0xff1c1c1c);
-  static const Color cff2e2e2e = Color(0xff2e2e2e);
-  static const Color cff202c44 = Color(0xff202c44);
-  static const Color cff365278 = Color(0xff365278);
-  static const Color cff289fff = Color(0xff289fff);
-  static const Color cff429af1 = Color(0xff429af1);
-  static const Color cff50a2f2 = Color(0xff50a2f2);
-  static const Color cff5c95e4 = Color(0xff5c95e4);
-  static const Color cff6bbaf0 = Color(0xff6bbaf0);
-  static const Color cffa3d1ff = Color(0xffa3d1ff);
-  static const Color cffc8e2ff = Color(0xffc8e2ff);
-  static const Color cff83a6cf = Color(0xff83a6cf);
-  static const Color cff7593b5 = Color(0xff7593b5);
-  static const Color cff7892b7 = Color(0xff7892b7);
-  static const Color cff8795a9 = Color(0xff8795a9);
-  static const Color cff9bb2ce = Color(0xff9bb2ce);
-  static const Color cffb2c1d0 = Color(0xffb2c1d0);
-  static const Color cffd2dfe6 = Color(0xffd2dfe6);
-  static const Color cffd6dfea = Color(0xffd6dfea);
-  static const Color cffdce2e8 = Color(0xffdce2e8);
-  static const Color cffdeeaf3 = Color(0xffdeeaf3);
-  static const Color cffe0efff = Color(0xffe0efff);
-  static const Color cffe8f2ff = Color(0xffe8f2ff);
-  static const Color cfff2f7fd = Color(0xfff2f7fd);
-  static const Color cfff9fbfd = Color(0xfff9fbfd);
-  static const Color cffeeeeee = Color(0xffeeeeee);
-  static const Color cfffafafa = Color(0xfffafafa);
-  static const Color cffffffff = Color(0xffffffff);
-  static const Color c00ffffff = Color(0x00ffffff);
+  static const neutrals = GrxColor(0xfffafafa, {
+    50: Color(0xffe7e7e7),
+    100: Color(0xffd5d5d5),
+    200: Color(0xffc2c2c2),
+    300: Color(0xffb0b0b0),
+    400: Color(0xff9d9d9d),
+    500: Color(0xff8b8b8b),
+    600: Color(0xff787878),
+    700: Color(0xff666666),
+    800: Color(0xff535353),
+    900: Color(0xff414141),
+    1000: Color(0xff2e2e2e),
+  });
 
-  static const Color cfffc5858 = Color(0xfffc5858);
-  static const Color cffef6969 = Color(0xffef6969);
-  static const Color cffffa5a5 = Color(0xffffa5a5);
+  static const success = GrxColor(0xffb4f9d9, {
+    200: Color(0xff1eed8c),
+    300: Color(0xff0ead62),
+  });
 
-  static const Color fffff6a8 = Color(0xfffff6a8);
+  static const error = GrxColor(0xffe4626f, {
+    200: Color(0xffc03744),
+    300: Color(0xff8c1823),
+  });
+
+  static const warning = GrxColor(0xfff4c790, {
+    200: Color(0xffeda145),
+    300: Color(0xffcc7914),
+  });
+
+  static const background = Color(0xffdfeaf6);
 }
