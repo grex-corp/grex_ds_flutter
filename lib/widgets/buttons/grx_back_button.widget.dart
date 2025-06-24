@@ -8,11 +8,11 @@ class GrxBackButton extends GrxIconButton {
   GrxBackButton({
     super.key,
     required super.onPressed,
-    super.iconSize,
+    super.size,
     super.margin,
     final Color? color,
   }) : super(
          icon: GrxIcons.arrow_back_ios,
-         color: color ?? GrxColors.primary.shade800,
+         foregroundColor: color ?? GrxColors.primary.shade800,
        );
 }

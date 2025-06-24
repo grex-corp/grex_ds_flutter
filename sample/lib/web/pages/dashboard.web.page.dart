@@ -4,10 +4,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:grex_ds/grex_ds.dart';
 
+import '../../buttons_sample.widget.dart';
 import '../../extensions/string_extension.dart';
 import '../../models/person.model.dart';
 import '../../models/role.model.dart';
-import '../../typo_sample.dart';
+import '../../typo_sample.widget.dart';
 import '../widgets/fields_sample.web.widget.dart';
 
 final _leaders = [
@@ -57,10 +58,7 @@ final _roles = [
 ];
 
 class DashboardWebPage extends StatefulWidget {
-  const DashboardWebPage({
-    super.key,
-    required this.animationController,
-  });
+  const DashboardWebPage({super.key, required this.animationController});
 
   final AnimationController animationController;
 
@@ -86,9 +84,7 @@ class _DashboardWebPageState extends State<DashboardWebPage>
       phone: '54992099544',
       birthDate: DateTime.now(),
       leadership: _leaders.first,
-      roles: [
-        _roles.first,
-      ],
+      roles: [_roles.first],
     );
 
     iconAnimationController = AnimationController(
@@ -113,9 +109,7 @@ class _DashboardWebPageState extends State<DashboardWebPage>
         setState(() {
           isLoading = true;
         });
-        await Future.delayed(
-          const Duration(milliseconds: 4000),
-        );
+        await Future.delayed(const Duration(milliseconds: 4000));
 
         form!.save();
         return true;
@@ -170,6 +164,7 @@ class _DashboardWebPageState extends State<DashboardWebPage>
               ),
               children: <Widget>[
                 const TypoSample(),
+                const ButtonsSample(),
                 Form(
                   key: formKey,
                   child: Column(
@@ -179,13 +174,16 @@ class _DashboardWebPageState extends State<DashboardWebPage>
                         leaders: _leaders,
                         roles: _roles,
                       ),
-                      GrxFloatingActionButton(
+                      GrxCircleButton(
                         isLoading: false,
-                        icon: AnimatedIcon(
-                          icon: AnimatedIcons.close_menu,
-                          progress: iconAnimationController,
-                          color: GrxColors.neutrals,
-                          size: 30,
+                        size: 48.0,
+                        child: Center(
+                          child: AnimatedIcon(
+                            icon: AnimatedIcons.close_menu,
+                            progress: iconAnimationController,
+                            color: GrxColors.neutrals,
+                            size: 30,
+                          ),
                         ),
                         onPressed: () {
                           if (iconAnimationController.isCompleted) {
@@ -209,43 +207,52 @@ class _DashboardWebPageState extends State<DashboardWebPage>
                         children: [
                           GrxIconButton(
                             icon: GrxIcons.whatsapp,
-                            margin:
-                                const EdgeInsets.only(bottom: 16, right: 10),
-                            iconSize: 30,
+                            margin: const EdgeInsets.only(
+                              bottom: 16,
+                              right: 10,
+                            ),
+                            size: 30,
                             onPressed: () {},
                           ),
                           GrxIconButton(
                             icon: GrxIcons.phone,
                             margin: const EdgeInsets.only(bottom: 16),
-                            iconSize: 30,
+                            size: 30,
                             onPressed: () {},
                           ),
                         ],
                       ),
-                      GrxTextIconButton(
-                        icon: GrxIcons.whatsapp,
-                        text: 'WhatsApp',
-                        iconSize: 50,
+                      GrxCircleButton(
+                        size: 96.0,
                         margin: const EdgeInsets.only(bottom: 16),
                         onPressed: () {},
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          spacing: GrxSpacing.xxs,
+                          children: [
+                            Icon(GrxIcons.whatsapp, size: 50.0),
+                            GrxLabelSmallText('WhatsApp'),
+                          ],
+                        ),
                       ),
                       GrxUserAvatar(
                         radius: 40,
                         uri: Uri.parse(
-                            'https://firebasestorage.googleapis.com/v0/b/appgrexdb.appspot.com/o/Images%2FPeople%2FWK242KO734Q9nPKThs9B?alt=media&token=e8906f71-58d5-42cb-9184-6f77a6c15694'),
+                          'https://firebasestorage.googleapis.com/v0/b/appgrexdb.appspot.com/o/Images%2FPeople%2FWK242KO734Q9nPKThs9B?alt=media&token=e8906f71-58d5-42cb-9184-6f77a6c15694',
+                        ),
                         heroTag: 4,
                         // openPreview: false,
                         // editable: true,
                         // isLoading: true,
                       ),
-                      const SizedBox(
-                        height: 16,
-                      ),
+                      const SizedBox(height: 16),
                       GrxUserAvatar(
                         radius: 70,
                         imageFile: selectedImage,
                         uri: Uri.parse(
-                            'https://firebasestorage.googleapis.com/v0/b/appgrexdb.appspot.com/o/Images%2FPeople%2FWK242KO734Q9nPKThs9B?alt=media&token=e8906f71-58d5-42cb-9184-6f77a6c15694'),
+                          'https://firebasestorage.googleapis.com/v0/b/appgrexdb.appspot.com/o/Images%2FPeople%2FWK242KO734Q9nPKThs9B?alt=media&token=e8906f71-58d5-42cb-9184-6f77a6c15694',
+                        ),
                         heroTag: 5,
                         // openPreview: false,
                         editable: true,
@@ -255,15 +262,10 @@ class _DashboardWebPageState extends State<DashboardWebPage>
                           setState(() {});
                         },
                       ),
-                      const SizedBox(
-                        height: 16,
-                      ),
+                      const SizedBox(height: 16),
                       GrxSecondaryButton(
                         text: 'Cadastrar',
-                        mainAxisSize: MainAxisSize.min,
-                        margin: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                        ),
+                        margin: const EdgeInsets.symmetric(horizontal: 16),
                         icon: GrxIcons.person_add_right,
                         onPressed: () {
                           setState(() {
@@ -295,121 +297,98 @@ class _DashboardWebPageState extends State<DashboardWebPage>
                         foregroundColor: GrxColors.success.shade300,
                         onPressed: () {
                           setState(() {
-                            _leaders.add(
-                              Person(id: 8, name: '8th Person'),
-                            );
+                            _leaders.add(Person(id: 8, name: '8th Person'));
                           });
                         },
                       ),
-                      GrxAnimatedLoadingButton(
-                        textSpan: const TextSpan(
-                          children: [
-                            TextSpan(
-                              text: 'Confirmar',
-                            ),
-                            WidgetSpan(
-                              child: SizedBox(
-                                width: 5,
-                              ),
-                            ),
-                            TextSpan(
-                              text: 'Desligamento',
-                              style: GrxHeadlineSmallTextStyle(
-                                color: GrxColors.error,
-                              ),
-                            )
-                          ],
-                        ),
-                        margin: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                        ),
-                        backgroundColor: GrxColors.primary.shade800,
-                        onPressed: (controller) async {
-                          controller.start();
+                      // GrxAnimatedLoadingButton(
+                      //   textSpan: const TextSpan(
+                      //     children: [
+                      //       TextSpan(text: 'Confirmar'),
+                      //       WidgetSpan(child: SizedBox(width: 5)),
+                      //       TextSpan(
+                      //         text: 'Desligamento',
+                      //         style: GrxHeadlineSmallTextStyle(
+                      //           color: GrxColors.error,
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ),
+                      //   margin: const EdgeInsets.symmetric(horizontal: 16),
+                      //   backgroundColor: GrxColors.primary.shade800,
+                      //   onPressed: (controller) async {
+                      //     controller.start();
 
-                          await Future.delayed(const Duration(seconds: 4));
+                      //     await Future.delayed(const Duration(seconds: 4));
 
-                          controller.error();
+                      //     controller.error();
 
-                          Timer(
-                            const Duration(seconds: 2),
-                            () {
-                              controller.reset();
-                            },
-                          );
-                        },
-                      ),
-                      GrxAnimatedLoadingButton(
-                        text: 'login.signin.button.text'.translate,
-                        margin: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 8.0,
-                        ),
-                        backgroundColor: GrxColors.secondary.shade500,
-                        onPressed: (controller) async {
-                          controller.start();
+                      //     Timer(const Duration(seconds: 2), () {
+                      //       controller.reset();
+                      //     });
+                      //   },
+                      // ),
+                      // GrxAnimatedLoadingButton(
+                      //   text: 'login.signin.button.text'.translate,
+                      //   margin: const EdgeInsets.symmetric(
+                      //     horizontal: 16,
+                      //     vertical: 8.0,
+                      //   ),
+                      //   backgroundColor: GrxColors.secondary.shade500,
+                      //   onPressed: (controller) async {
+                      //     controller.start();
 
-                          await Future.delayed(const Duration(seconds: 4));
+                      //     await Future.delayed(const Duration(seconds: 4));
 
-                          controller.success();
+                      //     controller.success();
 
-                          Timer(
-                            const Duration(seconds: 2),
-                            () {
-                              controller.reset();
-                            },
-                          );
-                        },
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
+                      //     Timer(const Duration(seconds: 2), () {
+                      //       controller.reset();
+                      //     });
+                      //   },
+                      // ),
+                      const SizedBox(height: 20),
                       Wrap(
                         children: [
                           GrxSecondaryButton(
-                            mainAxisSize: MainAxisSize.min,
                             text: 'Show Error',
-                            onPressed: () => GrxToastService.showError(
-                              title: 'Error message inside error toast',
-                              context: context,
-                            ),
+                            onPressed:
+                                () => GrxToastService.showError(
+                                  title: 'Error message inside error toast',
+                                  context: context,
+                                ),
                           ),
                           GrxSecondaryButton(
-                            mainAxisSize: MainAxisSize.min,
                             text: 'Show Warning',
-                            onPressed: () => GrxToastService.showWarning(
-                              title: 'Warning message inside warning toast',
-                              context: context,
-                            ),
+                            onPressed:
+                                () => GrxToastService.showWarning(
+                                  title: 'Warning message inside warning toast',
+                                  context: context,
+                                ),
                           ),
                           GrxSecondaryButton(
-                            mainAxisSize: MainAxisSize.min,
                             text: 'Show Success',
-                            onPressed: () => GrxToastService.showSuccess(
-                              title: 'Success message inside success toast',
-                              context: context,
-                            ),
+                            onPressed:
+                                () => GrxToastService.showSuccess(
+                                  title: 'Success message inside success toast',
+                                  context: context,
+                                ),
                           ),
                           GrxSecondaryButton(
-                            mainAxisSize: MainAxisSize.min,
                             text: 'Show Permanent Warning',
-                            onPressed: () => GrxToastService.showWarning(
-                              permanent: true,
-                              title: 'Showing permanent warning toast',
-                              subtitle:
-                                  'Adding a subtitle to show how it works',
-                              context: context,
-                            ),
+                            onPressed:
+                                () => GrxToastService.showWarning(
+                                  permanent: true,
+                                  title: 'Showing permanent warning toast',
+                                  subtitle:
+                                      'Adding a subtitle to show how it works',
+                                  context: context,
+                                ),
                           ),
                         ],
                       ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      GrxHeader(
-                        title: 'Preview Header',
-                        showCloseButton: true,
-                      ),
+                      const SizedBox(height: 20),
+                      GrxHeader(title: 'Preview Header', showCloseButton: true),
                       GrxHeader(
                         title: 'Preview Header With Back Button',
                         showBackButton: true,
@@ -420,22 +399,16 @@ class _DashboardWebPageState extends State<DashboardWebPage>
                         title: 'Preview Header With Actions a bit long',
                         height: 70.0,
                         actions: [
-                          GrxFilterButton(
-                            text: 'Filtros',
-                            onPressed: () {},
-                          ),
-                          GrxAddButton(
-                            onPressed: () {},
+                          GrxFilterButton(text: 'Filtros', onPressed: () {}),
+                          GrxCircleButton(
                             margin: const EdgeInsets.only(right: 10.0),
+                            onPressed: () {},
+                            child: Icon(GrxIcons.add, size: 24.0),
                           ),
                         ],
                       ),
-                      const SizedBox(
-                        height: 20.0,
-                      ),
-                      const GrxSvg(
-                        'assets/images/sheep.svg',
-                      ),
+                      const SizedBox(height: 20.0),
+                      const GrxSvg('assets/images/sheep.svg'),
                     ],
                   ),
                 ),

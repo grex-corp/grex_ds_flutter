@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../enums/grx_align.enum.dart';
+import '../../enums/grx_shape.enum.dart';
 import '../../enums/grx_text_transform.enum.dart';
+import '../../themes/spacing/grx_spacing.dart';
 import 'grx_button.widget.dart';
 
 class GrxRoundedButton extends StatelessWidget {
@@ -13,17 +15,19 @@ class GrxRoundedButton extends StatelessWidget {
     this.onPressed,
     this.margin,
     this.height = 48.0,
-    this.mainAxisSize = MainAxisSize.max,
+    this.mainAxisSize = MainAxisSize.min,
     required this.foregroundColor,
     this.backgroundColor,
     this.icon,
     this.iconAlign = GrxAlign.left,
     this.iconSize = 20.0,
     this.iconColor,
-    this.iconPadding = 5.0,
-    this.elevation = 5.0,
-    final double? borderRadius,
-  }) : borderRadius = borderRadius ?? height / 2.0;
+    this.iconPadding = GrxSpacing.xs,
+    this.isLoading = false,
+    this.shape = GrxShape.rounded,
+    this.borderColor,
+    this.textStyle,
+  });
 
   final String? text;
   final InlineSpan? textSpan;
@@ -39,8 +43,10 @@ class GrxRoundedButton extends StatelessWidget {
   final double iconSize;
   final Color? iconColor;
   final double iconPadding;
-  final double elevation;
-  final double borderRadius;
+  final bool isLoading;
+  final GrxShape shape;
+  final Color? borderColor;
+  final TextStyle? textStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -59,12 +65,10 @@ class GrxRoundedButton extends StatelessWidget {
       iconSize: iconSize,
       iconColor: iconColor,
       iconPadding: iconPadding,
-      elevation: elevation,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(
-          borderRadius,
-        ),
-      ),
+      isLoading: isLoading,
+      shape: shape,
+      borderColor: borderColor,
+      textStyle: textStyle,
     );
   }
 }

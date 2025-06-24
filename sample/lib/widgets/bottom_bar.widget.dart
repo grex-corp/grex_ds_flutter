@@ -260,13 +260,16 @@ class _BottomBarViewState extends State<BottomBarView>
                 curve: Curves.fastOutSlowIn,
               ),
             ),
-            child: GrxFloatingActionButton(
+            child: GrxCircleButton(
               isLoading: false,
-              icon: AnimatedIcon(
-                icon: AnimatedIcons.close_menu,
-                progress: iconAnimationController,
-                color: GrxColors.neutrals,
-                size: 30,
+              size: 56.0,
+              child: Center(
+                child: AnimatedIcon(
+                  icon: AnimatedIcons.close_menu,
+                  progress: iconAnimationController,
+                  color: GrxColors.neutrals,
+                  size: 30,
+                ),
               ),
               onPressed: () {
                 if (iconAnimationController.isCompleted) {

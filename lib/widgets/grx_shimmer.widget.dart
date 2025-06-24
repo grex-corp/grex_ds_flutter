@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../themes/colors/grx_colors.dart';
+import '../themes/radius/grx_radius.dart';
 
 class GrxShimmer extends StatelessWidget {
   final double height;
@@ -15,7 +16,7 @@ class GrxShimmer extends StatelessWidget {
     super.key,
     required this.height,
     required this.width,
-    this.borderRadius = 20,
+    this.borderRadius = GrxRadius.round,
     this.decoration,
     final Color? baseColor,
     final Color? highlightColor,

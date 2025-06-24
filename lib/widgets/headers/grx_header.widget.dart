@@ -71,7 +71,7 @@ class GrxHeader extends StatelessWidget implements PreferredSizeWidget {
         child: GrxBackButton(
           onPressed: Navigator.of(context).pop,
           color: foregroundColor,
-          iconSize: 20.0 - 2.0 * animationProgress,
+          size: 20.0 - 2.0 * animationProgress,
         ),
       ),
       leadingWidth: showBackButton ? 48.0 : 16.0,

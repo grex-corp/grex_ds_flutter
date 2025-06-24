@@ -110,7 +110,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   }
                   setState(() {
                     tabBody = CellulesListPage(
-                        animationController: animationController);
+                      animationController: animationController,
+                    );
                   });
                 });
               } else if (index == 2) {
@@ -120,7 +121,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   }
                   setState(() {
                     tabBody = PeopleListPage(
-                        animationController: animationController);
+                      animationController: animationController,
+                    );
                   });
                 });
               } else if (index == 3) {
@@ -129,8 +131,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     return;
                   }
                   setState(() {
-                    tabBody =
-                        SettingsPage(animationController: animationController);
+                    tabBody = SettingsPage(
+                      animationController: animationController,
+                    );
                   });
                 });
               }
@@ -149,12 +152,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       color: GrxColors.background,
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        body: Stack(
-          children: <Widget>[
-            tabBody,
-            bottomBar(),
-          ],
-        ),
+        body: Stack(children: <Widget>[tabBody, bottomBar()]),
       ),
     );
   }

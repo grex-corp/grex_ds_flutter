@@ -8,8 +8,11 @@ class GrxCloseButton extends GrxIconButton {
   GrxCloseButton({
     super.key,
     required super.onPressed,
-    super.iconSize,
+    super.size,
     super.margin,
     final Color? color,
-  }) : super(icon: GrxIcons.close, color: color ?? GrxColors.primary.shade800);
+  }) : super(
+         icon: GrxIcons.close,
+         foregroundColor: color ?? GrxColors.primary.shade800,
+       );
 }

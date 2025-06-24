@@ -9,6 +9,7 @@ import '../routes/fade_page.route.dart';
 import '../services/grx_image_picker.service.dart';
 import '../themes/colors/grx_colors.dart';
 import '../themes/icons/grx_icons.dart';
+import '../themes/spacing/grx_spacing.dart';
 import '../utils/grx_regex.util.dart';
 import '../utils/grx_utils.util.dart';
 import 'buttons/grx_circle_button.widget.dart';
@@ -175,7 +176,8 @@ class _GrxUserAvatarState extends State<GrxUserAvatar> {
             widget.avatarPickerButton ??
                 GrxCircleButton(
                   size: widget.radius / 1.7,
-                  border: const BorderSide(width: 4, color: GrxColors.neutrals),
+                  borderColor: GrxColors.neutrals,
+                  borderSize: GrxSpacing.xxs,
                   isLoading: isLoading,
                   child: Icon(GrxIcons.camera_alt, size: widget.radius / 4),
                   onPressed: () async {

@@ -37,6 +37,11 @@ abstract class GrxThemeData {
     floatingLabelBehavior: FloatingLabelBehavior.always,
   );
 
+  static final iconTheme = IconThemeData(
+    color: GrxColors.primary.shade900,
+    size: 20.0,
+  );
+
   static final lightTheme = ThemeData(
     useMaterial3: true,
     // primarySwatch: GrxColors.primary,
@@ -48,7 +53,7 @@ abstract class GrxThemeData {
     //   color: GrxColors.primary.shade700,
     // ),
     inputDecorationTheme: inputDecorationTheme,
-    iconTheme: IconThemeData(color: GrxColors.primary.shade900),
+    iconTheme: iconTheme,
     colorScheme: ColorScheme.fromSeed(
       seedColor: GrxColors.primary,
       error: GrxColors.error,
@@ -70,7 +75,7 @@ abstract class GrxThemeData {
     //   color: GrxColors.primary.shade700,
     // ),
     inputDecorationTheme: inputDecorationTheme,
-    iconTheme: IconThemeData(color: GrxColors.primary.shade900),
+    iconTheme: iconTheme,
     colorScheme: ColorScheme.fromSeed(
       seedColor: GrxColors.primary,
       error: GrxColors.error,

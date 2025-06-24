@@ -2,7 +2,7 @@ import '../../themes/colors/grx_colors.dart';
 import 'grx_rounded_button.widget.dart';
 
 class GrxSecondaryButton extends GrxRoundedButton {
-  GrxSecondaryButton({
+  const GrxSecondaryButton({
     super.key,
     required super.text,
     super.transform,
@@ -15,9 +15,10 @@ class GrxSecondaryButton extends GrxRoundedButton {
     super.iconSize,
     super.iconColor,
     super.iconPadding,
-    super.borderRadius,
-  }) : super(
-         backgroundColor: GrxColors.neutrals,
-         foregroundColor: GrxColors.primary.shade800,
-       );
+    super.shape,
+    super.isLoading,
+    super.borderColor = GrxColors.primary,
+    super.foregroundColor = GrxColors.primary,
+    super.textStyle,
+  });
 }

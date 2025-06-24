@@ -1,73 +1,85 @@
+import 'dart:ui';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../themes/colors/grx_colors.dart';
+import '../../themes/grx_theme_data.theme.dart';
+import '../../themes/typography/styles/grx_title_small_text.style.dart';
 
 class GrxCircleButton extends StatelessWidget {
   const GrxCircleButton({
     super.key,
     required this.child,
-    this.size = 44,
+    this.size = 44.0,
     this.backgroundColor = GrxColors.primary,
     this.foregroundColor = GrxColors.neutrals,
-    this.border = BorderSide.none,
-    this.elevation = 0,
+    this.borderColor,
+    this.borderSize = 1.0,
     this.onPressed,
-    this.showShadows = false,
     this.isLoading = false,
+    this.enabled = true,
     this.margin,
   });
 
   final double size;
   final Color backgroundColor;
   final Color foregroundColor;
-  final BorderSide border;
-  final double elevation;
+  final Color? borderColor;
+  final double borderSize;
   final Widget child;
   final void Function()? onPressed;
-  final bool showShadows;
   final bool isLoading;
+  final bool enabled;
   final EdgeInsetsGeometry? margin;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: margin,
-      child: SizedBox.fromSize(
-        size: Size(size, size),
-        child:
-            isLoading
-                ? Container(
-                  padding: const EdgeInsets.all(8.0),
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: border.color,
-                      width: border.width,
+    final enabled = this.enabled && !isLoading;
+    final backgroundColor =
+        enabled
+            ? this.backgroundColor
+            : this.backgroundColor.withValues(alpha: .6);
+    final borderColor =
+        enabled ? this.borderColor : this.borderColor?.withValues(alpha: .6);
+
+    return Padding(
+      padding: margin ?? EdgeInsets.zero,
+      child: CupertinoButton(
+        padding: EdgeInsets.zero,
+        minimumSize: Size.zero,
+        onPressed: enabled && !isLoading ? onPressed : null,
+        child: Container(
+          width: size,
+          height: size,
+          clipBehavior: Clip.antiAlias,
+          decoration: BoxDecoration(
+            color: backgroundColor,
+            border:
+                borderColor != null
+                    ? Border.all(color: borderColor, width: borderSize)
+                    : null,
+            borderRadius: BorderRadius.circular(size / 2),
+          ),
+          child:
+              isLoading
+                  ? Padding(
+                    padding: EdgeInsets.all(clampDouble(8.0, 0.0, size / 2)),
+                    child: const CircularProgressIndicator(
+                      strokeWidth: 1.5,
+                      color: GrxColors.neutrals,
                     ),
-                    color: backgroundColor,
-                    shape: BoxShape.circle,
-                  ),
-                  child: const CircularProgressIndicator(
-                    strokeWidth: 1.5,
-                    color: GrxColors.neutrals,
-                  ),
-                )
-                : ElevatedButton(
-                  onPressed: onPressed,
-                  style: ElevatedButton.styleFrom(
-                    shadowColor: showShadows ? null : Colors.transparent,
-                    backgroundColor: backgroundColor,
-                    foregroundColor: foregroundColor,
-                    elevation: elevation,
-                    padding: EdgeInsets.zero,
-                    disabledBackgroundColor: GrxColors.neutrals.shade500,
-                    disabledForegroundColor: GrxColors.neutrals,
-                    shape: RoundedRectangleBorder(
-                      side: border,
-                      borderRadius: BorderRadius.circular(size / 2),
+                  )
+                  : IconTheme(
+                    data: GrxThemeData.iconTheme.copyWith(
+                      color: foregroundColor,
+                    ),
+                    child: DefaultTextStyle(
+                      style: GrxTitleSmallTextStyle(color: foregroundColor),
+                      child: child,
                     ),
                   ),
-                  child: child,
-                ),
+        ),
       ),
     );
   }

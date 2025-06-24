@@ -44,6 +44,7 @@ class _FieldsSampleAppState extends State<FieldsSampleApp> {
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Column(
         mainAxisSize: MainAxisSize.min,
+        spacing: 16.0,
         children: [
           GrxTextFormField(
             value: widget.person.name,

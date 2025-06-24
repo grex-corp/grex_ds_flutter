@@ -87,24 +87,17 @@ export 'utils/grx_regex.util.dart' show GrxRegexUtils;
 export 'utils/grx_utils.util.dart' show GrxUtils;
 
 ///Widget/Buttons
-export 'widgets/buttons/grx_add_button.widget.dart' show GrxAddButton;
-export 'widgets/buttons/grx_animated_loading_button.widget.dart'
-    show GrxAnimatedLoadingButton;
 export 'widgets/buttons/grx_back_button.widget.dart' show GrxBackButton;
 export 'widgets/buttons/grx_bottom_button.widget.dart' show GrxBottomButton;
 export 'widgets/buttons/grx_circle_button.widget.dart' show GrxCircleButton;
 export 'widgets/buttons/grx_close_button.widget.dart' show GrxCloseButton;
 export 'widgets/buttons/grx_filter_button.widget.dart' show GrxFilterButton;
-export 'widgets/buttons/grx_floating_action_button.widget.dart'
-    show GrxFloatingActionButton;
 export 'widgets/buttons/grx_icon_button.widget.dart' show GrxIconButton;
 export 'widgets/buttons/grx_primary_button.widget.dart' show GrxPrimaryButton;
 export 'widgets/buttons/grx_rounded_button.widget.dart' show GrxRoundedButton;
 export 'widgets/buttons/grx_secondary_button.widget.dart'
     show GrxSecondaryButton;
 export 'widgets/buttons/grx_tertiary_button.widget.dart' show GrxTertiaryButton;
-export 'widgets/buttons/grx_text_icon_button.widget.dart'
-    show GrxTextIconButton;
 
 /// Widgets/Checkbox
 export 'widgets/checkbox/grx_checkbox.widget.dart' show GrxCheckbox;
@@ -187,9 +180,11 @@ export 'widgets/list/grx_list_error.widget.dart' show GrxListError;
 export 'widgets/media/grx_svg.widget.dart' show GrxSvg;
 
 /// Widgets/Typography
-export 'widgets/typography/grx_body_large_text.widget.dart' show GrxBodyLargeText;
+export 'widgets/typography/grx_body_large_text.widget.dart'
+    show GrxBodyLargeText;
 export 'widgets/typography/grx_body_text.widget.dart' show GrxBodyText;
-export 'widgets/typography/grx_body_small_text.widget.dart' show GrxBodySmallText;
+export 'widgets/typography/grx_body_small_text.widget.dart'
+    show GrxBodySmallText;
 export 'widgets/typography/grx_label_large_text.widget.dart'
     show GrxLabelLargeText;
 export 'widgets/typography/grx_label_small_text.widget.dart'

@@ -135,7 +135,7 @@ abstract class GrxToastService {
                     : null,
             trailing: GrxIconButton(
               icon: GrxIcons.close,
-              color: GrxColors.primary.shade900,
+              foregroundColor: GrxColors.primary.shade900,
               onPressed: () => toast?.remove(),
             ),
             color: backgroundColor,

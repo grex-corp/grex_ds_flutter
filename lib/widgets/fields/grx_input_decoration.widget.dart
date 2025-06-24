@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../themes/colors/grx_colors.dart';
-import '../../themes/spacing/grx_spacing.dart';
 import '../../themes/typography/styles/grx_title_text.style.dart';
 import '../buttons/grx_clear_input_button.widget.dart';
 
@@ -30,14 +29,7 @@ class GrxInputDecoration extends InputDecoration {
              if (showClearButton)
                Padding(
                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                 child: Container(
-                   padding: const EdgeInsets.all(GrxSpacing.xxs),
-                   decoration: BoxDecoration(
-                     borderRadius: BorderRadius.all(Radius.circular(20)),
-                     color: GrxColors.primary.shade200,
-                   ),
-                   child: GrxClearInputButton(onClear: onClear!),
-                 ),
+                 child: GrxClearInputButton(onClear: onClear!),
                ),
            ],
          ),

@@ -1,37 +1,22 @@
 import 'package:flutter/material.dart';
 
 import '../../themes/colors/grx_colors.dart';
+import '../../themes/spacing/grx_spacing.dart';
+import 'grx_circle_button.widget.dart';
 
-class GrxIconButton extends StatelessWidget {
-  const GrxIconButton({
+class GrxIconButton extends GrxCircleButton {
+  GrxIconButton({
     super.key,
-    required this.icon,
-    required this.onPressed,
-    this.iconSize = 24.0,
-    this.color = GrxColors.primary,
-    this.margin,
-  });
-
-  final IconData icon;
-  final void Function() onPressed;
-  final double? iconSize;
-  final Color? color;
-  final EdgeInsetsGeometry? margin;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: margin,
-      child: IconButton(
-        icon: Icon(
-          icon,
-          size: iconSize,
-        ),
-        onPressed: onPressed,
-        iconSize: iconSize,
-        color: color,
-        splashRadius: 22.0,
-      ),
-    );
-  }
+    required final IconData icon,
+    super.onPressed,
+    super.backgroundColor = Colors.transparent,
+    super.size = 24.0,
+    super.isLoading,
+    super.enabled,
+    super.margin,
+    final Color? foregroundColor,
+  }) : super(
+         child: Icon(icon, size: size - GrxSpacing.xxs),
+         foregroundColor: foregroundColor ?? GrxColors.primary.shade900,
+       );
 }
