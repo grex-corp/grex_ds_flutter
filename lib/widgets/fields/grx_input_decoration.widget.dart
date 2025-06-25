@@ -27,10 +27,7 @@ class GrxInputDecoration extends InputDecoration {
            children: [
              if (suffix != null) suffix,
              if (showClearButton)
-               Padding(
-                 padding: const EdgeInsets.symmetric(horizontal: 10),
-                 child: GrxClearInputButton(onClear: onClear!),
-               ),
+               GrxClearInputButton(onClear: onClear!),
            ],
          ),
        );

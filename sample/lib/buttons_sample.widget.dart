@@ -65,8 +65,8 @@ class _ButtonsSampleState extends State<ButtonsSample> {
           GrxIconButton(icon: GrxIcons.check, onPressed: () {}),
           GrxIconButton(
             icon: GrxIcons.check,
-            // isLoading: true,
-            onPressed: () {},
+            isLoading: isLoading,
+            onPressed: _onPressed,
           ),
           GrxTertiaryButton(
             text: 'Tertiary Button Full Width',
