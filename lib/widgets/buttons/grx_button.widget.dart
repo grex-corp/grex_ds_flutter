@@ -149,8 +149,7 @@ class _GrxButtonState extends State<GrxButton> {
           clipBehavior: Clip.antiAlias,
           decoration: BoxDecoration(
             color: backgroundColor,
-            border:
-                borderColor != null ? Border.all(color: borderColor!) : null,
+            border: borderColor != null ? Border.all(color: borderColor) : null,
             borderRadius: BorderRadius.circular(_getBorderRadius()),
           ),
           child: Row(
