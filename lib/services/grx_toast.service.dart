@@ -5,9 +5,10 @@ import 'package:flutter/widgets.dart';
 
 import '../themes/colors/grx_colors.dart';
 import '../themes/icons/grx_icons.dart';
+import '../themes/spacing/grx_spacing.dart';
 import '../widgets/buttons/grx_icon_button.widget.dart';
 import '../widgets/typography/grx_label_large_text.widget.dart';
-import '../widgets/typography/grx_headline_small_text.widget.dart';
+import '../widgets/typography/grx_title_text.widget.dart';
 
 abstract class GrxToastService {
   static BuildContext? _context;
@@ -16,7 +17,7 @@ abstract class GrxToastService {
 
   static void showError({
     required String title,
-    String? subtitle,
+    String? message,
     Duration? toastDuration,
     BuildContext? context,
     bool permanent = false,
@@ -24,7 +25,7 @@ abstract class GrxToastService {
     title: title,
     icon: _getIcon(GrxIcons.cancel),
     backgroundColor: GrxColors.error,
-    subtitle: subtitle,
+    message: message,
     toastDuration: toastDuration,
     context: context,
     permanent: permanent,
@@ -32,7 +33,7 @@ abstract class GrxToastService {
 
   static void showWarning({
     required String title,
-    String? subtitle,
+    String? message,
     Duration? toastDuration,
     BuildContext? context,
     bool permanent = false,
@@ -40,7 +41,7 @@ abstract class GrxToastService {
     title: title,
     icon: _getIcon(GrxIcons.warning_amber),
     backgroundColor: GrxColors.warning,
-    subtitle: subtitle,
+    message: message,
     toastDuration: toastDuration,
     context: context,
     permanent: permanent,
@@ -48,7 +49,7 @@ abstract class GrxToastService {
 
   static void showSuccess({
     required String title,
-    String? subtitle,
+    String? message,
     Duration? toastDuration,
     BuildContext? context,
     bool permanent = false,
@@ -56,7 +57,7 @@ abstract class GrxToastService {
     title: title,
     icon: _getIcon(GrxIcons.check_circle_outline),
     backgroundColor: GrxColors.success,
-    subtitle: subtitle,
+    message: message,
     toastDuration: toastDuration,
     context: context,
     permanent: permanent,
@@ -66,14 +67,14 @@ abstract class GrxToastService {
     required String title,
     required Icon icon,
     required Color backgroundColor,
-    String? subtitle,
+    String? message,
     Duration? toastDuration,
     BuildContext? context,
     bool permanent = false,
   }) {
     _validateContext(context);
 
-    int milliseconds = (title.length * 100 + (subtitle?.length ?? 0) * 100);
+    int milliseconds = (title.length * 100 + (message?.length ?? 0) * 100);
 
     if (milliseconds <= 3000) {
       milliseconds = 3000;
@@ -82,34 +83,6 @@ abstract class GrxToastService {
     final duration = toastDuration ?? Duration(milliseconds: milliseconds);
 
     final buildContext = (context ?? _context)!;
-
-    // Flushbar(
-    //   titleText: (title?.isNotEmpty ?? false)
-    //       ? GrxHeadlineSmallText(
-    //           title!,
-    //           color: GrxColors.cff202c44,
-    //         )
-    //       : null,
-    //   messageText: GrxLabelLargeText(
-    //     message,
-    //     color: GrxColors.cff202c44,
-    //   ),
-    //   flushbarPosition: FlushbarPosition.BOTTOM,
-    //   flushbarStyle: FlushbarStyle.GROUNDED,
-    //   backgroundColor: backgroundColor,
-    //   mainButton: GrxIconButton(
-    //     icon: GrxIcons.close,
-    //     color: GrxColors.cff202c44,
-    //     onPressed: Navigator.of(buildContext).pop,
-    //   ),
-    //   shouldIconPulse: false,
-    //   padding: const EdgeInsets.symmetric(
-    //     vertical: 18.0,
-    //     horizontal: 16.0,
-    //   ),
-    //   icon: icon,
-    //   duration: duration,
-    // ).show(buildContext);
 
     DelightToastBar? toast;
 
@@ -120,20 +93,21 @@ abstract class GrxToastService {
       builder:
           (context) => ToastCard(
             leading: icon,
-            title: GrxLabelLargeText(
+            title: GrxTitleText(
               title,
               color: GrxColors.primary.shade900,
               overflow: TextOverflow.visible,
             ),
             subtitle:
-                (subtitle?.isNotEmpty ?? false)
-                    ? GrxHeadlineSmallText(
-                      subtitle!,
+                (message?.isNotEmpty ?? false)
+                    ? GrxLabelLargeText(
+                      message!,
                       color: GrxColors.primary.shade900,
                       overflow: TextOverflow.visible,
                     )
                     : null,
             trailing: GrxIconButton(
+              margin: EdgeInsets.symmetric(horizontal: GrxSpacing.xxs),
               icon: GrxIcons.close,
               foregroundColor: GrxColors.primary.shade900,
               onPressed: () => toast?.remove(),

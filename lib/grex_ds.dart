@@ -141,6 +141,10 @@ export 'widgets/grx_chip.widget.dart' show GrxChip;
 /// Widget/DashedDivider
 export 'widgets/grx_dashed_divider.widget.dart' show GrxDashedDivider;
 
+/// Widget/DismissibleKeyboard
+export 'widgets/grx_dismissible_keyboard.widget.dart'
+    show GrxDismissibleKeyboard;
+
 ///Widget/DismissibleScaffold
 export 'widgets/grx_dismissible_scaffold.widget.dart'
     show GrxDismissibleScaffold;

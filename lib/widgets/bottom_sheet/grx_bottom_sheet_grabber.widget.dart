@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../themes/colors/grx_colors.dart';
-import '../typography/grx_headline_text.widget.dart';
+import '../../themes/radius/grx_radius.dart';
+import '../../themes/spacing/grx_spacing.dart';
+import '../typography/grx_title_large_text.widget.dart';
 
 class GrxBottomSheetGrabber extends StatefulWidget {
   const GrxBottomSheetGrabber({super.key, this.title});
@@ -26,26 +28,30 @@ class _GrxBottomSheetGrabberState extends State<GrxBottomSheetGrabber> {
               topRight: Radius.circular(20),
             ),
           ),
-          padding: const EdgeInsets.only(top: 15),
+          padding: const EdgeInsets.symmetric(vertical: GrxSpacing.m),
           child: Column(
             mainAxisSize: MainAxisSize.min,
+            spacing: GrxSpacing.m,
             children: <Widget>[
               Container(
                 decoration: BoxDecoration(
                   color: GrxColors.neutrals.shade200,
-                  borderRadius: BorderRadius.all(Radius.circular(2)),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(GrxRadius.xxs),
+                  ),
                 ),
                 height: 4,
-                width: 30,
+                width: 32.0,
               ),
-              Container(
-                padding: const EdgeInsets.all(15),
-                child: GrxHeadlineText(
-                  widget.title ?? 'Selecione uma Opção',
-                  color: GrxColors.neutrals.shade1000,
-                  textAlign: TextAlign.center,
+              if (widget.title != null)
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: GrxSpacing.m),
+                  child: GrxTitleLargeText(
+                    widget.title!,
+                    color: GrxColors.neutrals.shade1000,
+                    textAlign: TextAlign.center,
+                  ),
                 ),
-              ),
             ],
           ),
         ),

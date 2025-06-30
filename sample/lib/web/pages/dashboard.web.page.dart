@@ -281,7 +281,7 @@ class _DashboardWebPageState extends State<DashboardWebPage>
 
                           GrxToastService.showSuccess(
                             title: 'Nova pessoa criada',
-                            subtitle: 'Cadastro realizado com sucesso',
+                            message: 'Cadastro realizado com sucesso',
                             context: context,
                           );
                         },
@@ -380,7 +380,7 @@ class _DashboardWebPageState extends State<DashboardWebPage>
                                 () => GrxToastService.showWarning(
                                   permanent: true,
                                   title: 'Showing permanent warning toast',
-                                  subtitle:
+                                  message:
                                       'Adding a subtitle to show how it works',
                                   context: context,
                                 ),

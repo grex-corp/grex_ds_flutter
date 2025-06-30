@@ -7,14 +7,14 @@ class GrxCard extends Card {
     super.child,
     super.clipBehavior,
     super.color,
-    super.elevation,
+    super.elevation = 0.0,
     super.margin,
     super.semanticContainer,
     super.shadowColor,
     super.surfaceTintColor = Colors.transparent,
   }) : super(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8.0),
-          ),
-        );
+         shape: RoundedRectangleBorder(
+           borderRadius: BorderRadius.circular(8.0),
+         ),
+       );
 }

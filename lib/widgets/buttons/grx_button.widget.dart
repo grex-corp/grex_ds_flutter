@@ -64,17 +64,6 @@ class GrxButton extends StatefulWidget {
 class _GrxButtonState extends State<GrxButton> {
   Size? childSize;
 
-  Widget _createWidgetIcon() {
-    return Visibility(
-      visible: widget.icon != null,
-      child: Icon(
-        widget.icon,
-        size: widget.iconSize,
-        color: widget.iconColor ?? widget.foregroundColor,
-      ),
-    );
-  }
-
   Widget _getButton({required final Widget child}) {
     final onPressed =
         widget.enabled && !widget.isLoading ? widget.onPressed : null;
@@ -122,7 +111,12 @@ class _GrxButtonState extends State<GrxButton> {
         GrxTitleSmallTextStyle(color: foregroundColor);
 
     final children = <Widget>[
-      _createWidgetIcon(),
+      if (widget.icon != null)
+        Icon(
+          widget.icon,
+          size: widget.iconSize,
+          color: widget.iconColor ?? widget.foregroundColor,
+        ),
       Flexible(
         child:
             widget.textSpan != null

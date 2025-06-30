@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
-class GrxDismissibleScaffold extends GestureDetector {
+import 'grx_dismissible_keyboard.widget.dart';
+
+class GrxDismissibleScaffold extends GrxDismissibleKeyboard {
   GrxDismissibleScaffold({
     super.key,
     required final Widget body,
@@ -11,15 +13,14 @@ class GrxDismissibleScaffold extends GestureDetector {
     final Widget? bottomNavigationBar,
     final Widget? floatingActionButton,
   }) : super(
-          onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-          child: Scaffold(
-            backgroundColor: backgroundColor,
-            appBar: appBar,
-            extendBody: extendBody,
-            extendBodyBehindAppBar: extendBodyBehindAppBar,
-            body: body,
-            bottomNavigationBar: bottomNavigationBar,
-            floatingActionButton: floatingActionButton,
-          ),
-        );
+         child: Scaffold(
+           backgroundColor: backgroundColor,
+           appBar: appBar,
+           extendBody: extendBody,
+           extendBodyBehindAppBar: extendBodyBehindAppBar,
+           body: body,
+           bottomNavigationBar: bottomNavigationBar,
+           floatingActionButton: floatingActionButton,
+         ),
+       );
 }

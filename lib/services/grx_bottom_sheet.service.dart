@@ -19,7 +19,7 @@ class GrxBottomSheetService {
   bool isOpened = false;
 
   Widget _buildBottomSheet({
-    ScrollController? controller,
+    final ScrollController? controller,
     final bool hideGrabber = false,
   }) {
     return Container(
@@ -29,9 +29,7 @@ class GrxBottomSheetService {
         children: [
           Visibility(
             visible: !hideGrabber,
-            child: GrxBottomSheetGrabber(
-              title: title,
-            ),
+            child: GrxBottomSheetGrabber(title: title),
           ),
           _buildChild(controller),
         ],
@@ -49,10 +47,8 @@ class GrxBottomSheetService {
     );
   }
 
-  Widget _buildChild(ScrollController? controller) {
-    return Flexible(
-      child: builder(controller),
-    );
+  Widget _buildChild(final ScrollController? controller) {
+    return Flexible(child: builder(controller));
   }
 
   Future<T?> showDraggable<T>({
@@ -80,9 +76,7 @@ class GrxBottomSheetService {
     });
   }
 
-  Future<T?> showUndisposable<T>({
-    final bool isScrollControlled = true,
-  }) {
+  Future<T?> showUndisposable<T>({final bool isScrollControlled = true}) {
     isOpened = true;
 
     return showModalBottomSheet<T>(
@@ -91,21 +85,18 @@ class GrxBottomSheetService {
       isScrollControlled: isScrollControlled,
       enableDrag: false,
       isDismissible: false,
-      builder: (_) => PopScope(
-        canPop: false,
-        child: _buildBottomSheet(
-          hideGrabber: true,
-        ),
-      ),
+      builder:
+          (_) => PopScope(
+            canPop: false,
+            child: _buildBottomSheet(hideGrabber: true),
+          ),
     ).then((value) {
       isOpened = false;
       return value;
     });
   }
 
-  Future<T?> show<T>({
-    final bool isScrollControlled = true,
-  }) {
+  Future<T?> show<T>({final bool isScrollControlled = true}) {
     isOpened = true;
 
     return showModalBottomSheet<T>(

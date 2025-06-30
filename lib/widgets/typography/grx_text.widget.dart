@@ -84,8 +84,8 @@ class GrxText extends StatelessWidget {
       final width = renderParagraph.getMinIntrinsicWidth(style.fontSize!);
 
       return GrxShimmer(
-        height: clampDouble(height, height, size.height),
-        width: clampDouble(width, width, size.width),
+        height: clampDouble(height, 0, size.height),
+        width: clampDouble(width, 0, size.width),
       );
     }
 
