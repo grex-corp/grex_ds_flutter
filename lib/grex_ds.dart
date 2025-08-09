@@ -13,7 +13,6 @@ export 'controllers/grx_animated_loading_button.controller.dart'
 export 'enums/grx_align.enum.dart' show GrxAlign;
 export 'enums/grx_country_id.enum.dart' show GrxCountryId;
 export 'enums/grx_text_transform.enum.dart' show GrxTextTransform;
-export 'extensions/grx_country_id.extension.dart' show GrxCountryIdExtension;
 
 /// Extensions
 export 'extensions/uint8_list.extension.dart' show Uint8ListExtension;

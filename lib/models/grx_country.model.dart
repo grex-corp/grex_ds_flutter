@@ -25,16 +25,17 @@ class GrxCountry {
   final List<GrxFederativeUnit> states;
 
   GrxCountry.fromJson(Map<String, dynamic> json)
-      : id = GrxCountryId.unknown.getValue(json['id']),
-        code = json['code'],
-        name = json['name'],
-        flag = json['flag'],
-        language = json['language'],
-        phoneMasks = json['phoneMasks'] ?? [],
-        zipcodeMasks = json['zipcodeMasks'] ?? [],
-        states = List.from(json['states'] ?? [])
-            .map<GrxFederativeUnit>((x) => GrxFederativeUnit.fromJson(x))
-            .toList();
+    : id = GrxCountryId.fromName(json['id']),
+      code = json['code'],
+      name = json['name'],
+      flag = json['flag'],
+      language = json['language'],
+      phoneMasks = json['phoneMasks'] ?? [],
+      zipcodeMasks = json['zipcodeMasks'] ?? [],
+      states =
+          List.from(json['states'] ?? [])
+              .map<GrxFederativeUnit>((x) => GrxFederativeUnit.fromJson(x))
+              .toList();
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{

@@ -1,7 +1,5 @@
 // ignore_for_file: constant_identifier_names
 
-export '../extensions/grx_country_id.extension.dart';
-
 enum GrxCountryId {
   AE,
   AF,
@@ -216,5 +214,9 @@ enum GrxCountryId {
   VN,
   ZM,
   ZW,
-  unknown,
+  unknown;
+
+  static GrxCountryId fromName(String? value) {
+    return GrxCountryId.values.byName(value ?? 'BR');
+  }
 }
