@@ -13,14 +13,16 @@ final _inputTextStyle = GrxLabelLargeTextStyle(
 class GrxSearchField extends StatelessWidget {
   const GrxSearchField({
     super.key,
-    required this.onChanged,
     required this.hintText,
+    this.onChanged,
+    this.onSubmitted,
     this.searchFieldController,
     this.flexible = false,
   });
 
   final TextEditingController? searchFieldController;
-  final Function(String) onChanged;
+  final ValueChanged<String>? onChanged;
+  final ValueChanged<String>? onSubmitted;
   final String hintText;
   final bool flexible;
 
@@ -55,13 +57,14 @@ class GrxSearchField extends StatelessWidget {
                     : GrxClearInputButton(
                       onClear: () {
                         searchFieldController?.clear();
-                        onChanged(searchFieldController?.text ?? '');
+                        onChanged?.call(searchFieldController?.text ?? '');
                       },
                     ),
             hintText: hintText,
             hintStyle: _inputTextStyle,
           ),
           onChanged: onChanged,
+          onSubmitted: onSubmitted,
         );
       },
     );
