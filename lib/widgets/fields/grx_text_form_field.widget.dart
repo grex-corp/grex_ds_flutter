@@ -38,6 +38,7 @@ class GrxTextFormField extends GrxStatefulWidget {
     this.inputFormatters,
     this.isLoading = false,
     this.prefix,
+    this.suffix,
     this.mask,
   }) : super(
           key: key ?? ValueKey<int>(labelText.hashCode),
@@ -69,6 +70,7 @@ class GrxTextFormField extends GrxStatefulWidget {
   final List<TextInputFormatter>? inputFormatters;
   final bool isLoading;
   final Widget? prefix;
+  final Widget? suffix;
   final String? mask;
 
   @override
@@ -175,6 +177,7 @@ class _GrxTextFormFieldState extends State<GrxTextFormField> {
           errorText: field.errorText,
           enabled: widget.enabled,
           prefix: widget.prefix,
+          suffix: widget.suffix,
         );
       },
     );
