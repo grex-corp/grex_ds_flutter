@@ -1,3 +1,7 @@
+## 0.1.0
+
+* New tag pattern
+
 ## 0.0.10
 
 * Change action to publish this package on pub.dev
