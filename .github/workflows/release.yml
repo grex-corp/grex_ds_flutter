@@ -18,12 +18,57 @@ jobs:
     outputs:
       tag: ${{ steps.gen-tag-step.outputs.tagname }}
     steps:
-      - uses: actions/checkout@v5
-      - uses: jacopocarlini/action-autotag@3.0.0
-        id: gen-tag-step
-        with:
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
-          tag_prefix: 'v'
+      # - uses: actions/checkout@v5
+      # - uses: jacopocarlini/action-autotag@3.0.0
+      #   id: gen-tag-step
+      #   with:
+      #     GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+      #     tag_prefix: 'v'
+      - name: Extrair versão do pubspec.yaml
+        id: extract_version
+        run: |
+          # Usa sed para pegar a versão no pubspec.yaml (exemplo: version: 1.2.3+4)
+          VERSION=$(grep '^version:' pubspec.yaml | awk '{print $2}' | sed 's/+/-/g')
+          echo "Versão extraída: $VERSION"
+          
+          # Salva a versão extraída como variável de ambiente
+          echo "version=$VERSION" >> $GITHUB_ENV
+
+      - name: Verificar se a Tag Já Existe
+        id: check_tag
+        run: |
+          # Verifica se a tag já existe
+          TAG="v${{ env.version }}"
+          EXISTING_TAG=$(git tag -l "$TAG")
+          
+          if [ -n "$EXISTING_TAG" ]; then
+            echo "A tag $TAG já existe. Interrompendo o fluxo."
+            exit 1  # Interrompe o fluxo se a tag já existir
+          else
+            echo "A tag $TAG não existe. Continuando o fluxo."
+          fi
+
+      - name: Criar e Push da Tag
+        id: create_tag
+        run: |
+          # Cria uma tag com base na versão extraída
+          TAG="v${{ env.version }}"
+          git tag "$TAG"  # Exemplo: cria a tag v1.2.3
+          
+          # Empurra a tag para o repositório remoto
+          git push origin "$TAG"
+
+          # Adiciona a tag como output
+          echo "::set-output name=tagname::$TAG"  # Define o output "tagname" com o valor da tag criada
+
+      - name: Confirmar Tag Criada
+        run: |
+          # Lista as tags para confirmar que a tag foi criada
+          git tag
+
+      - name: Exibir o Nome da Tag Criada
+        run: |
+          echo "A tag criada é: ${{ steps.create_tag.outputs.tagname }}"
 
   generate-changelog:
     if: ${{ startsWith(needs.auto-gen-tag.outputs.tag, 'v') }}
