@@ -38,3 +38,4 @@ jobs:
     with:
        write-comments: false
        use-flutter: true
+       environment: pub.dev
