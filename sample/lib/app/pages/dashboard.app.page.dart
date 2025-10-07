@@ -150,6 +150,7 @@ class _DashboardAppPageState extends State<DashboardAppPage>
                 // horizontal).
                 // mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
+                  Icon(GrxIcons.undo),
                   const TypoSample(),
                   ButtonsSample(),
                   Form(
