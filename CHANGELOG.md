@@ -1,3 +1,7 @@
+## 0.0.10
+
+* Change action to publish this package on pub.dev
+
 ## 0.0.9
 
 * Upgraded to latest Dart version
