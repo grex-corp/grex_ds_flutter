@@ -16,7 +16,7 @@ jobs:
     name: Auto Generate Tag
     runs-on: ubuntu-latest
     outputs:
-      tag: ${{ steps.gen-tag-step.outputs.tagname }}
+      tag: ${{ steps.create_tag.outputs.tagname }}
     steps:
       - uses: actions/checkout@v5
       # - uses: jacopocarlini/action-autotag@3.0.0
@@ -60,24 +60,27 @@ jobs:
           EXISTING_TAG=$(git tag -l "$TAG")
           
           if [ -n "$EXISTING_TAG" ]; then
-            echo "A tag $TAG já existe. Interrompendo o fluxo."
-            exit 1  # Interrompe o fluxo se a tag já existir
+            echo "A tag $TAG já existe. Pulando a criação da tag."
+            echo "tag_exists=true" >> $GITHUB_ENV  # Define uma variável de ambiente para indicar que a tag existe
           else
             echo "A tag $TAG não existe. Continuando o fluxo."
+            echo "tag_exists=false" >> $GITHUB_ENV  # Define uma variável de ambiente para indicar que a tag não existe
           fi
 
       - name: Criar e Push da Tag
         id: create_tag
         run: |
-          # Cria uma tag com base na versão extraída
-          TAG="v${{ env.version }}"
-          git tag "$TAG"  # Exemplo: cria a tag v1.2.3
-          
-          # Empurra a tag para o repositório remoto
-          git push origin "$TAG"
+          # Só cria e empurra a tag se a tag não existir
+          if [ "${{ env.tag_exists }}" == "false" ]; then
+            TAG="v${{ env.version }}"
+            git tag "$TAG"  # Exemplo: cria a tag v1.2.3
+            git push origin "$TAG"
 
-          # Adiciona a tag como output
-          echo "::set-output name=tagname::$TAG"  # Define o output "tagname" com o valor da tag criada
+            # Definir o nome da tag criada como output do job
+            echo "tagname=$TAG" >> $GITHUB_OUTPUT  # Define o output "tagname" com o valor da tag criada
+          else
+            echo "Nenhuma nova tag criada, pois a tag já existe."
+          fi
 
       - name: Confirmar Tag Criada
         run: |
