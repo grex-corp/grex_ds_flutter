@@ -29,6 +29,13 @@ jobs:
         run: |
           # Usa sed para pegar a versão no pubspec.yaml (exemplo: version: 1.2.3+4)
           VERSION=$(grep '^version:' pubspec.yaml | awk '{print $2}' | sed 's/+/-/g')
+          
+          # Verifica se a versão foi corretamente extraída
+          if [ -z "$VERSION" ]; then
+            echo "Erro: não foi possível extrair a versão do pubspec.yaml"
+            exit 1
+          fi
+          
           echo "Versão extraída: $VERSION"
           
           # Salva a versão extraída como variável de ambiente
@@ -37,6 +44,9 @@ jobs:
       - name: Verificar se a Tag Já Existe
         id: check_tag
         run: |
+          # Garante que o repositório Git está inicializado
+          git fetch --tags  # Baixa todas as tags do repositório remoto
+
           # Verifica se a tag já existe
           TAG="v${{ env.version }}"
           EXISTING_TAG=$(git tag -l "$TAG")
