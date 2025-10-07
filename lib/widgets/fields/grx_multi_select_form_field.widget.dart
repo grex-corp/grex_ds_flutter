@@ -122,7 +122,7 @@ class _GrxMultiSelectStateFormField<T>
         return;
       }
 
-      this.values = [...(this.values?.toList() ?? []), value];
+      values = [...(values?.toList() ?? []), value];
       controller.text = widget.displayText(value);
     });
   }

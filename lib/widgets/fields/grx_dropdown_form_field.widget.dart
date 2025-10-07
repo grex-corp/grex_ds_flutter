@@ -201,7 +201,7 @@ class _GrxDropdownStateFormField<T> extends State<GrxDropdownFormField<T>> {
                       displayText: widget.displayText,
                       quickSearchFieldController: quickSearchFieldController,
                       onSelectItem: widget.onSelectItem,
-                      itemBuilder: (context, index, item, _, __) =>
+                      itemBuilder: (context, index, item, _, _) =>
                           (widget.itemBuilder ?? _defaultItemBuild)(
                               context, index, item),
                       items: _list,
