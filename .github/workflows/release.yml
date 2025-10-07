@@ -18,16 +18,24 @@ jobs:
     outputs:
       tag: ${{ steps.gen-tag-step.outputs.tagname }}
     steps:
-      # - uses: actions/checkout@v5
+      - uses: actions/checkout@v5
       # - uses: jacopocarlini/action-autotag@3.0.0
       #   id: gen-tag-step
       #   with:
       #     GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
       #     tag_prefix: 'v'
+      - name: Verificar se o arquivo pubspec.yaml existe
+        run: |
+          # Verifica se o arquivo pubspec.yaml está presente
+          if [ ! -f "pubspec.yaml" ]; then
+            echo "Erro: o arquivo pubspec.yaml não foi encontrado"
+            exit 1
+          fi
+
       - name: Extrair versão do pubspec.yaml
         id: extract_version
         run: |
-          # Usa sed para pegar a versão no pubspec.yaml (exemplo: version: 1.2.3+4)
+          # Ajuste o caminho caso o pubspec.yaml esteja em um subdiretório, como 'project/pubspec.yaml'
           VERSION=$(grep '^version:' pubspec.yaml | awk '{print $2}' | sed 's/+/-/g')
           
           # Verifica se a versão foi corretamente extraída
