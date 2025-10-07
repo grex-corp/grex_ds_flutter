@@ -1,3 +1,7 @@
+## 0.1.2
+
+* New publish test
+
 ## 0.1.1
 
 * New Test
