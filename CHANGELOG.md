@@ -1,3 +1,7 @@
+## 0.0.9
+
+* Upgraded to latest Dart version
+
 ## 0.0.8
 
 * Upgraded to latest Dart version
