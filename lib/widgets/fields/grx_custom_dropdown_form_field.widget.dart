@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../../services/grx_bottom_sheet.service.dart';
 import '../../utils/grx_form_field.util.dart';
 import '../grx_stateful.widget.dart';
+import 'controllers/grx_form_field.controller.dart';
+import 'grx_form_field.widget.dart';
 import 'grx_text_field.widget.dart';
 import 'shimmers/grx_form_field_shimmer.widget.dart';
 
@@ -15,26 +17,34 @@ class GrxCustomDropdownFormField<T> extends GrxStatefulWidget {
     this.controller,
     this.onSaved,
     this.hintText,
-    this.initialValue,
+    this.selectBottomSheetTitle,
+    this.value,
+    this.defaultValue,
+    this.autovalidateMode = AutovalidateMode.always,
     this.onSelectItem,
     this.validator,
     this.enabled = true,
+    this.flexible = false,
     this.isLoading = false,
   }) : super(
           key: key ?? ValueKey<int>(labelText.hashCode),
         );
 
-  final TextEditingController? controller;
+  final GrxFormFieldController<T>? controller;
   final String labelText;
   final String? hintText;
+  final String? selectBottomSheetTitle;
   final Widget Function(ScrollController? scrollController, T? selectedValue)
       builder;
   final String Function(T data) displayText;
-  final T? initialValue;
+  final T? value;
+  final T? defaultValue;
+  final AutovalidateMode autovalidateMode;
   final void Function(T?)? onSelectItem;
-  final void Function(T?)? onSaved;
-  final String? Function(String?)? validator;
+  final FormFieldSetter<T>? onSaved;
+  final FormFieldValidator<T>? validator;
   final bool enabled;
+  final bool flexible;
   final bool isLoading;
 
   @override
@@ -44,23 +54,52 @@ class GrxCustomDropdownFormField<T> extends GrxStatefulWidget {
 class _GrxDropdownStateFormField<T>
     extends State<GrxCustomDropdownFormField<T>> {
   T? value;
-  late final TextEditingController controller;
+  late final GrxFormFieldController<T> controller;
   final TextEditingController quickSearchFieldController =
       TextEditingController();
 
   @override
   void initState() {
-    controller = widget.controller ?? TextEditingController();
+    super.initState();
 
-    if (widget.initialValue != null && value == null) {
-      value = widget.initialValue;
+    controller = widget.controller ?? GrxFormFieldController<T>();
+
+    if (widget.value != null && value == null) {
+      value = widget.value;
       controller.text = widget.displayText(value as T);
       if (widget.onSelectItem != null) {
         widget.onSelectItem!(value);
       }
     }
 
-    super.initState();
+    _subscribeStreams();
+  }
+
+  @override
+  void dispose() {
+    if (widget.controller == null) {
+      controller.dispose();
+    }
+
+    super.dispose();
+  }
+
+  void _subscribeStreams() {
+    controller.onClearStream.stream.listen((_) {
+      value = null;
+    });
+
+    controller.onDidUpdateValue.stream.listen((data) {
+      final (value, _) = data;
+
+      if (value == null) {
+        controller.clear();
+        return;
+      }
+
+      this.value = value;
+      controller.text = widget.displayText(value);
+    });
   }
 
   @override
@@ -71,19 +110,20 @@ class _GrxDropdownStateFormField<T>
       );
     }
 
-    return FormField<String>(
+    return GrxFormField<String>(
       initialValue: controller.text,
-      autovalidateMode: AutovalidateMode.always,
-      validator: widget.validator,
-      onSaved: (_) => widget.onSaved != null ? widget.onSaved!(value) : null,
+      autovalidateMode: widget.autovalidateMode,
+      validator: (_) => widget.validator?.call(value),
+      onSaved: (_) => widget.onSaved?.call(value),
       enabled: widget.enabled,
+      flexible: widget.flexible,
       builder: (FormFieldState<String> field) {
         GrxFormFieldUtils.onValueChange(
           field,
           controller,
           onChanged: (value) {
-            if (value.isEmpty && widget.onSelectItem != null) {
-              widget.onSelectItem!(null);
+            if (value.isEmpty) {
+              widget.onSelectItem?.call(null);
               this.value = null;
             }
           },
@@ -96,9 +136,24 @@ class _GrxDropdownStateFormField<T>
           labelText: widget.labelText,
           errorText: field.errorText,
           enabled: widget.enabled,
+          onClear: () {
+            setState(
+              () {
+                value = widget.defaultValue;
+
+                if (widget.defaultValue != null) {
+                  controller.text =
+                      widget.displayText(widget.defaultValue as T);
+                } else {
+                  controller.clear();
+                }
+              },
+            );
+          },
           onTap: () async {
             final bottomSheet = GrxBottomSheetService(
               context: context,
+              title: widget.selectBottomSheetTitle,
               builder: (controller) => widget.builder(
                 controller,
                 value,

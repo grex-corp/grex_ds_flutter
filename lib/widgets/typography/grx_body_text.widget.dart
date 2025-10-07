@@ -15,58 +15,90 @@ class GrxBodyText extends StatelessWidget {
     super.key,
     this.textAlign,
     this.transform = GrxTextTransform.none,
-    this.color = GrxColors.cff2e2e2e,
+    this.color,
     this.fontWeight,
     this.decoration,
     this.overflow,
     this.isLoading = false,
-  }) : textSpan = null;
+  }) : textSpan = null,
+       style = null;
 
   const GrxBodyText.rich(
     this.textSpan, {
     super.key,
     this.textAlign,
     this.transform = GrxTextTransform.none,
-    this.color = GrxColors.cff2e2e2e,
+    this.color,
     this.fontWeight,
     this.decoration,
     this.overflow,
     this.isLoading = false,
-  }) : text = null;
+  }) : text = null,
+       style = null;
+
+  GrxBodyText.lerp(
+    this.text, {
+    super.key,
+    required final GrxBodyTextStyle style,
+    required final double t,
+    this.textAlign,
+    this.transform = GrxTextTransform.none,
+    this.color,
+    this.fontWeight,
+    this.decoration,
+    this.overflow,
+    this.isLoading = false,
+  }) : textSpan = null,
+       style =
+           TextStyle.lerp(
+             GrxBodyTextStyle(
+               color: color,
+               decoration: decoration,
+               overflow: overflow,
+               fontWeight: fontWeight,
+             ),
+             style,
+             t,
+           )!;
 
   final String? text;
   final InlineSpan? textSpan;
   final GrxTextTransform transform;
   final TextAlign? textAlign;
-  final Color color;
+  final Color? color;
   final FontWeight? fontWeight;
   final TextDecoration? decoration;
   final TextOverflow? overflow;
   final bool isLoading;
+  final TextStyle? style;
 
   @override
   Widget build(BuildContext context) {
-    final style = GrxBodyTextStyle(
-      color: color,
-      decoration: decoration,
-      overflow: overflow,
-      fontWeight: fontWeight,
-    );
+    final color = this.color ?? GrxColors.neutrals.shade1000;
+
+    final style =
+        this.style ??
+        GrxBodyTextStyle(
+          color: color,
+          decoration: decoration,
+          overflow: overflow,
+          fontWeight: fontWeight,
+        );
 
     return textSpan != null
         ? GrxText.rich(
-            textSpan,
-            transform: transform,
-            textAlign: textAlign,
-            style: style,
-            isLoading: isLoading,
-          )
+          textSpan,
+          transform: transform,
+          textAlign: textAlign,
+          style: style,
+          isLoading: isLoading,
+        )
         : GrxText(
-            text,
-            transform: transform,
-            textAlign: textAlign,
-            style: style,
-            isLoading: isLoading,
-          );
+          text,
+          transform: transform,
+          textAlign: textAlign,
+          style: style,
+          isLoading: isLoading,
+        );
   }
 }

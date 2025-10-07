@@ -1,15 +1,18 @@
+import 'package:flutter/painting.dart';
+
 import '../../themes/colors/grx_colors.dart';
 import '../../themes/icons/grx_icons.dart';
 import 'grx_icon_button.widget.dart';
 
 class GrxBackButton extends GrxIconButton {
-  const GrxBackButton({
+  GrxBackButton({
     super.key,
     required super.onPressed,
-    super.color = GrxColors.cff7593b5,
-    super.iconSize,
+    super.size,
     super.margin,
+    final Color? color,
   }) : super(
-          icon: GrxIcons.arrow_back_ios,
-        );
+         icon: GrxIcons.arrow_back_ios,
+         foregroundColor: color ?? GrxColors.primary.shade800,
+       );
 }

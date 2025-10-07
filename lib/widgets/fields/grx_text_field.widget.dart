@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../themes/colors/grx_colors.dart';
-import '../../themes/fields/grx_field_styles.theme.dart';
+import '../../themes/typography/styles/grx_label_large_text.style.dart';
 import 'grx_input_decoration.widget.dart';
 
 class GrxTextField extends TextField {
@@ -15,38 +15,45 @@ class GrxTextField extends TextField {
     super.autofocus,
     super.inputFormatters,
     super.onTap,
-    required final TextEditingController controller,
+    super.onChanged,
+    super.autofillHints,
+    required TextEditingController super.controller,
     final String? labelText,
     final bool enabled = true,
-    final bool autocorrect = false,
+    super.autocorrect = false,
     final EdgeInsets? contentPadding,
-    final TextCapitalization textCapitalization = TextCapitalization.sentences,
-    final TextAlignVertical textAlignVertical = TextAlignVertical.center,
+    super.textCapitalization = TextCapitalization.sentences,
+    TextAlignVertical super.textAlignVertical = TextAlignVertical.center,
     final int? maxLines = 1,
     final bool alignLabelWithHint = false,
     final String? hintText,
     final int? hintMaxLines,
     final String? errorText,
-    final TextInputAction textInputAction = TextInputAction.done,
+    TextInputAction super.textInputAction = TextInputAction.next,
+    final void Function()? onClear,
+    final bool showClearButton = true,
+    final Widget? prefix,
+    final Widget? suffix,
+    final TextStyle? style,
+    final BoxConstraints? suffixIconConstraints,
   }) : super(
-          controller: controller,
-          textCapitalization: textCapitalization,
-          autocorrect: autocorrect,
-          cursorColor: GrxColors.cff70efa7,
-          style: GrxFieldStyles.inputTextStyle,
-          textInputAction: textInputAction,
-          maxLines: obscureText ? 1 : maxLines,
-          textAlignVertical: textAlignVertical,
-          decoration: GrxInputDecoration(
-            labelText: labelText,
-            alignLabelWithHint: alignLabelWithHint,
-            contentPadding: contentPadding,
-            hintText: hintText,
-            hintMaxLines: hintMaxLines,
-            errorText: errorText,
-            enabled: enabled,
-            onClear: controller.clear,
-            showClearButton: controller.text.isNotEmpty && enabled,
-          ),
-        );
+         cursorColor: GrxColors.primary.shade900,
+         style: style ?? GrxLabelLargeTextStyle(),
+         maxLines: obscureText ? 1 : maxLines,
+         decoration: GrxInputDecoration(
+           labelText: labelText,
+           alignLabelWithHint: alignLabelWithHint,
+           contentPadding: contentPadding,
+           hintText: hintText,
+           hintMaxLines: hintMaxLines,
+           errorText: errorText,
+           enabled: enabled,
+           onClear: onClear?.call ?? controller.clear,
+           showClearButton:
+               showClearButton && controller.text.isNotEmpty && enabled,
+           prefix: prefix,
+           suffix: suffix,
+           suffixIconConstraints: suffixIconConstraints,
+         ),
+       );
 }

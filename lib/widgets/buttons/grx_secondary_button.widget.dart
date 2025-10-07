@@ -15,8 +15,10 @@ class GrxSecondaryButton extends GrxRoundedButton {
     super.iconSize,
     super.iconColor,
     super.iconPadding,
-  }) : super(
-          backgroundColor: GrxColors.cffffffff,
-          foregroundColor: GrxColors.cff7593b5,
-        );
+    super.shape,
+    super.isLoading,
+    super.borderColor = GrxColors.primary,
+    super.foregroundColor = GrxColors.primary,
+    super.textStyle,
+  });
 }

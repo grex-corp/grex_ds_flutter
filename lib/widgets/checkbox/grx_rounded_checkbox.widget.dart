@@ -6,7 +6,7 @@ import '../../utils/grx_utils.util.dart';
 class GrxRoundedCheckbox extends StatefulWidget {
   const GrxRoundedCheckbox({
     super.key,
-    this.initialValue = false,
+    this.value = false,
     this.radius = 18,
     this.onChanged,
     this.isTappable = true,
@@ -14,7 +14,7 @@ class GrxRoundedCheckbox extends StatefulWidget {
     this.isLoading = false,
   });
 
-  final bool initialValue;
+  final bool value;
   final double radius;
   final Function(bool)? onChanged;
   final bool isTappable;
@@ -32,45 +32,48 @@ class _GrxRoundedCheckboxState extends State<GrxRoundedCheckbox> {
   void initState() {
     super.initState();
 
-    _value = widget.initialValue;
+    _value = widget.value;
   }
 
   @override
   void didUpdateWidget(GrxRoundedCheckbox oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    _value = widget.initialValue;
+    _value = widget.value;
   }
 
   @override
   Widget build(BuildContext context) {
-    final opacity = widget.enabled && !widget.isLoading ? 1.0 : .5;
+    final double opacity = widget.enabled && !widget.isLoading ? 255 : 128;
 
     return InkWell(
       splashColor: Colors.transparent,
-      onTap: widget.isTappable && widget.enabled && !widget.isLoading
-          ? () {
-              setState(() {
-                _value = !_value;
-                if (widget.onChanged != null) {
-                  widget.onChanged!(_value);
-                }
-              });
-            }
-          : null,
+      onTap:
+          widget.isTappable && widget.enabled && !widget.isLoading
+              ? () {
+                setState(() {
+                  _value = !_value;
+                  if (widget.onChanged != null) {
+                    widget.onChanged!(_value);
+                  }
+                });
+              }
+              : null,
       child: AnimatedContainer(
         duration: GrxUtils.defaultAnimationDuration,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           border: Border.all(
             width: 2,
-            color: _value
-                ? GrxColors.cff1eb35e.withOpacity(opacity)
-                : GrxColors.cffdce2e8.withOpacity(opacity),
+            color:
+                _value
+                    ? GrxColors.success.shade300.withValues(alpha: opacity)
+                    : GrxColors.neutrals.shade100.withValues(alpha: opacity),
           ),
-          color: _value
-              ? GrxColors.cff1eb35e.withOpacity(opacity)
-              : GrxColors.cfff9fbfd.withOpacity(opacity),
+          color:
+              _value
+                  ? GrxColors.success.shade300.withValues(alpha: opacity)
+                  : GrxColors.neutrals.withValues(alpha: opacity),
         ),
         child: Padding(
           padding: const EdgeInsets.all(5.0),
@@ -78,13 +81,14 @@ class _GrxRoundedCheckboxState extends State<GrxRoundedCheckbox> {
             duration: GrxUtils.defaultAnimationDuration,
             child: SizedBox.fromSize(
               size: Size.fromRadius(widget.radius),
-              child: _value
-                  ? Icon(
-                      Icons.check,
-                      size: widget.radius * 2,
-                      color: GrxColors.cffffffff.withOpacity(opacity),
-                    )
-                  : const SizedBox.shrink(),
+              child:
+                  _value
+                      ? Icon(
+                        Icons.check,
+                        size: widget.radius * 2,
+                        color: GrxColors.neutrals.withValues(alpha: opacity),
+                      )
+                      : const SizedBox.shrink(),
             ),
           ),
         ),

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:grex_ds/grex_ds.dart';
-import 'package:sample/extensions/string_extension.dart';
 
+import '../../extensions/string_extension.dart';
+import '../app/pages/dashboard.app.page.dart';
 import '../models/tab_icon_data.model.dart';
+import '../web/pages/dashboard.web.page.dart';
 import '../widgets/bottom_bar.widget.dart';
 import 'cellules_list.page.dart';
-import 'dashboard.page.dart';
 import 'people_list.page.dart';
 import 'settings.page.dart';
 
@@ -50,9 +51,18 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     ),
   ];
 
-  Widget tabBody = Container(
-    color: GrxColors.cfff2f7fd,
+  late final _defaultBody = GrxResponsiveLayout(
+    mobileView: DashboardAppPage(
+      key: widget.key,
+      animationController: animationController,
+    ),
+    desktopView: DashboardWebPage(
+      key: widget.key,
+      animationController: animationController,
+    ),
   );
+
+  late Widget tabBody = _defaultBody;
 
   @override
   void initState() {
@@ -64,13 +74,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     tabIconsList[0].isSelected = true;
 
     animationController = AnimationController(
-      duration: const Duration(milliseconds: 600),
+      duration: const Duration(milliseconds: 2000),
       vsync: this,
-    );
-
-    tabBody = DashboardPage(
-      key: widget.key,
-      animationController: animationController,
     );
   }
 
@@ -95,8 +100,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     return;
                   }
                   setState(() {
-                    tabBody =
-                        DashboardPage(animationController: animationController);
+                    tabBody = _defaultBody;
                   });
                 });
               } else if (index == 1) {
@@ -106,7 +110,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   }
                   setState(() {
                     tabBody = CellulesListPage(
-                        animationController: animationController);
+                      animationController: animationController,
+                    );
                   });
                 });
               } else if (index == 2) {
@@ -116,7 +121,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   }
                   setState(() {
                     tabBody = PeopleListPage(
-                        animationController: animationController);
+                      animationController: animationController,
+                    );
                   });
                 });
               } else if (index == 3) {
@@ -125,8 +131,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     return;
                   }
                   setState(() {
-                    tabBody =
-                        SettingsPage(animationController: animationController);
+                    tabBody = SettingsPage(
+                      animationController: animationController,
+                    );
                   });
                 });
               }
@@ -142,15 +149,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: GrxColors.cfff2f7fd,
+      color: GrxColors.background,
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        body: Stack(
-          children: <Widget>[
-            tabBody,
-            bottomBar(),
-          ],
-        ),
+        body: Stack(children: <Widget>[tabBody, bottomBar()]),
       ),
     );
   }

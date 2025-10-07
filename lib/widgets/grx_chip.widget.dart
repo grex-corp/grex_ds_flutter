@@ -4,25 +4,33 @@ class GrxChip extends StatelessWidget {
   const GrxChip({
     super.key,
     required this.label,
-    required this.backgroundColor,
-    this.contentPadding,
-  });
+    this.backgroundColor = Colors.transparent,
+    this.borderColor = Colors.transparent,
+    this.contentPadding = const EdgeInsets.symmetric(
+      horizontal: 16.0,
+      vertical: 8.0,
+    ),
+  }) : assert(
+          backgroundColor != Colors.transparent ||
+              borderColor != Colors.transparent,
+        );
 
   final Widget label;
   final Color backgroundColor;
-  final EdgeInsetsGeometry? contentPadding;
+  final Color borderColor;
+  final EdgeInsetsGeometry contentPadding;
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      shape: const StadiumBorder(),
+      shape: StadiumBorder(
+        side: BorderSide(
+          color: borderColor,
+        ),
+      ),
       color: backgroundColor,
       child: Padding(
-        padding: contentPadding ??
-            const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 8,
-            ),
+        padding: contentPadding,
         child: label,
       ),
     );

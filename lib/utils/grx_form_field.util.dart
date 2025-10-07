@@ -1,18 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+
+import '../widgets/fields/controllers/grx_form_field.controller.dart';
 
 abstract class GrxFormFieldUtils {
-  static onValueChange(
+  static void onValueChange(
     FormFieldState<String> field,
-    TextEditingController controller, {
+    GrxFormFieldController controller, {
     void Function(String)? onChanged,
   }) {
+    if (controller.hasListeners) return;
+
     void onChangedHandler(String value) {
       if (field.mounted && field.value != value) {
         if (onChanged != null) {
           onChanged(value);
         }
 
-        field.didChange(value);
+        SchedulerBinding.instance.addPostFrameCallback(
+          (_) => field.didChange(value),
+        );
       }
     }
 

@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../themes/colors/grx_colors.dart';
+import '../../themes/spacing/grx_spacing.dart';
+
 class CupertinoSwitchListTile extends StatelessWidget {
   /// This has been shamelessly copied from Material/SwitchListTile.
   /// The applicable license applies.
@@ -15,6 +18,7 @@ class CupertinoSwitchListTile extends StatelessWidget {
     this.dense,
     this.secondary,
     this.selected = false,
+    this.enabled = true,
     this.contentPadding = const EdgeInsets.symmetric(horizontal: 16.0),
   }) : assert(!isThreeLine || subtitle != null);
 
@@ -97,32 +101,60 @@ class CupertinoSwitchListTile extends StatelessWidget {
   /// Normally, this property is left to its default value, false.
   final bool selected;
 
+  /// Whether this switch is enabled.
+  ///
+  /// If false, the switch will be displayed as disabled.
+  final bool enabled;
+
   @override
   Widget build(BuildContext context) {
     final Widget control = CupertinoSwitch(
       value: value,
       onChanged: onChanged,
-      activeColor: activeColor ?? Theme.of(context).colorScheme.secondary,
+      activeTrackColor: activeColor ?? Theme.of(context).colorScheme.secondary,
     );
 
-    return MergeSemantics(
-      child: ListTileTheme.merge(
-        selectedColor: activeColor ?? Theme.of(context).colorScheme.secondary,
-        child: ListTile(
-          leading: secondary,
-          contentPadding: contentPadding,
-          title: title,
-          subtitle: subtitle,
-          trailing: control,
-          isThreeLine: isThreeLine,
-          dense: dense,
-          enabled: onChanged != null,
-          onTap: onChanged != null
+    final borderColor =
+        enabled ? GrxColors.neutrals.shade200 : GrxColors.neutrals.shade50;
+
+    return GestureDetector(
+      onTap:
+          onChanged != null
               ? () {
-                  onChanged!(!value);
-                }
+                onChanged!(!value);
+              }
               : null,
-          selected: selected,
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(minHeight: 48.0),
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(GrxSpacing.xxs),
+            border: Border.all(color: borderColor, width: 1),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: GrxSpacing.xxs,
+              horizontal: GrxSpacing.sm,
+            ),
+            child: Row(
+              children: [
+                if (secondary != null) secondary!,
+                Expanded(
+                  child: Padding(
+                    padding: contentPadding,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        title ?? const SizedBox.shrink(),
+                        if (subtitle != null) subtitle!,
+                      ],
+                    ),
+                  ),
+                ),
+                control,
+              ],
+            ),
+          ),
         ),
       ),
     );

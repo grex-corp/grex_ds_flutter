@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -19,7 +21,6 @@ class GrxText extends StatelessWidget {
     this.textDirection,
     this.locale,
     this.softWrap,
-    this.textScaleFactor,
     this.maxLines,
     this.semanticsLabel,
     this.textWidthBasis,
@@ -39,7 +40,6 @@ class GrxText extends StatelessWidget {
     this.textDirection,
     this.locale,
     this.softWrap,
-    this.textScaleFactor,
     this.maxLines,
     this.semanticsLabel,
     this.textWidthBasis,
@@ -58,7 +58,6 @@ class GrxText extends StatelessWidget {
   final TextDirection? textDirection;
   final Locale? locale;
   final bool? softWrap;
-  final double? textScaleFactor;
   final int? maxLines;
   final String? semanticsLabel;
   final TextWidthBasis? textWidthBasis;
@@ -70,37 +69,30 @@ class GrxText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (isLoading) {
-      return LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) {
-          final renderParagraph = RenderParagraph(
-            textSpan ??
-                TextSpan(
-                  text: _capitalize(text),
-                  style: style,
-                ),
-            textDirection: TextDirection.ltr,
-            maxLines: maxLines ?? 1,
-          );
+      final renderParagraph = RenderParagraph(
+        textSpan ?? TextSpan(text: _capitalize(text), style: style),
+        textDirection: TextDirection.ltr,
+        maxLines: maxLines ?? 1,
+      );
 
-          renderParagraph.layout(constraints);
+      final size = MediaQuery.sizeOf(context);
+      renderParagraph.layout(
+        BoxConstraints(maxHeight: size.height, maxWidth: size.width),
+      );
 
-          final height = renderParagraph.getMinIntrinsicHeight(style.fontSize!);
-          final width = renderParagraph.getMinIntrinsicWidth(style.fontSize!);
+      final height = renderParagraph.getMinIntrinsicHeight(style.fontSize!);
+      final width = renderParagraph.getMinIntrinsicWidth(style.fontSize!);
 
-          return GrxShimmer(
-            height: height,
-            width: width,
-          );
-        },
+      return GrxShimmer(
+        height: clampDouble(height, 0, size.height),
+        width: clampDouble(width, 0, size.width),
       );
     }
 
     final formattedText = formatText();
 
     return Text.rich(
-      TextSpan(
-        children: formattedText,
-      ),
+      TextSpan(children: formattedText),
       overflow: style.overflow,
       style: style,
       strutStyle: strutStyle,
@@ -108,11 +100,11 @@ class GrxText extends StatelessWidget {
       textDirection: textDirection,
       locale: locale,
       softWrap: softWrap,
-      textScaleFactor: textScaleFactor,
       maxLines: maxLines,
       semanticsLabel: semanticsLabel,
       textWidthBasis: textWidthBasis,
-      textHeightBehavior: textHeightBehavior ??
+      textHeightBehavior:
+          textHeightBehavior ??
           const TextHeightBehavior(
             leadingDistribution: TextLeadingDistribution.even,
           ),
@@ -120,9 +112,10 @@ class GrxText extends StatelessWidget {
     );
   }
 
-  String? _capitalize(String? text) => transform == GrxTextTransform.uppercase
-      ? text?.toUpperCase()
-      : transform == GrxTextTransform.lowercase
+  String? _capitalize(String? text) =>
+      transform == GrxTextTransform.uppercase
+          ? text?.toUpperCase()
+          : transform == GrxTextTransform.lowercase
           ? text?.toLowerCase()
           : text;
 
@@ -137,7 +130,7 @@ class GrxText extends StatelessWidget {
           GrxLinkify.plainText(
             text: text!,
             defaultStyle: style,
-            linkColor: GrxColors.cff289fff,
+            linkColor: GrxColors.primary.shade600,
           ),
         );
       } else if (this.textSpan != null) {
@@ -145,14 +138,12 @@ class GrxText extends StatelessWidget {
           GrxLinkify.textSpan(
             textSpan: this.textSpan!,
             defaultStyle: style,
-            linkColor: GrxColors.cff289fff,
+            linkColor: GrxColors.primary.shade600,
           ),
         );
       }
 
-      textSpan = TextSpan(
-        children: linkfyText,
-      );
+      textSpan = TextSpan(children: linkfyText);
     } else {
       textSpan = this.textSpan;
     }
@@ -186,11 +177,7 @@ class GrxText extends StatelessWidget {
         return true;
       });
     } else {
-      formattedText.add(
-        TextSpan(
-          text: _capitalize(text),
-        ),
-      );
+      formattedText.add(TextSpan(text: _capitalize(text)));
     }
 
     return formattedText;

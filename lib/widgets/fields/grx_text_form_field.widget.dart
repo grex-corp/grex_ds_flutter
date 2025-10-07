@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 
 import '../../utils/grx_form_field.util.dart';
 import '../grx_stateful.widget.dart';
+import 'controllers/grx_form_field.controller.dart';
+import 'grx_form_field.widget.dart';
 import 'grx_text_field.widget.dart';
 import 'shimmers/grx_form_field_shimmer.widget.dart';
 
@@ -12,7 +14,7 @@ class GrxTextFormField extends GrxStatefulWidget {
     final Key? key,
     required this.labelText,
     this.controller,
-    this.initialValue,
+    this.value,
     this.keyboardType,
     this.obscureText = false,
     this.onChanged,
@@ -26,24 +28,29 @@ class GrxTextFormField extends GrxStatefulWidget {
     this.hintText,
     this.hintMaxLines,
     this.autovalidateMode = AutovalidateMode.always,
-    this.textInputAction = TextInputAction.done,
+    this.textInputAction = TextInputAction.next,
     this.onFieldSubmitted,
     this.focusNode,
+    this.autofillHints,
     this.autoFocus = false,
     this.enabled = true,
+    this.flexible = false,
     this.inputFormatters,
     this.isLoading = false,
+    this.prefix,
+    this.suffix,
+    this.mask,
   }) : super(
           key: key ?? ValueKey<int>(labelText.hashCode),
         );
 
-  final TextEditingController? controller;
-  final String? initialValue;
+  final GrxFormFieldController<String>? controller;
+  final String? value;
   final String labelText;
   final TextInputType? keyboardType;
   final bool obscureText;
   final void Function(String?)? onChanged;
-  final void Function(String?)? onSaved;
+  final FormFieldSetter<String?>? onSaved;
   final FormFieldValidator<String?>? validator;
   final EdgeInsets? contentPadding;
   final TextCapitalization textCapitalization;
@@ -56,30 +63,64 @@ class GrxTextFormField extends GrxStatefulWidget {
   final TextInputAction textInputAction;
   final void Function(String?)? onFieldSubmitted;
   final FocusNode? focusNode;
+  final Iterable<String>? autofillHints;
   final bool autoFocus;
   final bool enabled;
+  final bool flexible;
   final List<TextInputFormatter>? inputFormatters;
   final bool isLoading;
+  final Widget? prefix;
+  final Widget? suffix;
+  final String? mask;
 
   @override
   State<StatefulWidget> createState() => _GrxTextFormFieldState();
 }
 
 class _GrxTextFormFieldState extends State<GrxTextFormField> {
-  late final TextEditingController controller;
+  late final GrxFormFieldController<String> controller;
+
+  var _notifyListeners = true;
 
   @override
   void initState() {
-    controller = widget.controller ?? TextEditingController();
+    super.initState();
 
-    if (widget.initialValue != null) {
-      controller.text = widget.initialValue!;
+    controller =
+        widget.controller ?? GrxFormFieldController<String>(mask: widget.mask);
+
+    if (widget.value != null) {
+      controller.text = widget.value!;
       if (widget.onChanged != null) {
         widget.onChanged!(controller.text);
       }
     }
 
-    super.initState();
+    _subscribeStreams();
+  }
+
+  @override
+  void dispose() {
+    if (widget.controller == null) {
+      controller.dispose();
+    }
+
+    super.dispose();
+  }
+
+  void _subscribeStreams() {
+    controller.onDidUpdateValue.stream.listen((data) {
+      final (value, notifyListeners) = data;
+
+      _notifyListeners = notifyListeners;
+
+      if (value?.isEmpty ?? true) {
+        controller.clear();
+        return;
+      }
+
+      controller.text = value!;
+    });
   }
 
   @override
@@ -90,16 +131,25 @@ class _GrxTextFormFieldState extends State<GrxTextFormField> {
       );
     }
 
-    return FormField<String>(
+    return GrxFormField<String>(
       autovalidateMode: widget.autovalidateMode,
-      initialValue: widget.initialValue,
+      initialValue: widget.value,
       onSaved: widget.onSaved,
       validator: widget.validator,
+      enabled: widget.enabled,
+      flexible: widget.flexible,
       builder: (FormFieldState<String> field) {
         GrxFormFieldUtils.onValueChange(
           field,
           controller,
-          onChanged: widget.onChanged,
+          onChanged: (value) {
+            if (!_notifyListeners) {
+              _notifyListeners = true;
+              return;
+            }
+
+            widget.onChanged?.call(value);
+          },
         );
 
         return GrxTextField(
@@ -114,7 +164,11 @@ class _GrxTextFormFieldState extends State<GrxTextFormField> {
           maxLines: widget.obscureText ? 1 : widget.maxLines,
           textAlignVertical: widget.textAlignVertical,
           onSubmitted: widget.onFieldSubmitted,
-          inputFormatters: widget.inputFormatters,
+          autofillHints: widget.autofillHints,
+          inputFormatters: [
+            if (controller.maskFormatter != null) controller.maskFormatter!,
+            ...(widget.inputFormatters ?? []),
+          ],
           labelText: widget.labelText,
           alignLabelWithHint: widget.alignLabelWithHint,
           contentPadding: widget.contentPadding,
@@ -122,6 +176,8 @@ class _GrxTextFormFieldState extends State<GrxTextFormField> {
           hintMaxLines: widget.hintMaxLines,
           errorText: field.errorText,
           enabled: widget.enabled,
+          prefix: widget.prefix,
+          suffix: widget.suffix,
         );
       },
     );

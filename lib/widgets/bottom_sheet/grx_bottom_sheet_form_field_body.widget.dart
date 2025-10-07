@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../../themes/colors/grx_colors.dart';
 import '../buttons/grx_primary_button.widget.dart';
 import '../buttons/grx_secondary_button.widget.dart';
-import '../fields/grx_filter_field.widget.dart';
-import '../typography/grx_caption_large_text.widget.dart';
+import '../fields/grx_search_field.widget.dart';
+import '../typography/grx_label_large_text.widget.dart';
 
 class GrxBottomSheetFormFieldBody<T> extends StatefulWidget {
   const GrxBottomSheetFormFieldBody({
@@ -26,21 +26,31 @@ class GrxBottomSheetFormFieldBody<T> extends StatefulWidget {
     this.emptyListText,
     this.confirmButtonLabel,
     this.cancelButtonLabel,
-  })  : assert((!multiSelect && onChangeState != null) ||
-            (multiSelect && valueKey != null)),
-        assert(!searchable ||
-            (searchable &&
-                quickSearchFieldController != null &&
-                onFilterSetState != null &&
-                displayText != null));
+  }) : assert(
+         (!multiSelect && onChangeState != null) ||
+             (multiSelect && valueKey != null),
+       ),
+       assert(
+         !searchable ||
+             (searchable &&
+                 quickSearchFieldController != null &&
+                 onFilterSetState != null &&
+                 displayText != null),
+       );
 
   final ScrollController? controller;
   final StateSetter? onFilterSetState;
   final String Function(T data)? displayText;
   final TextEditingController? quickSearchFieldController;
   final void Function(T?)? onSelectItem;
-  final Widget Function(BuildContext context, int index, T value,
-      void Function()? onChanged, bool isSelected) itemBuilder;
+  final Widget Function(
+    BuildContext context,
+    int index,
+    T value,
+    void Function()? onChanged,
+    bool isSelected,
+  )
+  itemBuilder;
   final Iterable<T> items;
   final void Function(T)? onChangeState;
   final Iterable<T>? initialSelectedValues;
@@ -57,7 +67,8 @@ class GrxBottomSheetFormFieldBody<T> extends StatefulWidget {
   State<StatefulWidget> createState() => _GrxBottomSheetFormFieldBodyState<T>();
 }
 
-class _GrxBottomSheetFormFieldBodyState<T> extends State<GrxBottomSheetFormFieldBody<T>> {
+class _GrxBottomSheetFormFieldBodyState<T>
+    extends State<GrxBottomSheetFormFieldBody<T>> {
   final _list = <T>[];
   final _selectedValues = <T>[];
 
@@ -93,18 +104,16 @@ class _GrxBottomSheetFormFieldBodyState<T> extends State<GrxBottomSheetFormField
           (x) =>
               val.isEmpty ||
               widget.displayText!(x).toString().toLowerCase().contains(
-                    val.toLowerCase(),
-                  ),
+                val.toLowerCase(),
+              ),
         ),
       );
     }
 
     widget.onFilterSetState != null
-        ? widget.onFilterSetState!(
-            () {
-              filter();
-            },
-          )
+        ? widget.onFilterSetState!(() {
+          filter();
+        })
         : filter();
   }
 
@@ -116,49 +125,57 @@ class _GrxBottomSheetFormFieldBodyState<T> extends State<GrxBottomSheetFormField
       mainAxisSize: MainAxisSize.min,
       children: [
         Flexible(
-          child: CustomScrollView(
-            controller: widget.controller,
-            shrinkWrap: widget.shrinkWrap,
-            slivers: [
-              if (widget.searchable)
-                SliverAppBar(
-                  titleSpacing: 0.0,
-                  toolbarHeight: 65,
-                  backgroundColor: Colors.transparent,
-                  automaticallyImplyLeading: false,
-                  title: Container(
-                    color: GrxColors.cfff2f7fd,
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 10,
-                      horizontal: 8,
-                    ),
-                    child: GrxFilterField(
-                      searchFieldController: widget.quickSearchFieldController!,
-                      onChanged: _filterData,
-                      hintText: widget.searchHintText ?? 'Search',
+          child: ColoredBox(
+            color: GrxColors.background,
+            child: CustomScrollView(
+              controller: widget.controller,
+              shrinkWrap: widget.shrinkWrap,
+              slivers: [
+                if (widget.searchable)
+                  SliverAppBar(
+                    titleSpacing: 0.0,
+                    toolbarHeight: 65.0,
+                    backgroundColor: Colors.transparent,
+                    automaticallyImplyLeading: false,
+                    title: Container(
+                      color: GrxColors.background,
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 10,
+                        horizontal: 8,
+                      ),
+                      child: GrxSearchField(
+                        searchFieldController:
+                            widget.quickSearchFieldController!,
+                        onChanged: _filterData,
+                        hintText: widget.searchHintText ?? 'Search',
+                      ),
                     ),
                   ),
-                ),
-              _list.isEmpty
-                  ? SliverToBoxAdapter(
-                      child: Center(
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 8),
-                          child: GrxCaptionLargeText(
-                              widget.emptyListText ?? 'No results found'),
+                _list.isEmpty
+                    ? SliverToBoxAdapter(
+                      child: SafeArea(
+                        top: false,
+                        child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: GrxLabelLargeText(
+                              widget.emptyListText ?? 'No results found',
+                            ),
+                          ),
                         ),
                       ),
                     )
-                  : SliverPadding(
+                    : SliverPadding(
                       padding: EdgeInsets.only(
                         left: 8,
                         top: 8,
                         right: 8,
-                        bottom: !widget.multiSelect
-                            ? MediaQuery.of(context).viewInsets.bottom +
-                                MediaQuery.of(context).padding.bottom +
-                                8
-                            : 0,
+                        bottom:
+                            !widget.multiSelect
+                                ? MediaQuery.of(context).viewInsets.bottom +
+                                    MediaQuery.of(context).padding.bottom +
+                                    8
+                                : 0,
                       ),
                       sliver: SliverList(
                         delegate: SliverChildBuilderDelegate(
@@ -201,25 +218,24 @@ class _GrxBottomSheetFormFieldBodyState<T> extends State<GrxBottomSheetFormField
                         ),
                       ),
                     ),
-            ],
+              ],
+            ),
           ),
         ),
         if (widget.multiSelect)
           Container(
-            decoration: const BoxDecoration(
-              color: GrxColors.cfff2f7fd,
+            decoration: BoxDecoration(
+              color: GrxColors.neutrals,
               border: Border(
-                top: BorderSide(
-                  color: GrxColors.cffe0efff,
-                  width: 1,
-                ),
+                top: BorderSide(color: GrxColors.primary.shade50, width: 1),
               ),
             ),
             padding: EdgeInsets.only(
               top: 12.0,
               right: 16.0,
               left: 16.0,
-              bottom: mediaQuery.viewInsets.bottom +
+              bottom:
+                  mediaQuery.viewInsets.bottom +
                   mediaQuery.padding.bottom +
                   12.0,
             ),
@@ -234,9 +250,7 @@ class _GrxBottomSheetFormFieldBodyState<T> extends State<GrxBottomSheetFormField
                     },
                   ),
                 ),
-                const SizedBox(
-                  width: 12,
-                ),
+                const SizedBox(width: 12),
                 Flexible(
                   child: GrxPrimaryButton(
                     text: widget.confirmButtonLabel ?? 'Confirm',

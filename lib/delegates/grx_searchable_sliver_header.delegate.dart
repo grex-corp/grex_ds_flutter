@@ -3,22 +3,26 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
+import '../themes/icons/grx_icons.dart';
 import '../utils/grx_button.util.dart';
-import '../widgets/buttons/grx_add_button.widget.dart';
+import '../widgets/buttons/grx_circle_button.widget.dart';
 import '../widgets/buttons/grx_filter_button.widget.dart';
 import '../widgets/headers/grx_searchable_header.widget.dart';
 
-const double _kToolbarExtent = 130.0;
-const double _kFilterFieldExtent = 70.0;
+const double _kToolbarExtent = 60.0;
+const double _kFilterFieldExtent = 56.0;
+const double _kTotalWidgetExtent = 36.0;
 
 class GrxSearchableSliverHeaderDelegate extends SliverPersistentHeaderDelegate {
   const GrxSearchableSliverHeaderDelegate({
     required this.animationController,
     required this.title,
     required this.filterButtonText,
+    this.topSafePadding = 0.0,
     this.onFilter,
     this.onAdd,
     this.onQuickSearchHandler,
+    this.onTotalWidgetBuilder,
     this.hintText,
     this.canPop = false,
   });
@@ -26,9 +30,11 @@ class GrxSearchableSliverHeaderDelegate extends SliverPersistentHeaderDelegate {
   final AnimationController animationController;
   final String title;
   final String filterButtonText;
+  final double topSafePadding;
   final void Function()? onFilter;
   final void Function()? onAdd;
   final void Function(String)? onQuickSearchHandler;
+  final Widget Function(double progress)? onTotalWidgetBuilder;
   final String? hintText;
   final bool canPop;
 
@@ -60,24 +66,36 @@ class GrxSearchableSliverHeaderDelegate extends SliverPersistentHeaderDelegate {
               onPressed: onFilter!,
             ),
           if (onAdd != null)
-            GrxAddButton(
+            GrxCircleButton(
               margin: const EdgeInsets.only(right: 10.0),
               size: GrxButtonUtils.buttonAnimationProgressCalc(progress),
               onPressed: onAdd!,
+              child: Icon(GrxIcons.add, size: 24.0),
             ),
         ],
         onQuickSearchHandler: onQuickSearchHandler,
+        extraWidget: onTotalWidgetBuilder?.call(progress),
       ),
     );
   }
 
   @override
   double get maxExtent =>
-      _kToolbarExtent + (onQuickSearchHandler != null ? _kFilterFieldExtent : 0);
+      _kToolbarExtent +
+      topSafePadding +
+      (onQuickSearchHandler != null
+          ? _kFilterFieldExtent + (onTotalWidgetBuilder == null ? 8.0 : 0.0)
+          : 0.0) +
+      (onTotalWidgetBuilder != null ? _kTotalWidgetExtent : 0.0);
 
   @override
   double get minExtent =>
-      _kToolbarExtent + (onQuickSearchHandler != null ? _kFilterFieldExtent : 0);
+      _kToolbarExtent +
+      topSafePadding +
+      (onQuickSearchHandler != null
+          ? _kFilterFieldExtent + (onTotalWidgetBuilder == null ? 8.0 : 0.0)
+          : 0.0) +
+      (onTotalWidgetBuilder != null ? _kTotalWidgetExtent : 0);
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) =>

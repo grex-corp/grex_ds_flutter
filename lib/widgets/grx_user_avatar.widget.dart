@@ -9,6 +9,7 @@ import '../routes/fade_page.route.dart';
 import '../services/grx_image_picker.service.dart';
 import '../themes/colors/grx_colors.dart';
 import '../themes/icons/grx_icons.dart';
+import '../themes/spacing/grx_spacing.dart';
 import '../utils/grx_regex.util.dart';
 import '../utils/grx_utils.util.dart';
 import 'buttons/grx_circle_button.widget.dart';
@@ -16,21 +17,21 @@ import 'grx_shimmer.widget.dart';
 import 'typography/grx_body_text.widget.dart';
 
 class GrxUserAvatar extends StatefulWidget {
-  const GrxUserAvatar({
+  GrxUserAvatar({
     super.key,
     this.text,
     this.uri,
     this.imageFile,
     this.radius = 25.0,
-    this.backgroundColor = GrxColors.cff6bbaf0,
-    this.textColor = GrxColors.cffffffff,
+    this.textColor = GrxColors.neutrals,
     this.heroTag,
     this.openPreview = true,
     this.editable = false,
     this.avatarPickerButton,
     this.onPickAvatar,
     this.isLoading = false,
-  });
+    final Color? backgroundColor,
+  }) : backgroundColor = backgroundColor ?? GrxColors.primary.shade400;
 
   final String? text;
   final Uri? uri;
@@ -66,85 +67,92 @@ class _GrxUserAvatarState extends State<GrxUserAvatar> {
       );
     }
 
-    return Stack(
-      fit: StackFit.loose,
-      clipBehavior: Clip.none,
-      children: [
-        widget.imageFile != null
-            ? _buildAvatar(
-                context,
-                FileImage(widget.imageFile!),
-              )
-            : widget.uri != null
-                ? CachedNetworkImage(
-                    imageUrl: widget.uri.toString(),
-                    imageBuilder: (context, image) => GestureDetector(
-                      onTap: widget.openPreview
-                          ? () {
-                              Navigator.of(context).push(
-                                FadePageRoute(
-                                  builder: (context) => ImagePreview(
-                                    image: image,
-                                    title: 'Preview',
-                                    heroTag: widget.heroTag,
+    return Container(
+      padding: const EdgeInsets.all(2.0),
+      decoration: BoxDecoration(
+        border: Border.all(color: GrxColors.primary.shade600, width: 1.5),
+        borderRadius: BorderRadius.circular(widget.radius + 2.0),
+      ),
+      child: Stack(
+        fit: StackFit.loose,
+        clipBehavior: Clip.none,
+        children: [
+          widget.imageFile != null
+              ? _buildAvatar(context, FileImage(widget.imageFile!))
+              : widget.uri != null
+              ? CachedNetworkImage(
+                imageUrl: widget.uri.toString(),
+                imageBuilder:
+                    (context, image) => GestureDetector(
+                      onTap:
+                          widget.openPreview
+                              ? () {
+                                Navigator.of(context).push(
+                                  FadePageRoute(
+                                    builder:
+                                        (context) => ImagePreview(
+                                          image: image,
+                                          title: 'Preview',
+                                          heroTag: widget.heroTag,
+                                        ),
                                   ),
-                                ),
-                              );
-                            }
-                          : null,
-                      child: widget.heroTag != null
-                          ? Hero(
-                              tag: widget.heroTag!,
-                              transitionOnUserGestures: true,
-                              child: _buildAvatar(context, image),
-                            )
-                          : _buildAvatar(context, image),
+                                );
+                              }
+                              : null,
+                      child:
+                          widget.heroTag != null
+                              ? Hero(
+                                tag: widget.heroTag!,
+                                transitionOnUserGestures: true,
+                                child: _buildAvatar(context, image),
+                              )
+                              : _buildAvatar(context, image),
                     ),
-                    progressIndicatorBuilder: (context, url, downloadProgress) {
-                      return SizedBox.fromSize(
-                        size: Size.fromRadius(widget.radius),
-                        child: CircularProgressIndicator(
-                          value: downloadProgress.progress,
-                          strokeWidth: 1,
-                        ),
-                      );
-                    },
-                    errorWidget: (context, url, error) =>
-                        const Icon(Icons.error),
-                  )
-                : (widget.text?.isNotEmpty ?? false)
-                    ? CircleAvatar(
-                        radius: widget.radius,
-                        backgroundColor: widget.backgroundColor,
-                        child: Padding(
-                          padding: const EdgeInsets.all(2),
-                          child: GrxBodyText(
-                            RegExp(
-                              widget.text!.split(' ').length >= 2
-                                  ? GrxRegexUtils.fullNameAvatarRgx
-                                  : GrxRegexUtils.singleNameAvatarRgx,
-                            )
-                                .allMatches(widget.text!)
-                                .map((m) => m.group(0))
-                                .join()
-                                .toUpperCase()
-                                .substring(0, 2),
-                            color: widget.textColor,
-                            overflow: TextOverflow.clip,
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      )
-                    : CircleAvatar(
-                        radius: widget.radius,
-                        backgroundColor: widget.backgroundColor,
-                        backgroundImage: const AssetImage(
-                          'assets/images/default-avatar.png',
-                          package: GrxUtils.packageName,
-                        ),
-                      ),
-        _buildAvatarPickerIcon(context),
-      ],
+                progressIndicatorBuilder: (context, url, downloadProgress) {
+                  return SizedBox.fromSize(
+                    size: Size.fromRadius(widget.radius),
+                    child: CircularProgressIndicator(
+                      value: downloadProgress.progress,
+                      strokeWidth: 1,
+                    ),
+                  );
+                },
+                errorWidget: (context, url, error) => const Icon(Icons.error),
+              )
+              : (widget.text?.isNotEmpty ?? false)
+              ? CircleAvatar(
+                radius: widget.radius,
+                backgroundColor: widget.backgroundColor,
+                child: Padding(
+                  padding: const EdgeInsets.all(2),
+                  child: GrxBodyText(
+                    RegExp(
+                          widget.text!.split(' ').length >= 2
+                              ? GrxRegexUtils.fullNameAvatarRgx
+                              : GrxRegexUtils.singleNameAvatarRgx,
+                        )
+                        .allMatches(widget.text!)
+                        .map((m) => m.group(0))
+                        .join()
+                        .toUpperCase()
+                        .substring(0, 2),
+                    color: widget.textColor,
+                    overflow: TextOverflow.clip,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              )
+              : CircleAvatar(
+                radius: widget.radius,
+                backgroundColor: widget.backgroundColor,
+                backgroundImage: const AssetImage(
+                  'assets/images/default-avatar.png',
+                  package: GrxUtils.packageName,
+                ),
+              ),
+          _buildAvatarPickerIcon(context),
+        ],
+      ),
     );
   }
 
@@ -168,25 +176,21 @@ class _GrxUserAvatarState extends State<GrxUserAvatar> {
             widget.avatarPickerButton ??
                 GrxCircleButton(
                   size: widget.radius / 1.7,
-                  border:
-                      const BorderSide(width: 4, color: GrxColors.cffffffff),
+                  borderColor: GrxColors.neutrals,
+                  borderSize: GrxSpacing.xxs,
                   isLoading: isLoading,
-                  child: Icon(
-                    GrxIcons.camera_alt,
-                    size: widget.radius / 4,
-                  ),
+                  child: Icon(GrxIcons.camera_alt, size: widget.radius / 4),
                   onPressed: () async {
                     setLoading(true);
 
                     try {
-                      final file =
-                          await GrxImagePickerService.pickImage(context);
+                      final file = await GrxImagePickerService.pickImage(
+                        context,
+                      );
 
                       if (widget.onPickAvatar != null) {
                         final bytes = await file?.readAsBytes();
-                        widget.onPickAvatar!(
-                          await bytes?.toFile(),
-                        );
+                        widget.onPickAvatar!(await bytes?.toFile());
                       }
                     } finally {
                       setLoading(false);
@@ -199,7 +203,7 @@ class _GrxUserAvatarState extends State<GrxUserAvatar> {
     );
   }
 
-  setLoading(bool loading) => setState(() {
-        isLoading = loading;
-      });
+  void setLoading(bool loading) => setState(() {
+    isLoading = loading;
+  });
 }
