@@ -16,14 +16,80 @@ jobs:
     name: Auto Generate Tag
     runs-on: ubuntu-latest
     outputs:
-      tag: ${{ steps.gen-tag-step.outputs.tagname }}
+      tag: ${{ steps.create_tag.outputs.tagname }}
     steps:
       - uses: actions/checkout@v5
-      - uses: jacopocarlini/action-autotag@3.0.0
-        id: gen-tag-step
-        with:
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
-          tag_prefix: 'v'
+      # - uses: jacopocarlini/action-autotag@3.0.0
+      #   id: gen-tag-step
+      #   with:
+      #     GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+      #     tag_prefix: 'v'
+      - name: Verificar se o arquivo pubspec.yaml existe
+        run: |
+          # Verifica se o arquivo pubspec.yaml está presente
+          if [ ! -f "pubspec.yaml" ]; then
+            echo "Erro: o arquivo pubspec.yaml não foi encontrado"
+            exit 1
+          fi
+
+      - name: Extrair versão do pubspec.yaml
+        id: extract_version
+        run: |
+          # Ajuste o caminho caso o pubspec.yaml esteja em um subdiretório, como 'project/pubspec.yaml'
+          VERSION=$(grep '^version:' pubspec.yaml | awk '{print $2}' | sed 's/+/-/g')
+          
+          # Verifica se a versão foi corretamente extraída
+          if [ -z "$VERSION" ]; then
+            echo "Erro: não foi possível extrair a versão do pubspec.yaml"
+            exit 1
+          fi
+          
+          echo "Versão extraída: $VERSION"
+          
+          # Salva a versão extraída como variável de ambiente
+          echo "version=$VERSION" >> $GITHUB_ENV
+
+      - name: Verificar se a Tag Já Existe
+        id: check_tag
+        run: |
+          # Garante que o repositório Git está inicializado
+          git fetch --tags  # Baixa todas as tags do repositório remoto
+
+          # Verifica se a tag já existe
+          TAG="v${{ env.version }}"
+          EXISTING_TAG=$(git tag -l "$TAG")
+          
+          if [ -n "$EXISTING_TAG" ]; then
+            echo "A tag $TAG já existe. Pulando a criação da tag."
+            echo "tag_exists=true" >> $GITHUB_ENV  # Define uma variável de ambiente para indicar que a tag existe
+          else
+            echo "A tag $TAG não existe. Continuando o fluxo."
+            echo "tag_exists=false" >> $GITHUB_ENV  # Define uma variável de ambiente para indicar que a tag não existe
+          fi
+
+      - name: Criar e Push da Tag
+        id: create_tag
+        run: |
+          # Só cria e empurra a tag se a tag não existir
+          if [ "${{ env.tag_exists }}" == "false" ]; then
+            TAG="v${{ env.version }}"
+            git tag "$TAG"  # Exemplo: cria a tag v1.2.3
+            git push origin "$TAG"
+
+            # Definir o nome da tag criada como output do job
+            echo "tagname=$TAG" >> $GITHUB_OUTPUT  # Define o output "tagname" com o valor da tag criada
+          else
+            echo "Nenhuma nova tag criada, pois a tag já existe."
+          fi
+
+      - name: Confirmar Tag Criada
+        run: |
+          # Lista as tags para confirmar que a tag foi criada
+          git tag
+
+      - name: Exibir o Nome da Tag Criada
+        run: |
+          echo "A tag criada é: ${{ steps.create_tag.outputs.tagname }}"
 
   generate-changelog:
     if: ${{ startsWith(needs.auto-gen-tag.outputs.tag, 'v') }}
