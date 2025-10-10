@@ -354,7 +354,7 @@ class _DashboardWebPageState extends State<DashboardWebPage>
                             text: 'Show Error',
                             onPressed:
                                 () => GrxToastService.showError(
-                                  title: 'Error message inside error toast',
+                                  message: 'Error message inside error toast',
                                   context: context,
                                 ),
                           ),
@@ -362,7 +362,8 @@ class _DashboardWebPageState extends State<DashboardWebPage>
                             text: 'Show Warning',
                             onPressed:
                                 () => GrxToastService.showWarning(
-                                  title: 'Warning message inside warning toast',
+                                  message:
+                                      'Warning message inside warning toast',
                                   context: context,
                                 ),
                           ),
@@ -370,7 +371,8 @@ class _DashboardWebPageState extends State<DashboardWebPage>
                             text: 'Show Success',
                             onPressed:
                                 () => GrxToastService.showSuccess(
-                                  title: 'Success message inside success toast',
+                                  message:
+                                      'Success message inside success toast',
                                   context: context,
                                 ),
                           ),
@@ -379,7 +381,7 @@ class _DashboardWebPageState extends State<DashboardWebPage>
                             onPressed:
                                 () => GrxToastService.showWarning(
                                   permanent: true,
-                                  title: 'Showing permanent warning toast',
+                                  title: 'Permanent toast',
                                   message:
                                       'Adding a subtitle to show how it works',
                                   context: context,

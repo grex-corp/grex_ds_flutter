@@ -19,7 +19,6 @@ class GrxButton extends StatefulWidget {
     this.backgroundColor,
     this.onPressed,
     this.margin,
-    this.height = 48.0,
     this.mainAxisSize = MainAxisSize.max,
     this.icon,
     this.iconAlign = GrxAlign.left,
@@ -40,7 +39,6 @@ class GrxButton extends StatefulWidget {
   final GrxTextTransform transform;
   final void Function()? onPressed;
   final EdgeInsets? margin;
-  final double? height;
   final MainAxisSize mainAxisSize;
   final Color? backgroundColor;
   final Color foregroundColor;
@@ -50,7 +48,7 @@ class GrxButton extends StatefulWidget {
   final Color? iconColor;
   final double iconPadding;
   final GrxShape shape;
-  final EdgeInsetsGeometry padding;
+  final EdgeInsets padding;
   final TextStyle? style;
   final Color? borderColor;
   final TextStyle? textStyle;
