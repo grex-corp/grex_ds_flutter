@@ -36,7 +36,6 @@ class GrxBottomButton extends StatelessWidget {
     return GrxButton(
       text: text,
       transform: transform,
-      height: null,
       padding: EdgeInsets.only(
         left: 25,
         top: 22,

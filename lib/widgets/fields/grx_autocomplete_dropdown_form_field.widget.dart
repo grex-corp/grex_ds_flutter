@@ -128,7 +128,7 @@ class _GrxDropdownStateFormField<T>
     if (widget.setValueOnSelectItem) {
       _notifyListeners = false;
 
-      this.controller.text = widget.displayText(item);
+      controller.text = widget.displayText(item);
     }
 
     widget.onSelectItem?.call(item);

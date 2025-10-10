@@ -304,7 +304,7 @@ class _DashboardAppPageState extends State<DashboardAppPage>
                               text: 'Show Error',
                               onPressed:
                                   () => GrxToastService.showError(
-                                    title: 'Error message inside error toast',
+                                    message: 'Error message inside error toast',
                                     context: context,
                                   ),
                             ),
@@ -312,7 +312,7 @@ class _DashboardAppPageState extends State<DashboardAppPage>
                               text: 'Show Warning',
                               onPressed:
                                   () => GrxToastService.showWarning(
-                                    title:
+                                    message:
                                         'Warning message inside warning toast',
                                     context: context,
                                   ),
@@ -321,7 +321,7 @@ class _DashboardAppPageState extends State<DashboardAppPage>
                               text: 'Show Success',
                               onPressed:
                                   () => GrxToastService.showSuccess(
-                                    title:
+                                    message:
                                         'Success message inside success toast',
                                     context: context,
                                   ),
@@ -330,7 +330,24 @@ class _DashboardAppPageState extends State<DashboardAppPage>
                               text: 'Show Permanent Warning',
                               onPressed:
                                   () => GrxToastService.showWarning(
-                                    title: 'Showing permanent warning toast',
+                                    title: 'Permanent toast',
+                                    message:
+                                        'Adding a subtitle to show how it works',
+                                    context: context,
+                                    permanent: true,
+                                  ),
+                            ),
+                            GrxSecondaryButton(
+                              text: 'Show with actions',
+                              onPressed:
+                                  () => GrxToastService.showError(
+                                    title: 'Error toast',
+                                    actions: [
+                                      GrxToastAction(
+                                        label: 'Action 1',
+                                        onPressed: () {},
+                                      ),
+                                    ],
                                     message:
                                         'Adding a subtitle to show how it works',
                                     context: context,

@@ -7,7 +7,6 @@ class GrxSecondaryButton extends GrxRoundedButton {
     required super.text,
     super.transform,
     super.onPressed,
-    super.height,
     super.margin,
     super.mainAxisSize,
     super.icon,
@@ -20,5 +19,7 @@ class GrxSecondaryButton extends GrxRoundedButton {
     super.borderColor = GrxColors.primary,
     super.foregroundColor = GrxColors.primary,
     super.textStyle,
+    super.enabled,
+    super.padding,
   });
 }
