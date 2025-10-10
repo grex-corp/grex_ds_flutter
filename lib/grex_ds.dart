@@ -137,6 +137,7 @@ export 'widgets/grx_card.widget.dart' show GrxCard;
 
 /// Widget/Chip
 export 'widgets/grx_chip.widget.dart' show GrxChip;
+export 'enums/grx_chip_type.enum.dart' show GrxChipType;
 
 /// Widget/DashedDivider
 export 'widgets/grx_dashed_divider.widget.dart' show GrxDashedDivider;

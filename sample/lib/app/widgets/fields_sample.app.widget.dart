@@ -167,7 +167,11 @@ class _FieldsSampleAppState extends State<FieldsSampleApp> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           GrxHeadlineText(value.name),
-                          GrxRoundedCheckbox(value: isSelected, radius: 10),
+                          GrxRoundedCheckbox(
+                            value: isSelected,
+                            radius: 10,
+                            onChanged: (_) => onChanged?.call(),
+                          ),
                         ],
                       ),
                     ),
@@ -175,7 +179,11 @@ class _FieldsSampleAppState extends State<FieldsSampleApp> {
                 ),
             displayText: (value) => value.name,
             valueKey: (person) => person.id,
-            onSaved: (value) => widget.person.roles = value!,
+            onSaved: (value) {
+              print('Saved roles: $value');
+
+              widget.person.roles = value!;
+            },
             validator:
                 (value) =>
                     (value?.isEmpty ?? true)

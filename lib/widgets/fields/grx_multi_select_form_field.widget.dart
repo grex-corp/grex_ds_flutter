@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 
+import '../../enums/grx_chip_type.enum.dart';
 import '../../extensions/list.extension.dart';
 import '../../services/grx_bottom_sheet.service.dart';
-import '../../themes/colors/grx_colors.dart';
 import '../../themes/typography/styles/grx_label_large_text.style.dart';
 import '../bottom_sheet/grx_bottom_sheet_form_field_body.widget.dart';
 import '../grx_chip.widget.dart';
 import '../grx_stateful.widget.dart';
-import '../typography/grx_label_text.widget.dart';
 import 'controllers/grx_form_field.controller.dart';
 import 'grx_form_field.widget.dart';
 import 'grx_input_decoration.widget.dart';
@@ -152,11 +151,8 @@ class _GrxMultiSelectStateFormField<T>
 
               selectedOptions.add(
                 GrxChip(
-                  backgroundColor: GrxColors.success.shade300,
-                  label: GrxLabelText(
-                    widget.displayText(existingItem),
-                    color: GrxColors.neutrals,
-                  ),
+                  type: GrxChipType.info,
+                  label: widget.displayText(existingItem),
                 ),
               );
             }
@@ -216,32 +212,38 @@ class _GrxMultiSelectStateFormField<T>
           },
           child: Focus(
             focusNode: inputFocusNode,
-            child: InputDecorator(
-              baseStyle: GrxLabelLargeTextStyle(),
-              decoration: GrxInputDecoration(
-                errorText: field.errorText,
-                labelText: widget.labelText,
-                hintText: widget.hintText,
-                enabled: widget.enabled,
-                onClear: () {
-                  values = [];
-                  field.didChange(values);
-                },
-                showClearButton: !isEmpty(),
-              ),
-              isEmpty: isEmpty(),
-              isFocused: inputFocusNode.hasFocus,
-              child:
-                  (values?.isNotEmpty ?? false)
-                      ? Padding(
-                        padding: const EdgeInsets.only(top: 6.0),
-                        child: Wrap(
+            child: TapRegion(
+              onTapOutside: (_) {
+                inputFocusNode.unfocus();
+
+                setState(() {
+                  inputFocusNode.hasFocus;
+                });
+              },
+              child: InputDecorator(
+                baseStyle: GrxLabelLargeTextStyle(),
+                decoration: GrxInputDecoration(
+                  errorText: field.errorText,
+                  labelText: widget.labelText,
+                  hintText: widget.hintText,
+                  enabled: widget.enabled,
+                  onClear: () {
+                    values = [];
+                    field.didChange(values);
+                  },
+                  showClearButton: !isEmpty(),
+                ),
+                isEmpty: isEmpty(),
+                isFocused: inputFocusNode.hasFocus,
+                child:
+                    (values?.isNotEmpty ?? false)
+                        ? Wrap(
                           spacing: 4.0,
                           runSpacing: 2.0,
                           children: buildSelectedOptions(field),
-                        ),
-                      )
-                      : const SizedBox(height: 14),
+                        )
+                        : const SizedBox(height: 21),
+              ),
             ),
           ),
         );
