@@ -1,3 +1,7 @@
+## 0.1.0
+
+* Improve Toast style
+
 ## 0.0.9
 
 * Upgraded to latest Dart version

@@ -11,8 +11,9 @@ class GrxFilterButton extends GrxSecondaryButton {
     super.key,
     required super.text,
     super.onPressed,
-    super.height = 44.0,
     super.margin,
+    super.enabled,
+    super.padding,
   }) : super(
          icon: GrxIcons.filter_list,
          mainAxisSize: MainAxisSize.min,

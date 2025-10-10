@@ -1,14 +1,13 @@
-import 'package:delightful_toast/delight_toast.dart';
-import 'package:delightful_toast/toast/components/toast_card.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
+import 'dart:ui';
 
+import 'package:delightful_toast/delight_toast.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+import '../models/grx_toast_action.model.dart';
 import '../themes/colors/grx_colors.dart';
 import '../themes/icons/grx_icons.dart';
-import '../themes/spacing/grx_spacing.dart';
-import '../widgets/buttons/grx_icon_button.widget.dart';
-import '../widgets/typography/grx_label_large_text.widget.dart';
-import '../widgets/typography/grx_title_text.widget.dart';
+import '../widgets/grx_toast_card.widget.dart';
 
 abstract class GrxToastService {
   static BuildContext? _context;
@@ -16,69 +15,79 @@ abstract class GrxToastService {
   static void init(BuildContext context) => _context = context;
 
   static void showError({
-    required String title,
-    String? message,
+    required String message,
+    String? title,
     Duration? toastDuration,
     BuildContext? context,
     bool permanent = false,
+    List<GrxToastAction>? actions,
   }) => _show(
-    title: title,
+    message: message,
     icon: _getIcon(GrxIcons.cancel),
     backgroundColor: GrxColors.error,
-    message: message,
+    title: title,
     toastDuration: toastDuration,
     context: context,
     permanent: permanent,
+    actions: actions,
   );
 
   static void showWarning({
-    required String title,
-    String? message,
+    required String message,
+    String? title,
     Duration? toastDuration,
     BuildContext? context,
     bool permanent = false,
+    List<GrxToastAction>? actions,
   }) => _show(
-    title: title,
+    message: message,
     icon: _getIcon(GrxIcons.warning_amber),
     backgroundColor: GrxColors.warning,
-    message: message,
+    title: title,
     toastDuration: toastDuration,
     context: context,
     permanent: permanent,
+    actions: actions,
   );
 
   static void showSuccess({
-    required String title,
-    String? message,
+    required String message,
+    String? title,
     Duration? toastDuration,
     BuildContext? context,
     bool permanent = false,
+    List<GrxToastAction>? actions,
   }) => _show(
-    title: title,
+    message: message,
     icon: _getIcon(GrxIcons.check_circle_outline),
     backgroundColor: GrxColors.success,
-    message: message,
+    title: title,
     toastDuration: toastDuration,
     context: context,
     permanent: permanent,
+    actions: actions,
   );
 
   static void _show({
-    required String title,
+    required String message,
     required Icon icon,
     required Color backgroundColor,
-    String? message,
+    String? title,
     Duration? toastDuration,
     BuildContext? context,
     bool permanent = false,
+    List<GrxToastAction>? actions,
   }) {
     _validateContext(context);
 
-    int milliseconds = (title.length * 100 + (message?.length ?? 0) * 100);
-
-    if (milliseconds <= 3000) {
-      milliseconds = 3000;
-    }
+    final milliseconds =
+        clampDouble(
+          (message.length * 100 +
+              (title?.length ?? 0) * 100 +
+              (actions?.length ?? 0) * 100),
+          4000,
+          double.infinity,
+        ).toInt();
 
     final duration = toastDuration ?? Duration(milliseconds: milliseconds);
 
@@ -88,31 +97,14 @@ abstract class GrxToastService {
 
     toast = DelightToastBar(
       autoDismiss: !permanent,
-      snackbarDuration:
-          permanent ? const Duration(milliseconds: 5000) : duration,
+      snackbarDuration: duration,
       builder:
-          (context) => ToastCard(
-            leading: icon,
-            title: GrxTitleText(
-              title,
-              color: GrxColors.primary.shade900,
-              overflow: TextOverflow.visible,
-            ),
-            subtitle:
-                (message?.isNotEmpty ?? false)
-                    ? GrxLabelLargeText(
-                      message!,
-                      color: GrxColors.primary.shade900,
-                      overflow: TextOverflow.visible,
-                    )
-                    : null,
-            trailing: GrxIconButton(
-              margin: EdgeInsets.symmetric(horizontal: GrxSpacing.xxs),
-              icon: GrxIcons.close,
-              foregroundColor: GrxColors.primary.shade900,
-              onPressed: () => toast?.remove(),
-            ),
+          (context) => GrxToastCard(
+            message: message,
+            title: title,
+            actions: actions,
             color: backgroundColor,
+            onClose: () => toast?.remove(),
           ),
     )..show(buildContext);
   }

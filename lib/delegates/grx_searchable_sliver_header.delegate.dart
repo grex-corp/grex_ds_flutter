@@ -62,7 +62,9 @@ class GrxSearchableSliverHeaderDelegate extends SliverPersistentHeaderDelegate {
           if (onFilter != null)
             GrxFilterButton(
               text: filterButtonText,
-              height: GrxButtonUtils.buttonAnimationProgressCalc(progress),
+              padding: GrxButtonUtils.buttonAnimationProgressPaddingCalc(
+                progress,
+              ),
               onPressed: onFilter!,
             ),
           if (onAdd != null)
