@@ -4,6 +4,7 @@ import 'package:grex_ds/grex_ds.dart';
 import '../../extensions/string_extension.dart';
 import '../app/pages/dashboard.app.page.dart';
 import '../models/tab_icon_data.model.dart';
+import '../services/navigation.service.dart';
 import '../web/pages/dashboard.web.page.dart';
 import '../widgets/bottom_bar.widget.dart';
 import 'cellules_list.page.dart';
@@ -67,6 +68,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+
+    GrxToastService.init(NavigationService.navigatorKey.currentContext!);
 
     for (final tab in tabIconsList) {
       tab.isSelected = false;

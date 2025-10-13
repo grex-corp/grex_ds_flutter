@@ -72,7 +72,7 @@ class GrxSearchableSliverHeaderDelegate extends SliverPersistentHeaderDelegate {
               margin: const EdgeInsets.only(right: 10.0),
               size: GrxButtonUtils.buttonAnimationProgressCalc(progress),
               onPressed: onAdd!,
-              child: Icon(GrxIcons.add, size: 24.0),
+              child: Icon(GrxIcons.plus_l, size: 24.0),
             ),
         ],
         onQuickSearchHandler: onQuickSearchHandler,

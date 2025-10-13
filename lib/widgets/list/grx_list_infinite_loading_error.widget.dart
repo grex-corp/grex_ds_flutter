@@ -15,28 +15,19 @@ class GrxListInfiniteLoadingError extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => InkWell(
-        onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: 16.0,
-          ),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                GrxLabelLargeText(
-                  text,
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(
-                  height: 4.0,
-                ),
-                const Icon(
-                  GrxIcons.refresh,
-                ),
-              ],
-            ),
-          ),
+    onTap: onTap,
+    child: Padding(
+      padding: const EdgeInsets.symmetric(vertical: 16.0),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            GrxLabelLargeText(text, textAlign: TextAlign.center),
+            const SizedBox(height: 4.0),
+            const Icon(GrxIcons.arrows_restart_clockwise),
+          ],
         ),
-      );
+      ),
+    ),
+  );
 }

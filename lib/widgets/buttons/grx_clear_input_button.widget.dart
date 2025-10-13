@@ -11,6 +11,6 @@ class GrxClearInputButton extends GrxCircleButton {
         backgroundColor: GrxColors.neutrals.shade50,
         foregroundColor: GrxColors.neutrals.shade900,
         size: 24.0,
-        child: Icon(GrxIcons.close, size: 16.0),
+        child: Icon(GrxIcons.close_l, size: 16.0),
       );
 }

@@ -179,7 +179,7 @@ class _GrxUserAvatarState extends State<GrxUserAvatar> {
                   borderColor: GrxColors.neutrals,
                   borderSize: GrxSpacing.xxs,
                   isLoading: isLoading,
-                  child: Icon(GrxIcons.camera_alt, size: widget.radius / 4),
+                  child: Icon(GrxIcons.camera, size: widget.radius / 4),
                   onPressed: () async {
                     setLoading(true);
 

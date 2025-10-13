@@ -12,7 +12,7 @@ class GrxListError extends StatelessWidget {
     super.key,
     required this.title,
     required this.subTitle,
-    this.icon = const Icon(GrxIcons.error_outline, size: 86.0),
+    this.icon = const Icon(GrxIcons.circle_warning, size: 86.0),
     this.buttonOptions,
     this.animationController,
   }) : animation =

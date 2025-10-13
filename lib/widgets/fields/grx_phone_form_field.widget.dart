@@ -4,8 +4,6 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import '../../enums/grx_country_id.enum.dart';
 import '../../models/grx_country.model.dart';
 import '../../services/grx_bottom_sheet.service.dart';
-import '../../themes/colors/grx_colors.dart';
-import '../../themes/icons/grx_icons.dart';
 import '../../themes/spacing/grx_spacing.dart';
 import '../../utils/grx_country.util.dart';
 import '../../utils/grx_utils.util.dart';
@@ -159,29 +157,14 @@ class _GrxPhoneFormFieldState extends State<GrxPhoneFormField> {
                 );
               }
             },
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                GrxSvg(
-                  'assets/svgs/flags/${selectedCountry.flag}.svg',
-                  package: GrxUtils.packageName,
-                  width: 22.0,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: GrxSpacing.xxs,
-                  ),
-                  child: Icon(
-                    GrxIcons.arrow_drop_down,
-                    size: 18.0,
-                    color: GrxColors.neutrals.shade900,
-                  ),
-                ),
-              ],
+            child: GrxSvg(
+              'assets/svgs/flags/${selectedCountry.flag}.svg',
+              package: GrxUtils.packageName,
+              width: 22.0,
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(right: GrxSpacing.xxs),
+            padding: const EdgeInsets.symmetric(horizontal: GrxSpacing.xxs),
             child: GrxLabelLargeText(selectedCountry.code),
           ),
         ],

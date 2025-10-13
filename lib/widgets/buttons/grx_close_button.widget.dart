@@ -12,7 +12,7 @@ class GrxCloseButton extends GrxIconButton {
     super.margin,
     final Color? color,
   }) : super(
-         icon: GrxIcons.close,
+         icon: GrxIcons.close_l,
          foregroundColor: color ?? GrxColors.primary.shade900,
        );
 }

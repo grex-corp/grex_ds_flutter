@@ -14,7 +14,7 @@ class GrxListEmpty extends StatelessWidget {
     required this.title,
     required this.subTitle,
     this.icon = const Icon(
-      GrxIcons.format_list_bulleted,
+      GrxIcons.list_unordered,
       color: GrxColors.primary,
       size: 86.0,
     ),
