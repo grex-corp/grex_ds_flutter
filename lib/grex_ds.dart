@@ -1,5 +1,10 @@
 library;
 
+import 'package:flutter/material.dart';
+import 'package:flutter_libphonenumber/flutter_libphonenumber.dart' as phone;
+
+import 'services/grx_toast.service.dart';
+
 export 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 /// Animations
@@ -217,3 +222,43 @@ export 'themes/spacing/grx_spacing.dart' show GrxSpacing;
 
 /// Themes/Radius
 export 'themes/radius/grx_radius.dart' show GrxRadius;
+
+/// Grex Design System
+/// Main initialization class for the Grex Design System library
+abstract class GrexDS {
+  /// Initializes all required services for the Grex Design System
+  ///
+  /// This method should be called once at app startup, typically in the main function.
+  /// Optionally, provide a [context] to also initialize the toast service.
+  ///
+  /// Example (in main):
+  /// ```dart
+  /// void main() async {
+  ///   WidgetsFlutterBinding.ensureInitialized();
+  ///   await GrexDS.init();
+  ///   runApp(MyApp());
+  /// }
+  /// ```
+  ///
+  /// Example (with context for toast notifications):
+  /// ```dart
+  /// @override
+  /// void initState() {
+  ///   super.initState();
+  ///   WidgetsBinding.instance.addPostFrameCallback((_) async {
+  ///     await GrexDS.init(context);
+  ///   });
+  /// }
+  /// ```
+  ///
+  /// [context] - Optional BuildContext for initializing toast service
+  static Future<void> init([BuildContext? context]) async {
+    // Initialize toast service first if context is provided (synchronous)
+    if (context != null) {
+      GrxToastService.init(context);
+    }
+
+    // Initialize flutter_libphonenumber for phone number formatting
+    await phone.init();
+  }
+}

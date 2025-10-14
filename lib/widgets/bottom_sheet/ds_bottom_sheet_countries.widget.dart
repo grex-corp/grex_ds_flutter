@@ -4,13 +4,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../extensions/list.extension.dart';
 import '../../models/grx_country.model.dart';
 import '../../themes/colors/grx_colors.dart';
+import '../../themes/spacing/grx_spacing.dart';
+import '../../themes/typography/utils/grx_font_weights.dart';
 import '../../utils/grx_country.util.dart';
 import '../../utils/grx_utils.util.dart';
-import '../checkbox/grx_rounded_checkbox.widget.dart';
 import '../fields/grx_search_field.widget.dart';
 import '../grx_card.widget.dart';
 import '../typography/grx_body_text.widget.dart';
-import '../typography/grx_headline_small_text.widget.dart';
+import '../typography/grx_label_large_text.widget.dart';
 
 class GrxBottomSheetCountries extends StatefulWidget {
   const GrxBottomSheetCountries({super.key, required this.selectedCountry});
@@ -94,32 +95,37 @@ class _GrxBottomSheetCountriesState extends State<GrxBottomSheetCountries> {
                         padding: const EdgeInsets.all(16.0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          spacing: GrxSpacing.s,
                           children: [
                             Flexible(
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
+                                spacing: GrxSpacing.xs,
                                 children: [
                                   SvgPicture.asset(
                                     'assets/svgs/flags/${country.flag}.svg',
                                     width: 22.0,
                                     package: GrxUtils.packageName,
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 6.0,
-                                    ),
-                                    child: GrxBodyText(country.name),
-                                  ),
-                                  GrxHeadlineSmallText(country.code),
+                                  Flexible(child: GrxBodyText(country.name)),
                                 ],
                               ),
                             ),
-                            GrxRoundedCheckbox(
-                              value:
-                                  selectedCountry.code == country.code &&
-                                  selectedCountry.name == country.name,
-                              radius: 8.0,
-                              isTappable: false,
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: GrxSpacing.xs,
+                                vertical: GrxSpacing.xxs,
+                              ),
+                              decoration: BoxDecoration(
+                                color: GrxColors.neutrals.shade50,
+                                borderRadius: BorderRadius.circular(
+                                  GrxSpacing.xxs,
+                                ),
+                              ),
+                              child: GrxLabelLargeText(
+                                country.code,
+                                fontWeight: GrxFontWeights.medium,
+                              ),
                             ),
                           ],
                         ),

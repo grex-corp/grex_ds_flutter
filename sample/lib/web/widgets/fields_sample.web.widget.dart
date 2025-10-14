@@ -54,7 +54,7 @@ class _FieldsSampleWebState extends State<FieldsSampleWeb> {
           GrxPhoneFormField(
             value: widget.person.phone,
             labelText: 'pages.people.phone'.translate,
-            onSaved: (value, _) {
+            onSaved: (value) {
               print('Phone: $value');
               widget.person.phone = value!;
             },

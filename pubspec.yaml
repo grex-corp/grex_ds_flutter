@@ -27,6 +27,7 @@ dependencies:
   mask_text_input_formatter: ^2.9.0
   popover: ^0.3.1
   infinite_scroll_pagination: ^5.0.0
+  flutter_libphonenumber: ^2.4.0
 
 dev_dependencies:
   flutter_test:

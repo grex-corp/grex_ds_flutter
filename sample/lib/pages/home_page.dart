@@ -69,7 +69,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   void initState() {
     super.initState();
 
-    GrxToastService.init(NavigationService.navigatorKey.currentContext!);
+    GrexDS.init(NavigationService.navigatorKey.currentContext!);
 
     for (final tab in tabIconsList) {
       tab.isSelected = false;
