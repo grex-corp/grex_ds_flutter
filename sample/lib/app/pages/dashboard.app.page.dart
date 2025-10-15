@@ -78,7 +78,7 @@ class _DashboardAppPageState extends State<DashboardAppPage>
     person = Person(
       id: 22,
       name: 'Leonardo Gabriel',
-      phone: '+12125551234',
+      phone: GrxPhoneNumber(phone: '2125551234', countryCode: '+1'),
       birthDate: DateTime.now(),
       leadership: _leaders.first,
       roles: [_roles.first],

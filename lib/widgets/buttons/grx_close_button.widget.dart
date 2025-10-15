@@ -8,7 +8,7 @@ class GrxCloseButton extends GrxIconButton {
   GrxCloseButton({
     super.key,
     required super.onPressed,
-    super.size,
+    super.size = 18.0,
     super.margin,
     final Color? color,
   }) : super(

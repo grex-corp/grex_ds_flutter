@@ -25,6 +25,7 @@ export 'extensions/uint8_list.extension.dart' show Uint8ListExtension;
 /// Models
 export 'models/grx_country.model.dart' show GrxCountry;
 export 'models/grx_federative_unit.model.dart' show GrxFederativeUnit;
+export 'models/grx_phone_number.model.dart' show GrxPhoneNumber;
 export 'models/grx_toast_action.model.dart' show GrxToastAction;
 
 /// Services

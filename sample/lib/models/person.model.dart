@@ -1,3 +1,5 @@
+import 'package:grex_ds/grex_ds.dart';
+
 import '../enums/parent_worship_type.dart';
 import 'knowledge_trail_model.dart';
 import 'role.model.dart';
@@ -5,7 +7,7 @@ import 'role.model.dart';
 class Person {
   int id;
   String name;
-  String? phone;
+  GrxPhoneNumber? phone;
   Person? leadership;
   DateTime? birthDate;
   bool createUser;

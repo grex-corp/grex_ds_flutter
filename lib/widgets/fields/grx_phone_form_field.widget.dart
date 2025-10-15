@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_libphonenumber/flutter_libphonenumber.dart';
 
 import '../../models/grx_country.model.dart';
+import '../../models/grx_phone_number.model.dart';
 import '../../services/grx_bottom_sheet.service.dart';
 import '../../utils/grx_country.util.dart';
 import '../bottom_sheet/ds_bottom_sheet_countries.widget.dart';
@@ -39,14 +40,25 @@ class GrxPhoneFormField extends GrxStatefulWidget {
     this.isLoading = false,
   }) : super(key: key ?? ValueKey<int>(labelText.hashCode));
 
-  final GrxFormFieldController<String>? controller;
-  final String? value;
+  /// Phone number controller that works with [GrxPhoneNumber] model
+  final GrxFormFieldController<GrxPhoneNumber>? controller;
+  
+  /// Phone number value using [GrxPhoneNumber] model
+  final GrxPhoneNumber? value;
+  
   final String labelText;
   final TextInputType? keyboardType;
   final bool obscureText;
-  final void Function(String? value)? onChanged;
-  final void Function(String? value)? onSaved;
-  final FormFieldValidator<String?>? validator;
+  
+  /// Phone number callback that provides [GrxPhoneNumber] model
+  final void Function(GrxPhoneNumber? phone)? onChanged;
+  
+  /// Phone number callback that provides [GrxPhoneNumber] model
+  final void Function(GrxPhoneNumber? phone)? onSaved;
+  
+  /// Phone number validator that works with [GrxPhoneNumber] model
+  final FormFieldValidator<GrxPhoneNumber?>? validator;
+  
   final EdgeInsets? contentPadding;
   final TextCapitalization textCapitalization;
   final TextAlignVertical textAlignVertical;
@@ -56,7 +68,10 @@ class GrxPhoneFormField extends GrxStatefulWidget {
   final int? hintMaxLines;
   final AutovalidateMode autovalidateMode;
   final TextInputAction textInputAction;
-  final void Function(String? value)? onFieldSubmitted;
+  
+  /// Phone number callback that provides [GrxPhoneNumber] model
+  final void Function(GrxPhoneNumber? phone)? onFieldSubmitted;
+  
   final FocusNode? focusNode;
   final bool autoFocus;
   final bool enabled;
@@ -68,12 +83,21 @@ class GrxPhoneFormField extends GrxStatefulWidget {
 }
 
 class _GrxPhoneFormFieldState extends State<GrxPhoneFormField> {
-  late final controller = widget.controller ?? GrxFormFieldController<String>();
+  // Phone number controller
+  late final controller = widget.controller ?? GrxFormFieldController<GrxPhoneNumber>();
+  
+  // Internal state
   String selectedCountryCode = '+55'; // Default to Brazil
   String selectedRegionCode = 'BR'; // Default region code
   LibPhonenumberTextFormatter? formatter;
   bool _isInitialized = false;
   Map<String, CountryWithPhoneCode> regions = {};
+  
+  // Current phone number state
+  GrxPhoneNumber _currentPhoneNumber = GrxPhoneNumber.empty();
+  
+  // Internal text controller for display formatting
+  late final GrxFormFieldController<String> _textController = GrxFormFieldController<String>();
 
   @override
   void initState() {
@@ -107,15 +131,26 @@ class _GrxPhoneFormFieldState extends State<GrxPhoneFormField> {
       deviceRegion = null;
     }
 
-    if (widget.value != null && widget.value!.isNotEmpty) {
-      await _parseInitialValue(widget.value!, deviceRegion);
-    } else if (deviceRegion != null) {
-      // Set country code based on device region
-      selectedRegionCode = deviceRegion;
-      final regionInfo = regions[deviceRegion];
-      if (regionInfo != null) {
-        selectedCountryCode = '+${regionInfo.phoneCode}';
+    // Handle initial phone value
+    if (widget.value != null) {
+      await _parsePhoneValue(widget.value!, deviceRegion);
+    } else {
+      // Initialize with empty phone number and default country
+      if (deviceRegion != null) {
+        selectedRegionCode = deviceRegion;
+        final regionInfo = regions[deviceRegion];
+        if (regionInfo != null) {
+          selectedCountryCode = '+${regionInfo.phoneCode}';
+        }
       }
+      
+      // Initialize the controllers with empty phone number
+      _currentPhoneNumber = GrxPhoneNumber(
+        phone: '',
+        countryCode: selectedCountryCode,
+      );
+      controller.updateValue(_currentPhoneNumber);
+      _textController.text = ''; // Initialize text controller with empty string
     }
 
     // Create formatter
@@ -126,73 +161,44 @@ class _GrxPhoneFormFieldState extends State<GrxPhoneFormField> {
     });
   }
 
-  Future<void> _parseInitialValue(String value, String? deviceRegion) async {
-    // Clean the input value
-    final cleanValue = value.trim();
-
-    // If the number starts with +, manually extract the country code
-    if (cleanValue.startsWith('+')) {
-      final extractedInfo = _extractCountryCodeFromNumber(cleanValue);
-
-      if (extractedInfo != null) {
-        selectedCountryCode = extractedInfo['countryCode'];
-        selectedRegionCode = extractedInfo['regionCode'];
-        final nationalNumber = extractedInfo['nationalNumber'];
-
-        // Update formatter for the new region
-        _updateFormatter();
-
-        // Format and set the national number
-        await _setFormattedValue(nationalNumber);
-        return;
+  Future<void> _parsePhoneValue(GrxPhoneNumber phoneValue, String? deviceRegion) async {
+    // Update internal state
+    _currentPhoneNumber = phoneValue;
+    
+    // Update phone controller
+    controller.updateValue(phoneValue);
+    
+    // Set country code and region
+    if (phoneValue.hasCountryCode) {
+      selectedCountryCode = phoneValue.normalizedCountryCode;
+      
+      // Find the region for this country code
+      for (final entry in regions.entries) {
+        if ('+${entry.value.phoneCode}' == selectedCountryCode) {
+          selectedRegionCode = entry.key;
+          break;
+        }
       }
-    }
-
-    // For numbers without country code, use default or device region
-    if (deviceRegion != null) {
+    } else if (deviceRegion != null) {
       selectedRegionCode = deviceRegion;
       final regionInfo = regions[deviceRegion];
       if (regionInfo != null) {
         selectedCountryCode = '+${regionInfo.phoneCode}';
       }
     }
-
+    
     // Update formatter
     _updateFormatter();
-
-    // Set the value
-    await _setFormattedValue(cleanValue.replaceAll(RegExp(r'[^0-9]'), ''));
+    
+    // Set the formatted display value
+    await _setFormattedValue(phoneValue.phone);
   }
 
-  /// Manually extracts country code from international phone numbers
-  Map<String, dynamic>? _extractCountryCodeFromNumber(String phoneNumber) {
-    if (!phoneNumber.startsWith('+')) return null;
-
-    // Remove the + and get only digits
-    final digitsOnly = phoneNumber.substring(1).replaceAll(RegExp(r'[^0-9]'), '');
-
-    // Try to match country codes (longest first to avoid partial matches)
-    // Sort regions by phone code length descending
-    final sortedRegions = regions.entries.toList()
-      ..sort((a, b) => b.value.phoneCode.length.compareTo(a.value.phoneCode.length));
-
-    for (final entry in sortedRegions) {
-      final phoneCode = entry.value.phoneCode;
-      if (digitsOnly.startsWith(phoneCode)) {
-        return {
-          'countryCode': '+$phoneCode',
-          'regionCode': entry.key,
-          'nationalNumber': digitsOnly.substring(phoneCode.length),
-        };
-      }
-    }
-
-    return null;
-  }
 
   Future<void> _setFormattedValue(String value) async {
     if (value.isEmpty) {
-      controller.text = '';
+      _textController.text = '';
+      _updatePhoneNumber('');
       return;
     }
 
@@ -200,7 +206,8 @@ class _GrxPhoneFormFieldState extends State<GrxPhoneFormField> {
     final cleanValue = value.replaceAll(RegExp(r'[^0-9]'), '');
 
     if (cleanValue.isEmpty) {
-      controller.text = '';
+      _textController.text = '';
+      _updatePhoneNumber('');
       return;
     }
 
@@ -226,47 +233,63 @@ class _GrxPhoneFormFieldState extends State<GrxPhoneFormField> {
       // Additional cleaning: remove any leading + or spaces
       displayValue = displayValue.replaceFirst(RegExp(r'^\+?\s*'), '');
 
-      controller.text = displayValue;
+      _textController.text = displayValue;
+      _updatePhoneNumber(cleanValue);
     } catch (e) {
       // If formatting fails, just use the cleaned value
-      controller.text = cleanValue;
+      _textController.text = cleanValue;
+      _updatePhoneNumber(cleanValue);
     }
+  }
+
+  /// Updates the phone number model and controllers with the current values
+  void _updatePhoneNumber(String cleanPhoneNumber) {
+    final newPhoneNumber = GrxPhoneNumber(
+      phone: cleanPhoneNumber,
+      countryCode: selectedCountryCode,
+    );
+    
+    _currentPhoneNumber = newPhoneNumber;
+    controller.updateValue(newPhoneNumber);
+    
+    // Call the callback
+    widget.onChanged?.call(newPhoneNumber);
   }
 
   void _applyBrazilFormatting(String cleanValue) {
+    String formattedValue;
+    
     if (cleanValue.length < 2) {
-      controller.text = cleanValue;
-      return;
-    }
-
-    final areaCode = cleanValue.substring(0, 2);
-
-    if (cleanValue.length <= 2) {
-      controller.text = '($areaCode';
-    } else if (cleanValue.length <= 6) {
-      // Partial number
-      final rest = cleanValue.substring(2);
-      controller.text = '($areaCode) $rest';
-    } else if (cleanValue.length <= 10) {
-      // Old format: (XX) XXXX-XXXX
-      final firstPart = cleanValue.substring(2, 6);
-      final secondPart = cleanValue.substring(6);
-      controller.text = '($areaCode) $firstPart-$secondPart';
+      formattedValue = cleanValue;
     } else {
-      // New format: (XX) XXXXX-XXXX (11 digits)
-      final firstPart = cleanValue.substring(2, 7);
-      final secondPart = cleanValue.substring(
-        7,
-        cleanValue.length > 11 ? 11 : cleanValue.length,
-      );
-      controller.text = '($areaCode) $firstPart-$secondPart';
+      final areaCode = cleanValue.substring(0, 2);
+
+      if (cleanValue.length <= 2) {
+        formattedValue = '($areaCode';
+      } else if (cleanValue.length <= 6) {
+        // Partial number
+        final rest = cleanValue.substring(2);
+        formattedValue = '($areaCode) $rest';
+      } else if (cleanValue.length <= 10) {
+        // Old format: (XX) XXXX-XXXX
+        final firstPart = cleanValue.substring(2, 6);
+        final secondPart = cleanValue.substring(6);
+        formattedValue = '($areaCode) $firstPart-$secondPart';
+      } else {
+        // New format: (XX) XXXXX-XXXX (11 digits)
+        final firstPart = cleanValue.substring(2, 7);
+        final secondPart = cleanValue.substring(
+          7,
+          cleanValue.length > 11 ? 11 : cleanValue.length,
+        );
+        formattedValue = '($areaCode) $firstPart-$secondPart';
+      }
     }
+    
+    _textController.text = formattedValue;
+    _updatePhoneNumber(cleanValue);
   }
 
-  String? _getFullNumber() {
-    final cleanNumber = controller.text.replaceAll(RegExp(r'[^0-9]'), '');
-    return cleanNumber.isNotEmpty ? '$selectedCountryCode$cleanNumber' : null;
-  }
 
   CountryWithPhoneCode? _getCountryForRegion(String regionCode) {
     try {
@@ -320,6 +343,7 @@ class _GrxPhoneFormFieldState extends State<GrxPhoneFormField> {
     if (widget.controller == null) {
       controller.dispose();
     }
+    _textController.dispose();
     super.dispose();
   }
 
@@ -327,7 +351,7 @@ class _GrxPhoneFormFieldState extends State<GrxPhoneFormField> {
   Widget build(BuildContext context) {
     if (!_isInitialized) {
       return GrxTextFormField(
-        controller: controller,
+        controller: _textController,
         labelText: widget.labelText,
         enabled: false,
         hintText: 'Loading...',
@@ -335,8 +359,8 @@ class _GrxPhoneFormFieldState extends State<GrxPhoneFormField> {
     }
 
     return GrxTextFormField(
-      controller: controller,
-      value: controller.text,
+      controller: _textController,
+      value: _textController.text,
       labelText: widget.labelText,
       keyboardType: widget.keyboardType ?? TextInputType.phone,
       obscureText: widget.obscureText,
@@ -360,7 +384,7 @@ class _GrxPhoneFormFieldState extends State<GrxPhoneFormField> {
                 _updateFormatter();
 
                 // Reformat the current value with the new country code
-                final currentValue = controller.text.replaceAll(
+                final currentValue = _textController.text.replaceAll(
                   RegExp(r'[^0-9]'),
                   '',
                 );
@@ -369,7 +393,6 @@ class _GrxPhoneFormFieldState extends State<GrxPhoneFormField> {
                 }
 
                 setState(() {});
-                widget.onChanged?.call(_getFullNumber());
               }
             },
             child: Row(
@@ -383,10 +406,16 @@ class _GrxPhoneFormFieldState extends State<GrxPhoneFormField> {
         ],
       ),
       onChanged: (value) {
-        widget.onChanged?.call(_getFullNumber());
+        // Parse the current text and update phone number
+        final cleanNumber = value?.replaceAll(RegExp(r'[^0-9]'), '') ?? '';
+        _updatePhoneNumber(cleanNumber);
       },
-      onSaved: (value) => widget.onSaved?.call(_getFullNumber()),
-      validator: widget.validator,
+      onSaved: (value) {
+        widget.onSaved?.call(_currentPhoneNumber);
+      },
+      validator: (value) {
+        return widget.validator?.call(_currentPhoneNumber);
+      },
       contentPadding: widget.contentPadding,
       textCapitalization: widget.textCapitalization,
       textAlignVertical: widget.textAlignVertical,
@@ -396,8 +425,9 @@ class _GrxPhoneFormFieldState extends State<GrxPhoneFormField> {
       hintMaxLines: widget.hintMaxLines,
       autovalidateMode: widget.autovalidateMode,
       textInputAction: widget.textInputAction,
-      onFieldSubmitted:
-          (value) => widget.onFieldSubmitted?.call(_getFullNumber()),
+      onFieldSubmitted: (value) {
+        widget.onFieldSubmitted?.call(_currentPhoneNumber);
+      },
       focusNode: widget.focusNode,
       autoFocus: widget.autoFocus,
       enabled: widget.enabled,
@@ -416,64 +446,165 @@ class BrazilPhoneInputFormatter extends TextInputFormatter {
     TextEditingValue oldValue,
     TextEditingValue newValue,
   ) {
-    final text = newValue.text;
+    final oldText = oldValue.text;
+    final newText = newValue.text;
+    final oldCursorPosition = oldValue.selection.baseOffset;
+    
+    // Check if this is a deletion operation
+    final isDeleting = newText.length < oldText.length;
+    
+    // Remove all non-digit characters from both old and new text
+    final oldDigitsOnly = oldText.replaceAll(RegExp(r'[^0-9]'), '');
+    final newDigitsOnly = newText.replaceAll(RegExp(r'[^0-9]'), '');
 
-    // Remove all non-digit characters
-    final digitsOnly = text.replaceAll(RegExp(r'[^0-9]'), '');
-
-    // Limit to 11 digits
-    final limitedDigits =
-        digitsOnly.length > 11 ? digitsOnly.substring(0, 11) : digitsOnly;
-
-    if (limitedDigits.isEmpty) {
-      return const TextEditingValue();
+    // If all digits are removed, return empty
+    if (newDigitsOnly.isEmpty) {
+      return const TextEditingValue(
+        text: '',
+        selection: TextSelection.collapsed(offset: 0),
+      );
     }
 
-    final buffer = StringBuffer();
-
-    // Area code
-    if (limitedDigits.isNotEmpty) {
-      buffer.write('(');
-      buffer.write(
-        limitedDigits.substring(
-          0,
-          limitedDigits.length >= 2 ? 2 : limitedDigits.length,
-        ),
-      );
-
-      if (limitedDigits.length >= 2) {
-        buffer.write(') ');
-
-        // First part of the number
-        if (limitedDigits.length <= 10) {
-          // 10-digit format: (XX) XXXX-XXXX
-          final firstPartLength =
-              limitedDigits.length >= 6 ? 4 : limitedDigits.length - 2;
-          buffer.write(limitedDigits.substring(2, 2 + firstPartLength));
-
-          if (limitedDigits.length > 6) {
-            buffer.write('-');
-            buffer.write(limitedDigits.substring(6));
-          }
-        } else {
-          // 11-digit format: (XX) XXXXX-XXXX
-          final firstPartLength =
-              limitedDigits.length >= 7 ? 5 : limitedDigits.length - 2;
-          buffer.write(limitedDigits.substring(2, 2 + firstPartLength));
-
-          if (limitedDigits.length > 7) {
-            buffer.write('-');
-            buffer.write(limitedDigits.substring(7));
-          }
-        }
+    // Handle special deletion case: if user is trying to delete formatting characters
+    if (isDeleting && oldDigitsOnly == newDigitsOnly) {
+      // User is deleting formatting characters, not digits
+      // Allow this by removing one digit from the end
+      if (oldDigitsOnly.length > 1) {
+        final adjustedDigits = oldDigitsOnly.substring(0, oldDigitsOnly.length - 1);
+        final formattedText = _formatBrazilianNumber(adjustedDigits);
+        return TextEditingValue(
+          text: formattedText,
+          selection: TextSelection.collapsed(offset: formattedText.length),
+        );
+      } else {
+        // If only one digit, allow complete deletion
+        return const TextEditingValue(
+          text: '',
+          selection: TextSelection.collapsed(offset: 0),
+        );
       }
     }
 
-    final formattedText = buffer.toString();
+    // Limit to 11 digits
+    final limitedDigits = newDigitsOnly.length > 11 
+        ? newDigitsOnly.substring(0, 11) 
+        : newDigitsOnly;
+
+    // Format the number
+    final formattedText = _formatBrazilianNumber(limitedDigits);
+    
+    // Calculate the correct cursor position
+    int newCursorPosition;
+    
+    if (isDeleting) {
+      // When deleting, try to maintain a logical cursor position
+      newCursorPosition = _calculateCursorPositionForDeletion(
+        oldText, 
+        oldCursorPosition, 
+        formattedText, 
+        oldDigitsOnly, 
+        limitedDigits,
+      );
+    } else {
+      // When typing, place cursor at the end of the formatted text
+      newCursorPosition = formattedText.length;
+    }
+    
+    // Ensure cursor position is within bounds
+    newCursorPosition = newCursorPosition.clamp(0, formattedText.length);
 
     return TextEditingValue(
       text: formattedText,
-      selection: TextSelection.collapsed(offset: formattedText.length),
+      selection: TextSelection.collapsed(offset: newCursorPosition),
     );
+  }
+  
+  /// Formats Brazilian phone numbers with proper masks
+  String _formatBrazilianNumber(String digits) {
+    if (digits.isEmpty) return '';
+    
+    final buffer = StringBuffer();
+    
+    // Area code
+    buffer.write('(');
+    buffer.write(digits.substring(0, digits.length >= 2 ? 2 : digits.length));
+    
+    if (digits.length >= 2) {
+      buffer.write(') ');
+      
+      if (digits.length <= 10) {
+        // 10-digit format: (XX) XXXX-XXXX
+        final firstPart = digits.substring(2, digits.length >= 6 ? 6 : digits.length);
+        buffer.write(firstPart);
+        
+        if (digits.length > 6) {
+          buffer.write('-');
+          buffer.write(digits.substring(6));
+        }
+      } else {
+        // 11-digit format: (XX) XXXXX-XXXX
+        final firstPart = digits.substring(2, digits.length >= 7 ? 7 : digits.length);
+        buffer.write(firstPart);
+        
+        if (digits.length > 7) {
+          buffer.write('-');
+          buffer.write(digits.substring(7));
+        }
+      }
+    }
+    
+    return buffer.toString();
+  }
+  
+  /// Calculates appropriate cursor position during deletion
+  int _calculateCursorPositionForDeletion(
+    String oldText,
+    int oldCursorPosition,
+    String newFormattedText,
+    String oldDigits,
+    String newDigits,
+  ) {
+    // If we're deleting and the cursor is at the end, move it back appropriately
+    if (oldCursorPosition == oldText.length) {
+      // Special case: if we have only area code digits (2 or fewer), allow deletion to continue
+      if (newDigits.length <= 2 && newFormattedText.endsWith(') ')) {
+        // Allow deletion of the closing parenthesis and space
+        return newFormattedText.length - 2;
+      }
+      
+      // If we deleted a digit, place cursor at the end of the new formatted text
+      return newFormattedText.length;
+    }
+    
+    // If we're deleting from the middle, try to maintain relative position
+    final deletedDigitCount = oldDigits.length - newDigits.length;
+    
+    if (deletedDigitCount > 0) {
+      // Find where the cursor should be based on the remaining digits
+      final digitPosition = _findDigitPositionInFormattedText(
+        newFormattedText, 
+        newDigits.length,
+      );
+      return digitPosition;
+    }
+    
+    // Default: place at end
+    return newFormattedText.length;
+  }
+  
+  /// Finds the position in formatted text where a specific number of digits would end
+  int _findDigitPositionInFormattedText(String formattedText, int digitCount) {
+    int digitIndex = 0;
+    
+    for (int i = 0; i < formattedText.length; i++) {
+      if (RegExp(r'[0-9]').hasMatch(formattedText[i])) {
+        digitIndex++;
+        if (digitIndex == digitCount) {
+          return i + 1; // Position after this digit
+        }
+      }
+    }
+    
+    return formattedText.length;
   }
 }
