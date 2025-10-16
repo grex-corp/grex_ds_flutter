@@ -30,6 +30,7 @@ class GrxInputDecoration extends InputDecoration {
                GrxClearInputButton(onClear: onClear!),
            ],
          ),
+         isDense: true,
        );
 
   final void Function()? onClear;

@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 
 import '../models/grx_toast_action.model.dart';
 import '../themes/colors/grx_colors.dart';
-import '../themes/icons/grx_icons.dart';
 import '../widgets/grx_toast_card.widget.dart';
 
 abstract class GrxToastService {
@@ -23,7 +22,6 @@ abstract class GrxToastService {
     List<GrxToastAction>? actions,
   }) => _show(
     message: message,
-    icon: _getIcon(GrxIcons.cancel),
     backgroundColor: GrxColors.error,
     title: title,
     toastDuration: toastDuration,
@@ -41,7 +39,6 @@ abstract class GrxToastService {
     List<GrxToastAction>? actions,
   }) => _show(
     message: message,
-    icon: _getIcon(GrxIcons.warning_amber),
     backgroundColor: GrxColors.warning,
     title: title,
     toastDuration: toastDuration,
@@ -59,7 +56,6 @@ abstract class GrxToastService {
     List<GrxToastAction>? actions,
   }) => _show(
     message: message,
-    icon: _getIcon(GrxIcons.check_circle_outline),
     backgroundColor: GrxColors.success,
     title: title,
     toastDuration: toastDuration,
@@ -70,7 +66,6 @@ abstract class GrxToastService {
 
   static void _show({
     required String message,
-    required Icon icon,
     required Color backgroundColor,
     String? title,
     Duration? toastDuration,
@@ -108,9 +103,6 @@ abstract class GrxToastService {
           ),
     )..show(buildContext);
   }
-
-  static Icon _getIcon(IconData data) =>
-      Icon(data, size: 24.0, color: GrxColors.primary.shade900);
 
   static void _validateContext(BuildContext? context) {
     if ((context ?? _context) == null) {

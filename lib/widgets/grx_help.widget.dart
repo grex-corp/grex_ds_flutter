@@ -18,7 +18,7 @@ class GrxHelpWidget extends StatelessWidget {
     final size = MediaQuery.of(context).size;
 
     return GestureDetector(
-      child: const Icon(GrxIcons.help_outline, size: 20.0),
+      child: const Icon(GrxIcons.circle_info, size: 20.0),
       onTap: () {
         showPopover(
           context: context,

@@ -47,7 +47,10 @@ class GrxToastCard extends StatelessWidget {
           Positioned(
             top: GrxSpacing.s,
             right: GrxSpacing.s,
-            child: GrxCloseButton(onPressed: onClose),
+            child: Padding(
+              padding: const EdgeInsets.all(GrxSpacing.xxs),
+              child: GrxCloseButton(onPressed: onClose),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.all(GrxSpacing.ml),

@@ -30,6 +30,7 @@ class GrxUserAvatar extends StatefulWidget {
     this.avatarPickerButton,
     this.onPickAvatar,
     this.isLoading = false,
+    this.showBorder = false,
     final Color? backgroundColor,
   }) : backgroundColor = backgroundColor ?? GrxColors.primary.shade400;
 
@@ -45,6 +46,7 @@ class GrxUserAvatar extends StatefulWidget {
   final Widget? avatarPickerButton;
   final void Function(File?)? onPickAvatar;
   final bool isLoading;
+  final bool showBorder;
 
   @override
   State<StatefulWidget> createState() => _GrxUserAvatarState();
@@ -68,11 +70,11 @@ class _GrxUserAvatarState extends State<GrxUserAvatar> {
     }
 
     return Container(
-      padding: const EdgeInsets.all(2.0),
-      decoration: BoxDecoration(
+      padding: widget.showBorder ? const EdgeInsets.all(2.0) : EdgeInsets.zero,
+      decoration: widget.showBorder ? BoxDecoration(
         border: Border.all(color: GrxColors.primary.shade600, width: 1.5),
         borderRadius: BorderRadius.circular(widget.radius + 2.0),
-      ),
+      ) : null,
       child: Stack(
         fit: StackFit.loose,
         clipBehavior: Clip.none,
@@ -179,7 +181,7 @@ class _GrxUserAvatarState extends State<GrxUserAvatar> {
                   borderColor: GrxColors.neutrals,
                   borderSize: GrxSpacing.xxs,
                   isLoading: isLoading,
-                  child: Icon(GrxIcons.camera_alt, size: widget.radius / 4),
+                  child: Icon(GrxIcons.camera, size: widget.radius / 4),
                   onPressed: () async {
                     setLoading(true);
 

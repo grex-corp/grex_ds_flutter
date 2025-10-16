@@ -41,59 +41,67 @@ class _FieldsSampleWebState extends State<FieldsSampleWeb> {
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          GrxTextFormField(
-            value: widget.person.name,
-            labelText: 'pages.people.name'.translate,
-            hintText: 'José Algusto',
-            onSaved: (value) => widget.person.name = value!,
-            validator: (value) =>
-                (value?.isEmpty ?? true) ? 'Insira o nome da pessoa' : null,
-            isLoading: _isLoading,
-          ),
-          GrxPhoneFormField(
-            value: widget.person.phone,
-            labelText: 'pages.people.phone'.translate,
-            onSaved: (value, _) {
-              print('Phone: $value');
-              widget.person.phone = value!;
-            },
-            validator: (value) =>
-                (value?.isEmpty ?? true) ? 'Insira o telefone da pessoa' : null,
-            isLoading: _isLoading,
-          ),
-          GrxDateTimePickerFormField(
-            value: widget.person.birthDate,
-            labelText: 'pages.people.birth-date'.translate,
-            // hintText: 'fields.datetime.hint'.translate,
-            dialogConfirmText: 'confirm'.translate,
-            dialogCancelText: 'cancel'.translate,
-            dialogErrorFormatText: 'fields.datetime.error-format'.translate,
-            dialogErrorInvalidText: 'fields.datetime.error-invalid'.translate,
-            isDateTime: true,
-            onSelectItem: (value) => print('Selected birth date: $value'),
-            onSaved: (value) {
-              print('Saved Birthdate: $value');
-
-              widget.person.birthDate = value;
-            },
-            // validator: (value) => (value?.isEmpty ?? true)
-            //     ? 'Insira a data de nascimento'
-            //     : null,
-            isLoading: _isLoading,
-          ),
-        ]
-            .map(
-              (child) => Flexible(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8.0,
+        children:
+            [
+                  GrxTextFormField(
+                    value: widget.person.name,
+                    labelText: 'pages.people.name'.translate,
+                    hintText: 'José Algusto',
+                    onSaved: (value) => widget.person.name = value!,
+                    validator:
+                        (value) =>
+                            (value?.isEmpty ?? true)
+                                ? 'Insira o nome da pessoa'
+                                : null,
+                    isLoading: _isLoading,
                   ),
-                  child: child,
-                ),
-              ),
-            )
-            .toList(),
+                  GrxPhoneFormField(
+                    value: widget.person.phone,
+                    labelText: 'pages.people.phone'.translate,
+                    onSaved: (value) {
+                      print('Phone: $value');
+                      widget.person.phone = value!;
+                    },
+                    validator:
+                        (value) =>
+                            (value?.isEmpty ?? true)
+                                ? 'Insira o telefone da pessoa'
+                                : null,
+                    isLoading: _isLoading,
+                  ),
+                  GrxDateTimePickerFormField(
+                    value: widget.person.birthDate,
+                    labelText: 'pages.people.birth-date'.translate,
+                    // hintText: 'fields.datetime.hint'.translate,
+                    dialogConfirmText: 'confirm'.translate,
+                    dialogCancelText: 'cancel'.translate,
+                    dialogErrorFormatText:
+                        'fields.datetime.error-format'.translate,
+                    dialogErrorInvalidText:
+                        'fields.datetime.error-invalid'.translate,
+                    isDateTime: true,
+                    onSelectItem:
+                        (value) => print('Selected birth date: $value'),
+                    onSaved: (value) {
+                      print('Saved Birthdate: $value');
+
+                      widget.person.birthDate = value;
+                    },
+                    // validator: (value) => (value?.isEmpty ?? true)
+                    //     ? 'Insira a data de nascimento'
+                    //     : null,
+                    isLoading: _isLoading,
+                  ),
+                ]
+                .map(
+                  (child) => Flexible(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: child,
+                    ),
+                  ),
+                )
+                .toList(),
       ),
     );
   }

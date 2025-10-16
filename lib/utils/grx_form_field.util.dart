@@ -17,9 +17,11 @@ abstract class GrxFormFieldUtils {
           onChanged(value);
         }
 
-        SchedulerBinding.instance.addPostFrameCallback(
-          (_) => field.didChange(value),
-        );
+        SchedulerBinding.instance.addPostFrameCallback((_) {
+          if (field.mounted) {
+            field.didChange(value);
+          }
+        });
       }
     }
 

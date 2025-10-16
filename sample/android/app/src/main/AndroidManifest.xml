@@ -2,15 +2,16 @@
     package="com.example.sample">
 
     <uses-permission android:name="android.permission.INTERNET"/>
-    <!-- for below android 13-->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!-- for above android 13-->
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
-    <!-- <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
-    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" /> -->
-
-    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-feature android:name="android.hardware.camera" android:required="false"/>
+    
+    <!-- Gallery/Storage Permissions -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" 
+        android:maxSdkVersion="32"/>
+    
+    <!-- Android 13+ (API 33+) Photo Picker -->
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
 
    <application
         android:label="sample"

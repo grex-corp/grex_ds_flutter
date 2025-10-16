@@ -12,7 +12,7 @@ class GrxBackButton extends GrxIconButton {
     super.margin,
     final Color? color,
   }) : super(
-         icon: GrxIcons.arrow_back_ios,
+         icon: GrxIcons.chevron_left_l,
          foregroundColor: color ?? GrxColors.primary.shade800,
        );
 }

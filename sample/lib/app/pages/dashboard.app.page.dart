@@ -78,7 +78,7 @@ class _DashboardAppPageState extends State<DashboardAppPage>
     person = Person(
       id: 22,
       name: 'Leonardo Gabriel',
-      phone: '54992099544',
+      phone: GrxPhoneNumber(phone: '2125551234', countryCode: '+1'),
       birthDate: DateTime.now(),
       leadership: _leaders.first,
       roles: [_roles.first],
@@ -150,7 +150,7 @@ class _DashboardAppPageState extends State<DashboardAppPage>
                 // horizontal).
                 // mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Icon(GrxIcons.undo),
+                  Icon(GrxIcons.arrow_undo_up_right),
                   const TypoSample(),
                   ButtonsSample(),
                   Form(
@@ -260,7 +260,7 @@ class _DashboardAppPageState extends State<DashboardAppPage>
                         GrxSecondaryButton(
                           text: 'Cadastrar',
                           margin: const EdgeInsets.symmetric(horizontal: 16),
-                          icon: GrxIcons.person_add_right,
+                          icon: GrxIcons.user_add,
                           onPressed: () {
                             setState(() {
                               person = Person(
@@ -375,7 +375,7 @@ class _DashboardAppPageState extends State<DashboardAppPage>
                             GrxCircleButton(
                               onPressed: () {},
                               margin: const EdgeInsets.only(right: 10.0),
-                              child: Icon(GrxIcons.add, size: 24.0),
+                              child: Icon(GrxIcons.plus_l, size: 24.0),
                             ),
                           ],
                         ),
@@ -398,7 +398,7 @@ class _DashboardAppPageState extends State<DashboardAppPage>
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         tooltip: 'Increment',
-        child: const Icon(GrxIcons.save_alt),
+        child: const Icon(GrxIcons.save),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
