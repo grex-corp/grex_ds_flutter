@@ -1,3 +1,7 @@
+## 0.1.1
+
+* Improve phone form field
+
 ## 0.1.0
 
 * Improve Toast style
