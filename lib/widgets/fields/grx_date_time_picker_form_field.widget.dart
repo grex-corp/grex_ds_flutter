@@ -23,15 +23,15 @@ class GrxDateTimePickerFormField extends GrxStatefulWidget {
     this.onSelectItem,
     this.onSaved,
     this.validator,
+    this.textInputAction = TextInputAction.next,
+    this.onFieldSubmitted,
     this.focusNode,
     this.isDateTime = false,
     this.enabled = true,
     this.flexible = false,
     this.futureDate = false,
     this.isLoading = false,
-  }) : super(
-          key: key ?? ValueKey<int>(labelText.hashCode),
-        );
+  }) : super(key: key ?? ValueKey<int>(labelText.hashCode));
 
   final GrxFormFieldController<DateTime>? controller;
   final DateTime? value;
@@ -45,6 +45,8 @@ class GrxDateTimePickerFormField extends GrxStatefulWidget {
   final void Function(DateTime?)? onSelectItem;
   final FormFieldSetter<DateTime?>? onSaved;
   final FormFieldValidator<DateTime?>? validator;
+  final TextInputAction textInputAction;
+  final void Function(DateTime?)? onFieldSubmitted;
   final FocusNode? focusNode;
   final bool isDateTime;
   final bool enabled;
@@ -114,9 +116,7 @@ class _GrxDateTimePickerFormFieldState
   @override
   Widget build(_) {
     if (widget.isLoading) {
-      return GrxFormFieldShimmer(
-        labelText: widget.labelText,
-      );
+      return GrxFormFieldShimmer(labelText: widget.labelText);
     }
 
     return GrxFormField<String>(
@@ -144,7 +144,11 @@ class _GrxDateTimePickerFormFieldState
           hintText: widget.hintText,
           labelText: widget.labelText,
           focusNode: widget.focusNode,
+          textInputAction: widget.textInputAction,
           errorText: field.errorText,
+          onSubmitted: (_) {
+            widget.onFieldSubmitted?.call(value);
+          },
           onTap: () async {
             final today = DateTime.now();
             late final DateTime? selectedDate;
@@ -172,13 +176,15 @@ class _GrxDateTimePickerFormFieldState
                 context: context,
                 confirmText: widget.dialogConfirmText,
                 cancelText: widget.dialogCancelText,
-                initialTime: value != null
-                    ? TimeOfDay(hour: value!.hour, minute: value!.minute)
-                    : TimeOfDay.now(),
+                initialTime:
+                    value != null
+                        ? TimeOfDay(hour: value!.hour, minute: value!.minute)
+                        : TimeOfDay.now(),
                 builder: (context, child) {
                   return MediaQuery(
-                    data: MediaQuery.of(context)
-                        .copyWith(alwaysUse24HourFormat: true),
+                    data: MediaQuery.of(
+                      context,
+                    ).copyWith(alwaysUse24HourFormat: true),
                     child: child!,
                   );
                 },
@@ -188,24 +194,30 @@ class _GrxDateTimePickerFormFieldState
             DateTime? date;
 
             if (selectedTime != null) {
-              date = DateTime(selectedDate!.year, selectedDate.month,
-                  selectedDate.day, selectedTime.hour, selectedTime.minute);
+              date = DateTime(
+                selectedDate!.year,
+                selectedDate.month,
+                selectedDate.day,
+                selectedTime.hour,
+                selectedTime.minute,
+              );
             } else if (selectedDate != null) {
               date = DateTime(
-                  selectedDate.year, selectedDate.month, selectedDate.day);
+                selectedDate.year,
+                selectedDate.month,
+                selectedDate.day,
+              );
             }
 
             if (date != null) {
-              setState(
-                () {
-                  value = date;
-                  controller.text = _formatValue(value!);
+              setState(() {
+                value = date;
+                controller.text = _formatValue(value!);
 
-                  if (widget.onSelectItem != null) {
-                    widget.onSelectItem!(value);
-                  }
-                },
-              );
+                if (widget.onSelectItem != null) {
+                  widget.onSelectItem!(value);
+                }
+              });
             }
           },
           enabled: widget.enabled,
