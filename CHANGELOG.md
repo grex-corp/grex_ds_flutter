@@ -1,3 +1,7 @@
+## 0.1.3
+
+* Create a text sanitizer
+
 ## 0.1.2
 
 * Improve avatar picker permissions

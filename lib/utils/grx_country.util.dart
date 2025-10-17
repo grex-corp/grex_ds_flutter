@@ -7,6 +7,12 @@ abstract class GrxCountryUtils {
       .map<GrxCountry?>((x) => x)
       .firstWhere((country) => country!.id == id, orElse: () => null);
 
+  static GrxCountry findCountryByPhone(final String? e164Phone) =>
+      countries.firstWhere(
+        (country) => e164Phone?.startsWith(country.code) ?? false,
+        orElse: () => GrxCountry.unknown(),
+      );
+
   static const countries = <GrxCountry>[
     GrxCountry(
       id: GrxCountryId.BR,
@@ -14,13 +20,8 @@ abstract class GrxCountryUtils {
       name: 'Brasil',
       flag: 'brazil_flag',
       language: 'pt-BR',
-      phoneMasks: [
-        '(##) ####-#####',
-        '(##) #####-####',
-      ],
-      zipcodeMasks: [
-        '#####-###',
-      ],
+      phoneMasks: ['(##) ####-####', '(##) #####-####'],
+      zipcodeMasks: ['#####-###'],
       states: GrxStaticValuesService.brStates,
     ),
     GrxCountry(
@@ -29,9 +30,7 @@ abstract class GrxCountryUtils {
       name: 'Estados Unidos',
       flag: 'united_states_flag',
       language: 'en-US',
-      phoneMasks: [
-        '(###) ###-####',
-      ],
+      phoneMasks: ['(###) ###-####'],
       states: GrxStaticValuesService.usStates,
     ),
     GrxCountry(
@@ -40,9 +39,7 @@ abstract class GrxCountryUtils {
       name: 'Argentina',
       flag: 'argentina_flag',
       language: 'es',
-      phoneMasks: [
-        '### ####-####',
-      ],
+      phoneMasks: ['### ####-####'],
       states: GrxStaticValuesService.arStates,
     ),
     GrxCountry(
@@ -51,9 +48,7 @@ abstract class GrxCountryUtils {
       name: 'Uruguai',
       flag: 'uruguay_flag',
       language: 'es',
-      phoneMasks: [
-        '### ####-####',
-      ],
+      phoneMasks: ['### ####-####'],
       states: GrxStaticValuesService.uyStates,
     ),
     GrxCountry(
@@ -828,9 +823,7 @@ abstract class GrxCountryUtils {
       code: '+258',
       name: 'Moçambique',
       flag: 'mozambique_flag',
-      phoneMasks: [
-        '## ### ####',
-      ],
+      phoneMasks: ['## ### ####'],
       states: GrxStaticValuesService.mzStates,
     ),
     GrxCountry(

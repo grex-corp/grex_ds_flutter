@@ -410,10 +410,10 @@ class _GrxPhoneFormFieldState extends State<GrxPhoneFormField> {
         final cleanNumber = value?.replaceAll(RegExp(r'[^0-9]'), '') ?? '';
         _updatePhoneNumber(cleanNumber);
       },
-      onSaved: (value) {
+      onSaved: (_) {
         widget.onSaved?.call(_currentPhoneNumber);
       },
-      validator: (value) {
+      validator: (_) {
         return widget.validator?.call(_currentPhoneNumber);
       },
       contentPadding: widget.contentPadding,
