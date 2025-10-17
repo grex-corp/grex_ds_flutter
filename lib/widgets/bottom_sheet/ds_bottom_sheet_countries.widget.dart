@@ -7,6 +7,7 @@ import '../../themes/colors/grx_colors.dart';
 import '../../themes/spacing/grx_spacing.dart';
 import '../../themes/typography/utils/grx_font_weights.dart';
 import '../../utils/grx_country.util.dart';
+import '../../utils/grx_text_sanitizer.util.dart';
 import '../../utils/grx_utils.util.dart';
 import '../fields/grx_search_field.widget.dart';
 import '../grx_card.widget.dart';
@@ -35,8 +36,8 @@ class _GrxBottomSheetCountriesState extends State<GrxBottomSheetCountries> {
       _filteredCountries.assignAll(
         GrxCountryUtils.countries.where(
           (country) =>
-              country.name.toLowerCase().contains(searchString.toLowerCase()) ||
-              country.code.toLowerCase().contains(searchString.toLowerCase()),
+              GrxTextSanitizer.matchesSearch(searchString, country.name) ||
+              GrxTextSanitizer.matchesSearch(searchString, country.code),
         ),
       );
     });

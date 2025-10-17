@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import '../enums/grx_country_id.enum.dart';
 import 'grx_federative_unit.model.dart';
@@ -23,6 +24,16 @@ class GrxCountry {
   final List<String> phoneMasks;
   final List<String> zipcodeMasks;
   final List<GrxFederativeUnit> states;
+
+  GrxCountry.unknown()
+    : id = GrxCountryId.unknown,
+      code = '',
+      name = '',
+      flag = '',
+      language = null,
+      phoneMasks = const [],
+      zipcodeMasks = const [],
+      states = const [];
 
   GrxCountry.fromJson(Map<String, dynamic> json)
     : id = GrxCountryId.fromName(json['id']),
@@ -51,4 +62,7 @@ class GrxCountry {
   }
 
   String stringify() => json.encode(toJson());
+
+  int get phoneMaskMinLength =>
+      phoneMasks.isNotEmpty ? phoneMasks.map((e) => e.replaceAll(RegExp(r'[^#]'), '').length).reduce(min) : 8;
 }

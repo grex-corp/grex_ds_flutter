@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../themes/colors/grx_colors.dart';
+import '../../utils/grx_text_sanitizer.util.dart';
 import '../buttons/grx_primary_button.widget.dart';
 import '../buttons/grx_secondary_button.widget.dart';
 import '../fields/grx_search_field.widget.dart';
@@ -103,8 +104,9 @@ class _GrxBottomSheetFormFieldBodyState<T>
         widget.items.where(
           (x) =>
               val.isEmpty ||
-              widget.displayText!(x).toString().toLowerCase().contains(
-                val.toLowerCase(),
+              GrxTextSanitizer.matchesSearch(
+                val,
+                widget.displayText!(x).toString(),
               ),
         ),
       );
