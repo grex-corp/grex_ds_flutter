@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:io';
 
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
@@ -17,7 +19,7 @@ abstract class GrxImagePickerService {
 
   static Future<CroppedFile?> openCamera() async {
     final status = await Permission.camera.request();
-    
+
     if (status.isDenied || status.isPermanentlyDenied) {
       GrxToastService.showError(
         message:
@@ -34,7 +36,7 @@ abstract class GrxImagePickerService {
       );
       return null;
     }
-    
+
     final image = await _picker.pickImage(source: ImageSource.camera);
     if (image == null) return null;
 
@@ -42,14 +44,50 @@ abstract class GrxImagePickerService {
   }
 
   static Future<CroppedFile?> openGallery() async {
-    final status = await Permission.photos.request();
-    
+    PermissionStatus status;
+    String deniedMessage = '';
+    String permanentlyDeniedMessage = '';
+
+    if (Platform.isIOS) {
+      // iOS: Always request photos permission
+      status = await Permission.photos.request();
+      deniedMessage = 'Permissão de acesso à galeria negada.';
+      permanentlyDeniedMessage =
+          'Permissão de acesso à galeria negada permanentemente.';
+    } else if (Platform.isAndroid) {
+      final androidInfo = await DeviceInfoPlugin().androidInfo;
+
+      // Android: Check version and request appropriate permission
+      // var release = androidInfo.version.release;
+      final sdkInt = androidInfo.version.sdkInt;
+
+      if (sdkInt <= 32) {
+        // Android <= 12: Request storage permission
+        status = await Permission.storage.request();
+        deniedMessage = 'Permissão de acesso ao armazenamento negada.';
+        permanentlyDeniedMessage =
+            'Permissão de acesso ao armazenamento negada permanentemente.';
+      } else {
+        // Android > 12: No permission needed, proceed directly
+        status = PermissionStatus.granted;
+        deniedMessage = 'Permissão de acesso à galeria negada.';
+        permanentlyDeniedMessage =
+            'Permissão de acesso à galeria negada permanentemente.';
+      }
+    } else {
+      // Other platforms: Default to photos permission
+      status = await Permission.photos.request();
+      deniedMessage = 'Permissão de acesso à galeria negada.';
+      permanentlyDeniedMessage =
+          'Permissão de acesso à galeria negada permanentemente.';
+    }
+
     if (status.isDenied || status.isPermanentlyDenied) {
       GrxToastService.showError(
         message:
             status.isPermanentlyDenied
-                ? 'Permissão de acesso à galeria negada permanentemente.'
-                : 'Permissão de acesso à galeria negada.',
+                ? permanentlyDeniedMessage
+                : deniedMessage,
         actions: [
           GrxToastAction(
             label: 'Abrir Configurações',
@@ -60,7 +98,7 @@ abstract class GrxImagePickerService {
       );
       return null;
     }
-    
+
     final image = await _picker.pickImage(source: ImageSource.gallery);
     if (image == null) return null;
 

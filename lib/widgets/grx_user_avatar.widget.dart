@@ -170,18 +170,18 @@ class _GrxUserAvatarState extends State<GrxUserAvatar> {
     return Visibility(
       visible: widget.editable,
       child: Positioned(
-        bottom: 0,
-        right: 0,
+        bottom: -5.0,
+        right: -5.0,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
             widget.avatarPickerButton ??
                 GrxCircleButton(
-                  size: widget.radius / 1.7,
+                  size: widget.radius / 1.4,
                   borderColor: GrxColors.neutrals,
                   borderSize: GrxSpacing.xxs,
                   isLoading: isLoading,
-                  child: Icon(GrxIcons.camera, size: widget.radius / 4),
+                  child: Icon(GrxIcons.camera, size: widget.radius / 3.2),
                   onPressed: () async {
                     setLoading(true);
 

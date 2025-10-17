@@ -1,3 +1,7 @@
+## 0.1.2
+
+* Improve avatar picker permissions
+
 ## 0.1.1
 
 * Improve phone form field
