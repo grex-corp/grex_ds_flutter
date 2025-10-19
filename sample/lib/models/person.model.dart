@@ -30,4 +30,6 @@ class Person {
     this.trail,
     this.fatherType = ParentWorshipType.unknown,
   });
+
+  static Person empty() => Person(id: 0, name: '');
 }

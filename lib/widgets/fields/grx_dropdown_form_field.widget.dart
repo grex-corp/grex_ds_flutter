@@ -87,6 +87,34 @@ class _GrxDropdownStateFormField<T> extends State<GrxDropdownFormField<T>> {
   }
 
   @override
+  void didUpdateWidget(GrxDropdownFormField<T> oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    
+    // Update value if the value prop changed
+    if (widget.value != oldWidget.value) {
+      if (widget.value != null) {
+        value = widget.value;
+        controller.text = widget.displayText(value as T);
+        if (widget.onSelectItem != null) {
+          widget.onSelectItem!(value);
+        }
+      } else {
+        value = null;
+        controller.clear();
+        if (widget.onSelectItem != null) {
+          widget.onSelectItem!(null);
+        }
+      }
+    }
+    
+    // Update data if the data prop changed
+    if (widget.data != oldWidget.data) {
+      _list.clear();
+      _list.addAll(widget.data);
+    }
+  }
+
+  @override
   void dispose() {
     if (widget.controller == null) {
       controller.dispose();

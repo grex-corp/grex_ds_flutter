@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../themes/colors/grx_colors.dart';
+import '../../themes/spacing/grx_spacing.dart';
 import '../../themes/system_overlay/grx_system_overlay.style.dart';
 import '../../themes/typography/styles/grx_headline_text.style.dart';
 import '../../utils/grx_button.util.dart';
@@ -80,9 +81,12 @@ class GrxHeader extends StatelessWidget implements PreferredSizeWidget {
       actions:
           showCloseButton
               ? [
-                GrxCloseButton(
-                  onPressed: Navigator.of(context).pop,
-                  color: foregroundColor,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: GrxSpacing.sm),
+                  child: GrxCloseButton(
+                    onPressed: Navigator.of(context).pop,
+                    color: foregroundColor,
+                  ),
                 ),
               ]
               : actions

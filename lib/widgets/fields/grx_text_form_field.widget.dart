@@ -100,6 +100,23 @@ class _GrxTextFormFieldState extends State<GrxTextFormField> {
   }
 
   @override
+  void didUpdateWidget(GrxTextFormField oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    
+    // Update controller text if the value prop changed
+    if (widget.value != oldWidget.value) {
+      if (widget.value != null) {
+        controller.text = widget.value!;
+        if (widget.onChanged != null) {
+          widget.onChanged!(controller.text);
+        }
+      } else {
+        controller.clear();
+      }
+    }
+  }
+
+  @override
   void dispose() {
     if (widget.controller == null) {
       controller.dispose();
