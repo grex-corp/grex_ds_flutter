@@ -1,3 +1,7 @@
+## 0.1.5
+
+* Add remove image callback on user avatar widget
+
 ## 0.1.4
 
 * Fix form fields value update

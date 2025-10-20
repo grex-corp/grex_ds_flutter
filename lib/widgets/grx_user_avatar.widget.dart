@@ -29,6 +29,7 @@ class GrxUserAvatar extends StatefulWidget {
     this.editable = false,
     this.avatarPickerButton,
     this.onPickAvatar,
+    this.onRemoveAvatar,
     this.isLoading = false,
     this.showBorder = false,
     final Color? backgroundColor,
@@ -45,6 +46,7 @@ class GrxUserAvatar extends StatefulWidget {
   final bool editable;
   final Widget? avatarPickerButton;
   final void Function(File?)? onPickAvatar;
+  final void Function()? onRemoveAvatar;
   final bool isLoading;
   final bool showBorder;
 
@@ -71,10 +73,16 @@ class _GrxUserAvatarState extends State<GrxUserAvatar> {
 
     return Container(
       padding: widget.showBorder ? const EdgeInsets.all(2.0) : EdgeInsets.zero,
-      decoration: widget.showBorder ? BoxDecoration(
-        border: Border.all(color: GrxColors.primary.shade600, width: 1.5),
-        borderRadius: BorderRadius.circular(widget.radius + 2.0),
-      ) : null,
+      decoration:
+          widget.showBorder
+              ? BoxDecoration(
+                border: Border.all(
+                  color: GrxColors.primary.shade600,
+                  width: 1.5,
+                ),
+                borderRadius: BorderRadius.circular(widget.radius + 2.0),
+              )
+              : null,
       child: Stack(
         fit: StackFit.loose,
         clipBehavior: Clip.none,
@@ -152,7 +160,10 @@ class _GrxUserAvatarState extends State<GrxUserAvatar> {
                   package: GrxUtils.packageName,
                 ),
               ),
-          _buildAvatarPickerIcon(context),
+          if (widget.editable) ...[
+            _buildAvatarPickerIcon(context),
+            _buildClearButton(context),
+          ],
         ],
       ),
     );
@@ -167,40 +178,53 @@ class _GrxUserAvatarState extends State<GrxUserAvatar> {
   }
 
   Widget _buildAvatarPickerIcon(BuildContext context) {
-    return Visibility(
-      visible: widget.editable,
-      child: Positioned(
-        bottom: -5.0,
-        right: -5.0,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            widget.avatarPickerButton ??
-                GrxCircleButton(
-                  size: widget.radius / 1.4,
-                  borderColor: GrxColors.neutrals,
-                  borderSize: GrxSpacing.xxs,
-                  isLoading: isLoading,
-                  child: Icon(GrxIcons.camera, size: widget.radius / 3.2),
-                  onPressed: () async {
-                    setLoading(true);
+    return Positioned(
+      bottom: -5.0,
+      right: -5.0,
+      child:
+          widget.avatarPickerButton ??
+          GrxCircleButton(
+            size: widget.radius / 1.4,
+            borderColor: GrxColors.neutrals,
+            borderSize: GrxSpacing.xxs,
+            isLoading: isLoading,
+            child: Icon(GrxIcons.camera, size: widget.radius / 3.2),
+            onPressed: () async {
+              setLoading(true);
 
-                    try {
-                      final file = await GrxImagePickerService.pickImage(
-                        context,
-                      );
+              try {
+                final file = await GrxImagePickerService.pickImage(context);
 
-                      if (widget.onPickAvatar != null) {
-                        final bytes = await file?.readAsBytes();
-                        widget.onPickAvatar!(await bytes?.toFile());
-                      }
-                    } finally {
-                      setLoading(false);
-                    }
-                  },
-                ),
-          ],
-        ),
+                if (widget.onPickAvatar != null) {
+                  final bytes = await file?.readAsBytes();
+                  widget.onPickAvatar!(await bytes?.toFile());
+                }
+              } finally {
+                setLoading(false);
+              }
+            },
+          ),
+    );
+  }
+
+  Widget _buildClearButton(BuildContext context) {
+    final hasImage = widget.imageFile != null || widget.uri != null;
+
+    if (!hasImage || widget.onRemoveAvatar == null) {
+      return const SizedBox.shrink();
+    }
+
+    return Positioned(
+      top: -5,
+      right: -5,
+      child: GrxCircleButton(
+        size: 32.0,
+        backgroundColor: GrxColors.error,
+        foregroundColor: GrxColors.neutrals,
+        borderColor: GrxColors.neutrals,
+        borderSize: GrxSpacing.xxs,
+        onPressed: widget.onRemoveAvatar,
+        child: Icon(GrxIcons.close_l, size: 12.0),
       ),
     );
   }
