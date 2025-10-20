@@ -96,6 +96,32 @@ class _GrxMultiSelectStateFormField<T>
   }
 
   @override
+  void didUpdateWidget(GrxMultiSelectFormField<T> oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    
+    // Update values if the value prop changed
+    if (widget.value != oldWidget.value) {
+      if (widget.value != null) {
+        values = widget.value;
+        if (widget.onSelectItems != null) {
+          widget.onSelectItems!(values);
+        }
+      } else {
+        values = null;
+        if (widget.onSelectItems != null) {
+          widget.onSelectItems!(null);
+        }
+      }
+    }
+    
+    // Update data if the data prop changed
+    if (widget.data != oldWidget.data) {
+      _list.clear();
+      _list.addAll(widget.data);
+    }
+  }
+
+  @override
   void dispose() {
     if (widget.controller == null) {
       controller.dispose();

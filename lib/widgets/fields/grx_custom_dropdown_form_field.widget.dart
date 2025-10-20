@@ -76,6 +76,28 @@ class _GrxDropdownStateFormField<T>
   }
 
   @override
+  void didUpdateWidget(GrxCustomDropdownFormField<T> oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    
+    // Update value if the value prop changed
+    if (widget.value != oldWidget.value) {
+      if (widget.value != null) {
+        value = widget.value;
+        controller.text = widget.displayText(value as T);
+        if (widget.onSelectItem != null) {
+          widget.onSelectItem!(value);
+        }
+      } else {
+        value = null;
+        controller.clear();
+        if (widget.onSelectItem != null) {
+          widget.onSelectItem!(null);
+        }
+      }
+    }
+  }
+
+  @override
   void dispose() {
     if (widget.controller == null) {
       controller.dispose();

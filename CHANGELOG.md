@@ -1,3 +1,7 @@
+## 0.1.4
+
+* Fix form fields value update
+
 ## 0.1.3
 
 * Create a text sanitizer

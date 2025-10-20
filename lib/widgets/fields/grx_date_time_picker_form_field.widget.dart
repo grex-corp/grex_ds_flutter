@@ -83,6 +83,28 @@ class _GrxDateTimePickerFormFieldState
   }
 
   @override
+  void didUpdateWidget(GrxDateTimePickerFormField oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    
+    // Update value if the value prop changed
+    if (widget.value != oldWidget.value) {
+      if (widget.value != null) {
+        value = widget.value;
+        controller.text = _formatValue(value!);
+        if (widget.onSelectItem != null) {
+          widget.onSelectItem!(value);
+        }
+      } else {
+        value = null;
+        controller.clear();
+        if (widget.onSelectItem != null) {
+          widget.onSelectItem!(null);
+        }
+      }
+    }
+  }
+
+  @override
   void dispose() {
     if (widget.controller == null) {
       controller.dispose();

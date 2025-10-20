@@ -27,6 +27,8 @@ class FieldsSampleApp extends StatefulWidget {
 class _FieldsSampleAppState extends State<FieldsSampleApp> {
   bool _isLoading = true;
 
+  late Person person = Person.empty();
+
   @override
   void initState() {
     super.initState();
@@ -34,6 +36,7 @@ class _FieldsSampleAppState extends State<FieldsSampleApp> {
     Future.delayed(const Duration(seconds: 5), () {
       setState(() {
         _isLoading = false;
+        person = widget.person;
       });
     });
   }
@@ -47,21 +50,24 @@ class _FieldsSampleAppState extends State<FieldsSampleApp> {
         spacing: 16.0,
         children: [
           GrxTextFormField(
-            value: widget.person.name,
+            value: person.name,
             labelText: 'pages.people.name'.translate,
             hintText: 'José Algusto',
-            onSaved: (value) => widget.person.name = value!,
+            onSaved: (value) {
+              print('Saved name: $value');
+              person.name = value!;
+            },
             validator:
                 (value) =>
                     (value?.isEmpty ?? true) ? 'Insira o nome da pessoa' : null,
             isLoading: _isLoading,
           ),
           GrxPhoneFormField(
-            value: widget.person.phone,
+            value: person.phone,
             labelText: 'pages.people.phone'.translate,
             onSaved: (value) {
-              print('Phone: $value');
-              widget.person.phone = value!;
+              print('Saved Phone: $value');
+              person.phone = value!;
             },
             validator:
                 (value) =>
@@ -71,7 +77,7 @@ class _FieldsSampleAppState extends State<FieldsSampleApp> {
             isLoading: _isLoading,
           ),
           GrxDateTimePickerFormField(
-            value: widget.person.birthDate,
+            value: person.birthDate,
             labelText: 'pages.people.birth-date'.translate,
             // hintText: 'fields.datetime.hint'.translate,
             dialogConfirmText: 'confirm'.translate,
@@ -83,7 +89,7 @@ class _FieldsSampleAppState extends State<FieldsSampleApp> {
             onSaved: (value) {
               print('Saved Birthdate: $value');
 
-              widget.person.birthDate = value;
+              person.birthDate = value;
             },
             // validator: (value) => (value?.isEmpty ?? true)
             //     ? 'Insira a data de nascimento'
@@ -91,7 +97,7 @@ class _FieldsSampleAppState extends State<FieldsSampleApp> {
             isLoading: _isLoading,
           ),
           GrxDropdownFormField<Person>(
-            value: widget.person.leadership,
+            value: person.leadership,
             labelText: 'Liderança Direta',
             onSelectItem: (value) => print('Selected Value: ${value?.name}'),
             data: widget.leaders,
@@ -107,14 +113,14 @@ class _FieldsSampleAppState extends State<FieldsSampleApp> {
             onSaved: (value) {
               print('Saved leader: $value');
 
-              widget.person.leadership = value;
+              person.leadership = value;
             },
             validator:
                 (value) => value == null ? 'O líder deve ser informado' : null,
             isLoading: _isLoading,
           ),
           GrxDropdownFormField<ParentWorshipType>(
-            value: widget.person.fatherType,
+            value: person.fatherType,
             labelText: 'O Pai é?',
             onSelectItem: (value) => print('Selected Value: ${value?.name}'),
             data: ParentWorshipType.values,
@@ -122,7 +128,7 @@ class _FieldsSampleAppState extends State<FieldsSampleApp> {
             onSaved: (value) {
               print('Saved leader: $value');
 
-              widget.person.fatherType = value ?? ParentWorshipType.unknown;
+              person.fatherType = value ?? ParentWorshipType.unknown;
             },
             validator:
                 (value) => value == null ? 'O Tipo deve ser informado' : null,
@@ -152,7 +158,7 @@ class _FieldsSampleAppState extends State<FieldsSampleApp> {
             isLoading: _isLoading,
           ),
           GrxMultiSelectFormField<Role>(
-            value: widget.person.roles,
+            value: person.roles,
             searchable: true,
             labelText: 'Funções',
             onSelectItems: (value) => print('Selected Value: ${value?.length}'),
@@ -180,9 +186,9 @@ class _FieldsSampleAppState extends State<FieldsSampleApp> {
             displayText: (value) => value.name,
             valueKey: (person) => person.id,
             onSaved: (value) {
-              print('Saved roles: $value');
+              print('Saved roles: ${value?.map((e) => e.name).join(', ')}');
 
-              widget.person.roles = value!;
+              person.roles = value!;
             },
             validator:
                 (value) =>
@@ -192,7 +198,7 @@ class _FieldsSampleAppState extends State<FieldsSampleApp> {
             isLoading: _isLoading,
           ),
           GrxCustomDropdownFormField<KnowledgeTrail>(
-            value: widget.person.trail,
+            value: person.trail,
             labelText: 'Trilho do Vencedor',
             onSelectItem: (value) => print('Selected Value: ${value?.name}'),
             builder:
@@ -204,7 +210,7 @@ class _FieldsSampleAppState extends State<FieldsSampleApp> {
             onSaved: (value) {
               print('Saved trail: $value');
 
-              widget.person.trail = value;
+              person.trail = value;
             },
             // validator: (value) => (value?.isEmpty ?? true)
             //     ? 'O líder deve ser informado'
@@ -213,25 +219,25 @@ class _FieldsSampleAppState extends State<FieldsSampleApp> {
           ),
           GrxDashedDivider(padding: EdgeInsets.symmetric(vertical: 15.0)),
           GrxSwitchFormField(
-            value: widget.person.createUser,
+              value: person.createUser,
             labelText: 'Criar usuário',
-            onSaved: (value) => widget.person.createUser = value,
+            onSaved: (value) => person.createUser = value,
             onChanged: (value) => print('Changed: $value'),
             isLoading: _isLoading,
           ),
           GrxDashedDivider(title: 'Dados Auxiliares'),
           // GrxCheckboxListTile(
           //   title: 'Solteiro',
-          //   value: widget.person.single,
+          //   value: person.single,
           //   isLoading: _isLoading,
           //   onTap: () {
           //     setState(() {
-          //       widget.person.single = !widget.person.single;
+          //       person.single = !person.single;
           //     });
           //   },
           // ),
           // GrxRoundedCheckbox(
-          //   value: widget.person.single,
+          //   value: person.single,
           //   isLoading: _isLoading,
           // ),
         ],
