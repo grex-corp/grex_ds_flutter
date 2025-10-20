@@ -255,6 +255,10 @@ class _DashboardAppPageState extends State<DashboardAppPage>
                             selectedImage = file;
                             setState(() {});
                           },
+                          onRemoveAvatar: () {
+                            selectedImage = null;
+                            setState(() {});
+                          },
                         ),
                         const SizedBox(height: 16),
                         GrxSecondaryButton(
