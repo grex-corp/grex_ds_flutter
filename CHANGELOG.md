@@ -1,3 +1,7 @@
+## 0.1.6
+
+* Add missing properties to text widgets
+
 ## 0.1.5
 
 * Add remove image callback on user avatar widget

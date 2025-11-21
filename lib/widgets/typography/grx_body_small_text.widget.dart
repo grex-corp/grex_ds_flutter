@@ -20,6 +20,16 @@ class GrxBodySmallText extends StatelessWidget {
     this.decoration,
     this.overflow,
     this.isLoading = false,
+    this.strutStyle,
+    this.textDirection,
+    this.locale,
+    this.softWrap,
+    this.maxLines,
+    this.semanticsLabel,
+    this.textWidthBasis,
+    this.textHeightBehavior,
+    this.selectionColor,
+    this.shouldLinkify = false,
   }) : textSpan = null,
        style = null;
 
@@ -33,6 +43,16 @@ class GrxBodySmallText extends StatelessWidget {
     this.decoration,
     this.overflow,
     this.isLoading = false,
+    this.strutStyle,
+    this.textDirection,
+    this.locale,
+    this.softWrap,
+    this.maxLines,
+    this.semanticsLabel,
+    this.textWidthBasis,
+    this.textHeightBehavior,
+    this.selectionColor,
+    this.shouldLinkify = false,
   }) : text = null,
        style = null;
 
@@ -48,6 +68,16 @@ class GrxBodySmallText extends StatelessWidget {
     this.decoration,
     this.overflow,
     this.isLoading = false,
+    this.strutStyle,
+    this.textDirection,
+    this.locale,
+    this.softWrap,
+    this.maxLines,
+    this.semanticsLabel,
+    this.textWidthBasis,
+    this.textHeightBehavior,
+    this.selectionColor,
+    this.shouldLinkify = false,
   }) : textSpan = null,
        style =
            TextStyle.lerp(
@@ -71,6 +101,16 @@ class GrxBodySmallText extends StatelessWidget {
   final TextOverflow? overflow;
   final bool isLoading;
   final TextStyle? style;
+  final StrutStyle? strutStyle;
+  final TextDirection? textDirection;
+  final Locale? locale;
+  final bool? softWrap;
+  final int? maxLines;
+  final String? semanticsLabel;
+  final TextWidthBasis? textWidthBasis;
+  final TextHeightBehavior? textHeightBehavior;
+  final Color? selectionColor;
+  final bool shouldLinkify;
 
   @override
   Widget build(BuildContext context) {
@@ -92,6 +132,16 @@ class GrxBodySmallText extends StatelessWidget {
           textAlign: textAlign,
           style: style,
           isLoading: isLoading,
+          strutStyle: strutStyle,
+          textDirection: textDirection,
+          locale: locale,
+          softWrap: softWrap,
+          maxLines: maxLines,
+          semanticsLabel: semanticsLabel,
+          textWidthBasis: textWidthBasis,
+          textHeightBehavior: textHeightBehavior,
+          selectionColor: selectionColor,
+          shouldLinkify: shouldLinkify,
         )
         : GrxText(
           text,
@@ -99,6 +149,16 @@ class GrxBodySmallText extends StatelessWidget {
           textAlign: textAlign,
           style: style,
           isLoading: isLoading,
+          strutStyle: strutStyle,
+          textDirection: textDirection,
+          locale: locale,
+          softWrap: softWrap,
+          maxLines: maxLines,
+          semanticsLabel: semanticsLabel,
+          textWidthBasis: textWidthBasis,
+          textHeightBehavior: textHeightBehavior,
+          selectionColor: selectionColor,
+          shouldLinkify: shouldLinkify,
         );
   }
 }
