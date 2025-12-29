@@ -1,3 +1,7 @@
+## 0.1.7
+
+* Create [GrxUpperCaseTextFormatter] utility
+
 ## 0.1.6
 
 * Add missing properties to text widgets
