@@ -88,6 +88,8 @@ export 'themes/typography/utils/grx_font_weights.dart' show GrxFontWeights;
 export 'utils/grx_country.util.dart' show GrxCountryUtils;
 export 'utils/grx_linkify.util.dart' show GrxLinkify;
 export 'utils/grx_regex.util.dart' show GrxRegexUtils;
+export 'utils/grx_upper_case_text_formatter.util.dart'
+    show GrxUpperCaseTextFormatter;
 
 /// Utils
 export 'utils/grx_utils.util.dart' show GrxUtils;
