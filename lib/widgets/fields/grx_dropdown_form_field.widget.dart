@@ -7,7 +7,7 @@ import '../bottom_sheet/grx_bottom_sheet_form_field_body.widget.dart';
 import '../checkbox/grx_rounded_checkbox.widget.dart';
 import '../grx_card.widget.dart';
 import '../grx_stateful.widget.dart';
-import '../typography/grx_headline_small_text.widget.dart';
+import '../typography/grx_body_text.widget.dart';
 import 'controllers/grx_form_field.controller.dart';
 import 'grx_form_field.widget.dart';
 import 'grx_text_field.widget.dart';
@@ -152,8 +152,10 @@ class _GrxDropdownStateFormField<T> extends State<GrxDropdownFormField<T>> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            GrxHeadlineSmallText(
-              widget.displayText(value),
+            Flexible(
+              child: GrxBodyText(
+                widget.displayText(value),
+              ),
             ),
             GrxRoundedCheckbox(
               radius: 8.0,

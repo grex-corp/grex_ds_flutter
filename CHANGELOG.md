@@ -1,3 +1,8 @@
+## 0.1.8
+
+* [GrxDropdownFormField] Fix default item builder text style
+* Upgrade package versions
+
 ## 0.1.7
 
 * Create [GrxUpperCaseTextFormatter] utility
