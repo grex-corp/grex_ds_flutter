@@ -1,6 +1,6 @@
 name: grex_ds
 description: Grex Design System for Flutter.
-version: 0.1.7
+version: 0.1.8
 homepage: https://grex.com.br
 repository: https://github.com/grex-corp/grex_ds_flutter
 
@@ -25,7 +25,7 @@ dependencies:
   linkify: ^5.0.0
   url_launcher: ^6.3.1
   mask_text_input_formatter: ^2.9.0
-  popover: ^0.3.1
+  popover: ^0.4.0
   infinite_scroll_pagination: ^5.0.0
   flutter_libphonenumber: ^2.4.0
   device_info_plus: ^12.1.0
