@@ -16,6 +16,8 @@ export 'controllers/grx_animated_loading_button.controller.dart'
 
 /// Enums
 export 'enums/grx_align.enum.dart' show GrxAlign;
+export 'enums/grx_autocomplete_loading_style.enum.dart'
+    show GrxAutocompleteLoadingStyle;
 export 'enums/grx_country_id.enum.dart' show GrxCountryId;
 export 'enums/grx_text_transform.enum.dart' show GrxTextTransform;
 

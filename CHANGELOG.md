@@ -1,3 +1,14 @@
+## 0.1.9
+
+* [GrxAutocompleteDropdownFormField] Add `debounceDuration` parameter to customize search debounce timing (default: 500ms)
+* [GrxAutocompleteDropdownFormField] Add `minChars` parameter to require minimum characters before triggering search (default: 0)
+* [GrxAutocompleteDropdownFormField] Add `emptyText` parameter to display custom message when search returns no results
+* [GrxAutocompleteDropdownFormField] Add `disableSearchOnSelect` parameter to prevent unnecessary searches after item selection (default: true)
+* [GrxAutocompleteDropdownFormField] Add `loadingStyle` parameter with `GrxAutocompleteLoadingStyle` enum for flexible loading indicators
+  * `shimmer` (default): Replaces entire field with shimmer loader
+  * `suffixSpinner`: Shows subtle spinner in suffix while keeping field visible
+* Create `GrxAutocompleteLoadingStyle` enum in separate file
+
 ## 0.1.8
 
 * [GrxDropdownFormField] Fix default item builder text style
