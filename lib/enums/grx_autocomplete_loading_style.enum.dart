@@ -1,0 +1,4 @@
+enum GrxAutocompleteLoadingStyle {
+  shimmer,
+  suffixSpinner,
+}
