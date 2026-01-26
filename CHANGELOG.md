@@ -1,3 +1,7 @@
+## 0.1.10
+
+* Export `GrxShimmer` widget in barrel file for public access
+
 ## 0.1.9
 
 * [GrxAutocompleteDropdownFormField] Add `debounceDuration` parameter to customize search debounce timing (default: 500ms)
