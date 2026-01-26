@@ -171,6 +171,7 @@ export 'widgets/grx_sliver_animated_list.widget.dart'
     show GrxSliverAnimatedList;
 
 /// Widget/Loading
+export 'widgets/grx_shimmer.widget.dart' show GrxShimmer;
 export 'widgets/grx_spinner_loading.widget.dart' show GrxSpinnerLoading;
 
 /// Widget/Avatar
