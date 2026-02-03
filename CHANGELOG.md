@@ -1,4 +1,4 @@
-## 0.1.10+1
+## 0.1.11
 
 * Sync FormField values with controller changes for immediate validation
 
