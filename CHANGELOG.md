@@ -1,3 +1,7 @@
+## 0.1.10+1
+
+* Sync FormField values with controller changes for immediate validation
+
 ## 0.1.10
 
 * Export `GrxShimmer` widget in barrel file for public access
