@@ -1,3 +1,7 @@
+## 0.1.12
+
+* Restore PostFrameCallback in FormField controller sync
+
 ## 0.1.11
 
 * Sync FormField values with controller changes for immediate validation
