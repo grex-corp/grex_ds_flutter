@@ -1,3 +1,10 @@
+## 0.1.13
+
+* Add phone number masks for Portugal, Spain, Germany, and other important countries
+* Add phone number masks for France, Italy, United Kingdom, Netherlands, Sweden, Austria, Belgium, Switzerland
+* Add phone number masks for Canada, Mexico, Australia, China, India, Japan, South Korea, Russia, South Africa, New Zealand
+* All masks follow each country's standard phone number formatting conventions
+
 ## 0.1.12
 
 * Restore PostFrameCallback in FormField controller sync
