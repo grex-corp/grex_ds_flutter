@@ -48,7 +48,7 @@ abstract class GrxCountryUtils {
       name: 'Uruguai',
       flag: 'uruguay_flag',
       language: 'es',
-      phoneMasks: ['### ####-####'],
+      phoneMasks: ['#### ####'],
       states: GrxStaticValuesService.uyStates,
     ),
     GrxCountry(
@@ -62,6 +62,7 @@ abstract class GrxCountryUtils {
       code: '+27',
       name: 'África do Sul',
       flag: 'south_africa_flag',
+      phoneMasks: ['## ### ####', '### ### ####'],
     ),
     GrxCountry(
       id: GrxCountryId.AL,
@@ -74,6 +75,7 @@ abstract class GrxCountryUtils {
       code: '+49',
       name: 'Alemanha',
       flag: 'germany_flag',
+      phoneMasks: ['### #######', '#### ########'],
     ),
     GrxCountry(
       id: GrxCountryId.AD,
@@ -128,12 +130,14 @@ abstract class GrxCountryUtils {
       code: '+61',
       name: 'Austrália',
       flag: 'australia_flag',
+      phoneMasks: ['#### ######', '### #### ####'],
     ),
     GrxCountry(
       id: GrxCountryId.AT,
       code: '+43',
       name: 'Áustria',
       flag: 'austria_flag',
+      phoneMasks: ['#### #######', '### ########'],
     ),
     GrxCountry(
       id: GrxCountryId.AZ,
@@ -170,6 +174,7 @@ abstract class GrxCountryUtils {
       code: '+32',
       name: 'Bélgica',
       flag: 'belgium_flag',
+      phoneMasks: ['### ## ## ##', '#### ## ## ##'],
     ),
     GrxCountry(
       id: GrxCountryId.BZ,
@@ -248,6 +253,7 @@ abstract class GrxCountryUtils {
       code: '+1',
       name: 'Canadá',
       flag: 'canada_flag',
+      phoneMasks: ['(###) ###-####'],
     ),
     GrxCountry(
       id: GrxCountryId.KZ,
@@ -266,12 +272,14 @@ abstract class GrxCountryUtils {
       code: '+56',
       name: 'Chile',
       flag: 'chile_flag',
+      phoneMasks: ['# #### ####'],
     ),
     GrxCountry(
       id: GrxCountryId.CN,
       code: '+86',
       name: 'China',
       flag: 'china_flag',
+      phoneMasks: ['### #### ####', '#### ########'],
     ),
     GrxCountry(
       id: GrxCountryId.CY,
@@ -284,6 +292,7 @@ abstract class GrxCountryUtils {
       code: '+57',
       name: 'Colômbia',
       flag: 'colombia_flag',
+      phoneMasks: ['### ### ####'],
     ),
     GrxCountry(
       id: GrxCountryId.KM,
@@ -302,6 +311,7 @@ abstract class GrxCountryUtils {
       code: '+82',
       name: 'Coreia do Sul',
       flag: 'south_korea_flag',
+      phoneMasks: ['##-####-####', '###-###-####'],
     ),
     GrxCountry(
       id: GrxCountryId.CI,
@@ -314,6 +324,7 @@ abstract class GrxCountryUtils {
       code: '+506',
       name: 'Costa Rica',
       flag: 'costa_rica_flag',
+      phoneMasks: ['#### ####'],
     ),
     GrxCountry(
       id: GrxCountryId.HR,
@@ -368,6 +379,7 @@ abstract class GrxCountryUtils {
       code: '+593',
       name: 'Equador',
       flag: 'ecuador_flag',
+      phoneMasks: ['## ### ####'],
     ),
     GrxCountry(
       id: GrxCountryId.ER,
@@ -392,6 +404,7 @@ abstract class GrxCountryUtils {
       code: '+34',
       name: 'Espanha',
       flag: 'spain_flag',
+      phoneMasks: ['### ### ###'],
     ),
     GrxCountry(
       id: GrxCountryId.EE,
@@ -428,6 +441,7 @@ abstract class GrxCountryUtils {
       code: '+33',
       name: 'França',
       flag: 'france_flag',
+      phoneMasks: ['# ## ## ## ##'],
     ),
     GrxCountry(
       id: GrxCountryId.GA,
@@ -512,6 +526,7 @@ abstract class GrxCountryUtils {
       code: '+31',
       name: 'Holanda',
       flag: 'netherlands_flag',
+      phoneMasks: ['## ## ## ##', '### ## ## ##'],
     ),
     GrxCountry(
       id: GrxCountryId.HN,
@@ -608,6 +623,7 @@ abstract class GrxCountryUtils {
       code: '+91',
       name: 'Índia',
       flag: 'india_flag',
+      phoneMasks: ['##### #####', '#### ######'],
     ),
     GrxCountry(
       id: GrxCountryId.ID,
@@ -650,6 +666,7 @@ abstract class GrxCountryUtils {
       code: '+39',
       name: 'Itália',
       flag: 'italy_flag',
+      phoneMasks: ['### ### ####', '#### ######'],
     ),
     GrxCountry(
       id: GrxCountryId.JM,
@@ -662,6 +679,7 @@ abstract class GrxCountryUtils {
       code: '+81',
       name: 'Japão',
       flag: 'japan_flag',
+      phoneMasks: ['##-####-####', '###-####-####'],
     ),
     GrxCountry(
       id: GrxCountryId.JO,
@@ -811,6 +829,7 @@ abstract class GrxCountryUtils {
       code: '+52',
       name: 'México',
       flag: 'mexico_flag',
+      phoneMasks: ['## #### ####', '### ### ####'],
     ),
     GrxCountry(
       id: GrxCountryId.FM,
@@ -915,6 +934,7 @@ abstract class GrxCountryUtils {
       code: '+64',
       name: 'Nova Zelândia',
       flag: 'new_zealand_flag',
+      phoneMasks: ['#### ######', '### ### ####'],
     ),
     GrxCountry(
       id: GrxCountryId.OM,
@@ -939,6 +959,7 @@ abstract class GrxCountryUtils {
       code: '+507',
       name: 'Panamá',
       flag: 'panama_flag',
+      phoneMasks: ['####-####'],
     ),
     GrxCountry(
       id: GrxCountryId.PG,
@@ -957,12 +978,14 @@ abstract class GrxCountryUtils {
       code: '+595',
       name: 'Paraguai',
       flag: 'paraguay_flag',
+      phoneMasks: ['(###) ###-###'],
     ),
     GrxCountry(
       id: GrxCountryId.PE,
       code: '+51',
       name: 'Peru',
       flag: 'peru_flag',
+      phoneMasks: ['### ### ###'],
     ),
     GrxCountry(
       id: GrxCountryId.PF,
@@ -987,6 +1010,7 @@ abstract class GrxCountryUtils {
       code: '+351',
       name: 'Portugal',
       flag: 'portugal_flag',
+      phoneMasks: ['## ### ####'],
     ),
     GrxCountry(
       id: GrxCountryId.QA,
@@ -1011,6 +1035,7 @@ abstract class GrxCountryUtils {
       code: '+44',
       name: 'Reino Unido',
       flag: 'united_kingdom_flag',
+      phoneMasks: ['#### ######', '##### #####'],
     ),
     GrxCountry(
       id: GrxCountryId.CF,
@@ -1047,6 +1072,7 @@ abstract class GrxCountryUtils {
       code: '+7',
       name: 'Rússia',
       flag: 'russia_flag',
+      phoneMasks: ['(###) ###-##-##'],
     ),
     GrxCountry(
       id: GrxCountryId.WS,
@@ -1155,12 +1181,14 @@ abstract class GrxCountryUtils {
       code: '+46',
       name: 'Suécia',
       flag: 'sweden_flag',
+      phoneMasks: ['## ### ## ##', '### ### ##'],
     ),
     GrxCountry(
       id: GrxCountryId.CH,
       code: '+41',
       name: 'Suíça',
       flag: 'switzerland_flag',
+      phoneMasks: ['## ### ## ##'],
     ),
     GrxCountry(
       id: GrxCountryId.SR,
