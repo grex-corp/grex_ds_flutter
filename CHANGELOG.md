@@ -1,3 +1,8 @@
+## 0.1.14
+
+* Update GrxIcons font with new icons: `i3d`, `accessibility`, `blogger_outline`
+* Update icon mapping to match new font codepoints
+
 ## 0.1.13
 
 * Add phone number masks for Portugal, Spain, Germany, and other important countries
