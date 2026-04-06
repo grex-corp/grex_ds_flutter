@@ -1,3 +1,7 @@
+## 0.1.15
+
+* Align Paraguay (`GrxCountryId.PY`) with Argentina and Uruguay: set `language` to `es`, add `GrxStaticValuesService.pyStates` (ISO 3166-2:PY departments and Asunción)
+
 ## 0.1.14
 
 * Update GrxIcons font with new icons: `i3d`, `accessibility`, `blogger_outline`
