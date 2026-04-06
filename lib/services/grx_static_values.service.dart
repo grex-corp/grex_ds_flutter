@@ -142,6 +142,27 @@ abstract class GrxStaticValuesService {
     GrxFederativeUnit(id: 'TT', name: 'Treinta y Tres'),
   ];
 
+  static const pyStates = [
+    GrxFederativeUnit(id: '16', name: 'Alto Paraguay'),
+    GrxFederativeUnit(id: '10', name: 'Alto Paraná'),
+    GrxFederativeUnit(id: '13', name: 'Amambay'),
+    GrxFederativeUnit(id: 'ASU', name: 'Asunción'),
+    GrxFederativeUnit(id: '19', name: 'Boquerón'),
+    GrxFederativeUnit(id: '5', name: 'Caaguazú'),
+    GrxFederativeUnit(id: '6', name: 'Caazapá'),
+    GrxFederativeUnit(id: '14', name: 'Canindeyú'),
+    GrxFederativeUnit(id: '11', name: 'Central'),
+    GrxFederativeUnit(id: '1', name: 'Concepción'),
+    GrxFederativeUnit(id: '3', name: 'Cordillera'),
+    GrxFederativeUnit(id: '4', name: 'Guairá'),
+    GrxFederativeUnit(id: '7', name: 'Itapúa'),
+    GrxFederativeUnit(id: '8', name: 'Misiones'),
+    GrxFederativeUnit(id: '12', name: 'Ñeembucú'),
+    GrxFederativeUnit(id: '9', name: 'Paraguarí'),
+    GrxFederativeUnit(id: '15', name: 'Presidente Hayes'),
+    GrxFederativeUnit(id: '2', name: 'San Pedro'),
+  ];
+
   static const mzStates = [
     GrxFederativeUnit(id: '1', name: '1 - Niassa'),
     GrxFederativeUnit(id: '2', name: '2 - Cabo Delgado'),

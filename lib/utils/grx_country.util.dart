@@ -978,7 +978,9 @@ abstract class GrxCountryUtils {
       code: '+595',
       name: 'Paraguai',
       flag: 'paraguay_flag',
+      language: 'es',
       phoneMasks: ['(###) ###-###'],
+      states: GrxStaticValuesService.pyStates,
     ),
     GrxCountry(
       id: GrxCountryId.PE,
