@@ -1,14 +1,10 @@
-import 'package:flutter/widgets.dart';
-
 import '../../utils/grx_utils.util.dart';
 
-class GrxIconData extends IconData {
-  static const _kFontFam = 'GrxIcons';
-  static const String _kFontPkg = GrxUtils.packageName;
-
-  const GrxIconData(super.codePoint)
-      : super(
-          fontFamily: GrxIconData._kFontFam,
-          fontPackage: GrxIconData._kFontPkg,
-        );
+/// Font metadata for [GrxIcons].
+///
+/// [IconData] is final as of Flutter 3.44, so custom icons are created via
+/// [IconData] directly using these constants.
+abstract final class GrxIconData {
+  static const fontFamily = 'GrxIcons';
+  static const fontPackage = GrxUtils.packageName;
 }
