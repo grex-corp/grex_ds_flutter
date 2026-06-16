@@ -1,3 +1,7 @@
+## 0.1.16
+
+* Fix Flutter 3.44 compatibility: stop extending `IconData` in `GrxIconData` (now uses `IconData` directly)
+
 ## 0.1.15
 
 * Align Paraguay (`GrxCountryId.PY`) with Argentina and Uruguay: set `language` to `es`, add `GrxStaticValuesService.pyStates` (ISO 3166-2:PY departments and Asunción)
