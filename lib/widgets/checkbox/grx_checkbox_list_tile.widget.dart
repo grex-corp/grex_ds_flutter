@@ -42,7 +42,7 @@ class GrxCheckboxListTile extends StatelessWidget {
                 child: GrxBodyText(
                   title,
                   color: GrxColors.primary.shade800
-                      .withOpacity(enabled && !isLoading ? 1.0 : .5),
+                      .withValues(alpha: enabled && !isLoading ? 1.0 : .5),
                 ),
               ),
             ),
