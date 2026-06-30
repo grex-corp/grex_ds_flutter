@@ -7,10 +7,7 @@ import 'typography/grx_label_text.widget.dart';
 
 class GrxChip extends StatelessWidget {
   const GrxChip({super.key, required this.type, this.label, this.builder})
-    : assert(
-        (type != GrxChipType.custom && label != null) ||
-            (type == GrxChipType.custom && builder != null),
-      );
+    : assert((type != GrxChipType.custom && label != null) || (type == GrxChipType.custom && builder != null));
 
   final GrxChipType type;
   final String? label;
@@ -21,14 +18,14 @@ class GrxChip extends StatelessWidget {
     GrxChipType.secondary => GrxColors.secondary,
     GrxChipType.success => GrxColors.success,
     GrxChipType.error => GrxColors.error,
-    GrxChipType.warning => GrxColors.warning,
+    GrxChipType.warning => GrxColors.warning.withValues(alpha: 0.4),
     GrxChipType.info => GrxColors.primary.shade50,
     _ => Colors.transparent,
   };
 
   Color get foregroundColor => switch (type) {
     GrxChipType.primary || GrxChipType.secondary => GrxColors.neutrals,
-    GrxChipType.success => GrxColors.success.shade900,
+    GrxChipType.success => GrxColors.secondary.shade900,
     GrxChipType.error => GrxColors.error.shade300,
     GrxChipType.warning => GrxColors.warning.shade300,
     GrxChipType.info => GrxColors.primary.shade900,
@@ -50,10 +47,7 @@ class GrxChip extends StatelessWidget {
           type == GrxChipType.custom && builder != null
               ? builder!(context)
               : Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: GrxSpacing.sm,
-                  vertical: GrxSpacing.xxs,
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: GrxSpacing.sm, vertical: GrxSpacing.xxs),
                 child: GrxLabelText(label, color: foregroundColor),
               ),
     );

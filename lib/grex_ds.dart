@@ -20,6 +20,7 @@ export 'enums/grx_autocomplete_loading_style.enum.dart'
     show GrxAutocompleteLoadingStyle;
 export 'enums/grx_country_id.enum.dart' show GrxCountryId;
 export 'enums/grx_text_transform.enum.dart' show GrxTextTransform;
+export 'enums/grx_shape.enum.dart' show GrxShape;
 
 /// Extensions
 export 'extensions/uint8_list.extension.dart' show Uint8ListExtension;
@@ -96,10 +97,13 @@ export 'utils/grx_upper_case_text_formatter.util.dart'
 /// Utils
 export 'utils/grx_utils.util.dart' show GrxUtils;
 
+/// Widgets/Accordion
+export 'widgets/grx_accordion.widget.dart' show GrxAccordion;
+
 ///Widget/Buttons
 export 'widgets/buttons/grx_back_button.widget.dart' show GrxBackButton;
 export 'widgets/buttons/grx_bottom_button.widget.dart' show GrxBottomButton;
-export 'widgets/buttons/grx_circle_button.widget.dart' show GrxCircleButton;
+export 'widgets/buttons/grx_sized_button.widget.dart' show GrxSizedButton;
 export 'widgets/buttons/grx_close_button.widget.dart' show GrxCloseButton;
 export 'widgets/buttons/grx_filter_button.widget.dart' show GrxFilterButton;
 export 'widgets/buttons/grx_icon_button.widget.dart' show GrxIconButton;

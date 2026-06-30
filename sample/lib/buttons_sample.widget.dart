@@ -85,8 +85,8 @@ class _ButtonsSampleState extends State<ButtonsSample> {
             onPressed: _onPressed,
           ),
           GrxFilterButton(text: 'Filter Button', onPressed: () {}),
-          GrxCircleButton(child: Icon(GrxIcons.check), onPressed: () {}),
-          GrxCircleButton(
+          GrxSizedButton(child: Icon(GrxIcons.check), onPressed: () {}),
+          GrxSizedButton(
             isLoading: isLoading,
             onPressed: _onPressed,
             child: Icon(GrxIcons.check),

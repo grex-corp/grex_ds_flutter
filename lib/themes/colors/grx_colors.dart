@@ -58,6 +58,7 @@ sealed class GrxColors {
     300: Color(0xffcc7914),
   });
 
+  static const white = Color(0xffffffff);
   static const background = Color(0xffdfeaf6);
   static const transparent = Color(0x00000000);
 }

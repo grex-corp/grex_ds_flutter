@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../themes/icons/grx_icons.dart';
 import '../utils/grx_button.util.dart';
-import '../widgets/buttons/grx_circle_button.widget.dart';
+import '../widgets/buttons/grx_sized_button.widget.dart';
 import '../widgets/buttons/grx_filter_button.widget.dart';
 import '../widgets/headers/grx_searchable_header.widget.dart';
 
@@ -68,7 +68,7 @@ class GrxSearchableSliverHeaderDelegate extends SliverPersistentHeaderDelegate {
               onPressed: onFilter!,
             ),
           if (onAdd != null)
-            GrxCircleButton(
+            GrxSizedButton(
               margin: const EdgeInsets.only(right: 10.0),
               size: GrxButtonUtils.buttonAnimationProgressCalc(progress),
               onPressed: onAdd!,

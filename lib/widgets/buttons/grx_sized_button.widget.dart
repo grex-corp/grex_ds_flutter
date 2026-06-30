@@ -3,15 +3,18 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../enums/grx_shape.enum.dart';
 import '../../themes/colors/grx_colors.dart';
 import '../../themes/grx_theme_data.theme.dart';
+import '../../themes/radius/grx_radius.dart';
 import '../../themes/typography/styles/grx_title_small_text.style.dart';
 
-class GrxCircleButton extends StatelessWidget {
-  const GrxCircleButton({
+class GrxSizedButton extends StatelessWidget {
+  const GrxSizedButton({
     super.key,
     required this.child,
     this.size = 44.0,
+    this.shape = GrxShape.circle,
     this.backgroundColor = GrxColors.primary,
     this.foregroundColor = GrxColors.neutrals,
     this.borderColor,
@@ -23,6 +26,7 @@ class GrxCircleButton extends StatelessWidget {
   });
 
   final double size;
+  final GrxShape shape;
   final Color backgroundColor;
   final Color foregroundColor;
   final Color? borderColor;
@@ -32,6 +36,18 @@ class GrxCircleButton extends StatelessWidget {
   final bool isLoading;
   final bool enabled;
   final EdgeInsetsGeometry? margin;
+
+  double _borderRadius() {
+    switch (shape) {
+      case GrxShape.circle:
+        return size / 2;
+      case GrxShape.rounded:
+      case GrxShape.square:
+        return GrxRadius.xs;
+      case GrxShape.sharp:
+        return GrxRadius.sharp;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +75,7 @@ class GrxCircleButton extends StatelessWidget {
                 borderColor != null
                     ? Border.all(color: borderColor, width: borderSize)
                     : null,
-            borderRadius: BorderRadius.circular(size / 2),
+            borderRadius: BorderRadius.circular(_borderRadius()),
           ),
           child:
               isLoading

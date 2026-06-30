@@ -12,7 +12,7 @@ import '../themes/icons/grx_icons.dart';
 import '../themes/spacing/grx_spacing.dart';
 import '../utils/grx_regex.util.dart';
 import '../utils/grx_utils.util.dart';
-import 'buttons/grx_circle_button.widget.dart';
+import 'buttons/grx_sized_button.widget.dart';
 import 'grx_shimmer.widget.dart';
 import 'typography/grx_body_text.widget.dart';
 
@@ -183,7 +183,7 @@ class _GrxUserAvatarState extends State<GrxUserAvatar> {
       right: -5.0,
       child:
           widget.avatarPickerButton ??
-          GrxCircleButton(
+          GrxSizedButton(
             size: widget.radius / 1.4,
             borderColor: GrxColors.neutrals,
             borderSize: GrxSpacing.xxs,
@@ -217,7 +217,7 @@ class _GrxUserAvatarState extends State<GrxUserAvatar> {
     return Positioned(
       top: -5,
       right: -5,
-      child: GrxCircleButton(
+      child: GrxSizedButton(
         size: 32.0,
         backgroundColor: GrxColors.error,
         foregroundColor: GrxColors.neutrals,
