@@ -109,12 +109,6 @@ class _GrxButtonState extends State<GrxButton> {
         GrxTitleSmallTextStyle(color: foregroundColor);
 
     final children = <Widget>[
-      if (widget.icon != null)
-        Icon(
-          widget.icon,
-          size: widget.iconSize,
-          color: widget.iconColor ?? widget.foregroundColor,
-        ),
       Flexible(
         child:
             widget.textSpan != null
@@ -131,6 +125,12 @@ class _GrxButtonState extends State<GrxButton> {
                   transform: widget.transform,
                 ),
       ),
+      if (widget.icon != null)
+        Icon(
+          widget.icon,
+          size: widget.iconSize,
+          color: widget.iconColor ?? widget.foregroundColor,
+        ),
     ];
 
     return Padding(

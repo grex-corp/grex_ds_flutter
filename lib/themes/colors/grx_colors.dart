@@ -43,22 +43,13 @@ sealed class GrxColors {
     1000: Color(0xff2e2e2e),
   });
 
-  static const success = GrxColor(0xffb4f9d9, {
-    200: Color(0xff1eed8c),
-    300: Color(0xff0ead62),
-  });
+  static const success = GrxColor(0xffb4f9d9, {200: Color(0xff1eed8c), 300: Color(0xff0ead62)});
 
-  static const error = GrxColor(0xffe4626f, {
-    200: Color(0xffc03744),
-    300: Color(0xff8c1823),
-  });
+  static const error = GrxColor(0xffe4626f, {200: Color(0xffc03744), 300: Color(0xff8c1823)});
 
-  static const warning = GrxColor(0xfff4c790, {
-    200: Color(0xffeda145),
-    300: Color(0xffcc7914),
-  });
+  static const warning = GrxColor(0xfff4c790, {200: Color(0xffeda145), 300: Color(0xffcc7914)});
 
   static const white = Color(0xffffffff);
-  static const background = Color(0xffdfeaf6);
+  static const background = Color(0xffe5f0fb);
   static const transparent = Color(0x00000000);
 }
