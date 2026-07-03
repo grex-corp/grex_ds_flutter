@@ -71,6 +71,8 @@ class _GrxUserAvatarState extends State<GrxUserAvatar> {
       );
     }
 
+    final initials = GrxRegexUtils.initialsFromName(widget.text);
+
     return Container(
       padding: widget.showBorder ? const EdgeInsets.all(2.0) : EdgeInsets.zero,
       decoration:
@@ -129,23 +131,14 @@ class _GrxUserAvatarState extends State<GrxUserAvatar> {
                 },
                 errorWidget: (context, url, error) => const Icon(Icons.error),
               )
-              : (widget.text?.isNotEmpty ?? false)
+              : initials.isNotEmpty
               ? CircleAvatar(
                 radius: widget.radius,
                 backgroundColor: widget.backgroundColor,
                 child: Padding(
                   padding: const EdgeInsets.all(2),
                   child: GrxBodyText(
-                    RegExp(
-                          widget.text!.split(' ').length >= 2
-                              ? GrxRegexUtils.fullNameAvatarRgx
-                              : GrxRegexUtils.singleNameAvatarRgx,
-                        )
-                        .allMatches(widget.text!)
-                        .map((m) => m.group(0))
-                        .join()
-                        .toUpperCase()
-                        .substring(0, 2),
+                    initials,
                     color: widget.textColor,
                     overflow: TextOverflow.clip,
                     textAlign: TextAlign.center,

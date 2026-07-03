@@ -26,10 +26,22 @@ export 'enums/grx_shape.enum.dart' show GrxShape;
 export 'extensions/uint8_list.extension.dart' show Uint8ListExtension;
 
 /// Models
+export 'models/address/grx_address_form_strings.dart' show GrxAddressFormStrings;
+export 'models/address/grx_address_schema.model.dart'
+    show GrxAddressSchemaModel;
+export 'models/address/grx_autocomplete_item.model.dart'
+    show GrxAutocompleteItemModel;
+export 'models/address/grx_canonical_address.model.dart'
+    show GrxCanonicalAddressModel;
+export 'models/address/grx_subdivision.model.dart' show GrxSubdivisionModel;
 export 'models/grx_country.model.dart' show GrxCountry;
 export 'models/grx_federative_unit.model.dart' show GrxFederativeUnit;
 export 'models/grx_phone_number.model.dart' show GrxPhoneNumber;
 export 'models/grx_toast_action.model.dart' show GrxToastAction;
+
+/// Delegates
+export 'delegates/grx_address_form_delegate.dart'
+    show GrxAddressFormDelegate, GrxAddressValidationException;
 
 /// Services
 export 'services/grx_bottom_sheet.service.dart' show GrxBottomSheetService;
@@ -96,6 +108,9 @@ export 'utils/grx_upper_case_text_formatter.util.dart'
 
 /// Utils
 export 'utils/grx_utils.util.dart' show GrxUtils;
+
+/// Widgets/Address
+export 'widgets/address/grx_address_form.widget.dart' show GrxAddressForm;
 
 /// Widgets/Accordion
 export 'widgets/grx_accordion.widget.dart' show GrxAccordion;

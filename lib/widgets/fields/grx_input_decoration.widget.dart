@@ -17,6 +17,7 @@ class GrxInputDecoration extends InputDecoration {
     this.onClear,
     super.enabled = true,
     this.showClearButton = false,
+    this.isClearButtonVisible = false,
     final Widget? suffix,
   }) : super(
          floatingLabelStyle: GrxTitleTextStyle(
@@ -27,12 +28,24 @@ class GrxInputDecoration extends InputDecoration {
            children: [
              if (suffix != null) suffix,
              if (showClearButton)
-               GrxClearInputButton(onClear: onClear!),
+               Opacity(
+                 opacity: isClearButtonVisible ? 1 : 0,
+                 child: IgnorePointer(
+                   ignoring: !isClearButtonVisible,
+                   child: GrxClearInputButton(onClear: onClear!),
+                 ),
+               ),
            ],
          ),
          isDense: true,
        );
 
   final void Function()? onClear;
+
+  /// When true, reserves suffix space for the clear button so toggling text
+  /// empty/non-empty does not change [InputDecoration] structure (avoids focus loss).
   final bool showClearButton;
+
+  /// Whether the clear button is visible and tappable.
+  final bool isClearButtonVisible;
 }

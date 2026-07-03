@@ -22,8 +22,13 @@ class GrxBottomSheetService {
     final ScrollController? controller,
     final bool hideGrabber = false,
   }) {
-    return Container(
-      decoration: _border(),
+    return Material(
+      color: backgroundColor,
+      borderRadius: const BorderRadius.only(
+        topLeft: Radius.circular(22.0),
+        topRight: Radius.circular(22.0),
+      ),
+      clipBehavior: Clip.antiAlias,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -33,16 +38,6 @@ class GrxBottomSheetService {
           ),
           _buildChild(controller),
         ],
-      ),
-    );
-  }
-
-  BoxDecoration _border() {
-    return BoxDecoration(
-      color: backgroundColor,
-      borderRadius: const BorderRadius.only(
-        topLeft: Radius.circular(22.0),
-        topRight: Radius.circular(22.0),
       ),
     );
   }

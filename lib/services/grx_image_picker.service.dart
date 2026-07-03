@@ -1,8 +1,7 @@
 import 'dart:async';
-import 'dart:io';
 
-import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -17,92 +16,62 @@ import 'grx_toast.service.dart';
 abstract class GrxImagePickerService {
   static final ImagePicker _picker = ImagePicker();
 
-  static Future<CroppedFile?> openCamera() async {
-    final status = await Permission.camera.request();
+  static const _cameraAccessDeniedCodes = {
+    'camera_access_denied',
+    'camera_access_restricted',
+  };
 
-    if (status.isDenied || status.isPermanentlyDenied) {
-      GrxToastService.showError(
-        message:
-            status.isPermanentlyDenied
-                ? 'Permissão de acesso à câmera negada permanentemente.'
-                : 'Permissão de acesso à câmera negada.',
-        actions: [
-          GrxToastAction(
-            label: 'Abrir Configurações',
-            icon: Icons.settings,
-            onPressed: () => openAppSettings(),
-          ),
-        ],
-      );
+  static const _photosAccessDeniedCodes = {
+    'photo_access_denied',
+    'photo_access_restricted',
+  };
+
+  static Future<CroppedFile?> openCamera() async {
+    try {
+      final image = await _picker.pickImage(source: ImageSource.camera);
+      if (image == null) return null;
+
+      return cropImage(image.path);
+    } on PlatformException catch (error) {
+      if (_cameraAccessDeniedCodes.contains(error.code)) {
+        _showAccessDeniedToast(
+          message: 'Permissão de acesso à câmera negada.',
+        );
+      }
       return null;
     }
-
-    final image = await _picker.pickImage(source: ImageSource.camera);
-    if (image == null) return null;
-
-    return cropImage(image.path);
   }
 
   static Future<CroppedFile?> openGallery() async {
-    PermissionStatus status;
-    String deniedMessage = '';
-    String permanentlyDeniedMessage = '';
-
-    if (Platform.isIOS) {
-      // iOS: Always request photos permission
-      status = await Permission.photos.request();
-      deniedMessage = 'Permissão de acesso à galeria negada.';
-      permanentlyDeniedMessage =
-          'Permissão de acesso à galeria negada permanentemente.';
-    } else if (Platform.isAndroid) {
-      final androidInfo = await DeviceInfoPlugin().androidInfo;
-
-      // Android: Check version and request appropriate permission
-      // var release = androidInfo.version.release;
-      final sdkInt = androidInfo.version.sdkInt;
-
-      if (sdkInt <= 32) {
-        // Android <= 12: Request storage permission
-        status = await Permission.storage.request();
-        deniedMessage = 'Permissão de acesso ao armazenamento negada.';
-        permanentlyDeniedMessage =
-            'Permissão de acesso ao armazenamento negada permanentemente.';
-      } else {
-        // Android > 12: No permission needed, proceed directly
-        status = PermissionStatus.granted;
-        deniedMessage = 'Permissão de acesso à galeria negada.';
-        permanentlyDeniedMessage =
-            'Permissão de acesso à galeria negada permanentemente.';
-      }
-    } else {
-      // Other platforms: Default to photos permission
-      status = await Permission.photos.request();
-      deniedMessage = 'Permissão de acesso à galeria negada.';
-      permanentlyDeniedMessage =
-          'Permissão de acesso à galeria negada permanentemente.';
-    }
-
-    if (status.isDenied || status.isPermanentlyDenied) {
-      GrxToastService.showError(
-        message:
-            status.isPermanentlyDenied
-                ? permanentlyDeniedMessage
-                : deniedMessage,
-        actions: [
-          GrxToastAction(
-            label: 'Abrir Configurações',
-            icon: Icons.settings,
-            onPressed: () => openAppSettings(),
-          ),
-        ],
+    try {
+      final image = await _picker.pickImage(
+        source: ImageSource.gallery,
+        requestFullMetadata: false,
       );
+      if (image == null) return null;
+
+      return cropImage(image.path);
+    } on PlatformException catch (error) {
+      if (_photosAccessDeniedCodes.contains(error.code)) {
+        _showAccessDeniedToast(
+          message: 'Permissão de acesso à galeria negada.',
+        );
+      }
       return null;
     }
+  }
 
-    final image = await _picker.pickImage(source: ImageSource.gallery);
-    if (image == null) return null;
-
-    return cropImage(image.path);
+  static void _showAccessDeniedToast({required String message}) {
+    GrxToastService.showError(
+      message: message,
+      actions: [
+        GrxToastAction(
+          label: 'Abrir Configurações',
+          icon: Icons.settings,
+          onPressed: openAppSettings,
+        ),
+      ],
+    );
   }
 
   static Future<CroppedFile?> cropImage(String path) async =>

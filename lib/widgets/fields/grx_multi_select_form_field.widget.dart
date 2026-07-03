@@ -257,7 +257,8 @@ class _GrxMultiSelectStateFormField<T>
                     values = [];
                     field.didChange(values);
                   },
-                  showClearButton: !isEmpty(),
+                  showClearButton: widget.enabled,
+                  isClearButtonVisible: !isEmpty(),
                 ),
                 isEmpty: isEmpty(),
                 isFocused: inputFocusNode.hasFocus,
