@@ -7,7 +7,7 @@ import '../buttons/grx_clear_input_button.widget.dart';
 import 'grx_form_field.widget.dart';
 
 final _inputTextStyle = GrxLabelLargeTextStyle(
-  color: GrxColors.primary.shade800,
+  color: GrxColors.primary.shade900,
 );
 
 class GrxSearchField extends StatelessWidget {
@@ -36,24 +36,42 @@ class GrxSearchField extends StatelessWidget {
           autocorrect: false,
           style: _inputTextStyle,
           decoration: InputDecoration(
-            suffixIconConstraints: const BoxConstraints(
-              minHeight: 24,
-              minWidth: 40,
-            ),
             isDense: true,
-            border: const OutlineInputBorder(
+            border: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(5.0)),
-              borderSide: BorderSide(width: 0, style: BorderStyle.none),
+              borderSide: BorderSide(
+                width: 1,
+                color: GrxColors.primary.shade50,
+              ),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(5.0)),
+              borderSide: BorderSide(
+                width: 1,
+                color: GrxColors.primary.shade50,
+              ),
             ),
             focusedBorder: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(5.0)),
               borderSide: BorderSide(width: 0, style: BorderStyle.none),
             ),
-            fillColor: GrxColors.neutrals,
+            fillColor: GrxColors.primary.withValues(alpha: 0.1),
             filled: true,
+            prefixIcon: Icon(
+              GrxIcons.search,
+              color: GrxColors.primary.shade800,
+            ),
+            prefixIconConstraints: const BoxConstraints(
+              minHeight: 24,
+              minWidth: 40,
+            ),
+            suffixIconConstraints: const BoxConstraints(
+              minHeight: 24,
+              minWidth: 40,
+            ),
             suffixIcon:
                 searchFieldController?.text.isEmpty ?? true
-                    ? Icon(GrxIcons.search)
+                    ? const SizedBox.shrink()
                     : GrxClearInputButton(
                       onClear: () {
                         searchFieldController?.clear();
@@ -61,7 +79,9 @@ class GrxSearchField extends StatelessWidget {
                       },
                     ),
             hintText: hintText,
-            hintStyle: _inputTextStyle,
+            hintStyle: _inputTextStyle.copyWith(
+              color: GrxColors.primary.shade800,
+            ),
           ),
           onChanged: onChanged,
           onSubmitted: onSubmitted,
