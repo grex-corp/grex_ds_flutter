@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:grex_ds/grex_ds.dart';
 
 import '../../themes/colors/grx_colors.dart';
 import '../../utils/grx_utils.util.dart';
@@ -17,18 +18,12 @@ class GrxCheckbox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double opacity = enabled && !isLoading ? 255 : 102;
-
     return Container(
-      height: 20,
-      width: 20,
+      height: 20.0,
+      width: 20.0,
       decoration: BoxDecoration(
-        color: GrxColors.primary.shade50.withValues(alpha: opacity),
-        border: Border.all(
-          color: GrxColors.neutrals.shade100.withValues(alpha: opacity),
-          width: 2.0,
-        ),
-        borderRadius: BorderRadius.circular(4.0),
+        border: Border.all(color: GrxColors.primary, width: 1.0),
+        borderRadius: BorderRadius.circular(GrxRadius.xs),
       ),
       child: Padding(
         padding: const EdgeInsets.all(2),
@@ -36,7 +31,7 @@ class GrxCheckbox extends StatelessWidget {
           duration: GrxUtils.defaultAnimationDuration,
           decoration: BoxDecoration(
             color: value ? GrxColors.primary.shade600 : Colors.transparent,
-            borderRadius: BorderRadius.circular(2.0),
+            borderRadius: BorderRadius.circular(GrxRadius.xs),
           ),
         ),
       ),
