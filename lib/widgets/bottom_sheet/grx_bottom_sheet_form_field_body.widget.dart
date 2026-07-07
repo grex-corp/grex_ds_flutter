@@ -215,12 +215,10 @@ class _GrxBottomSheetFormFieldBodyState<T> extends State<GrxBottomSheetFormField
       ),
     );
 
-    final shouldExpandList = !widget.shrinkWrap || widget.multiSelect;
-
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        if (shouldExpandList) Flexible(child: listContent) else listContent,
+        Flexible(child: listContent),
         if (widget.multiSelect)
           Container(
             decoration: BoxDecoration(

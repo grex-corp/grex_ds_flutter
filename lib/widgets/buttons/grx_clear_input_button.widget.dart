@@ -8,7 +8,7 @@ class GrxClearInputButton extends GrxSizedButton {
   GrxClearInputButton({super.key, final VoidCallback? onClear})
     : super(
         onPressed: onClear,
-        backgroundColor: GrxColors.neutrals.shade50,
+        backgroundColor: GrxColors.transparent,
         foregroundColor: GrxColors.neutrals.shade900,
         size: 18.0,
         child: Icon(GrxIcons.close_l, size: 8.0),
