@@ -20,6 +20,7 @@ class GrxHeader extends StatelessWidget implements PreferredSizeWidget {
     this.actions = const [],
     this.showBackButton = false,
     this.showCloseButton = false,
+    this.centerTitle = false,
     this.height = _kHeight,
     this.animationProgress = 0,
     final Color? foregroundColor,
@@ -37,6 +38,7 @@ class GrxHeader extends StatelessWidget implements PreferredSizeWidget {
   final List<Widget> actions;
   final bool showBackButton;
   final bool showCloseButton;
+  final bool centerTitle;
   final double height;
   final double animationProgress;
   final SystemUiOverlayStyle systemOverlayStyle;
@@ -63,7 +65,7 @@ class GrxHeader extends StatelessWidget implements PreferredSizeWidget {
         ),
       ),
       elevation: 0,
-      centerTitle: false,
+      centerTitle: centerTitle,
       backgroundColor: backgroundColor,
       foregroundColor: foregroundColor,
       systemOverlayStyle: systemOverlayStyle,
