@@ -30,16 +30,11 @@ class GrxBottomSheetFormFieldBody<T> extends StatefulWidget {
     this.emptyListText,
     this.confirmButtonLabel,
     this.cancelButtonLabel,
-  }) : assert(
-         (!multiSelect && onChangeState != null) ||
-             (multiSelect && valueKey != null),
-       ),
+    this.includeListBottomSafeAreaPadding = true,
+  }) : assert((!multiSelect && onChangeState != null) || (multiSelect && valueKey != null)),
        assert(
          !searchable ||
-             (searchable &&
-                 quickSearchFieldController != null &&
-                 onFilterSetState != null &&
-                 displayText != null),
+             (searchable && quickSearchFieldController != null && onFilterSetState != null && displayText != null),
        );
 
   final ScrollController? controller;
@@ -47,13 +42,7 @@ class GrxBottomSheetFormFieldBody<T> extends StatefulWidget {
   final String Function(T data)? displayText;
   final TextEditingController? quickSearchFieldController;
   final void Function(T?)? onSelectItem;
-  final Widget Function(
-    BuildContext context,
-    int index,
-    T value,
-    void Function()? onChanged,
-    bool isSelected,
-  )
+  final Widget Function(BuildContext context, int index, T value, void Function()? onChanged, bool isSelected)
   itemBuilder;
   final Iterable<T> items;
   final void Function(T)? onChangeState;
@@ -66,13 +55,13 @@ class GrxBottomSheetFormFieldBody<T> extends StatefulWidget {
   final String? emptyListText;
   final String? confirmButtonLabel;
   final String? cancelButtonLabel;
+  final bool includeListBottomSafeAreaPadding;
 
   @override
   State<StatefulWidget> createState() => _GrxBottomSheetFormFieldBodyState<T>();
 }
 
-class _GrxBottomSheetFormFieldBodyState<T>
-    extends State<GrxBottomSheetFormFieldBody<T>> {
+class _GrxBottomSheetFormFieldBodyState<T> extends State<GrxBottomSheetFormFieldBody<T>> {
   static const _kSearchFieldHeight = 48.0;
   static const _kSearchDebounceDuration = Duration(milliseconds: 500);
 
@@ -120,12 +109,7 @@ class _GrxBottomSheetFormFieldBodyState<T>
       _list.clear();
       _list.addAll(
         widget.items.where(
-          (x) =>
-              val.isEmpty ||
-              GrxTextSanitizer.matchesSearch(
-                val,
-                widget.displayText!(x).toString(),
-              ),
+          (x) => val.isEmpty || GrxTextSanitizer.matchesSearch(val, widget.displayText!(x).toString()),
         ),
       );
     }
@@ -150,16 +134,9 @@ class _GrxBottomSheetFormFieldBodyState<T>
       scrolledUnderElevation: 0,
       elevation: 0,
       bottom: PreferredSize(
-        preferredSize: const Size.fromHeight(
-          GrxSpacing.xs + _kSearchFieldHeight + GrxSpacing.s,
-        ),
+        preferredSize: const Size.fromHeight(GrxSpacing.xs + _kSearchFieldHeight + GrxSpacing.s),
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(
-            GrxSpacing.s,
-            GrxSpacing.xs,
-            GrxSpacing.s,
-            GrxSpacing.s,
-          ),
+          padding: const EdgeInsets.fromLTRB(GrxSpacing.s, GrxSpacing.xs, GrxSpacing.s, GrxSpacing.s),
           child: GrxSearchField(
             searchFieldController: widget.quickSearchFieldController!,
             onChanged: _onSearchChanged,
@@ -173,105 +150,88 @@ class _GrxBottomSheetFormFieldBodyState<T>
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
+    final listBottomPadding =
+        widget.multiSelect
+            ? 0.0
+            : widget.includeListBottomSafeAreaPadding
+            ? mediaQuery.viewInsets.bottom + mediaQuery.padding.bottom + GrxSpacing.s
+            : 0.0;
+
+    final listContent = ColoredBox(
+      color: GrxColors.background,
+      child: CustomScrollView(
+        controller: widget.controller,
+        shrinkWrap: widget.shrinkWrap,
+        slivers: [
+          if (widget.searchable) ...[_buildFloatingSearchSliver()],
+          _list.isEmpty
+              ? SliverToBoxAdapter(
+                child: SafeArea(
+                  top: false,
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: GrxLabelLargeText(widget.emptyListText ?? 'No results found'),
+                    ),
+                  ),
+                ),
+              )
+              : SliverPadding(
+                padding: EdgeInsets.only(
+                  left: GrxSpacing.s,
+                  top: GrxSpacing.s,
+                  right: GrxSpacing.s,
+                  bottom: listBottomPadding,
+                ),
+                sliver: SliverList(
+                  delegate: SliverChildBuilderDelegate(childCount: _list.length, (context, index) {
+                    final item = _list[index];
+
+                    if (widget.multiSelect) {
+                      return widget.itemBuilder(
+                        context,
+                        index,
+                        item,
+                        () => _onItemCheckedChange(item),
+                        _selectedValues.any((element) => widget.valueKey!(element) == widget.valueKey!(item)),
+                      );
+                    }
+
+                    return InkWell(
+                      onTap: () {
+                        Navigator.pop(context, true);
+
+                        if (widget.onSelectItem != null) {
+                          widget.onSelectItem!(item);
+                        }
+                        widget.onChangeState!(item);
+                      },
+                      child: widget.itemBuilder(context, index, item, null, false),
+                    );
+                  }),
+                ),
+              ),
+        ],
+      ),
+    );
+
+    final shouldExpandList = !widget.shrinkWrap || widget.multiSelect;
 
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Flexible(
-          child: ColoredBox(
-            color: GrxColors.background,
-            child: CustomScrollView(
-              controller: widget.controller,
-              shrinkWrap: widget.shrinkWrap,
-              slivers: [
-                if (widget.searchable) ...[_buildFloatingSearchSliver()],
-                _list.isEmpty
-                    ? SliverToBoxAdapter(
-                      child: SafeArea(
-                        top: false,
-                        child: Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: GrxLabelLargeText(
-                              widget.emptyListText ?? 'No results found',
-                            ),
-                          ),
-                        ),
-                      ),
-                    )
-                    : SliverPadding(
-                      padding: EdgeInsets.only(
-                        left: GrxSpacing.s,
-                        top: GrxSpacing.s,
-                        right: GrxSpacing.s,
-                        bottom:
-                            !widget.multiSelect
-                                ? MediaQuery.of(context).viewInsets.bottom +
-                                    MediaQuery.of(context).padding.bottom +
-                                    GrxSpacing.s
-                                : 0,
-                      ),
-                      sliver: SliverList(
-                        delegate: SliverChildBuilderDelegate(
-                          childCount: _list.length,
-                          (context, index) {
-                            final item = _list[index];
-
-                            if (widget.multiSelect) {
-                              return widget.itemBuilder(
-                                context,
-                                index,
-                                item,
-                                () => _onItemCheckedChange(item),
-                                _selectedValues.any(
-                                  (element) =>
-                                      widget.valueKey!(element) ==
-                                      widget.valueKey!(item),
-                                ),
-                              );
-                            } else {
-                              return InkWell(
-                                onTap: () {
-                                  Navigator.pop(context, true);
-
-                                  if (widget.onSelectItem != null) {
-                                    widget.onSelectItem!(item);
-                                  }
-                                  widget.onChangeState!(item);
-                                },
-                                child: widget.itemBuilder(
-                                  context,
-                                  index,
-                                  item,
-                                  null,
-                                  false,
-                                ),
-                              );
-                            }
-                          },
-                        ),
-                      ),
-                    ),
-              ],
-            ),
-          ),
-        ),
+        if (shouldExpandList) Flexible(child: listContent) else listContent,
         if (widget.multiSelect)
           Container(
             decoration: BoxDecoration(
               color: GrxColors.neutrals,
-              border: Border(
-                top: BorderSide(color: GrxColors.primary.shade50, width: 1),
-              ),
+              border: Border(top: BorderSide(color: GrxColors.primary.shade50, width: 1)),
             ),
             padding: EdgeInsets.only(
               top: 12.0,
               right: 16.0,
               left: 16.0,
-              bottom:
-                  mediaQuery.viewInsets.bottom +
-                  mediaQuery.padding.bottom +
-                  12.0,
+              bottom: mediaQuery.viewInsets.bottom + mediaQuery.padding.bottom + 12.0,
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

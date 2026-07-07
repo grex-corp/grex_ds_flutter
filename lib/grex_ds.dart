@@ -45,6 +45,9 @@ export 'delegates/grx_address_form_delegate.dart'
 
 /// Services
 export 'services/grx_bottom_sheet.service.dart' show GrxBottomSheetService;
+export 'widgets/bottom_sheet/grx_bottom_sheet_form_field_body.widget.dart'
+    show GrxBottomSheetFormFieldBody;
+export 'services/grx_dialog.service.dart' show GrxDialogService;
 export 'services/grx_image_picker.service.dart' show GrxImagePickerService;
 export 'services/grx_toast.service.dart' show GrxToastService;
 
@@ -175,9 +178,12 @@ export 'widgets/grx_dashed_divider.widget.dart' show GrxDashedDivider;
 export 'widgets/grx_dismissible_keyboard.widget.dart'
     show GrxDismissibleKeyboard;
 
-///Widget/DismissibleScaffold
+/// Widget/DismissibleScaffold
 export 'widgets/grx_dismissible_scaffold.widget.dart'
     show GrxDismissibleScaffold;
+
+/// Widgets/Dialog
+export 'widgets/dialog/grx_dialog.widget.dart' show GrxDialog;
 
 /// Widget/Divider
 export 'widgets/grx_divider.widget.dart' show GrxDivider;

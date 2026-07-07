@@ -55,6 +55,7 @@ class GrxBottomSheetService {
     return showModalBottomSheet<T>(
       backgroundColor: Colors.transparent,
       isScrollControlled: true,
+      useSafeArea: true,
       context: context,
       builder: (_) {
         return DraggableScrollableSheet(

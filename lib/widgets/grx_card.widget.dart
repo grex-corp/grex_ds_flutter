@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
+import '../themes/colors/grx_colors.dart';
+
 class GrxCard extends Card {
   GrxCard({
     super.key,
     super.borderOnForeground,
     super.child,
     super.clipBehavior,
-    super.color,
+    super.color = GrxColors.neutrals,
     super.elevation = 0.0,
     super.margin,
     super.semanticContainer,
