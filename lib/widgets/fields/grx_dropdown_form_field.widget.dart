@@ -30,6 +30,7 @@ class GrxDropdownFormField<T> extends GrxStatefulWidget {
     this.onSelectItem,
     this.validator,
     this.searchable = false,
+    this.searchHintText,
     this.enabled = true,
     this.flexible = false,
     this.isLoading = false,
@@ -51,6 +52,7 @@ class GrxDropdownFormField<T> extends GrxStatefulWidget {
   final FormFieldSetter<T>? onSaved;
   final FormFieldValidator<T>? validator;
   final bool searchable;
+  final String? searchHintText;
   final bool enabled;
   final bool flexible;
   final bool isLoading;
@@ -236,6 +238,7 @@ class _GrxDropdownStateFormField<T> extends State<GrxDropdownFormField<T>> {
                               context, index, item),
                       items: _list,
                       searchable: widget.searchable,
+                      searchHintText: widget.searchHintText,
                       shrinkWrap: !widget.searchable,
                       onChangeState: (item) {
                         setState(() {

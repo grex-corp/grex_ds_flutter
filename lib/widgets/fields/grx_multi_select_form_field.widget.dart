@@ -31,6 +31,7 @@ class GrxMultiSelectFormField<T> extends GrxStatefulWidget {
     this.enabled = true,
     this.flexible = false,
     this.searchable = false,
+    this.searchHintText,
     this.confirmButtonLabel,
     this.cancelButtonLabel,
     this.isLoading = false,
@@ -59,6 +60,7 @@ class GrxMultiSelectFormField<T> extends GrxStatefulWidget {
   final bool enabled;
   final bool flexible;
   final bool searchable;
+  final String? searchHintText;
   final bool isLoading;
   final String? confirmButtonLabel;
   final String? cancelButtonLabel;
@@ -212,6 +214,7 @@ class _GrxMultiSelectStateFormField<T>
                       valueKey: widget.valueKey,
                       shrinkWrap: !widget.searchable,
                       searchable: widget.searchable,
+                      searchHintText: widget.searchHintText,
                       quickSearchFieldController: quickSearchFieldController,
                       multiSelect: true,
                       confirmButtonLabel: widget.confirmButtonLabel,

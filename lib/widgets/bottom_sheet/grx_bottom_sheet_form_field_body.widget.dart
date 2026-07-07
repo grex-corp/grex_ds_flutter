@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../../themes/colors/grx_colors.dart';
+import '../../themes/spacing/grx_spacing.dart';
 import '../../utils/grx_text_sanitizer.util.dart';
 import '../buttons/grx_primary_button.widget.dart';
 import '../buttons/grx_secondary_button.widget.dart';
@@ -70,8 +73,12 @@ class GrxBottomSheetFormFieldBody<T> extends StatefulWidget {
 
 class _GrxBottomSheetFormFieldBodyState<T>
     extends State<GrxBottomSheetFormFieldBody<T>> {
+  static const _kSearchFieldHeight = 48.0;
+  static const _kSearchDebounceDuration = Duration(milliseconds: 500);
+
   final _list = <T>[];
   final _selectedValues = <T>[];
+  Timer? _debounceTimer;
 
   @override
   void initState() {
@@ -85,6 +92,12 @@ class _GrxBottomSheetFormFieldBodyState<T>
     }
   }
 
+  @override
+  void dispose() {
+    _debounceTimer?.cancel();
+    super.dispose();
+  }
+
   void _onItemCheckedChange(T itemValue) {
     final checked = _selectedValues.contains(itemValue);
 
@@ -95,6 +108,11 @@ class _GrxBottomSheetFormFieldBodyState<T>
         _selectedValues.remove(itemValue);
       }
     });
+  }
+
+  void _onSearchChanged(String value) {
+    _debounceTimer?.cancel();
+    _debounceTimer = Timer(_kSearchDebounceDuration, () => _filterData(value));
   }
 
   void _filterData(String val) {
@@ -119,6 +137,39 @@ class _GrxBottomSheetFormFieldBodyState<T>
         : filter();
   }
 
+  Widget _buildFloatingSearchSliver() {
+    return SliverAppBar(
+      primary: false,
+      floating: true,
+      snap: true,
+      pinned: false,
+      toolbarHeight: 0,
+      automaticallyImplyLeading: false,
+      backgroundColor: GrxColors.background,
+      surfaceTintColor: Colors.transparent,
+      scrolledUnderElevation: 0,
+      elevation: 0,
+      bottom: PreferredSize(
+        preferredSize: const Size.fromHeight(
+          GrxSpacing.xs + _kSearchFieldHeight + GrxSpacing.s,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(
+            GrxSpacing.s,
+            GrxSpacing.xs,
+            GrxSpacing.s,
+            GrxSpacing.s,
+          ),
+          child: GrxSearchField(
+            searchFieldController: widget.quickSearchFieldController!,
+            onChanged: _onSearchChanged,
+            hintText: widget.searchHintText ?? 'Search',
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
@@ -133,26 +184,7 @@ class _GrxBottomSheetFormFieldBodyState<T>
               controller: widget.controller,
               shrinkWrap: widget.shrinkWrap,
               slivers: [
-                if (widget.searchable)
-                  SliverAppBar(
-                    titleSpacing: 0.0,
-                    toolbarHeight: 65.0,
-                    backgroundColor: Colors.transparent,
-                    automaticallyImplyLeading: false,
-                    title: Container(
-                      color: GrxColors.background,
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 10,
-                        horizontal: 8,
-                      ),
-                      child: GrxSearchField(
-                        searchFieldController:
-                            widget.quickSearchFieldController!,
-                        onChanged: _filterData,
-                        hintText: widget.searchHintText ?? 'Search',
-                      ),
-                    ),
-                  ),
+                if (widget.searchable) ...[_buildFloatingSearchSliver()],
                 _list.isEmpty
                     ? SliverToBoxAdapter(
                       child: SafeArea(
@@ -169,21 +201,21 @@ class _GrxBottomSheetFormFieldBodyState<T>
                     )
                     : SliverPadding(
                       padding: EdgeInsets.only(
-                        left: 8,
-                        top: 8,
-                        right: 8,
+                        left: GrxSpacing.s,
+                        top: GrxSpacing.s,
+                        right: GrxSpacing.s,
                         bottom:
                             !widget.multiSelect
                                 ? MediaQuery.of(context).viewInsets.bottom +
                                     MediaQuery.of(context).padding.bottom +
-                                    8
+                                    GrxSpacing.s
                                 : 0,
                       ),
                       sliver: SliverList(
                         delegate: SliverChildBuilderDelegate(
                           childCount: _list.length,
                           (context, index) {
-                            final item = _list.toList()[index];
+                            final item = _list[index];
 
                             if (widget.multiSelect) {
                               return widget.itemBuilder(
