@@ -18,7 +18,7 @@ class GrxIconButton extends GrxSizedButton {
     super.margin,
     final Color? foregroundColor,
   }) : super(
-         child: Icon(icon, size: size - GrxSpacing.xxs),
+         child: Icon(icon, size: size - GrxSpacing.s),
          foregroundColor: foregroundColor ?? GrxColors.primary.shade900,
        );
 }
