@@ -10,6 +10,7 @@ import '../grx_stateful.widget.dart';
 import 'controllers/grx_form_field.controller.dart';
 import 'grx_form_field.widget.dart';
 import 'grx_input_decoration.widget.dart';
+import 'grx_text_field.widget.dart';
 import 'shimmers/grx_form_field_shimmer.widget.dart';
 
 class GrxMultiSelectFormField<T> extends GrxStatefulWidget {
@@ -125,11 +126,58 @@ class _GrxMultiSelectStateFormField<T>
 
   @override
   void dispose() {
+    quickSearchFieldController.dispose();
+    inputFocusNode.dispose();
+
     if (widget.controller == null) {
       controller.dispose();
     }
 
     super.dispose();
+  }
+
+  Future<void> _openBottomSheet(FormFieldState<Iterable<T>> field) async {
+    field.setState(() {
+      inputFocusNode.requestFocus();
+    });
+
+    final bottomSheet = GrxBottomSheetService(
+      context: field.context,
+      title: widget.selectBottomSheetTitle,
+      builder: (controller) {
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setModalState) {
+            return GrxBottomSheetFormFieldBody<T>(
+              initialSelectedValues: values,
+              items: _list,
+              itemBuilder: widget.itemBuilder,
+              onFilterSetState: setModalState,
+              displayText: widget.displayText,
+              valueKey: widget.valueKey,
+              shrinkWrap: !widget.searchable,
+              searchable: widget.searchable,
+              searchHintText: widget.searchHintText,
+              quickSearchFieldController: quickSearchFieldController,
+              multiSelect: true,
+              confirmButtonLabel: widget.confirmButtonLabel,
+              cancelButtonLabel: widget.cancelButtonLabel,
+            );
+          },
+        );
+      },
+    );
+
+    final selectedValues = await bottomSheet.show<Iterable<T>>();
+
+    if (selectedValues != null) {
+      field.didChange(selectedValues);
+
+      widget.onSelectItems?.call(selectedValues);
+
+      setState(() {
+        values = selectedValues;
+      });
+    }
   }
 
   void _subscribeStreams() {
@@ -193,86 +241,57 @@ class _GrxMultiSelectStateFormField<T>
             (field.value == null || (field.value?.isEmpty ?? true)) &&
             (values == null || values!.isEmpty);
 
+        if (isEmpty()) {
+          return GrxTextField(
+            controller: controller,
+            readOnly: true,
+            hintText: widget.hintText,
+            labelText: widget.labelText,
+            errorText: field.errorText,
+            enabled: widget.enabled,
+            focusNode: inputFocusNode,
+            showClearButton: false,
+            onTap: () => _openBottomSheet(field),
+          );
+        }
+
         return GestureDetector(
-          onTap: () async {
-            field.setState(() {
-              inputFocusNode.requestFocus();
-            });
-
-            final bottomSheet = GrxBottomSheetService(
-              context: field.context,
-              title: widget.selectBottomSheetTitle,
-              builder: (controller) {
-                return StatefulBuilder(
-                  builder: (BuildContext context, StateSetter setModalState) {
-                    return GrxBottomSheetFormFieldBody<T>(
-                      initialSelectedValues: values,
-                      items: _list,
-                      itemBuilder: widget.itemBuilder,
-                      onFilterSetState: setModalState,
-                      displayText: widget.displayText,
-                      valueKey: widget.valueKey,
-                      shrinkWrap: !widget.searchable,
-                      searchable: widget.searchable,
-                      searchHintText: widget.searchHintText,
-                      quickSearchFieldController: quickSearchFieldController,
-                      multiSelect: true,
-                      confirmButtonLabel: widget.confirmButtonLabel,
-                      cancelButtonLabel: widget.cancelButtonLabel,
-                    );
-                  },
-                );
-              },
-            );
-
-            final selectedValues = await bottomSheet.show<Iterable<T>>();
-
-            if (selectedValues != null) {
-              field.didChange(selectedValues);
-
-              if (widget.onSelectItems != null) {
-                widget.onSelectItems!(selectedValues);
-              }
-
-              setState(() {
-                values = selectedValues;
-              });
-            }
-          },
+          onTap: () => _openBottomSheet(field),
           child: Focus(
             focusNode: inputFocusNode,
             child: TapRegion(
               onTapOutside: (_) {
                 inputFocusNode.unfocus();
-
-                setState(() {
-                  inputFocusNode.hasFocus;
-                });
+                setState(() {});
               },
               child: InputDecorator(
                 baseStyle: GrxLabelLargeTextStyle(),
                 decoration: GrxInputDecoration(
                   errorText: field.errorText,
                   labelText: widget.labelText,
-                  hintText: widget.hintText,
                   enabled: widget.enabled,
                   onClear: () {
-                    values = [];
+                    setState(() {
+                      values = [];
+                      controller.clear();
+                    });
                     field.didChange(values);
+                    widget.onSelectItems?.call(values);
                   },
                   showClearButton: widget.enabled,
-                  isClearButtonVisible: !isEmpty(),
+                  isClearButtonVisible: true,
                 ),
-                isEmpty: isEmpty(),
+                isEmpty: false,
                 isFocused: inputFocusNode.hasFocus,
-                child:
-                    (values?.isNotEmpty ?? false)
-                        ? Wrap(
-                          spacing: 4.0,
-                          runSpacing: 2.0,
-                          children: buildSelectedOptions(field),
-                        )
-                        : const SizedBox(height: 21),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Wrap(
+                    spacing: 4.0,
+                    runSpacing: 2.0,
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    children: buildSelectedOptions(field),
+                  ),
+                ),
               ),
             ),
           ),
