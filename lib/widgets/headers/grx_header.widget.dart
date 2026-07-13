@@ -23,6 +23,8 @@ class GrxHeader extends StatelessWidget implements PreferredSizeWidget {
     this.centerTitle = false,
     this.height = _kHeight,
     this.animationProgress = 0,
+    this.onBackPressed,
+    this.onClosePressed,
     final Color? foregroundColor,
     final SystemUiOverlayStyle? systemOverlayStyle,
   }) : systemOverlayStyle =
@@ -41,10 +43,15 @@ class GrxHeader extends StatelessWidget implements PreferredSizeWidget {
   final bool centerTitle;
   final double height;
   final double animationProgress;
+  final VoidCallback? onBackPressed;
+  final VoidCallback? onClosePressed;
   final SystemUiOverlayStyle systemOverlayStyle;
 
   @override
   Widget build(BuildContext context) {
+    void handleBack() => (onBackPressed ?? Navigator.of(context).pop)();
+    void handleClose() => (onClosePressed ?? Navigator.of(context).pop)();
+
     return AppBar(
       surfaceTintColor: Colors.transparent,
       title: Padding(
@@ -72,7 +79,7 @@ class GrxHeader extends StatelessWidget implements PreferredSizeWidget {
       leading: Visibility(
         visible: showBackButton,
         child: GrxBackButton(
-          onPressed: Navigator.of(context).pop,
+          onPressed: handleBack,
           color: foregroundColor,
           size: 20.0 - 2.0 * animationProgress,
         ),
@@ -88,7 +95,7 @@ class GrxHeader extends StatelessWidget implements PreferredSizeWidget {
                     horizontal: GrxSpacing.sm,
                   ),
                   child: GrxCloseButton(
-                    onPressed: Navigator.of(context).pop,
+                    onPressed: handleClose,
                     color: foregroundColor,
                   ),
                 ),
