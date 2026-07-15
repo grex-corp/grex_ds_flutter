@@ -47,7 +47,11 @@ sealed class GrxColors {
 
   static const error = GrxColor(0xffe4626f, {200: Color(0xffc03744), 300: Color(0xff8c1823)});
 
-  static const warning = GrxColor(0xfff4c790, {200: Color(0xffeda145), 300: Color(0xffcc7914)});
+  static const warning = GrxColor(0xfff4c790, {
+    200: Color(0xffeda145),
+    300: Color(0xffcc7914),
+    400: Color(0xff5b3507),
+  });
 
   static const white = Color(0xffffffff);
   static const background = Color(0xffe5f0fb);

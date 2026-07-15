@@ -5,8 +5,6 @@ import '../../themes/radius/grx_radius.dart';
 import '../../themes/spacing/grx_spacing.dart';
 import '../buttons/grx_close_button.widget.dart';
 import '../typography/grx_body_text.widget.dart';
-import '../typography/grx_headline_small_text.widget.dart';
-import '../typography/grx_headline_text.widget.dart';
 import '../typography/grx_title_large_text.widget.dart';
 
 class GrxDialog extends StatelessWidget {
