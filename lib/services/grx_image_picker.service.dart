@@ -31,7 +31,7 @@ abstract class GrxImagePickerService {
       final image = await _picker.pickImage(source: ImageSource.camera);
       if (image == null) return null;
 
-      return cropImage(image.path);
+      return await cropImage(image.path);
     } on PlatformException catch (error) {
       if (_cameraAccessDeniedCodes.contains(error.code)) {
         _showAccessDeniedToast(
@@ -50,7 +50,7 @@ abstract class GrxImagePickerService {
       );
       if (image == null) return null;
 
-      return cropImage(image.path);
+      return await cropImage(image.path);
     } on PlatformException catch (error) {
       if (_photosAccessDeniedCodes.contains(error.code)) {
         _showAccessDeniedToast(
