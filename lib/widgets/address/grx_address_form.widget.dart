@@ -123,7 +123,6 @@ class _GrxAddressFormState extends State<GrxAddressForm> {
   // BR line1 number validation state tracking
   bool _didLookupCepThisSession = false;
   bool _line1Touched = false;
-  bool _showLine1NumberError = false;
 
   // Reliability mechanism: epoch counter to force helper rebuild after CEP lookup
   final ValueNotifier<int> _helperEpoch = ValueNotifier<int>(0);
@@ -239,7 +238,6 @@ class _GrxAddressFormState extends State<GrxAddressForm> {
             final line1Controller = _controllers['line1'];
             final hasValidPattern = line1Controller != null && _hasBrValidNumberOrNoNumber(line1Controller.text);
             _safeSetState(() {
-              _showLine1NumberError = !hasValidPattern;
               // Update epoch to refresh helper visibility
               _helperEpoch.value = _helperEpoch.value + 1;
             }, reason: 'Set line1 error flag on blur based on valid pattern presence');
@@ -623,7 +621,7 @@ class _GrxAddressFormState extends State<GrxAddressForm> {
       // BR-specific: Set session flag and clear error flag (no immediate error after CEP)
       _safeSetState(() {
         _didLookupCepThisSession = true;
-        _showLine1NumberError = false; // Ensure no immediate error
+// Ensure no immediate error
         _fieldErrors.clear();
         // Increment epoch to force helper rebuild
         _helperEpoch.value = _helperEpoch.value + 1;
@@ -965,7 +963,6 @@ class _GrxAddressFormState extends State<GrxAddressForm> {
       _cepError = null;
       _didLookupCepThisSession = false;
       _line1Touched = false;
-      _showLine1NumberError = false;
       _helperEpoch.value = 0;
       _adminAreaDropdownInitializing = true;
       _addressLat = null;
@@ -1049,7 +1046,6 @@ class _GrxAddressFormState extends State<GrxAddressForm> {
       _cepError = null;
       _didLookupCepThisSession = false;
       _line1Touched = false;
-      _showLine1NumberError = false;
       
       // Reset country selection to default
       if (countryChanged) {
@@ -1120,7 +1116,6 @@ class _GrxAddressFormState extends State<GrxAddressForm> {
       final line1Controller = _controllers['line1'];
       final hasValidPattern = line1Controller != null && _hasBrValidNumberOrNoNumber(line1Controller.text);
       _safeSetState(() {
-        _showLine1NumberError = !hasValidPattern;
       }, reason: 'Set line1 error flag before save validation');
     }
 
@@ -1501,7 +1496,7 @@ class _GrxAddressFormState extends State<GrxAddressForm> {
           final line1Controller = _controllers['line1'];
           if (line1Controller != null && _hasBrValidNumberOrNoNumber(line1Controller.text)) {
             _safeSetState(() {
-              _showLine1NumberError = false; // Clear error flag
+// Clear error flag
               _fieldErrors.remove('line1'); // Clear any existing error
               // Increment epoch to update helper visibility
               _helperEpoch.value = _helperEpoch.value + 1;
