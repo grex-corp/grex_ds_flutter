@@ -1,3 +1,14 @@
+## 0.1.17
+
+* [GrxIconButton] Add optional `iconSize` parameter (defaults to `size - GrxSpacing.s`)
+* [GrxHeader] Add `centerTitle`, back/close button handlers, and typography/style consistency updates
+* [GrxChip] Add `isLoading` state with full-chip shimmer
+* [GrxMultiSelectFormField] Align empty state with other form fields via `GrxTextField`
+* [GrxBottomSheetService] Use `Material` instead of decorated `Container` to fix ListTile ink splashes
+* Improve disabled state color handling in `GrxButton` and `GrxSizedButton`
+* Add warning color variant to `GrxColors`
+* Enhance dialog/bottom sheet components, address form, accordion, and filter button behavior
+
 ## 0.1.16
 
 * Fix Flutter 3.44 compatibility: stop extending `IconData` in `GrxIconData` (now uses `IconData` directly)

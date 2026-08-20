@@ -40,6 +40,7 @@ class GrxTextFormField extends GrxStatefulWidget {
     this.prefix,
     this.suffix,
     this.mask,
+    this.showClearButton = true,
   }) : super(
           key: key ?? ValueKey<int>(labelText.hashCode),
         );
@@ -72,6 +73,7 @@ class GrxTextFormField extends GrxStatefulWidget {
   final Widget? prefix;
   final Widget? suffix;
   final String? mask;
+  final bool showClearButton;
 
   @override
   State<StatefulWidget> createState() => _GrxTextFormFieldState();
@@ -79,6 +81,7 @@ class GrxTextFormField extends GrxStatefulWidget {
 
 class _GrxTextFormFieldState extends State<GrxTextFormField> {
   late final GrxFormFieldController<String> controller;
+  late List<TextInputFormatter> _inputFormatters;
 
   var _notifyListeners = true;
 
@@ -96,12 +99,30 @@ class _GrxTextFormFieldState extends State<GrxTextFormField> {
       }
     }
 
+    _inputFormatters = _buildInputFormatters();
     _subscribeStreams();
+  }
+
+  List<TextInputFormatter> _buildInputFormatters() {
+    return [
+      if (controller.maskFormatter != null) controller.maskFormatter!,
+      ...(widget.inputFormatters ?? const []),
+    ];
+  }
+
+  void _syncInputFormatters(GrxTextFormField oldWidget) {
+    if (widget.inputFormatters != oldWidget.inputFormatters ||
+        widget.mask != oldWidget.mask ||
+        widget.controller != oldWidget.controller) {
+      _inputFormatters = _buildInputFormatters();
+    }
   }
 
   @override
   void didUpdateWidget(GrxTextFormField oldWidget) {
     super.didUpdateWidget(oldWidget);
+
+    _syncInputFormatters(oldWidget);
     
     // Update controller text if the value prop changed
     if (widget.value != oldWidget.value) {
@@ -118,6 +139,8 @@ class _GrxTextFormFieldState extends State<GrxTextFormField> {
 
   @override
   void dispose() {
+    GrxFormFieldUtils.detachListener(controller);
+
     if (widget.controller == null) {
       controller.dispose();
     }
@@ -170,6 +193,9 @@ class _GrxTextFormFieldState extends State<GrxTextFormField> {
         );
 
         return GrxTextField(
+          key: widget.focusNode != null
+              ? ValueKey(widget.focusNode)
+              : ValueKey(widget.labelText),
           controller: controller,
           focusNode: widget.focusNode,
           autofocus: widget.autoFocus,
@@ -182,10 +208,7 @@ class _GrxTextFormFieldState extends State<GrxTextFormField> {
           textAlignVertical: widget.textAlignVertical,
           onSubmitted: widget.onFieldSubmitted,
           autofillHints: widget.autofillHints,
-          inputFormatters: [
-            if (controller.maskFormatter != null) controller.maskFormatter!,
-            ...(widget.inputFormatters ?? []),
-          ],
+          inputFormatters: _inputFormatters,
           labelText: widget.labelText,
           alignLabelWithHint: widget.alignLabelWithHint,
           contentPadding: widget.contentPadding,
@@ -195,6 +218,7 @@ class _GrxTextFormFieldState extends State<GrxTextFormField> {
           enabled: widget.enabled,
           prefix: widget.prefix,
           suffix: widget.suffix,
+          showClearButton: widget.showClearButton,
         );
       },
     );

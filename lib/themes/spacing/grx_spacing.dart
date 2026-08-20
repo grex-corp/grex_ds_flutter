@@ -1,4 +1,5 @@
 sealed class GrxSpacing {
+  static const double xxxs = 2.0;
   static const double xxs = 4.0;
   static const double xs = 6.0;
   static const double s = 8.0;

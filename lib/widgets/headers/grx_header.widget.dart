@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import '../../themes/colors/grx_colors.dart';
 import '../../themes/spacing/grx_spacing.dart';
 import '../../themes/system_overlay/grx_system_overlay.style.dart';
-import '../../themes/typography/styles/grx_headline_text.style.dart';
+import '../../themes/typography/styles/grx_body_text.style.dart';
 import '../../utils/grx_button.util.dart';
 import '../buttons/grx_back_button.widget.dart';
 import '../buttons/grx_close_button.widget.dart';
@@ -20,8 +20,11 @@ class GrxHeader extends StatelessWidget implements PreferredSizeWidget {
     this.actions = const [],
     this.showBackButton = false,
     this.showCloseButton = false,
+    this.centerTitle = false,
     this.height = _kHeight,
     this.animationProgress = 0,
+    this.onBackPressed,
+    this.onClosePressed,
     final Color? foregroundColor,
     final SystemUiOverlayStyle? systemOverlayStyle,
   }) : systemOverlayStyle =
@@ -37,12 +40,18 @@ class GrxHeader extends StatelessWidget implements PreferredSizeWidget {
   final List<Widget> actions;
   final bool showBackButton;
   final bool showCloseButton;
+  final bool centerTitle;
   final double height;
   final double animationProgress;
+  final VoidCallback? onBackPressed;
+  final VoidCallback? onClosePressed;
   final SystemUiOverlayStyle systemOverlayStyle;
 
   @override
   Widget build(BuildContext context) {
+    void handleBack() => (onBackPressed ?? Navigator.of(context).pop)();
+    void handleClose() => (onClosePressed ?? Navigator.of(context).pop)();
+
     return AppBar(
       surfaceTintColor: Colors.transparent,
       title: Padding(
@@ -56,21 +65,21 @@ class GrxHeader extends StatelessWidget implements PreferredSizeWidget {
           title,
           style:
               TextStyle.lerp(
-                GrxHeadlineTextStyle(color: foregroundColor),
-                GrxHeadlineTextStyle(color: foregroundColor),
+                GrxBodyTextStyle(color: foregroundColor),
+                GrxBodyTextStyle(color: foregroundColor),
                 animationProgress,
               )!,
         ),
       ),
       elevation: 0,
-      centerTitle: false,
+      centerTitle: centerTitle,
       backgroundColor: backgroundColor,
       foregroundColor: foregroundColor,
       systemOverlayStyle: systemOverlayStyle,
       leading: Visibility(
         visible: showBackButton,
         child: GrxBackButton(
-          onPressed: Navigator.of(context).pop,
+          onPressed: handleBack,
           color: foregroundColor,
           size: 20.0 - 2.0 * animationProgress,
         ),
@@ -82,9 +91,11 @@ class GrxHeader extends StatelessWidget implements PreferredSizeWidget {
           showCloseButton
               ? [
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: GrxSpacing.sm),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: GrxSpacing.sm,
+                  ),
                   child: GrxCloseButton(
-                    onPressed: Navigator.of(context).pop,
+                    onPressed: handleClose,
                     color: foregroundColor,
                   ),
                 ),

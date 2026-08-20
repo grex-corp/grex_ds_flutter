@@ -162,7 +162,7 @@ class _DashboardAppPageState extends State<DashboardAppPage>
                           leaders: _leaders,
                           roles: _roles,
                         ),
-                        GrxCircleButton(
+                        GrxSizedButton(
                           isLoading: false,
                           size: 48.0,
                           child: Center(
@@ -210,7 +210,7 @@ class _DashboardAppPageState extends State<DashboardAppPage>
                             ),
                           ],
                         ),
-                        GrxCircleButton(
+                        GrxSizedButton(
                           size: 96.0,
                           backgroundColor: Colors.transparent,
                           foregroundColor: GrxColors.primary.shade900,
@@ -376,7 +376,7 @@ class _DashboardAppPageState extends State<DashboardAppPage>
                           height: 70.0,
                           actions: [
                             GrxFilterButton(text: 'Filtros', onPressed: () {}),
-                            GrxCircleButton(
+                            GrxSizedButton(
                               onPressed: () {},
                               margin: const EdgeInsets.only(right: 10.0),
                               child: Icon(GrxIcons.plus_l, size: 24.0),

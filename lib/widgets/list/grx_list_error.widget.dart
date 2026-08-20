@@ -3,9 +3,11 @@ import 'package:flutter/widgets.dart';
 import '../../animations/grx_fade_transition.animation.dart';
 import '../../models/grx_button_options.model.dart';
 import '../../themes/icons/grx_icons.dart';
+import '../../themes/radius/grx_radius.dart';
+import '../../themes/spacing/grx_spacing.dart';
 import '../buttons/grx_rounded_button.widget.dart';
-import '../typography/grx_label_large_text.widget.dart';
-import '../typography/grx_headline_text.widget.dart';
+import '../typography/grx_body_text.widget.dart';
+import '../typography/grx_title_large_text.widget.dart';
 
 class GrxListError extends StatelessWidget {
   GrxListError({
@@ -40,24 +42,33 @@ class GrxListError extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             if (icon != null)
-              Padding(
-                padding: const EdgeInsets.only(bottom: 24.0),
+              Container(
+                margin: const EdgeInsets.only(bottom: GrxSpacing.m),
+                padding: const EdgeInsets.all(GrxSpacing.m),
+                decoration: BoxDecoration(
+                  color:
+                      icon is Icon
+                          ? (icon as Icon).color?.withAlpha((0.1 * 255).round())
+                          : null,
+
+                  borderRadius: BorderRadius.circular(GrxRadius.round),
+                ),
                 child: icon,
               ),
-            GrxHeadlineText(
+            GrxTitleLargeText(
               title,
               overflow: TextOverflow.visible,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 8.0),
-            GrxLabelLargeText(
+            const SizedBox(height: GrxSpacing.s),
+            GrxBodyText(
               subTitle,
               overflow: TextOverflow.visible,
               textAlign: TextAlign.center,
             ),
             if (buttonOptions != null)
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 32.0),
+                padding: const EdgeInsets.symmetric(vertical: GrxSpacing.l),
                 child: GrxRoundedButton(
                   text: buttonOptions!.title,
                   foregroundColor: buttonOptions!.foregroundColor,

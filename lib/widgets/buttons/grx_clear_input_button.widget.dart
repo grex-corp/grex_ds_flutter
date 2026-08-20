@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 import '../../themes/colors/grx_colors.dart';
 import '../../themes/icons/grx_icons.dart';
-import 'grx_circle_button.widget.dart';
+import 'grx_sized_button.widget.dart';
 
-class GrxClearInputButton extends GrxCircleButton {
+class GrxClearInputButton extends GrxSizedButton {
   GrxClearInputButton({super.key, final VoidCallback? onClear})
     : super(
         onPressed: onClear,
-        backgroundColor: GrxColors.neutrals.shade50,
+        backgroundColor: GrxColors.transparent,
         foregroundColor: GrxColors.neutrals.shade900,
         size: 18.0,
         child: Icon(GrxIcons.close_l, size: 8.0),

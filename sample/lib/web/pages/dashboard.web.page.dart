@@ -174,7 +174,7 @@ class _DashboardWebPageState extends State<DashboardWebPage>
                         leaders: _leaders,
                         roles: _roles,
                       ),
-                      GrxCircleButton(
+                      GrxSizedButton(
                         isLoading: false,
                         size: 48.0,
                         child: Center(
@@ -222,7 +222,7 @@ class _DashboardWebPageState extends State<DashboardWebPage>
                           ),
                         ],
                       ),
-                      GrxCircleButton(
+                      GrxSizedButton(
                         size: 96.0,
                         margin: const EdgeInsets.only(bottom: 16),
                         onPressed: () {},
@@ -402,7 +402,7 @@ class _DashboardWebPageState extends State<DashboardWebPage>
                         height: 70.0,
                         actions: [
                           GrxFilterButton(text: 'Filtros', onPressed: () {}),
-                          GrxCircleButton(
+                          GrxSizedButton(
                             margin: const EdgeInsets.only(right: 10.0),
                             onPressed: () {},
                             child: Icon(GrxIcons.plus_l, size: 24.0),

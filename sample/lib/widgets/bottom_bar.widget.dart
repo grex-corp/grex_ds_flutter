@@ -260,7 +260,7 @@ class _BottomBarViewState extends State<BottomBarView>
                 curve: Curves.fastOutSlowIn,
               ),
             ),
-            child: GrxCircleButton(
+            child: GrxSizedButton(
               isLoading: false,
               size: 56.0,
               child: Center(

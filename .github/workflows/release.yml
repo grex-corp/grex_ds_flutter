@@ -1,16 +1,13 @@
-# This is a basic workflow to help you get started with Actions
-
 name: Publish
 
-# Controls when the workflow will run
 on:
   push:
     branches: [main]
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+permissions:
+  contents: write
+
 jobs:
   auto-gen-tag:
     name: Auto Generate Tag
@@ -19,11 +16,25 @@ jobs:
       tag: ${{ steps.gen-tag-step.outputs.tagname }}
     steps:
       - uses: actions/checkout@v5
-      - uses: jacopocarlini/action-autotag@3.0.0
-        id: gen-tag-step
         with:
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
-          tag_prefix: 'v'
+          fetch-depth: 0
+      - name: Create tag from pubspec version
+        id: gen-tag-step
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          version=$(grep -E '^version:' pubspec.yaml | head -1 | sed -E 's/^version:[[:space:]]*([0-9]+\.[0-9]+\.[0-9]+).*/\1/')
+          tag="v${version}"
+          if git rev-parse "refs/tags/${tag}" >/dev/null 2>&1; then
+            echo "Tag ${tag} already exists, skipping."
+            echo "tagname=" >> "$GITHUB_OUTPUT"
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git tag -a "$tag" -m "Release ${tag}"
+            git push origin "$tag"
+            echo "tagname=${tag}" >> "$GITHUB_OUTPUT"
+          fi
 
   generate-changelog:
     if: ${{ startsWith(needs.auto-gen-tag.outputs.tag, 'v') }}
@@ -33,41 +44,43 @@ jobs:
     steps:
       - name: Get latest published release tag
         id: get_latest_release
-        uses: pozetroninc/github-action-get-latest-release@v0.7.0
-        with:
-          repository: ${{ github.repository }}
-          excludes: prerelease, draft
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          release=$(gh release list \
+            --repo "${{ github.repository }}" \
+            --exclude-pre-releases \
+            --limit 1 \
+            --json tagName \
+            --jq '.[0].tagName // empty')
+          echo "release=${release}" >> "$GITHUB_OUTPUT"
       - name: Generate changelog since last published release
-        uses: charmixer/auto-changelog-action@5c6320ae4dedc8743e4439a3c56294c294553fb9
+        uses: charmixer/auto-changelog-action@v1.4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           future_release: ${{ needs.auto-gen-tag.outputs.tag }}
           since_tag: ${{ steps.get_latest_release.outputs.release }}
+          release_branch: main
       - name: Upload changelog
         uses: actions/upload-artifact@v4
         with:
           name: changelog
           path: CHANGELOG.md
 
-  # This workflow contains a single job called "build"
   create-release:
     name: Draft Github release
     needs: [auto-gen-tag, generate-changelog]
     runs-on: ubuntu-latest
     steps:
-      - run: echo ${{needs.auto-gen-tag.outputs.tag}}
       - name: Download changelog
         uses: actions/download-artifact@v5
         with:
           name: changelog
-      - name: Draft release with changelog
-        id: create_release
-        uses: actions/create-release@v1.1.4
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create release with changelog
+        uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{ needs.auto-gen-tag.outputs.tag }}
-          release_name: Grex DS ${{ needs.auto-gen-tag.outputs.tag }}
+          name: Grex DS ${{ needs.auto-gen-tag.outputs.tag }}
           body_path: CHANGELOG.md
           draft: false
           prerelease: false
@@ -78,7 +91,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - uses: subosito/flutter-action@v2
+      - uses: subosito/flutter-action@v2.23.0
         with:
           flutter-version: '3.x'
       - name: Install dependencies
@@ -93,13 +106,13 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - name: Install Flutter
-        uses: subosito/flutter-action@v2
+        uses: subosito/flutter-action@v2.23.0
         with:
           flutter-version: '3.x'
       - name: Check Publish Warnings
         run: dart pub publish --dry-run
       - name: Publish
-        uses: k-paxian/dart-package-publisher@v1.6.1
+        uses: k-paxian/dart-package-publisher@v.1.6.2
         with:
           credentialJson: ${{ secrets.CREDENTIAL_JSON }}
           flutter: true

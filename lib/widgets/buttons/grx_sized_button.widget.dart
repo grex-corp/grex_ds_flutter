@@ -3,15 +3,18 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../enums/grx_shape.enum.dart';
 import '../../themes/colors/grx_colors.dart';
 import '../../themes/grx_theme_data.theme.dart';
+import '../../themes/radius/grx_radius.dart';
 import '../../themes/typography/styles/grx_title_small_text.style.dart';
 
-class GrxCircleButton extends StatelessWidget {
-  const GrxCircleButton({
+class GrxSizedButton extends StatelessWidget {
+  const GrxSizedButton({
     super.key,
     required this.child,
     this.size = 44.0,
+    this.shape = GrxShape.circle,
     this.backgroundColor = GrxColors.primary,
     this.foregroundColor = GrxColors.neutrals,
     this.borderColor,
@@ -23,6 +26,7 @@ class GrxCircleButton extends StatelessWidget {
   });
 
   final double size;
+  final GrxShape shape;
   final Color backgroundColor;
   final Color foregroundColor;
   final Color? borderColor;
@@ -33,22 +37,39 @@ class GrxCircleButton extends StatelessWidget {
   final bool enabled;
   final EdgeInsetsGeometry? margin;
 
+  double _borderRadius() {
+    switch (shape) {
+      case GrxShape.circle:
+        return size / 2;
+      case GrxShape.rounded:
+      case GrxShape.square:
+        return GrxRadius.xs;
+      case GrxShape.sharp:
+        return GrxRadius.sharp;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final enabled = this.enabled && !isLoading;
-    final backgroundColor =
-        enabled
-            ? this.backgroundColor
-            : this.backgroundColor.withValues(alpha: .6);
-    final borderColor =
-        enabled ? this.borderColor : this.borderColor?.withValues(alpha: .6);
+    final backgroundColor = enabled
+        ? this.backgroundColor
+        : _disabledColor(this.backgroundColor, alpha: 0.6);
+    final foregroundColor = enabled
+        ? this.foregroundColor
+        : _disabledColor(this.foregroundColor, alpha: 0.4);
+    final borderColor = enabled
+        ? this.borderColor
+        : this.borderColor == null
+            ? null
+            : _disabledColor(this.borderColor!, alpha: 0.6);
 
     return Padding(
       padding: margin ?? EdgeInsets.zero,
       child: CupertinoButton(
         padding: EdgeInsets.zero,
         minimumSize: Size.zero,
-        onPressed: enabled && !isLoading ? onPressed : null,
+        onPressed: enabled ? onPressed : null,
         child: Container(
           width: size,
           height: size,
@@ -59,7 +80,7 @@ class GrxCircleButton extends StatelessWidget {
                 borderColor != null
                     ? Border.all(color: borderColor, width: borderSize)
                     : null,
-            borderRadius: BorderRadius.circular(size / 2),
+            borderRadius: BorderRadius.circular(_borderRadius()),
           ),
           child:
               isLoading
@@ -82,5 +103,12 @@ class GrxCircleButton extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  /// Keeps fully transparent colors transparent. Applying alpha to
+  /// [Colors.transparent] would otherwise paint a semi-opaque black fill.
+  Color _disabledColor(Color color, {required double alpha}) {
+    if (color.a == 0) return color;
+    return color.withValues(alpha: alpha);
   }
 }

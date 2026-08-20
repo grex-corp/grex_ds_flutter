@@ -12,7 +12,7 @@ import '../themes/icons/grx_icons.dart';
 import '../themes/spacing/grx_spacing.dart';
 import '../utils/grx_regex.util.dart';
 import '../utils/grx_utils.util.dart';
-import 'buttons/grx_circle_button.widget.dart';
+import 'buttons/grx_sized_button.widget.dart';
 import 'grx_shimmer.widget.dart';
 import 'typography/grx_body_text.widget.dart';
 
@@ -70,6 +70,8 @@ class _GrxUserAvatarState extends State<GrxUserAvatar> {
         ),
       );
     }
+
+    final initials = GrxRegexUtils.initialsFromName(widget.text);
 
     return Container(
       padding: widget.showBorder ? const EdgeInsets.all(2.0) : EdgeInsets.zero,
@@ -129,23 +131,14 @@ class _GrxUserAvatarState extends State<GrxUserAvatar> {
                 },
                 errorWidget: (context, url, error) => const Icon(Icons.error),
               )
-              : (widget.text?.isNotEmpty ?? false)
+              : initials.isNotEmpty
               ? CircleAvatar(
                 radius: widget.radius,
                 backgroundColor: widget.backgroundColor,
                 child: Padding(
                   padding: const EdgeInsets.all(2),
                   child: GrxBodyText(
-                    RegExp(
-                          widget.text!.split(' ').length >= 2
-                              ? GrxRegexUtils.fullNameAvatarRgx
-                              : GrxRegexUtils.singleNameAvatarRgx,
-                        )
-                        .allMatches(widget.text!)
-                        .map((m) => m.group(0))
-                        .join()
-                        .toUpperCase()
-                        .substring(0, 2),
+                    initials,
                     color: widget.textColor,
                     overflow: TextOverflow.clip,
                     textAlign: TextAlign.center,
@@ -183,7 +176,7 @@ class _GrxUserAvatarState extends State<GrxUserAvatar> {
       right: -5.0,
       child:
           widget.avatarPickerButton ??
-          GrxCircleButton(
+          GrxSizedButton(
             size: widget.radius / 1.4,
             borderColor: GrxColors.neutrals,
             borderSize: GrxSpacing.xxs,
@@ -217,7 +210,7 @@ class _GrxUserAvatarState extends State<GrxUserAvatar> {
     return Positioned(
       top: -5,
       right: -5,
-      child: GrxCircleButton(
+      child: GrxSizedButton(
         size: 32.0,
         backgroundColor: GrxColors.error,
         foregroundColor: GrxColors.neutrals,
