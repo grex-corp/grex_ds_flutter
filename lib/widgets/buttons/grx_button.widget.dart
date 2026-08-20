@@ -92,17 +92,21 @@ class _GrxButtonState extends State<GrxButton> {
     final foregroundColor =
         widget.enabled && !widget.isLoading
             ? widget.foregroundColor
-            : widget.foregroundColor.withValues(alpha: 0.70);
+            : _disabledColor(widget.foregroundColor, alpha: 0.4);
 
     final backgroundColor =
         widget.enabled && !widget.isLoading
             ? widget.backgroundColor
-            : widget.backgroundColor?.withValues(alpha: 0.60);
+            : widget.backgroundColor == null
+                ? null
+                : _disabledColor(widget.backgroundColor!, alpha: 0.6);
 
     final borderColor =
         widget.enabled && !widget.isLoading
             ? widget.borderColor
-            : widget.borderColor?.withValues(alpha: 0.60);
+            : widget.borderColor == null
+                ? null
+                : _disabledColor(widget.borderColor!, alpha: 0.6);
 
     final textStyle =
         widget.textStyle?.copyWith(color: foregroundColor) ??
@@ -164,5 +168,12 @@ class _GrxButtonState extends State<GrxButton> {
         ),
       ),
     );
+  }
+
+  /// Keeps fully transparent colors transparent. Applying alpha to
+  /// [Colors.transparent] would otherwise paint a semi-opaque black fill.
+  Color _disabledColor(Color color, {required double alpha}) {
+    if (color.a == 0) return color;
+    return color.withValues(alpha: alpha);
   }
 }

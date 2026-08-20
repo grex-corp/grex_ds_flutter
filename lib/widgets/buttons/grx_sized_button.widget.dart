@@ -52,19 +52,24 @@ class GrxSizedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final enabled = this.enabled && !isLoading;
-    final backgroundColor =
-        enabled
-            ? this.backgroundColor
-            : this.backgroundColor.withValues(alpha: .6);
-    final borderColor =
-        enabled ? this.borderColor : this.borderColor?.withValues(alpha: .6);
+    final backgroundColor = enabled
+        ? this.backgroundColor
+        : _disabledColor(this.backgroundColor, alpha: 0.6);
+    final foregroundColor = enabled
+        ? this.foregroundColor
+        : _disabledColor(this.foregroundColor, alpha: 0.4);
+    final borderColor = enabled
+        ? this.borderColor
+        : this.borderColor == null
+            ? null
+            : _disabledColor(this.borderColor!, alpha: 0.6);
 
     return Padding(
       padding: margin ?? EdgeInsets.zero,
       child: CupertinoButton(
         padding: EdgeInsets.zero,
         minimumSize: Size.zero,
-        onPressed: enabled && !isLoading ? onPressed : null,
+        onPressed: enabled ? onPressed : null,
         child: Container(
           width: size,
           height: size,
@@ -98,5 +103,12 @@ class GrxSizedButton extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  /// Keeps fully transparent colors transparent. Applying alpha to
+  /// [Colors.transparent] would otherwise paint a semi-opaque black fill.
+  Color _disabledColor(Color color, {required double alpha}) {
+    if (color.a == 0) return color;
+    return color.withValues(alpha: alpha);
   }
 }
