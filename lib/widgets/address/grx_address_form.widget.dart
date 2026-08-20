@@ -236,7 +236,7 @@ class _GrxAddressFormState extends State<GrxAddressForm> {
           final shouldCheck = _didLookupCepThisSession || _line1Touched;
           if (shouldCheck) {
             final line1Controller = _controllers['line1'];
-            final hasValidPattern = line1Controller != null && _hasBrValidNumberOrNoNumber(line1Controller.text);
+            final _ = line1Controller != null && _hasBrValidNumberOrNoNumber(line1Controller.text);
             _safeSetState(() {
               // Update epoch to refresh helper visibility
               _helperEpoch.value = _helperEpoch.value + 1;
@@ -1114,7 +1114,7 @@ class _GrxAddressFormState extends State<GrxAddressForm> {
     // BR-specific: Before validation, check line1 for valid number/no-number marker and set error flag
     if (_selectedCountryCode?.toUpperCase() == 'BR') {
       final line1Controller = _controllers['line1'];
-      final hasValidPattern = line1Controller != null && _hasBrValidNumberOrNoNumber(line1Controller.text);
+      final _ = line1Controller != null && _hasBrValidNumberOrNoNumber(line1Controller.text);
       _safeSetState(() {
       }, reason: 'Set line1 error flag before save validation');
     }
