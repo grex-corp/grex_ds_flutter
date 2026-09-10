@@ -69,19 +69,24 @@ class GrxText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (isLoading) {
+      final size = MediaQuery.sizeOf(context);
       final renderParagraph = RenderParagraph(
         textSpan ?? TextSpan(text: _capitalize(text), style: style),
-        textDirection: TextDirection.ltr,
+        textDirection: textDirection ?? TextDirection.ltr,
         maxLines: maxLines ?? 1,
+        textScaler: MediaQuery.textScalerOf(context),
+        strutStyle: strutStyle,
+        locale: locale,
       );
 
-      final size = MediaQuery.sizeOf(context);
       renderParagraph.layout(
         BoxConstraints(maxHeight: size.height, maxWidth: size.width),
       );
 
-      final height = renderParagraph.getMinIntrinsicHeight(style.fontSize!);
-      final width = renderParagraph.getMinIntrinsicWidth(style.fontSize!);
+      final height = renderParagraph.size.height;
+      final width = renderParagraph.getMinIntrinsicWidth(size.height);
+
+      renderParagraph.dispose();
 
       return GrxShimmer(
         height: clampDouble(height, 0, size.height),
