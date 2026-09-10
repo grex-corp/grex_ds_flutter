@@ -1,3 +1,9 @@
+## 0.1.18
+
+* [GrxText] Fix loading shimmer height: measure against the available width instead of `fontSize`, so `maxLines` no longer inflates single-line text
+* [GrxImagePickerService] Await image cropping when picking from camera or gallery
+* [GrxAddressForm] Simplify `line1` validation logic
+
 ## 0.1.17
 
 * [GrxIconButton] Add optional `iconSize` parameter (defaults to `size - GrxSpacing.s`)
