@@ -102,6 +102,11 @@ abstract class GrxToastService {
             onClose: () => toast?.remove(),
           ),
     )..show(buildContext);
+
+    // DelightToastBar inserts the OverlayEntry in a post-frame callback.
+    // After an async gap (e.g. API call), no frame may be scheduled, so the
+    // toast stays invisible until the next user-driven frame.
+    WidgetsBinding.instance.ensureVisualUpdate();
   }
 
   static void _validateContext(BuildContext? context) {

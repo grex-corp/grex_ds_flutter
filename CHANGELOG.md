@@ -1,3 +1,7 @@
+## 0.1.19
+
+* [GrxToastService] Ensure toast visibility after async gaps by scheduling a visual update
+
 ## 0.1.18
 
 * [GrxText] Fix loading shimmer height: measure against the available width instead of `fontSize`, so `maxLines` no longer inflates single-line text
