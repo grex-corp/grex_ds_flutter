@@ -1,3 +1,7 @@
+## 0.1.20
+
+* [GrxUserAvatar] Expand the image preview full screen and dismiss it by dragging, with the photo animating back to the avatar
+
 ## 0.1.19
 
 * [GrxToastService] Ensure toast visibility after async gaps by scheduling a visual update
