@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 
 import '../extensions/uint8_list.extension.dart';
 import '../pages/image_preview.page.dart';
-import '../routes/fade_page.route.dart';
 import '../services/grx_image_picker.service.dart';
 import '../themes/colors/grx_colors.dart';
 import '../themes/icons/grx_icons.dart';
@@ -56,6 +55,7 @@ class GrxUserAvatar extends StatefulWidget {
 
 class _GrxUserAvatarState extends State<GrxUserAvatar> {
   bool isLoading = false;
+  final _previewSourceKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -90,36 +90,12 @@ class _GrxUserAvatarState extends State<GrxUserAvatar> {
         clipBehavior: Clip.none,
         children: [
           widget.imageFile != null
-              ? _buildAvatar(context, FileImage(widget.imageFile!))
+              ? _buildPreviewableAvatar(context, FileImage(widget.imageFile!))
               : widget.uri != null
               ? CachedNetworkImage(
                 imageUrl: widget.uri.toString(),
                 imageBuilder:
-                    (context, image) => GestureDetector(
-                      onTap:
-                          widget.openPreview
-                              ? () {
-                                Navigator.of(context).push(
-                                  FadePageRoute(
-                                    builder:
-                                        (context) => ImagePreview(
-                                          image: image,
-                                          title: 'Preview',
-                                          heroTag: widget.heroTag,
-                                        ),
-                                  ),
-                                );
-                              }
-                              : null,
-                      child:
-                          widget.heroTag != null
-                              ? Hero(
-                                tag: widget.heroTag!,
-                                transitionOnUserGestures: true,
-                                child: _buildAvatar(context, image),
-                              )
-                              : _buildAvatar(context, image),
-                    ),
+                    (context, image) => _buildPreviewableAvatar(context, image),
                 progressIndicatorBuilder: (context, url, downloadProgress) {
                   return SizedBox.fromSize(
                     size: Size.fromRadius(widget.radius),
@@ -160,6 +136,45 @@ class _GrxUserAvatarState extends State<GrxUserAvatar> {
         ],
       ),
     );
+  }
+
+  Widget _buildPreviewableAvatar(BuildContext context, ImageProvider image) {
+    Widget child = KeyedSubtree(
+      key: _previewSourceKey,
+      child: _buildAvatar(context, image),
+    );
+
+    if (widget.heroTag != null) {
+      child = Hero(
+        tag: widget.heroTag!,
+        transitionOnUserGestures: true,
+        child: child,
+      );
+    }
+
+    if (!widget.openPreview) return child;
+
+    return GestureDetector(
+      onTap: () => _openPreview(context, image),
+      child: child,
+    );
+  }
+
+  void _openPreview(BuildContext context, ImageProvider image) {
+    Navigator.of(context).push(
+      ImagePreview.route(
+        image: image,
+        title: 'Preview',
+        sourceRect: _previewSourceRect,
+      ),
+    );
+  }
+
+  Rect? _previewSourceRect() {
+    final box =
+        _previewSourceKey.currentContext?.findRenderObject() as RenderBox?;
+    if (box == null || !box.attached || !box.hasSize) return null;
+    return box.localToGlobal(Offset.zero) & box.size;
   }
 
   CircleAvatar _buildAvatar(BuildContext context, ImageProvider? image) {
