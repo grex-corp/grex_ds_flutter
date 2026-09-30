@@ -1,3 +1,7 @@
+## 0.1.21
+
+* [GrxMultiSelectFormField] Keep the selected label when the option is missing or duplicated in the current catalog, instead of throwing
+
 ## 0.1.20
 
 * [GrxUserAvatar] Expand the image preview full screen and dismiss it by dragging, with the photo animating back to the avatar
