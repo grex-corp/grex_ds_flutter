@@ -202,6 +202,21 @@ class _GrxMultiSelectStateFormField<T>
     });
   }
 
+  /// Catalog rows can lag behind the current selection (inactive trail,
+  /// filtered service role, leader outside the current options).
+  /// [Iterable.singleWhere] throws and takes down the form.
+  /// More than one row with the same key keeps the selected item's label.
+  T _selectedItemInData(T item) {
+    final key = widget.valueKey(item);
+    T? match;
+    for (final candidate in widget.data) {
+      if (widget.valueKey(candidate) != key) continue;
+      if (match != null) return item;
+      match = candidate;
+    }
+    return match ?? item;
+  }
+
   @override
   Widget build(BuildContext context) {
     if (widget.isLoading) {
@@ -221,14 +236,10 @@ class _GrxMultiSelectStateFormField<T>
 
           if (values != null) {
             for (final item in values!) {
-              final existingItem = widget.data.singleWhere(
-                (itm) => widget.valueKey(itm!) == widget.valueKey(item),
-              );
-
               selectedOptions.add(
                 GrxChip(
                   type: GrxChipType.info,
-                  label: widget.displayText(existingItem),
+                  label: widget.displayText(_selectedItemInData(item)),
                 ),
               );
             }
