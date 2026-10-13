@@ -85,7 +85,7 @@ class _GrxDateTimePickerFormFieldState
   @override
   void didUpdateWidget(GrxDateTimePickerFormField oldWidget) {
     super.didUpdateWidget(oldWidget);
-    
+
     // Update value if the value prop changed
     if (widget.value != oldWidget.value) {
       if (widget.value != null) {
@@ -115,6 +115,20 @@ class _GrxDateTimePickerFormFieldState
 
   String _formatValue(DateTime value) {
     return '${DateFormat.yMd().format(value)}${widget.isDateTime ? ' ${DateFormat.Hm().format(value)}' : ''}';
+  }
+
+  DateTime _pickerInitialDate({
+    required DateTime? current,
+    required DateTime firstDate,
+    required DateTime lastDate,
+  }) {
+    final day = DateUtils.dateOnly(current ?? DateTime.now());
+    final first = DateUtils.dateOnly(firstDate);
+    final last = DateUtils.dateOnly(lastDate);
+
+    if (day.isBefore(first)) return first;
+    if (day.isAfter(last)) return last;
+    return day;
   }
 
   void _subscribeStreams() {
@@ -173,16 +187,22 @@ class _GrxDateTimePickerFormFieldState
           },
           onTap: () async {
             final today = DateTime.now();
+            final firstDate =
+                widget.futureDate ? today : DateTime.parse('0001-01-01');
+            final lastDate =
+                widget.futureDate ? DateTime.parse('2099-12-31') : today;
             late final DateTime? selectedDate;
             TimeOfDay? selectedTime;
 
             selectedDate = await showDatePicker(
               context: context,
-              initialDate: value ?? today,
-              firstDate:
-                  widget.futureDate ? today : DateTime.parse("0001-01-01"),
-              lastDate:
-                  widget.futureDate ? DateTime.parse('2099-12-31') : today,
+              initialDate: _pickerInitialDate(
+                current: value,
+                firstDate: firstDate,
+                lastDate: lastDate,
+              ),
+              firstDate: firstDate,
+              lastDate: lastDate,
               confirmText: widget.dialogConfirmText,
               cancelText: widget.dialogCancelText,
               errorFormatText: widget.dialogErrorFormatText,
