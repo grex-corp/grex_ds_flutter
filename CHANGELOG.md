@@ -1,3 +1,7 @@
+## 0.1.22
+
+* [GrxDateTimePickerFormField] Open the calendar when the saved date falls outside the allowed range, starting on the nearest valid day
+
 ## 0.1.21
 
 * [GrxMultiSelectFormField] Keep the selected label when the option is missing or duplicated in the current catalog, instead of throwing
