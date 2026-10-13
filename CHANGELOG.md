@@ -1,3 +1,7 @@
+## 0.1.24
+
+* [GrxListEmpty] Let the title and subtitle render in full instead of clipping them
+
 ## 0.1.23
 
 * [GrxTextFormField] Skip rewriting the controller when the incoming value matches the current text, so the cursor and keyboard shift state stay put
