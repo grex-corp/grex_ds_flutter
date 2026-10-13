@@ -60,6 +60,7 @@ class GrxListEmpty extends StatelessWidget {
             GrxHeadlineText(
               title,
               textAlign: TextAlign.center,
+              overflow: TextOverflow.visible,
             ),
             const SizedBox(
               height: 8.0,
@@ -67,6 +68,7 @@ class GrxListEmpty extends StatelessWidget {
             GrxLabelLargeText(
               subTitle,
               textAlign: TextAlign.center,
+              overflow: TextOverflow.visible,
             ),
             if (buttonOptions != null)
               Padding(
