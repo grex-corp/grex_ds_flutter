@@ -1,3 +1,7 @@
+## 0.1.23
+
+* [GrxTextFormField] Skip rewriting the controller when the incoming value matches the current text, so the cursor and keyboard shift state stay put
+
 ## 0.1.22
 
 * [GrxDateTimePickerFormField] Open the calendar when the saved date falls outside the allowed range, starting on the nearest valid day

@@ -124,13 +124,12 @@ class _GrxTextFormFieldState extends State<GrxTextFormField> {
 
     _syncInputFormatters(oldWidget);
     
-    // Update controller text if the value prop changed
-    if (widget.value != oldWidget.value) {
+    // Ignore echoes of the text the user just typed. Assigning
+    // controller.text resets the cursor and the keyboard shift state.
+    if (widget.value != oldWidget.value && widget.value != controller.text) {
       if (widget.value != null) {
         controller.text = widget.value!;
-        if (widget.onChanged != null) {
-          widget.onChanged!(controller.text);
-        }
+        widget.onChanged?.call(controller.text);
       } else {
         controller.clear();
       }
