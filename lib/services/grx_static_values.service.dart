@@ -163,6 +163,35 @@ abstract class GrxStaticValuesService {
     GrxFederativeUnit(id: '2', name: 'San Pedro'),
   ];
 
+  static const peStates = [
+    GrxFederativeUnit(id: 'AMA', name: 'Amazonas'),
+    GrxFederativeUnit(id: 'ANC', name: 'Ancash'),
+    GrxFederativeUnit(id: 'APU', name: 'Apurímac'),
+    GrxFederativeUnit(id: 'ARE', name: 'Arequipa'),
+    GrxFederativeUnit(id: 'AYA', name: 'Ayacucho'),
+    GrxFederativeUnit(id: 'CAJ', name: 'Cajamarca'),
+    GrxFederativeUnit(id: 'CAL', name: 'El Callao'),
+    GrxFederativeUnit(id: 'CUS', name: 'Cusco'),
+    GrxFederativeUnit(id: 'HUV', name: 'Huancavelica'),
+    GrxFederativeUnit(id: 'HUC', name: 'Huánuco'),
+    GrxFederativeUnit(id: 'ICA', name: 'Ica'),
+    GrxFederativeUnit(id: 'JUN', name: 'Junín'),
+    GrxFederativeUnit(id: 'LAL', name: 'La Libertad'),
+    GrxFederativeUnit(id: 'LAM', name: 'Lambayeque'),
+    GrxFederativeUnit(id: 'LIM', name: 'Lima'),
+    GrxFederativeUnit(id: 'LMA', name: 'Municipalidad Metropolitana de Lima'),
+    GrxFederativeUnit(id: 'LOR', name: 'Loreto'),
+    GrxFederativeUnit(id: 'MDD', name: 'Madre de Dios'),
+    GrxFederativeUnit(id: 'MOQ', name: 'Moquegua'),
+    GrxFederativeUnit(id: 'PAS', name: 'Pasco'),
+    GrxFederativeUnit(id: 'PIU', name: 'Piura'),
+    GrxFederativeUnit(id: 'PUN', name: 'Puno'),
+    GrxFederativeUnit(id: 'SAM', name: 'San Martín'),
+    GrxFederativeUnit(id: 'TAC', name: 'Tacna'),
+    GrxFederativeUnit(id: 'TUM', name: 'Tumbes'),
+    GrxFederativeUnit(id: 'UCA', name: 'Ucayali'),
+  ];
+
   static const mzStates = [
     GrxFederativeUnit(id: '1', name: '1 - Niassa'),
     GrxFederativeUnit(id: '2', name: '2 - Cabo Delgado'),
