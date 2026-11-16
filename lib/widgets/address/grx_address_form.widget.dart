@@ -1193,6 +1193,8 @@ class _GrxAddressFormState extends State<GrxAddressForm> {
         return widget.strings.countryAR;
       case 'PY':
         return widget.strings.countryPY;
+      case 'PE':
+        return widget.strings.countryPE;
       case 'MZ':
         return widget.strings.countryMZ;
       case 'US':

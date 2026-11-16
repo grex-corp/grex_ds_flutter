@@ -1,3 +1,7 @@
+## 0.1.25
+
+* Align Peru (`GrxCountryId.PE`) with the other operational countries: set `language` to `es`, add `GrxStaticValuesService.peStates` (ISO 3166-2:PE departments), zip code mask `#####`, and the address-form country name
+
 ## 0.1.24
 
 * [GrxListEmpty] Let the title and subtitle render in full instead of clipping them
