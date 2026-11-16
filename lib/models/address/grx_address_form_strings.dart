@@ -17,6 +17,7 @@ abstract class GrxAddressFormStrings {
   String get countryUY;
   String get countryAR;
   String get countryPY;
+  String get countryPE;
   String get countryMZ;
   String get countryUS;
   String get countryPT;

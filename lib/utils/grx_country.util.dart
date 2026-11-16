@@ -987,7 +987,10 @@ abstract class GrxCountryUtils {
       code: '+51',
       name: 'Peru',
       flag: 'peru_flag',
+      language: 'es',
       phoneMasks: ['### ### ###'],
+      zipcodeMasks: ['#####'],
+      states: GrxStaticValuesService.peStates,
     ),
     GrxCountry(
       id: GrxCountryId.PF,
