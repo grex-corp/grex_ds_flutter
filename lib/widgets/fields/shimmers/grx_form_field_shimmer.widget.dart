@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:grex_ds/themes/grx_theme_data.theme.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../../themes/spacing/grx_spacing.dart';
 import '../../typography/grx_label_large_text.widget.dart';

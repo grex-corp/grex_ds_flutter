@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../enums/grx_autocomplete_loading_style.enum.dart';
 import '../../extensions/list.extension.dart';
@@ -15,7 +15,7 @@ import 'shimmers/grx_form_field_shimmer.widget.dart';
 
 class GrxAutocompleteDropdownFormField<T> extends GrxStatefulWidget {
   GrxAutocompleteDropdownFormField({
-    final Key? key,
+    Key? key,
     required this.labelText,
     required this.displayText,
     this.controller,

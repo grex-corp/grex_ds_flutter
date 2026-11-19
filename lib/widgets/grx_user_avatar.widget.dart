@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../extensions/uint8_list.extension.dart';
 import '../pages/image_preview.page.dart';
@@ -31,7 +31,7 @@ class GrxUserAvatar extends StatefulWidget {
     this.onRemoveAvatar,
     this.isLoading = false,
     this.showBorder = false,
-    final Color? backgroundColor,
+    Color? backgroundColor,
   }) : backgroundColor = backgroundColor ?? GrxColors.primary.shade400;
 
   final String? text;

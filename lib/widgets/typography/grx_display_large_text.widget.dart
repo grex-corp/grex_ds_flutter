@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../enums/grx_text_transform.enum.dart';
 import '../../themes/colors/grx_colors.dart';
@@ -59,8 +59,8 @@ class GrxDisplayLargeText extends StatelessWidget {
   GrxDisplayLargeText.lerp(
     this.text, {
     super.key,
-    required final GrxDisplayLargeTextStyle style,
-    required final double t,
+    required GrxDisplayLargeTextStyle style,
+    required double t,
     this.textAlign,
     this.transform = GrxTextTransform.none,
     this.color,

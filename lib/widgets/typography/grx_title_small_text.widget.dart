@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../enums/grx_text_transform.enum.dart';
 import '../../themes/colors/grx_colors.dart';
@@ -59,8 +59,8 @@ class GrxTitleSmallText extends StatelessWidget {
   GrxTitleSmallText.lerp(
     this.text, {
     super.key,
-    required final GrxTitleSmallTextStyle style,
-    required final double t,
+    required GrxTitleSmallTextStyle style,
+    required double t,
     this.textAlign,
     this.transform = GrxTextTransform.none,
     this.color,

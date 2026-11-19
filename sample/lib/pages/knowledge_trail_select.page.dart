@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:grex_ds/grex_ds.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../models/knowledge_trail_model.dart';
 
@@ -131,13 +131,10 @@ class _KnowledgeTrailStateSelectPage extends State<KnowledgeTrailSelectPage> {
                     ],
                   ),
                   trailing: GestureDetector(
-                    child: Container(
-                      // margin: const EdgeInsets.only(bottom: 20),
-                      child: GrxRoundedCheckbox(
-                        value: trail.priority == _data.priority,
-                        radius: 10,
-                        isTappable: false,
-                      ),
+                    child: GrxRoundedCheckbox(
+                      value: trail.priority == _data.priority,
+                      radius: 10,
+                      isTappable: false,
                     ),
                   ),
                   onTap: () {

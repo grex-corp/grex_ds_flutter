@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../themes/spacing/grx_spacing.dart';
 import '../utils/grx_utils.util.dart';

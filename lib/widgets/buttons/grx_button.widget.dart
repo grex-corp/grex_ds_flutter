@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:cupertino_ui/cupertino_ui.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../enums/grx_align.enum.dart';
 import '../../enums/grx_shape.enum.dart';
@@ -62,7 +62,7 @@ class GrxButton extends StatefulWidget {
 class _GrxButtonState extends State<GrxButton> {
   Size? childSize;
 
-  Widget _getButton({required final Widget child}) {
+  Widget _getButton({required Widget child}) {
     final onPressed =
         widget.enabled && !widget.isLoading ? widget.onPressed : null;
 

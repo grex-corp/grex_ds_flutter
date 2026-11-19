@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../themes/colors/grx_colors.dart';
 import '../../themes/spacing/grx_spacing.dart';
@@ -25,8 +25,8 @@ class GrxHeader extends StatelessWidget implements PreferredSizeWidget {
     this.animationProgress = 0,
     this.onBackPressed,
     this.onClosePressed,
-    final Color? foregroundColor,
-    final SystemUiOverlayStyle? systemOverlayStyle,
+    Color? foregroundColor,
+    SystemUiOverlayStyle? systemOverlayStyle,
   }) : systemOverlayStyle =
            systemOverlayStyle ??
            (backgroundColor.computeLuminance() > .5

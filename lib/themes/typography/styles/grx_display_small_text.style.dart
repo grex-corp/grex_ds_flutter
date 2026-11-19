@@ -13,6 +13,6 @@ class GrxDisplaySmallTextStyle extends GrxTextStyle {
     super.decorationStyle,
     super.decorationThickness,
     super.overflow,
-    final FontWeight? fontWeight,
+    FontWeight? fontWeight,
   }) : super(fontSize: 32, fontWeight: fontWeight ?? GrxFontWeights.semiBold);
 }

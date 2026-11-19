@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../enums/grx_shape.enum.dart';
 import '../../themes/colors/grx_colors.dart';
@@ -8,7 +8,7 @@ import 'grx_sized_button.widget.dart';
 class GrxIconButton extends GrxSizedButton {
   GrxIconButton({
     super.key,
-    required final IconData icon,
+    required IconData icon,
     super.onPressed,
     super.backgroundColor = Colors.transparent,
     super.size = 24.0,
@@ -16,8 +16,8 @@ class GrxIconButton extends GrxSizedButton {
     super.isLoading,
     super.enabled,
     super.margin,
-    final double? iconSize,
-    final Color? foregroundColor,
+    double? iconSize,
+    Color? foregroundColor,
   }) : super(
          child: Icon(icon, size: iconSize ?? size - GrxSpacing.s),
          foregroundColor: foregroundColor ?? GrxColors.primary.shade900,

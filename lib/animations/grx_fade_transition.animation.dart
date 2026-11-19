@@ -3,8 +3,8 @@ import 'package:flutter/widgets.dart';
 class GrxFadeTransition extends FadeTransition {
   GrxFadeTransition({
     super.key,
-    required final Widget child,
-    required final Animation<double> animation,
+    required Widget child,
+    required Animation<double> animation,
   }) : super(
           opacity: animation,
           child: Transform(

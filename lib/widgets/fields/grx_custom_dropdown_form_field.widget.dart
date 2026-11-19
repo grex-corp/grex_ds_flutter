@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../services/grx_bottom_sheet.service.dart';
 import '../../utils/grx_form_field.util.dart';
@@ -10,7 +10,7 @@ import 'shimmers/grx_form_field_shimmer.widget.dart';
 
 class GrxCustomDropdownFormField<T> extends GrxStatefulWidget {
   GrxCustomDropdownFormField({
-    final Key? key,
+    Key? key,
     required this.labelText,
     required this.builder,
     required this.displayText,

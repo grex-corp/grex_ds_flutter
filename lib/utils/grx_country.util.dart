@@ -3,11 +3,11 @@ import '../models/grx_country.model.dart';
 import '../services/grx_static_values.service.dart';
 
 abstract class GrxCountryUtils {
-  static GrxCountry? getCountry(final GrxCountryId? id) => countries
+  static GrxCountry? getCountry(GrxCountryId? id) => countries
       .map<GrxCountry?>((x) => x)
       .firstWhere((country) => country!.id == id, orElse: () => null);
 
-  static GrxCountry findCountryByPhone(final String? e164Phone) =>
+  static GrxCountry findCountryByPhone(String? e164Phone) =>
       countries.firstWhere(
         (country) => e164Phone?.startsWith(country.code) ?? false,
         orElse: () => GrxCountry.unknown(),

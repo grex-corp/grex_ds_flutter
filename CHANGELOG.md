@@ -1,3 +1,9 @@
+## 0.2.0
+
+* **Breaking.** Material and Cupertino widgets now come from `material_ui` and `cupertino_ui`. `GrxThemeData.theme` is a `material_ui` `ThemeData` and does not fit a `MaterialApp` from `package:flutter/material.dart`.
+* **Breaking.** Dart SDK is `^3.13.0` (Flutter 3.47 or newer). Consumers need a direct `material_ui` dependency.
+* `GrxToastService` and `GrxHelpWidget` no longer depend on `delightful_toast` or `popover`. Both draw through `material_ui`. Replacing a toast during its exit does not touch an overlay entry that has already left the tree. The help balloon is a route, so the back button closes it, and it opens downward when there is no room above the icon.
+
 ## 0.1.25
 
 * Align Peru (`GrxCountryId.PE`) with the other operational countries: set `language` to `es`, add `GrxStaticValuesService.peStates` (ISO 3166-2:PE departments), zip code mask `#####`, and the address-form country name

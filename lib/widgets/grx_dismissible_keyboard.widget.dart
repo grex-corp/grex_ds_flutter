@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class GrxDismissibleKeyboard extends GestureDetector {
-  GrxDismissibleKeyboard({super.key, required final Widget child})
+  GrxDismissibleKeyboard({super.key, required Widget child})
     : super(
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
         child: child,

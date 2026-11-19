@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../../utils/grx_utils.util.dart';
 import '../utils/grx_font_families.dart';
@@ -14,7 +14,7 @@ class GrxTextStyle extends TextStyle {
     super.decorationColor,
     super.decorationStyle,
     super.decorationThickness,
-    final TextOverflow? overflow,
+    TextOverflow? overflow,
   }) : super(
          package: GrxUtils.packageName,
          fontFamily: GrxFontFamilies.montserrat,

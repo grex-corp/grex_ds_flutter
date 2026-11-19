@@ -1,6 +1,6 @@
 import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
 import 'package:linkify/linkify.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../themes/colors/grx_colors.dart';
@@ -85,7 +85,7 @@ abstract class GrxLinkify {
     return formattedText;
   }
 
-  static Uri getFirstUrlFromText(final String text) {
+  static Uri getFirstUrlFromText(String text) {
     final List<LinkifyElement> elements = linkify(
       text,
       linkifiers: const [UrlLinkifier()],
@@ -103,8 +103,8 @@ abstract class GrxLinkify {
   }
 
   static InlineSpan buildLink({
-    required final String text,
-    required final String link,
+    required String text,
+    required String link,
   }) {
     final uri = Uri.parse(link);
 

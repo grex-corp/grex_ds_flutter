@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../themes/colors/grx_colors.dart';
 import '../../themes/icons/grx_icons.dart';
 import 'grx_sized_button.widget.dart';
 
 class GrxClearInputButton extends GrxSizedButton {
-  GrxClearInputButton({super.key, final VoidCallback? onClear})
+  GrxClearInputButton({super.key, VoidCallback? onClear})
     : super(
         onPressed: onClear,
         backgroundColor: GrxColors.transparent,

@@ -1,20 +1,20 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import 'typography/styles/grx_body_large_text.style.dart';
-import 'typography/styles/grx_body_text.style.dart';
 import 'typography/styles/grx_body_small_text.style.dart';
+import 'typography/styles/grx_body_text.style.dart';
 import 'typography/styles/grx_display_large_text.style.dart';
-import 'typography/styles/grx_display_text.style.dart';
 import 'typography/styles/grx_display_small_text.style.dart';
+import 'typography/styles/grx_display_text.style.dart';
 import 'typography/styles/grx_headline_large_text.style.dart';
-import 'typography/styles/grx_headline_text.style.dart';
 import 'typography/styles/grx_headline_small_text.style.dart';
+import 'typography/styles/grx_headline_text.style.dart';
 import 'typography/styles/grx_label_large_text.style.dart';
 import 'typography/styles/grx_label_small_text.style.dart';
 import 'typography/styles/grx_label_text.style.dart';
 import 'typography/styles/grx_title_large_text.style.dart';
-import 'typography/styles/grx_title_text.style.dart';
 import 'typography/styles/grx_title_small_text.style.dart';
+import 'typography/styles/grx_title_text.style.dart';
 
 /// A [TextTheme] used by Material Design to automatically apply our Design System's [TextStyle].
 class GrxTextTheme extends TextTheme {

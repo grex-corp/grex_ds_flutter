@@ -1,12 +1,12 @@
 import 'dart:math' as math;
 import 'dart:ui';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../themes/icons/grx_icons.dart';
 import '../utils/grx_button.util.dart';
-import '../widgets/buttons/grx_sized_button.widget.dart';
 import '../widgets/buttons/grx_filter_button.widget.dart';
+import '../widgets/buttons/grx_sized_button.widget.dart';
 import '../widgets/headers/grx_searchable_header.widget.dart';
 
 const double _kToolbarExtent = 60.0;

@@ -1,8 +1,10 @@
-import 'package:get/get.dart';
-
 import '../localization/app_localizations.dart';
+import '../services/navigation.service.dart';
 
 extension StringExtension on String {
   String get translate =>
-      AppLocalizations.of(Get.context!)?.translate(this) ?? this;
+      AppLocalizations.of(
+        NavigationService.navigatorKey.currentContext!,
+      )?.translate(this) ??
+      this;
 }

@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../themes/colors/grx_colors.dart';
 
@@ -11,7 +11,7 @@ class GrxSpinnerLoading extends StatefulWidget {
     this.size = 30.0,
     this.duration = const Duration(milliseconds: 500),
     this.controller,
-    final Color? color,
+    Color? color,
   }) : color = color ?? GrxColors.primary.shade600;
 
   final Color color;

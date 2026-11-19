@@ -10,7 +10,7 @@ class GrxCloseButton extends GrxIconButton {
     required super.onPressed,
     super.size = 18.0,
     super.margin,
-    final Color? color,
+    Color? color,
   }) : super(
          icon: GrxIcons.close_m,
          foregroundColor: color ?? GrxColors.primary.shade900,
