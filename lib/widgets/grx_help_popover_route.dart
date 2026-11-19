@@ -34,7 +34,12 @@ class GrxHelpPopoverRoute extends PopupRoute<void> {
     Animation<double> animation,
     Animation<double> secondaryAnimation,
   ) {
-    return GrxHelpPopover(anchor: anchor, width: width, child: child);
+    // The route is painted in the overlay, outside the page Material. Text in
+    // that overlay otherwise keeps MaterialApp's yellow fallback underline.
+    return Material(
+      type: MaterialType.transparency,
+      child: GrxHelpPopover(anchor: anchor, width: width, child: child),
+    );
   }
 
   @override
