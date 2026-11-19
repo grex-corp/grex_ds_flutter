@@ -1,3 +1,8 @@
+## 0.2.1
+
+* [GrxToastService] Draw the toast on a `Material`, so the message no longer picks up MaterialApp's yellow fallback underline.
+* [GrxHelpWidget] Give the help route the same `Material`, so its text does not inherit that underline either.
+
 ## 0.2.0
 
 * **Breaking.** Material and Cupertino widgets now come from `material_ui` and `cupertino_ui`. `GrxThemeData.theme` is a `material_ui` `ThemeData` and does not fit a `MaterialApp` from `package:flutter/material.dart`.

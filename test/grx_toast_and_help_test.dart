@@ -1,6 +1,16 @@
+import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:grex_ds/grex_ds.dart';
 import 'package:material_ui/material_ui.dart';
+
+void _expectNoFallbackUnderline(WidgetTester tester, String text) {
+  final style = tester
+      .renderObject<RenderParagraph>(find.text(text))
+      .text
+      .style;
+  expect(style?.decoration, isNot(TextDecoration.underline));
+  expect(style?.decorationColor, isNot(const Color(0xFFFFFF00)));
+}
 
 void main() {
   testWidgets('toast shows the message and closes', (tester) async {
@@ -28,6 +38,7 @@ void main() {
     await tester.pump(const Duration(milliseconds: 400));
 
     expect(find.text('Salvo'), findsOneWidget);
+    _expectNoFallbackUnderline(tester, 'Salvo');
 
     await tester.tap(find.byIcon(GrxIcons.close_m));
     await tester.pump();
@@ -131,6 +142,7 @@ void main() {
     await tester.pump(const Duration(milliseconds: 400));
 
     expect(find.text('Ajuda'), findsOneWidget);
+    _expectNoFallbackUnderline(tester, 'Ajuda');
 
     await tester.tapAt(const Offset(20, 20));
     await tester.pumpAndSettle();
