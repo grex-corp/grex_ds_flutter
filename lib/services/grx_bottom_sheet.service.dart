@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../themes/colors/grx_colors.dart';
 import '../widgets/bottom_sheet/grx_bottom_sheet_grabber.widget.dart';
@@ -19,8 +19,8 @@ class GrxBottomSheetService {
   bool isOpened = false;
 
   Widget _buildBottomSheet({
-    final ScrollController? controller,
-    final bool hideGrabber = false,
+    ScrollController? controller,
+    bool hideGrabber = false,
   }) {
     return Material(
       color: backgroundColor,
@@ -42,13 +42,13 @@ class GrxBottomSheetService {
     );
   }
 
-  Widget _buildChild(final ScrollController? controller) {
+  Widget _buildChild(ScrollController? controller) {
     return Flexible(child: builder(controller));
   }
 
   Future<T?> showDraggable<T>({
-    final double minSize = 0.25,
-    final double initSize = 1.0,
+    double minSize = 0.25,
+    double initSize = 1.0,
   }) {
     isOpened = true;
 
@@ -72,7 +72,7 @@ class GrxBottomSheetService {
     });
   }
 
-  Future<T?> showUndisposable<T>({final bool isScrollControlled = true}) {
+  Future<T?> showUndisposable<T>({bool isScrollControlled = true}) {
     isOpened = true;
 
     return showModalBottomSheet<T>(
@@ -92,7 +92,7 @@ class GrxBottomSheetService {
     });
   }
 
-  Future<T?> show<T>({final bool isScrollControlled = true}) {
+  Future<T?> show<T>({bool isScrollControlled = true}) {
     isOpened = true;
 
     return showModalBottomSheet<T>(

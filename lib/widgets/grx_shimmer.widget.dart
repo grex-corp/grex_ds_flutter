@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../themes/colors/grx_colors.dart';
@@ -18,8 +18,8 @@ class GrxShimmer extends StatelessWidget {
     required this.width,
     this.borderRadius = GrxRadius.round,
     this.decoration,
-    final Color? baseColor,
-    final Color? highlightColor,
+    Color? baseColor,
+    Color? highlightColor,
   }) : baseColor = baseColor ?? GrxColors.primary.shade50,
        highlightColor = highlightColor ?? GrxColors.primary.shade200;
 

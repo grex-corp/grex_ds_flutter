@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../extensions/list.extension.dart';
 import '../../models/grx_country.model.dart';
@@ -30,7 +30,7 @@ class _GrxBottomSheetCountriesState extends State<GrxBottomSheetCountries> {
   bool showClearButton = false;
   late GrxCountry selectedCountry = widget.selectedCountry;
 
-  Future<void> _onSearch(final String searchString) async {
+  Future<void> _onSearch(String searchString) async {
     setState(() {
       showClearButton = searchString.isNotEmpty;
       _filteredCountries.assignAll(

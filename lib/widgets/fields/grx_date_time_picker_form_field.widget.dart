@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../utils/grx_form_field.util.dart';
 import '../grx_stateful.widget.dart';
@@ -10,7 +10,7 @@ import 'shimmers/grx_form_field_shimmer.widget.dart';
 
 class GrxDateTimePickerFormField extends GrxStatefulWidget {
   GrxDateTimePickerFormField({
-    final Key? key,
+    Key? key,
     required this.labelText,
     this.controller,
     this.value,

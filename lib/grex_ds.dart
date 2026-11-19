@@ -1,7 +1,7 @@
 library;
 
-import 'package:flutter/material.dart';
 import 'package:flutter_libphonenumber/flutter_libphonenumber.dart' as phone;
+import 'package:material_ui/material_ui.dart';
 
 import 'services/grx_toast.service.dart';
 
@@ -9,22 +9,22 @@ export 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 /// Animations
 export 'animations/grx_fade_transition.animation.dart' show GrxFadeTransition;
-
 /// Controllers
 export 'controllers/grx_animated_loading_button.controller.dart'
     show GrxAnimatedLoadingButtonController;
-
+/// Delegates
+export 'delegates/grx_address_form_delegate.dart'
+    show GrxAddressFormDelegate, GrxAddressValidationException;
 /// Enums
 export 'enums/grx_align.enum.dart' show GrxAlign;
 export 'enums/grx_autocomplete_loading_style.enum.dart'
     show GrxAutocompleteLoadingStyle;
+export 'enums/grx_chip_type.enum.dart' show GrxChipType;
 export 'enums/grx_country_id.enum.dart' show GrxCountryId;
-export 'enums/grx_text_transform.enum.dart' show GrxTextTransform;
 export 'enums/grx_shape.enum.dart' show GrxShape;
-
+export 'enums/grx_text_transform.enum.dart' show GrxTextTransform;
 /// Extensions
 export 'extensions/uint8_list.extension.dart' show Uint8ListExtension;
-
 /// Models
 export 'models/address/grx_address_form_strings.dart' show GrxAddressFormStrings;
 export 'models/address/grx_address_schema.model.dart'
@@ -38,68 +38,58 @@ export 'models/grx_country.model.dart' show GrxCountry;
 export 'models/grx_federative_unit.model.dart' show GrxFederativeUnit;
 export 'models/grx_phone_number.model.dart' show GrxPhoneNumber;
 export 'models/grx_toast_action.model.dart' show GrxToastAction;
-
-/// Delegates
-export 'delegates/grx_address_form_delegate.dart'
-    show GrxAddressFormDelegate, GrxAddressValidationException;
-
 /// Services
 export 'services/grx_bottom_sheet.service.dart' show GrxBottomSheetService;
-export 'widgets/bottom_sheet/grx_bottom_sheet_form_field_body.widget.dart'
-    show GrxBottomSheetFormFieldBody;
 export 'services/grx_dialog.service.dart' show GrxDialogService;
 export 'services/grx_image_picker.service.dart' show GrxImagePickerService;
 export 'services/grx_toast.service.dart' show GrxToastService;
-
 /// Themes/Colors
 export 'themes/colors/grx_colors.dart' show GrxColors;
-
 /// Themes/FormFieldStyles
 export 'themes/grx_text_theme.theme.dart' show GrxTextTheme;
-
 /// Themes
 export 'themes/grx_theme_data.theme.dart' show GrxThemeData;
-
 /// Themes/Icons
 export 'themes/icons/grx_icons.dart' show GrxIcons;
-
+/// Themes/Radius
+export 'themes/radius/grx_radius.dart' show GrxRadius;
+/// Themes/Spacing
+export 'themes/spacing/grx_spacing.dart' show GrxSpacing;
 /// Themes/System Overlay
 export 'themes/system_overlay/grx_system_overlay.style.dart'
     show GrxSystemOverlayStyle;
 export 'themes/typography/styles/grx_body_large_text.style.dart'
     show GrxBodyLargeTextStyle;
-export 'themes/typography/styles/grx_body_text.style.dart'
-    show GrxBodyTextStyle;
 export 'themes/typography/styles/grx_body_small_text.style.dart'
     show GrxBodySmallTextStyle;
+export 'themes/typography/styles/grx_body_text.style.dart'
+    show GrxBodyTextStyle;
+export 'themes/typography/styles/grx_display_large_text.style.dart'
+    show GrxDisplayLargeTextStyle;
+export 'themes/typography/styles/grx_display_small_text.style.dart'
+    show GrxDisplaySmallTextStyle;
+export 'themes/typography/styles/grx_display_text.style.dart'
+    show GrxDisplayTextStyle;
+export 'themes/typography/styles/grx_headline_large_text.style.dart'
+    show GrxHeadlineLargeTextStyle;
+export 'themes/typography/styles/grx_headline_small_text.style.dart'
+    show GrxHeadlineSmallTextStyle;
+export 'themes/typography/styles/grx_headline_text.style.dart'
+    show GrxHeadlineTextStyle;
 export 'themes/typography/styles/grx_label_large_text.style.dart'
     show GrxLabelLargeTextStyle;
 export 'themes/typography/styles/grx_label_small_text.style.dart'
     show GrxLabelSmallTextStyle;
 export 'themes/typography/styles/grx_label_text.style.dart'
     show GrxLabelTextStyle;
-export 'themes/typography/styles/grx_headline_large_text.style.dart'
-    show GrxHeadlineLargeTextStyle;
-export 'themes/typography/styles/grx_headline_text.style.dart'
-    show GrxHeadlineTextStyle;
-export 'themes/typography/styles/grx_headline_small_text.style.dart'
-    show GrxHeadlineSmallTextStyle;
-export 'themes/typography/styles/grx_title_large_text.style.dart'
-    show GrxTitleLargeTextStyle;
-export 'themes/typography/styles/grx_title_text.style.dart'
-    show GrxTitleTextStyle;
-export 'themes/typography/styles/grx_title_small_text.style.dart'
-    show GrxTitleSmallTextStyle;
-export 'themes/typography/styles/grx_display_large_text.style.dart'
-    show GrxDisplayLargeTextStyle;
-export 'themes/typography/styles/grx_display_text.style.dart'
-    show GrxDisplayTextStyle;
-export 'themes/typography/styles/grx_display_small_text.style.dart'
-    show GrxDisplaySmallTextStyle;
-
 /// Themes/Typography/Text Styles
 export 'themes/typography/styles/grx_text.style.dart' show GrxTextStyle;
-
+export 'themes/typography/styles/grx_title_large_text.style.dart'
+    show GrxTitleLargeTextStyle;
+export 'themes/typography/styles/grx_title_small_text.style.dart'
+    show GrxTitleSmallTextStyle;
+export 'themes/typography/styles/grx_title_text.style.dart'
+    show GrxTitleTextStyle;
 /// Themes/Typography/Utils
 export 'themes/typography/utils/grx_font_families.dart' show GrxFontFamilies;
 export 'themes/typography/utils/grx_font_weights.dart' show GrxFontWeights;
@@ -108,20 +98,15 @@ export 'utils/grx_linkify.util.dart' show GrxLinkify;
 export 'utils/grx_regex.util.dart' show GrxRegexUtils;
 export 'utils/grx_upper_case_text_formatter.util.dart'
     show GrxUpperCaseTextFormatter;
-
 /// Utils
 export 'utils/grx_utils.util.dart' show GrxUtils;
-
 /// Widgets/Address
 export 'widgets/address/grx_address_form.widget.dart' show GrxAddressForm;
-
-/// Widgets/Accordion
-export 'widgets/grx_accordion.widget.dart' show GrxAccordion;
-
+export 'widgets/bottom_sheet/grx_bottom_sheet_form_field_body.widget.dart'
+    show GrxBottomSheetFormFieldBody;
 ///Widget/Buttons
 export 'widgets/buttons/grx_back_button.widget.dart' show GrxBackButton;
 export 'widgets/buttons/grx_bottom_button.widget.dart' show GrxBottomButton;
-export 'widgets/buttons/grx_sized_button.widget.dart' show GrxSizedButton;
 export 'widgets/buttons/grx_close_button.widget.dart' show GrxCloseButton;
 export 'widgets/buttons/grx_filter_button.widget.dart' show GrxFilterButton;
 export 'widgets/buttons/grx_icon_button.widget.dart' show GrxIconButton;
@@ -129,25 +114,24 @@ export 'widgets/buttons/grx_primary_button.widget.dart' show GrxPrimaryButton;
 export 'widgets/buttons/grx_rounded_button.widget.dart' show GrxRoundedButton;
 export 'widgets/buttons/grx_secondary_button.widget.dart'
     show GrxSecondaryButton;
+export 'widgets/buttons/grx_sized_button.widget.dart' show GrxSizedButton;
 export 'widgets/buttons/grx_tertiary_button.widget.dart' show GrxTertiaryButton;
-
 /// Widgets/Checkbox
 export 'widgets/checkbox/grx_checkbox.widget.dart' show GrxCheckbox;
 export 'widgets/checkbox/grx_checkbox_list_tile.widget.dart'
     show GrxCheckboxListTile;
 export 'widgets/checkbox/grx_rounded_checkbox.widget.dart'
     show GrxRoundedCheckbox;
-
 /// Widgets/Cupertino
 export 'widgets/cupertino/cupertino_switch_list_tile.dart'
     show CupertinoSwitchListTile;
-
+/// Widgets/Dialog
+export 'widgets/dialog/grx_dialog.widget.dart' show GrxDialog;
 /// Widget/Fields/Controllers
 export 'widgets/fields/controllers/grx_form_field.controller.dart'
     show GrxFormFieldController;
 export 'widgets/fields/grx_autocomplete_dropdown_form_field.widget.dart'
     show GrxAutocompleteDropdownFormField;
-
 /// Widgets/Fields
 export 'widgets/fields/grx_custom_dropdown_form_field.widget.dart'
     show GrxCustomDropdownFormField;
@@ -163,96 +147,74 @@ export 'widgets/fields/grx_switch_form_field.widget.dart'
     show GrxSwitchFormField;
 export 'widgets/fields/grx_text_field.widget.dart' show GrxTextField;
 export 'widgets/fields/grx_text_form_field.widget.dart' show GrxTextFormField;
-
+/// Widgets/Accordion
+export 'widgets/grx_accordion.widget.dart' show GrxAccordion;
 ///Widgets/Card
 export 'widgets/grx_card.widget.dart' show GrxCard;
-
 /// Widget/Chip
 export 'widgets/grx_chip.widget.dart' show GrxChip;
-export 'enums/grx_chip_type.enum.dart' show GrxChipType;
-
 /// Widget/DashedDivider
 export 'widgets/grx_dashed_divider.widget.dart' show GrxDashedDivider;
-
 /// Widget/DismissibleKeyboard
 export 'widgets/grx_dismissible_keyboard.widget.dart'
     show GrxDismissibleKeyboard;
-
 /// Widget/DismissibleScaffold
 export 'widgets/grx_dismissible_scaffold.widget.dart'
     show GrxDismissibleScaffold;
-
-/// Widgets/Dialog
-export 'widgets/dialog/grx_dialog.widget.dart' show GrxDialog;
-
 /// Widget/Divider
 export 'widgets/grx_divider.widget.dart' show GrxDivider;
-
 /// Widgets/Help
 export 'widgets/grx_help.widget.dart' show GrxHelpWidget;
-
+/// Widget/Loading
+export 'widgets/grx_shimmer.widget.dart' show GrxShimmer;
 /// Widgets/Lists
 export 'widgets/grx_sliver_animated_list.widget.dart'
     show GrxSliverAnimatedList;
-
-/// Widget/Loading
-export 'widgets/grx_shimmer.widget.dart' show GrxShimmer;
 export 'widgets/grx_spinner_loading.widget.dart' show GrxSpinnerLoading;
-
 /// Widget/Avatar
 export 'widgets/grx_user_avatar.widget.dart' show GrxUserAvatar;
 export 'widgets/headers/grx_animated_sliver_header.widget.dart'
     show GrxAnimatedSliverHeader;
-
 /// Widget/Headers
 export 'widgets/headers/grx_header.widget.dart' show GrxHeader;
 export 'widgets/headers/grx_searchable_header.widget.dart'
     show GrxSearchableHeader;
 export 'widgets/headers/grx_searchable_sliver_header.widget.dart'
     show GrxSearchableSliverHeader;
-
 /// Widgets/Layout
 export 'widgets/layout/grx_responsive_layout.widget.dart'
     show GrxResponsiveLayout;
 export 'widgets/list/grx_list_empty.widget.dart' show GrxListEmpty;
 export 'widgets/list/grx_list_error.widget.dart' show GrxListError;
-
 /// Widgets/Media
 export 'widgets/media/grx_svg.widget.dart' show GrxSvg;
-
 /// Widgets/Typography
 export 'widgets/typography/grx_body_large_text.widget.dart'
     show GrxBodyLargeText;
-export 'widgets/typography/grx_body_text.widget.dart' show GrxBodyText;
 export 'widgets/typography/grx_body_small_text.widget.dart'
     show GrxBodySmallText;
+export 'widgets/typography/grx_body_text.widget.dart' show GrxBodyText;
+export 'widgets/typography/grx_display_large_text.widget.dart'
+    show GrxDisplayLargeText;
+export 'widgets/typography/grx_display_small_text.widget.dart'
+    show GrxDisplaySmallText;
+export 'widgets/typography/grx_display_text.widget.dart' show GrxDisplayText;
+export 'widgets/typography/grx_headline_large_text.widget.dart'
+    show GrxHeadlineLargeText;
+export 'widgets/typography/grx_headline_small_text.widget.dart'
+    show GrxHeadlineSmallText;
+export 'widgets/typography/grx_headline_text.widget.dart' show GrxHeadlineText;
 export 'widgets/typography/grx_label_large_text.widget.dart'
     show GrxLabelLargeText;
 export 'widgets/typography/grx_label_small_text.widget.dart'
     show GrxLabelSmallText;
 export 'widgets/typography/grx_label_text.widget.dart' show GrxLabelText;
-export 'widgets/typography/grx_headline_large_text.widget.dart'
-    show GrxHeadlineLargeText;
-export 'widgets/typography/grx_headline_text.widget.dart' show GrxHeadlineText;
-export 'widgets/typography/grx_headline_small_text.widget.dart'
-    show GrxHeadlineSmallText;
+export 'widgets/typography/grx_text.widget.dart' show GrxText;
 export 'widgets/typography/grx_title_large_text.widget.dart'
     show GrxTitleLargeText;
-export 'widgets/typography/grx_title_text.widget.dart' show GrxTitleText;
 export 'widgets/typography/grx_title_small_text.widget.dart'
     show GrxTitleSmallText;
-export 'widgets/typography/grx_display_large_text.widget.dart'
-    show GrxDisplayLargeText;
-export 'widgets/typography/grx_display_text.widget.dart' show GrxDisplayText;
-export 'widgets/typography/grx_display_small_text.widget.dart'
-    show GrxDisplaySmallText;
-export 'widgets/typography/grx_text.widget.dart' show GrxText;
-
-/// Themes/Spacing
-export 'themes/spacing/grx_spacing.dart' show GrxSpacing;
-
-/// Themes/Radius
-export 'themes/radius/grx_radius.dart' show GrxRadius;
+export 'widgets/typography/grx_title_text.widget.dart' show GrxTitleText;
 
 /// Grex Design System
 /// Main initialization class for the Grex Design System library

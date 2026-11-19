@@ -13,6 +13,6 @@ class GrxTitleTextStyle extends GrxTextStyle {
     super.decorationStyle,
     super.decorationThickness,
     super.overflow,
-    final FontWeight? fontWeight,
+    FontWeight? fontWeight,
   }) : super(fontSize: 16, fontWeight: fontWeight ?? GrxFontWeights.semiBold);
 }

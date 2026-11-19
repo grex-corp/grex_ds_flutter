@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../themes/colors/grx_colors.dart';
 import '../../themes/typography/styles/grx_label_large_text.style.dart';

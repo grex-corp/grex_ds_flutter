@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../enums/grx_chip_type.enum.dart';
 import '../../extensions/list.extension.dart';
@@ -15,7 +15,7 @@ import 'shimmers/grx_form_field_shimmer.widget.dart';
 
 class GrxMultiSelectFormField<T> extends GrxStatefulWidget {
   GrxMultiSelectFormField({
-    final Key? key,
+    Key? key,
     required this.labelText,
     required this.data,
     required this.itemBuilder,

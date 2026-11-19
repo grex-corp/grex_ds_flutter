@@ -10,15 +10,15 @@ import 'grx_form_field.widget.dart';
 /// A Design System's [FormField] used like a switch
 class GrxSwitchFormField extends GrxFormField<bool> {
   GrxSwitchFormField({
-    final Key? key,
+    Key? key,
     required this.labelText,
     this.onChanged,
     this.overflow,
     this.changeOnInitialValue = false,
     this.isLoading = false,
-    final void Function(bool)? onSaved,
-    final TextStyle? style,
-    final bool? value,
+    void Function(bool)? onSaved,
+    TextStyle? style,
+    bool? value,
     super.enabled,
     super.flexible,
   }) : super(

@@ -10,7 +10,7 @@ class GrxBackButton extends GrxIconButton {
     required super.onPressed,
     super.size,
     super.margin,
-    final Color? color,
+    Color? color,
   }) : super(
          icon: GrxIcons.chevron_left_l,
          foregroundColor: color ?? GrxColors.primary.shade800,

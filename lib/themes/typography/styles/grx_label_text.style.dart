@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../utils/grx_font_weights.dart';
 import 'grx_text.style.dart';
@@ -13,6 +13,6 @@ class GrxLabelTextStyle extends GrxTextStyle {
     super.decorationStyle,
     super.decorationThickness,
     super.overflow,
-    final FontWeight? fontWeight,
+    FontWeight? fontWeight,
   }) : super(fontSize: 12, fontWeight: fontWeight ?? GrxFontWeights.regular);
 }

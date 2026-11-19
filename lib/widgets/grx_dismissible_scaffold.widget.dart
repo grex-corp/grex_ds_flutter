@@ -1,17 +1,17 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import 'grx_dismissible_keyboard.widget.dart';
 
 class GrxDismissibleScaffold extends GrxDismissibleKeyboard {
   GrxDismissibleScaffold({
     super.key,
-    required final Widget body,
-    final PreferredSizeWidget? appBar,
-    final bool extendBody = false,
-    final bool extendBodyBehindAppBar = false,
-    final Color? backgroundColor,
-    final Widget? bottomNavigationBar,
-    final Widget? floatingActionButton,
+    required Widget body,
+    PreferredSizeWidget? appBar,
+    bool extendBody = false,
+    bool extendBodyBehindAppBar = false,
+    Color? backgroundColor,
+    Widget? bottomNavigationBar,
+    Widget? floatingActionButton,
   }) : super(
          child: Scaffold(
            backgroundColor: backgroundColor,

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../themes/colors/grx_colors.dart';
 import '../../themes/typography/styles/grx_title_text.style.dart';
@@ -18,7 +18,7 @@ class GrxInputDecoration extends InputDecoration {
     super.enabled = true,
     this.showClearButton = false,
     this.isClearButtonVisible = false,
-    final Widget? suffix,
+    Widget? suffix,
   }) : super(
          floatingLabelStyle: GrxTitleTextStyle(
            color: GrxColors.primary.shade900,
@@ -26,7 +26,7 @@ class GrxInputDecoration extends InputDecoration {
          suffix: Row(
            mainAxisSize: MainAxisSize.min,
            children: [
-             if (suffix != null) suffix,
+             ?suffix,
              if (showClearButton)
                Opacity(
                  opacity: isClearButtonVisible ? 1 : 0,

@@ -21,6 +21,6 @@ class GrxTertiaryButton extends GrxRoundedButton {
     super.mainAxisSize,
     super.enabled,
     super.padding,
-    final Color? foregroundColor,
+    Color? foregroundColor,
   }) : super(foregroundColor: foregroundColor ?? GrxColors.primary.shade800);
 }

@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../themes/colors/grx_colors.dart';
 import '../themes/typography/styles/grx_label_small_text.style.dart';
@@ -12,7 +12,7 @@ class GrxDashedDivider extends StatelessWidget {
     this.padding = EdgeInsets.zero,
     this.stroke = 1.0,
     this.dashSize = 3.0,
-    final Color? color,
+    Color? color,
   }) : color = color ?? GrxColors.primary.shade600;
 
   final String? title;

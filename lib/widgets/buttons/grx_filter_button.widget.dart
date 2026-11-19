@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../enums/grx_shape.enum.dart';
 import '../../themes/colors/grx_colors.dart';

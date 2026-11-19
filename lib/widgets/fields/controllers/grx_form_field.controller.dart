@@ -1,12 +1,12 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:material_ui/material_ui.dart';
 
 class GrxFormFieldController<T> extends TextEditingController {
   GrxFormFieldController({
     super.text,
-    final String? mask,
+    String? mask,
   }) : maskFormatter = mask?.isNotEmpty ?? false
             ? MaskTextInputFormatter(
                 mask: '#####-###',

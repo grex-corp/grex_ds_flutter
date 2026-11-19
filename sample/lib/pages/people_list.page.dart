@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:grex_ds/grex_ds.dart';
+import 'package:material_ui/material_ui.dart';
 
 class PeopleListPage extends StatelessWidget {
   const PeopleListPage({

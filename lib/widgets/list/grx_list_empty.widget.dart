@@ -1,12 +1,12 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../animations/grx_fade_transition.animation.dart';
 import '../../models/grx_button_options.model.dart';
 import '../../themes/colors/grx_colors.dart';
 import '../../themes/icons/grx_icons.dart';
 import '../buttons/grx_rounded_button.widget.dart';
-import '../typography/grx_label_large_text.widget.dart';
 import '../typography/grx_headline_text.widget.dart';
+import '../typography/grx_label_large_text.widget.dart';
 
 class GrxListEmpty extends StatelessWidget {
   GrxListEmpty({

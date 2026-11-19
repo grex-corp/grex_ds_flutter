@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../themes/icons/grx_icons.dart';
 import '../typography/grx_label_large_text.widget.dart';

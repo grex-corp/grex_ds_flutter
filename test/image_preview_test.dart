@@ -1,9 +1,9 @@
 import 'dart:typed_data';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:grex_ds/pages/image_preview.page.dart';
 import 'package:grex_ds/themes/icons/grx_icons.dart';
+import 'package:material_ui/material_ui.dart';
 
 final Uint8List _png = Uint8List.fromList(const <int>[
   0x89,

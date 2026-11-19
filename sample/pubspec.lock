@@ -105,14 +105,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.9"
-  delightful_toast:
+  cupertino_ui:
     dependency: transitive
     description:
-      name: delightful_toast
-      sha256: "93d0b9e89a65947e42daa8aafe552596487dbedc15f68d0480654e789e94bc5b"
+      name: cupertino_ui
+      sha256: c3eaf7f5bdfee36deb0b14a4cbf7602f1b6b8d8b8576b81f38fc08c25881c94c
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.0"
+    version: "1.1.7"
   device_info_plus:
     dependency: transitive
     description:
@@ -206,14 +206,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_animate:
-    dependency: transitive
-    description:
-      name: flutter_animate
-      sha256: "7befe2d3252728afb77aecaaea1dec88a89d35b9b1d2eea6d04479e8af9117b5"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.5.2"
   flutter_cache_manager:
     dependency: transitive
     description:
@@ -271,7 +263,7 @@ packages:
     source: hosted
     version: "6.0.0"
   flutter_localizations:
-    dependency: "direct main"
+    dependency: transitive
     description: flutter
     source: sdk
     version: "0.0.0"
@@ -283,14 +275,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.35"
-  flutter_shaders:
-    dependency: transitive
-    description:
-      name: flutter_shaders
-      sha256: "16cd456daf2fd6ed7ac0c5168716c5e2fe18f91d82631b775f1af9100fb3f586"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.1.5"
   flutter_staggered_grid_view:
     dependency: transitive
     description:
@@ -317,21 +301,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  get:
-    dependency: "direct main"
-    description:
-      name: get
-      sha256: "5ed34a7925b85336e15d472cc4cfe7d9ebf4ab8e8b9f688585bf6b50f4c3d79a"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.7.3"
   grex_ds:
     dependency: "direct main"
     description:
       path: ".."
       relative: true
     source: path
-    version: "0.1.22"
+    version: "0.2.0"
   hooks:
     dependency: transitive
     description:
@@ -524,6 +500,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.1.0"
+  listen:
+    dependency: transitive
+    description:
+      name: listen
+      sha256: "47501a08016a43fcad79252439d723f50f14f88fa7bfd8a177e0a417e5c9e1f2"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.1"
   logging:
     dependency: transitive
     description:
@@ -556,6 +540,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.13.0"
+  material_ui:
+    dependency: "direct main"
+    description:
+      name: material_ui
+      sha256: a6b19012df437a356cbc01f8ea22a105e07194c47c9a6009da0032a0ce35c4ab
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.11.1"
   meta:
     dependency: transitive
     description:
@@ -740,14 +732,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.8"
-  popover:
-    dependency: transitive
-    description:
-      name: popover
-      sha256: "2b2e1c40658b05089ac9365211983ebdad067d34b9d8fa0313434b38f7efff07"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.4.0"
   pub_semver:
     dependency: transitive
     description:
@@ -893,10 +877,10 @@ packages:
     dependency: transitive
     description:
       name: test_api
-      sha256: "2a122cbe059f8b610d3a5415f42e255b6c17b1f21eee1d960f31080237fb4f11"
+      sha256: "0a10344e901e5b2e63819567951cb6a06673ed6b84f40462188ff5a0c41f371f"
       url: "https://pub.dev"
     source: hosted
-    version: "0.7.12"
+    version: "0.7.14"
   typed_data:
     dependency: transitive
     description:
@@ -1067,4 +1051,4 @@ packages:
     version: "3.1.4"
 sdks:
   dart: ">=3.13.0 <4.0.0"
-  flutter: ">=3.44.0"
+  flutter: ">=3.47.0"

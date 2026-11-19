@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:cupertino_ui/cupertino_ui.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../themes/colors/grx_colors.dart';
 import '../../themes/spacing/grx_spacing.dart';
@@ -138,7 +138,7 @@ class CupertinoSwitchListTile extends StatelessWidget {
             ),
             child: Row(
               children: [
-                if (secondary != null) secondary!,
+                ?secondary,
                 Expanded(
                   child: Padding(
                     padding: contentPadding,
@@ -146,7 +146,7 @@ class CupertinoSwitchListTile extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         title ?? const SizedBox.shrink(),
-                        if (subtitle != null) subtitle!,
+                        ?subtitle,
                       ],
                     ),
                   ),
